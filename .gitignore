@@ -1,0 +1,12 @@
+build
+/.idea
+/dist
+.idea/
+.DS_Store*
+_site/
+node_modules
+npm-debug.log
+bower_components
+Rdatasets
+/resources/fonts/font-awesome-4.6.3
+/resources/fonts/ionicons-2.0.1

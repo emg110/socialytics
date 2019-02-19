@@ -1,0 +1,6 @@
+{
+    "presets": ["env", "es2016", "stage-0", "@babel/preset-env", "@babel/preset-react"],
+    "compact": "true",
+    "comments": false,
+    "ignore": []
+}

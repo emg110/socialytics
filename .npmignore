@@ -1,0 +1,12 @@
+bower.json
+CONTRIBUTING.md
+downloads
+misc
+test
+tools
+.idea
+component.json
+.npmignore
+.gitignore
+*.zip
+npm-debug.log

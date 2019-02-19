@@ -1,0 +1,32 @@
+{
+  "name": "houman-project",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Houman Hadian's doctoral project analytics platform and app",
+  "keywords": [],
+  "homepage": "https://www.github.com/emg110/houman-project",
+  "repository": {
+    "type": "git",
+    "url": "https://www.github.com/emg110/houman-project.git"
+  },
+  "license": "MIT",
+  "main": "src/server/main.js",
+  "scripts": {
+    "dev": "NODE_ENV=development node --debug --harmony src/server.js",
+    "local": "NODE_ENV=local nodemon --debug --harmony src/server.js",
+    "start": "NODE_ENV=production node --harmony src/server.js",
+    "test": "npm run test-jshint && npm run test-mocha",
+    "test-jshint": "jshint -c .jshintrc src/**/*.js --exclude src/**/*.spec.js --reporter node_modules/jshint-stylish/stylish.js",
+    "test-mocha": "NODE_ENV=test mocha --harmony ./src/**/*.spec.js",
+    "test-mocha-watch": "NODE_ENV=test mocha --watch --harmony ./src/**/*.spec.js"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "authors": [
+    "M.Ghiasi <emg110@gmail.com>",
+    "Shegzo <shm1358110@gmail.com>"
+  ]
+}
