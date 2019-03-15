@@ -10,23 +10,69 @@
     "url": "https://www.github.com/emg110/houman-project.git"
   },
   "license": "MIT",
-  "main": "src/server/main.js",
+  "main": "backend/index.js",
   "scripts": {
-    "dev": "NODE_ENV=development node --debug --harmony src/server.js",
-    "local": "NODE_ENV=local nodemon --debug --harmony src/server.js",
-    "start": "NODE_ENV=production node --harmony src/server.js",
-    "test": "npm run test-jshint && npm run test-mocha",
-    "test-jshint": "jshint -c .jshintrc src/**/*.js --exclude src/**/*.spec.js --reporter node_modules/jshint-stylish/stylish.js",
-    "test-mocha": "NODE_ENV=test mocha --harmony ./src/**/*.spec.js",
-    "test-mocha-watch": "NODE_ENV=test mocha --watch --harmony ./src/**/*.spec.js"
+    "test": "npm run eslint && NODE_ENV= npm run jest",
+    "eslint": "eslint src/. test/. --config .eslintrc.json",
+    "dev": "nodemon src/",
+    "start": "node ./server/index.js",
+    "jest": "jest"
   },
-  "dependencies": {},
-  "devDependencies": {},
+  "dependencies": {
+    "@feathersjs/authentication-client": "^1.0.11",
+    "@feathersjs/configuration": "^2.0.6",
+    "@feathersjs/errors": "^3.3.6",
+    "@feathersjs/express": "^1.3.1",
+    "@feathersjs/feathers": "^3.3.1",
+    "@feathersjs/rest-client": "^1.4.7",
+    "@feathersjs/socketio": "^3.2.9",
+    "@feathersjs/socketio-client": "^1.2.1",
+    "compression": "^1.7.3",
+    "cors": "^2.8.5",
+    "feathers-hooks-rediscache": "^1.1.5",
+    "feathers-sequelize": "^4.1.1",
+    "helmet": "^3.15.1",
+    "insta-getty": "latest",
+    "instapro": "latest",
+    "instagram-api": "latest",
+    "xmlhttprequest": "latest",
+    "xmlhttprequest-cookie": "latest",
+    "jetta": "latest",
+    "fs-extra": "latest",
+    "node-rest-client": "latest",
+    "pg": "^7.8.1",
+    "pg-hstore": "^2.3.2",
+    "serve-favicon": "^2.5.0",
+    "winston": "^3.2.1",
+    "axios": "^0.18.0",
+    "jsdom": "^11.11.0",
+    "koa": "2.3.0",
+    "koa-bodyparser": "4.2.0",
+    "koa-logger": "3.0.1",
+    "koa-router": "7.2.1",
+    "koa2-cors": "^2.0.5",
+    "axios-cookiejar-support": "^0.4.2"
+  },
+  "devDependencies": {
+    "jest": "^24.1.0",
+    "nodemon": "^1.18.10",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4",
+    "eslint": "3.19.0",
+    "eslint-config-airbnb": "15.0.2",
+    "eslint-plugin-import": "2.7.0",
+    "eslint-plugin-jsx-a11y": "5.1.1",
+    "eslint-plugin-react": "7.1.0",
+    "mocha": "3.4.2",
+    "should": "11.2.1",
+    "supertest": "3.0.0"
+  },
   "engines": {
-    "node": ">=8.0.0"
+    "node": "^8.0.0",
+    "npm": ">= 3.0.0"
   },
   "authors": [
     "M.Ghiasi <emg110@gmail.com>",
-    "Shegzo <shm1358110@gmail.com>"
+    "H.Hadian <a58976@ualg.pt>"
   ]
 }
