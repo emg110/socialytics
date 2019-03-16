@@ -19,17 +19,24 @@
     "jest": "jest"
   },
   "dependencies": {
+    "@feathersjs/authentication-client": "latest",
+    "@feathersjs/configuration": "latest",
+    "@feathersjs/errors": "latest",
+    "@feathersjs/express": "latest",
+    "@feathersjs/feathers": "latest",
+    "@feathersjs/rest-client": "latest",
+    "@feathersjs/socketio": "latest",
+    "@feathersjs/socketio-client": "latest",
     "koa": "latest",
     "koa-bodyparser": "latest",
     "koa-logger": "latest",
     "koa-router": "latest",
     "koa2-cors": "latest",
     "koa-passport": "latest",
+    "ramda": "latest",
     "compression": "latest",
     "cors": "latest",
     "helmet": "latest",
-    "xmlhttprequest": "latest",
-    "xmlhttprequest-cookie": "latest",
     "jetta": "latest",
     "fs-extra": "latest",
     "node-rest-client": "latest",
@@ -39,7 +46,6 @@
     "serve-favicon": "latest",
     "winston": "latest",
     "jsdom": "latest"
-
   },
   "devDependencies": {
     "jest": "latest",
