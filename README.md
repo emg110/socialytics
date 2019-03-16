@@ -8,11 +8,11 @@ This application is intended to provide batch and realtime (LAMBDA) ETL function
 in order to analyse brand engagement on Instagram via analytical models presented on 
 Houman Hadian's research papers. 
 
-**`WIP:` Work in progress!**
+**`Notice:` Work in progress!**
 
 The front end application is primitive HTML just for sake of testing and 
 needs to be completed. For now just links to API endpoints are available,
-and you have to change the parameters directly inside URI.
+and you have to change the parameters directly inside URI. The login process is still shakey and PM2 integration is being completed.
 
 **`TODO:`**
 
