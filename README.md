@@ -31,7 +31,7 @@ and you have to change the parameters directly inside URI.
 7- Adding Analytical models and algorithms
 
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+//---------------------------------------------------
 
 
 **`Quick start:`** 
@@ -49,7 +49,7 @@ and you have to change the parameters directly inside URI.
 6- Go to localhost:8080 and start surfing Instagram!
 
 
-**`Developers:`**
+**`Contributors:`**
  
  M.Ghiasi (emg110@gmail.com), H.Hadian (a58976@ualg.pt)
 

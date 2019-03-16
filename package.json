@@ -15,7 +15,7 @@
     "test": "npm run eslint && NODE_ENV= npm run jest",
     "eslint": "eslint src/. test/. --config .eslintrc.json",
     "dev": "nodemon src/",
-    "start": "node ./server/index.js",
+    "start": "node ./backend/index.js",
     "jest": "jest"
   },
   "dependencies": {
