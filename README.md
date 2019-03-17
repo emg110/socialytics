@@ -6,7 +6,7 @@ Houman Hadian's doctoral project code base
 
 This application is intended to provide batch and realtime (LAMBDA) ETL functionality on Instagram service APIs (private web API)
 in order to analyse brand engagement on Instagram via analytical models presented on 
-Houman Hadian's research papers. 
+[Houman Hadian's doctoral project research papers](https://houmanhadian.github.io/). 
 
 **`Notice:` Work in progress!**
 
@@ -55,7 +55,9 @@ and you have to change the parameters directly inside URI. The login process is 
 
 Special thanks to these great open source projects which paved the client's starting point:
 
-_https://www.github.com/yatsenkolesh/instagram-nodejs_
+[yatsenkolesh/instagram-nodejs](https://www.github.com/yatsenkolesh/instagram-nodejs)
 
-_https://www.github.com/dilame/instagram-private-api_
+
+[dilame/instagram-private-api](https://www.github.com/dilame/instagram-private-api)
+
 
