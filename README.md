@@ -16,19 +16,19 @@ and you have to change the parameters directly inside URI. The login process is 
 
 **`TODO:`**
 
-1- adding Instagram login form as start page for frontend and store the session-id and csrf_token on server side (with security in mind!)
+1- Add Instagram login form as start page for frontend and store the session-id and csrf_token on server side (with security in mind!)
 
-2- adding react components for parameters
+2- Add react components for parameters
 
 3- Implement database loading (Mongo, Postgress, ElasticSearch and Redis)
 
-4- Adding progress , start and stop for every ETL operation.
+4- Add progress , start and stop for every ETL operation.
 
-5- Adding export to CSV/JSON option to every ETL process.
+5- Add export to CSV/JSON option to every ETL process.
 
-6- Adding Analytics Dashboards and components
+6- Add Analytics dashboards and components
 
-7- Adding Analytical models and algorithms
+7- Add analytical models and algorithms
 
 
 //---------------------------------------------------
