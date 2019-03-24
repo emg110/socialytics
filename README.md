@@ -43,9 +43,9 @@ and you have to change the parameters directly inside URI. The login process is 
 
 4- In CMD go to project root folder
 
-5- Run: _pm2 start backend_ , then run _pm2 start frontend_
+5- Run: _pm2 start_
 
-6- Go to localhost:8080 and start surfing Instagram!
+6- Go to localhost:8080 and start analysing Instagram!
 
 
 **`Contributors:`**
