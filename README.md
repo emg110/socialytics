@@ -1,8 +1,7 @@
-# houman-project
-@UAlg.pt
-
+![houmanhadian.github.io](./public/img/hhadianproject.png?raw=true "Houman Hadian's Doctoral Project")
+# houman-project:
 Houman Hadian's doctoral project code base
-
+@UAlg.pt
 
 This application is intended to provide batch and realtime (LAMBDA) ETL functionality on Instagram service APIs (private web API)
 in order to analyse brand engagement on Instagram via analytical models presented on 
@@ -18,17 +17,17 @@ and you have to change the parameters directly inside URI. The login process is 
 
 1- Add Instagram login form as start page for frontend and store the session-id and csrf_token on server side (with security in mind!)
 
-2- Add react components for parameters
+2- Add UI components for parameters
 
-3- Implement database loading (Mongo, Postgress, ElasticSearch and Redis)
+3- Implement database loading (NeDB for time being with support for MongoDB, Postgress, ElasticSearch and Redis).
 
 4- Add progress , start and stop for every ETL operation.
 
 5- Add export to CSV/JSON option to every ETL process.
 
-6- Add Analytics dashboards and components
+6- Add Analytics dashboards and components.
 
-7- Add analytical models and algorithms
+7- Add analytical models and algorithms.
 
 
 //---------------------------------------------------
@@ -40,13 +39,13 @@ and you have to change the parameters directly inside URI. The login process is 
 
 2- Run _npm install -g pm2_
 
-3- Config your session_id & csrf_token from your browser on Instagram website (these are Instagram website cookies).
+3- Config your session_id  from your browser on Instagram website (within Instagram cookies!).
 
 4- In CMD go to project root folder
 
-5- Run: _pm2 start backend_ , then run _pm2 start frontend_
+5- Run: _pm2 start_
 
-6- Go to localhost:8080 and start surfing Instagram!
+6- Go to localhost:8080 and start analysing Instagram!
 
 
 **`Contributors:`**
@@ -59,6 +58,7 @@ Special thanks to these great open source projects which paved the client's star
 
 
 [dilame/instagram-private-api](https://www.github.com/dilame/instagram-private-api)
+
 
 
 
