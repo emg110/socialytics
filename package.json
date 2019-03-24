@@ -99,7 +99,7 @@
     "mocha": "latest",
     "nodemon": "latest",
     "request": "latest",
-    "request-promise": "latest",
+    "request-promise-native": "latest",
     "should": "latest",
     "supertest": "latest"
   },

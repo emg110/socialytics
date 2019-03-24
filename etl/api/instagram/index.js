@@ -23,14 +23,14 @@ const api = client().configure(socketio(socket, {
 //Async functions using Instagram client
 const profileJson = async (ctx) => {
   var inputUser = ctx.request.query;
-  var uoi = inputUser.username;
+  var uoi = inputUser.username || Object.keys(ctx.request.query)[0];
   const userData = await instagramClient.getUserDataByUsername(uoi).then((t) =>
   {
     return t;
   })
   console.log('Profile JSON data has fetched from Instagram for user name: '+uoi);
 
-// Set up a socket connection to our remote API
+// Set up a socket connection to our Instagram ETL API
   const recordData = await api.service('/instagram/profiles')
     .create(userData)
     .then(result =>  {
@@ -41,12 +41,10 @@ const profileJson = async (ctx) => {
     });
   ctx.status = 200;
   ctx.body = {
-    results: recordData
+    results: userData.graphql.user
   }
 }
 const profileSelfJson = async (ctx) => {
-
-
   var uoi = new String(instagramClient.userName);
   const userData = await instagramClient.getUserDataByUsername(uoi).then((t) =>
   {
