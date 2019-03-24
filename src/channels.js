@@ -6,7 +6,15 @@ module.exports = function(app) {
 
   app.on('connection', connection => {
     // On a new real-time connection, add it to the anonymous channel
-    app.channel('anonymous').join(connection);
+    app.channel('insta-comments').join(connection);
+    app.channel('insta-feed').join(connection);
+    app.channel('insta-followers').join(connection);
+    app.channel('insta-following').join(connection);
+    app.channel('insta-likes').join(connection);
+    app.channel('insta-locations').join(connection);
+    app.channel('insta-tags').join(connection);
+    app.channel('insta-profiles').join(connection);
+    app.channel('insta-posts').join(connection);
   });
 
   app.on('login', (authResult, { connection }) => {
@@ -35,7 +43,7 @@ module.exports = function(app) {
       // app.channel(`userIds/$(user.id}`).join(channel);
     }
   });
-
+  app.publish(() => app.channel('instagram'));
   // eslint-disable-next-line no-unused-vars
   app.publish((data, hook) => {
     // Here you can add event publishers to channels set up in `channels.js`

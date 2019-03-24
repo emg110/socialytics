@@ -91,7 +91,7 @@ module.exports = class Instagram {
   /**
    * @name updateEssentialValues
    * @desc Update essential values
-   * @description Updates essentialValues object with frontend object's values if they exist.
+   * @description Updates essentialValues object with src object's values if they exist.
    * @tutorial assumes that essential values will be extracted from a cookie unless specified by the isHTML bool
    * @param {Object} src
    * @param {Boolean} isHTML
@@ -137,19 +137,19 @@ module.exports = class Instagram {
         'headers':
           this.combineWithBaseHeader(
             {
-              'accept': 'text/html,application/xhtml+xml,application/xml;q0.9,image/webp,image/apng,*.*;q=0.8',
+              'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
               'accept-encoding': 'gzip, deflate, br',
               'cookie': this.generateCookie(true)
             }
           )
       }).then(t => {
-      this.updateEssentialValues(t.headers._headers['set-cookie'])
+      this.updateEssentialValues(t.headers.get('set-cookie'))
       return t.text()
     }).then(html => {
       this.updateEssentialValues(html, true)
       return this.essentialValues.csrftoken
-    }).catch(() =>
-      console.log('Failed to get instagram csrf token')
+    }).catch((err) =>
+      console.log('Failed to get instagram csrf token: '+ err)
     )
   }
 
@@ -189,11 +189,11 @@ module.exports = class Instagram {
       headers:
         this.combineWithBaseHeader(
           {
-            'accept': '*/*',
+            'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
             'accept-encoding': 'gzip, deflate, br',
             'content-length': formdata.length,
             'content-type': 'application/x-www-form-urlencoded',
-            'cookie': 'ig_cb=' + this.essentialValues.ig_cb,
+            'cookie': 'ig_cb=' + this.essentialValues.ig_cb+';'+'csrftoken='+ this.csrfToken+';',
             'x-csrftoken': this.csrfToken,
             'x-instagram-ajax': this.rollout_hash,
             'x-requested-with': 'XMLHttpRequest',
@@ -203,7 +203,7 @@ module.exports = class Instagram {
 
     return fetch('https://www.instagram.com/accounts/login/ajax/', options).then(
       t => {
-        this.updateEssentialValues(t.headers._headers['set-cookie']);
+        this.updateEssentialValues(t.headers.get('set-cookie'));
         this.userName = username;
         return this.essentialValues.sessionid;
       }).catch(() =>

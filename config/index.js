@@ -3,7 +3,8 @@ module.exports = {
     ENVIRONMENT: process.env.NODE_ENV || "development",
     PORT: process.env.PORT || "3003",
     HOST: process.env.HOST || "localhost",
-    CSRFTOKEN : "",
-    SESSIONID : "",
-    LOGINMODE: "NONE" // This can be either CLI, API or NONE
+    SESSION_ID:"",
+    DEFAULT_PROFILES:[],
+    DEFAULT_LOCATIONS:[],
+    DEFAULT_TAGS:[]
 };

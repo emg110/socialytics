@@ -4,6 +4,7 @@
   "public": "../public/",
   "paginate": {
     "default": 12,
-    "max": 50
-  }
+    "max": 100
+  },
+  "nedb": "../data"
 }

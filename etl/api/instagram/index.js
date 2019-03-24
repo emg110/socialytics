@@ -1,6 +1,3 @@
-//const axios = require("axios");
-//const { JSDOM } = jsdom;
-//const jsdom = require("jsdom");
 var conf = require('../../../config');
 const CSRF_TOKEN = conf.CSRFTOKEN;
 const SESSION_ID = conf.SESSIONID;
@@ -16,6 +13,13 @@ console.log("Houman project's Instagram client has been initialized...");
 const instagramRouter = new Router({ prefix: "/api" });
 console.log("Houman project's Instagram API has started...");
 
+const client = require('@feathersjs/client');
+const socketio = require('@feathersjs/socketio-client');
+const io = require('socket.io-client');
+const socket = io('http://localhost:8080');
+const api = client().configure(socketio(socket, {
+  timeout: 45000
+}));
 //Async functions using Instagram client
 const profileJson = async (ctx) => {
   var inputUser = ctx.request.query;
@@ -24,10 +28,20 @@ const profileJson = async (ctx) => {
   {
     return t;
   })
-  console.log('Profile JSON data has fetched from Instagram for user name: '+uoi)
+  console.log('Profile JSON data has fetched from Instagram for user name: '+uoi);
+
+// Set up a socket connection to our remote API
+  const recordData = await api.service('/instagram/profiles')
+    .create(userData)
+    .then(result =>  {
+      return result;
+    })
+    .catch(err=>{
+      console.log(err);
+    });
   ctx.status = 200;
   ctx.body = {
-    results: userData
+    results: recordData
   }
 }
 const profileSelfJson = async (ctx) => {
@@ -247,8 +261,8 @@ instagramRouter.get("/instagram/profile", profileJson);
 instagramRouter.get("/instagram/whoami", profileSelfJson);
 instagramRouter.get("/instagram/posts", userPosts);
 instagramRouter.get("/instagram/allposts", userAllPosts);
-instagramRouter.get("/instagram/explore/tag", exploreTag);
-instagramRouter.get("/instagram/explore/location", exploreLocation);
+instagramRouter.get("/instagram/tag", exploreTag);
+instagramRouter.get("/instagram/location", exploreLocation);
 instagramRouter.get("/instagram/following", userFollowing);
 instagramRouter.get("/instagram/followers", userFollowers);
 instagramRouter.get("/instagram/search", searchTop);
@@ -256,8 +270,7 @@ instagramRouter.get("/instagram/feed", userFeedPosts);
 instagramRouter.get("/instagram/likes", postLikes);
 instagramRouter.get("/instagram/comments", postComments);
 instagramRouter.get("/instagram/post", postJson);
-instagramRouter.get("/instagram/post/page", postPage);
-//DONE
+instagramRouter.get("/instagram/page", postPage);
 instagramRouter.get("/instagram/suggested/posts", suggestedPosts);
 instagramRouter.get("/instagram/suggested/people", suggestedPeople);
 

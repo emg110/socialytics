@@ -1,6 +1,6 @@
 const rp = require('request-promise');
 const url = require('url');
-const app = require('../frontend/app');
+const app = require('../src/app');
 
 const port = app.get('port') || 3030;
 const getUrl = pathname => url.format({
