@@ -51,13 +51,14 @@ footer p {
 }
 
 a {
-  color: #31D8A0;
+  color: #144a73;
   text-decoration: none;
 }
 
 a:hover,
 a:focus {
-  color: #2f8165;
+  color: #547c92;
+  text-decoration: underline;
 }
 
 .image {
