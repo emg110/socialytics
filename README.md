@@ -39,7 +39,7 @@ and you have to change the parameters directly inside URI. The login process is 
 
 2- Run _npm install -g pm2_
 
-3- Config your session_id & csrf_token from your browser on Instagram website (these are Instagram website cookies).
+3- Config your session_id  from your browser on Instagram website (within Instagram cookies!).
 
 4- In CMD go to project root folder
 
