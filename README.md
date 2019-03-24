@@ -17,17 +17,17 @@ and you have to change the parameters directly inside URI. The login process is 
 
 1- Add Instagram login form as start page for frontend and store the session-id and csrf_token on server side (with security in mind!)
 
-2- Add react components for parameters
+2- Add UI components for parameters
 
-3- Implement database loading (Mongo, Postgress, ElasticSearch and Redis)
+3- Implement database loading (NeDB for time being with support for MongoDB, Postgress, ElasticSearch and Redis).
 
 4- Add progress , start and stop for every ETL operation.
 
 5- Add export to CSV/JSON option to every ETL process.
 
-6- Add Analytics dashboards and components
+6- Add Analytics dashboards and components.
 
-7- Add analytical models and algorithms
+7- Add analytical models and algorithms.
 
 
 //---------------------------------------------------
