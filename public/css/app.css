@@ -169,7 +169,7 @@ aside.sidebar li > a {
 }
 
 aside.sidebar li > a:hover > span,
-aside.sidebar li > a:focus > span, {
+aside.sidebar li > a:focus > span  {
   color: #31D8A0;
 }
 
