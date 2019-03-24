@@ -26,7 +26,12 @@ img.logo {
   max-width: 100%;
   margin-bottom: 30px;
 }
-
+img.UAlglogo {
+  display: block;
+  margin: 0 auto;
+  max-width: 121px;
+  margin-bottom: 30px;
+}
 h2 {
   font-size: 2em;
   font-weight: 100;
@@ -52,7 +57,7 @@ a {
 
 a:hover,
 a:focus {
-  color: #31D8A0;
+  color: #2f8165;
 }
 
 .image {
@@ -70,4 +75,13 @@ a:focus {
   padding: 0;
   text-align: center;
   white-space: nowrap;
+}
+.endpoints{
+  display:inline-block;
+  columns: 4;
+  -webkit-columns: 4;
+  -moz-columns: 4;
+}
+.endpoints li{
+  text-align: left;
 }
