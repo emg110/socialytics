@@ -39,7 +39,7 @@
     "@feathersjs/socketio": "latest",
     "@feathersjs/socketio-client": "latest",
     "@tensorflow/tfjs": "latest",
-    "camo": "latest",
+    "jquery": "^3.3.1",
     "compression": "latest",
     "cors": "latest",
     "crossfilter2": "latest",
