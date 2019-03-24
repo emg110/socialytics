@@ -1,8 +1,7 @@
-# houman-project
-@UAlg.pt
-
+![houmanhadian.github.io](./public/img/hhadianproject.png?raw=true "Houman Hadian's Doctoral Project")
+# houman-project:
 Houman Hadian's doctoral project code base
-
+@UAlg.pt
 
 This application is intended to provide batch and realtime (LAMBDA) ETL functionality on Instagram service APIs (private web API)
 in order to analyse brand engagement on Instagram via analytical models presented on 
@@ -60,6 +59,6 @@ Special thanks to these great open source projects which paved the client's star
 
 [dilame/instagram-private-api](https://www.github.com/dilame/instagram-private-api)
 
-![houmanhadian.github.io](./public/img/hhadianproject.png?raw=true "Houman Hadian's Doctoral Project")
+
 
 
