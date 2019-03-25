@@ -32,7 +32,7 @@ const profileJson = async (ctx) => {
 
 // Set up a socket connection to our Instagram ETL API
   const recordData = await api.service('/instagram/profiles')
-    .create(userData)
+    .create(userData.graphql.user)
     .then(result =>  {
       return result;
     })
@@ -46,14 +46,23 @@ const profileJson = async (ctx) => {
 }
 const profileSelfJson = async (ctx) => {
   var uoi = new String(instagramClient.userName);
+  var uoi = inputUser.username || Object.keys(ctx.request.query)[0];
   const userData = await instagramClient.getUserDataByUsername(uoi).then((t) =>
   {
     return t;
   })
-  console.log('Profile JSON data has fetched from Instagram for self logged in account: '+uoi)
+  console.log('Profile JSON data has fetched from Instagram for self logged in account: '+uoi);
+  const recordData = await api.service('/instagram/profiles')
+    .create(userData.graphql.user)
+    .then(result =>  {
+      return result;
+    })
+    .catch(err=>{
+      console.log(err);
+    });
   ctx.status = 200;
   ctx.body = {
-    results: userData
+    results: userData.graphql.user
   }
 }
 const userPosts = async (ctx) => {

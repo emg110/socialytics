@@ -2,18 +2,18 @@
 
   <div class="col-sm-6 text-center align-self-center">
 
-    <% if(user.profile_pic_url) { %>
-        <img class="img-thumbnail" src="<%= user.profile_pic_url %>" alt="<%= user.username %>">
+    <% if(etlData.profile_pic_url) { %>
+        <img class="img-thumbnail" src="<%= etlData.profile_pic_url %>" alt="<%= etlData.username %>">
       <% } else { %>
-        <img class="img-thumbnail" src="<%= user.profile_pic_url %>" alt="<%= user.username %>">
+        <img class="img-thumbnail" src="<%= etlData.profile_pic_url %>" alt="<%= etlData.username %>">
     <% } %>
 
   </div>
 
   <div class="col-sm-6 text-center align-self-center">
 
-    <h1><%= user.username %></h1>
-    <h4><%= user.email || user.full_name %></h4>
+    <h1><%= etlData.username %></h1>
+    <h4><%= etlData.email || etlData.full_name %></h4>
 
     <form method="POST" action="/profile">
       <input type="hidden" name="_method" value="DELETE">
@@ -26,36 +26,36 @@
 
 <div class="row">
 
-  <% photos.forEach((photo) => { %>
-    <% photo = photo.node %>
-    <% if(photo.owner.id === user.id) { %>
+  <% edges.forEach((edge) => { %>
+    <% edge = edge.node %>
+    <% if(edge.owner.id === etlData.id) { %>
 
       <div class="col-md-4  align-self-center">
         <div class="card">
 
           <div class="card-header">
-            <%= photo.edge_media_to_caption.edges[0].node.text %>
+            <%= edge.edge_media_to_caption.edges[0].node.text %>
           </div>
 
           <div class="card-body">
-            <a href="/photos/<%= photo.id %>">
-              <img class="img-fluid" src="<%= photo.thumbnail_src %>" alt="<%= photo.edge_media_to_caption.edges[0].node.text %>">
+            <a href="/edges/<%= edge.id %>">
+              <img class="img-fluid" src="<%= edge.thumbnail_src %>" alt="<%= edge.edge_media_to_caption.edges[0].node.text %>">
             </a>
 
             <p class="yellowStars">
-              <% while(photo.edge_liked_by--) { %> &starf; <% } %>
+              <% while(edge.edge_liked_by--) { %> &starf; <% } %>
             </p>
 
-            <% if(photo.owner.id === user.id) { %>
+            <% if(edge.owner.id === etlData.id) { %>
 
               <div class="row">
 
                 <div class="col-6 align-self-center">
-                  <a href="/photos/<%= photo.id %>/edit" class="btn btn-primary">Edit</a>
+                  <a href="/edges/<%= edge.id %>/edit" class="btn btn-primary">Edit</a>
                 </div>
 
                 <div class="col-6 align-self-center">
-                  <form method="POST" action="/photos/<%= photo.id %>">
+                  <form method="POST" action="/edges/<%= edge.id %>">
                     <input type="hidden" name="_method" value="DELETE">
                     <button class="btn btn-danger">Delete</button>
                   </form>

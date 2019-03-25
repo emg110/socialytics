@@ -8,7 +8,11 @@ module.exports = function (app) {
   const expressLayouts = require('express-ejs-layouts')
   app.set('view engine', 'ejs');
   app.set('views', path.join(__dirname, '../../src/views'));
+
   app.use('/home',expressLayouts);
+ /* app.get('/', function(req, res) {
+    res.render('pages/home', { layout: 'layout-home' });
+  )*/
   //app.get('/', (req, res) => res.render('pages/home'));
   app.use(mwInstaAuth());
 
