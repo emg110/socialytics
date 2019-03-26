@@ -37,13 +37,13 @@ and you have to change the parameters directly inside URI. The login process is 
 
 1- Clone this project
 
-2- Run _npm install -g pm2_
+2- Optionally-- Run: _npm install -g pm2_
 
 3- Config your session_id  from your browser on Instagram website (within Instagram cookies!).
 
 4- In CMD go to project root folder
 
-5- Run: _pm2 start_
+5- Run: _pm2 start_ OR Run: _npm install_ then Run:_npm start_
 
 6- Go to localhost:8080 and start analysing Instagram!
 
