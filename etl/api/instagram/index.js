@@ -68,12 +68,13 @@ const profileSelfJson = async (ctx) => {
 const userPosts = async (ctx) => {
   var inputUser = ctx.request.query;
   var uoi = inputUser.username;
+  var count = inputUser.count;
   const userData = await instagramClient.getUserDataByUsername(uoi).then((t) =>
   {
     return t;
   })
   var userId = instagramClient.getUserIdByUserName(userData);
-  var posts = await instagramClient.getUserPosts(userId).then((p) =>
+  var posts = await instagramClient.getUserPosts(userId,count).then((p) =>
   {
     return p
   })

@@ -1,19 +1,21 @@
 <div class="row whiteBox ">
 
   <div class="col-sm-6 text-center align-self-center">
-
-    <% if(etlData.profile_pic_url) { %>
-        <img class="img-thumbnail" src="<%= etlData.profile_pic_url %>" alt="<%= etlData.username %>">
+    <% if(!(typeof etlData == 'undefined')){%>
+      <% if(etlData.profile_pic_url) { %>
+        <img class="img-thumbnail" src="<%= !(typeof etlData == 'undefined') ? etlData.profile_pic_url:"" %>" alt="<%= etlData ? etlData.username :"" %>">
       <% } else { %>
-        <img class="img-thumbnail" src="<%= etlData.profile_pic_url %>" alt="<%= etlData.username %>">
-    <% } %>
+        <img class="img-thumbnail" src="<%= !(typeof etlData == 'undefined') ? etlData.profile_pic_url : "" %>" alt="<%= etlData ? etlData.username : "" %>">
+      <% } %>
+    <%}%>
+
 
   </div>
 
   <div class="col-sm-6 text-center align-self-center">
 
-    <h1><%= etlData.username %></h1>
-    <h4><%= etlData.email || etlData.full_name %></h4>
+    <h1><%= !(typeof etlData == 'undefined') ? etlData.username : "username" %></h1>
+    <h4><%= !(typeof etlData == 'undefined') ? (etlData.email || etlData.full_name) :"user@maildomain"%></h4>
 
     <form method="POST" action="/profile">
       <input type="hidden" name="_method" value="DELETE">
@@ -25,8 +27,8 @@
 </div>
 
 <div class="row">
-
-  <% edges.forEach((edge) => { %>
+  <% if(!(typeof edges == 'undefined')){ console.log('we got data here...')%>
+    <% edges.forEach((edge) => { %>
     <% edge = edge.node %>
     <% if(edge.owner.id === etlData.id) { %>
 
@@ -34,12 +36,12 @@
         <div class="card">
 
           <div class="card-header">
-            <%= edge.edge_media_to_caption.edges[0].node.text %>
+            <%= edge.edge_media_to_caption.edges[0] ? edge.edge_media_to_caption.edges[0].node.text : "" %>
           </div>
 
           <div class="card-body">
             <a href="/edges/<%= edge.id %>">
-              <img class="img-fluid" src="<%= edge.thumbnail_src %>" alt="<%= edge.edge_media_to_caption.edges[0].node.text %>">
+              <img class="img-fluid" src="<%= edge.thumbnail_src %>" alt="<%= edge.edge_media_to_caption.edges[0] ? edge.edge_media_to_caption.edges[0].node.text : "" %>">
             </a>
 
             <p class="yellowStars">
@@ -72,6 +74,6 @@
     <% } %>
 
   <% }) %>
-
+  <%}%>
 
 </div>

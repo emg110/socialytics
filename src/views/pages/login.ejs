@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="/css/app.css">
 </head>
 <body>
+<button class="instabtn" onclick="openNav('sidepanel-login')">&#9776; ig</button>
+<!--<button class="twitrbtn" onclick="openNav()">&#9776; tw</button>-->
 <div id="app" class="flex flex-column">
   <main class="login container">
     <div class="row">
@@ -37,5 +39,10 @@
     </div>
   </main>
 </div>
+<div class="sidepanel" id="sidepanel-login">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav('sidepanel-login')">&times;</a>
+  <%- include ../pages/instagram/sessions/new.ejs %>
+</div>
+<%- include ../layout-footer.ejs %>
 </body>
 </html>
