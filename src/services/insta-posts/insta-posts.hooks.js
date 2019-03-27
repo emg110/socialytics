@@ -1,13 +1,13 @@
-
+const hookInstaPostVersion = require('../../hooks/hook-insta-post-version');
 
 module.exports = {
   before: {
     all: [],
     find: [],
     get: [],
-    create: [],
-    update: [],
-    patch: [],
+    create: [hookInstaPostVersion()],
+    update: [hookInstaPostVersion()],
+    patch: [hookInstaPostVersion()],
     remove: []
   },
 
