@@ -215,10 +215,12 @@ const userFollowers = async (ctx) => {
 const searchTop = async (ctx) => {
   var input = ctx.request.query;
   var query = input.query;
+  config.activequery = query;
   const searchData = await instagramClient.commonSearch(query).then((t) =>
   {
     return t;
   })
+  let writeSearchToDatabase = await writeDatabase(searchData,'/instagram/search')
   ctx.status = 200;
   ctx.body = {
     results: searchData

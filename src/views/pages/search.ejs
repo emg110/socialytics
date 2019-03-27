@@ -1,0 +1,112 @@
+<% if(!(typeof etlData.places == 'undefined')){ console.log('we got data here...')%>
+  <h1>Places:</h1>
+  <h2>_________</h2>
+  </br>
+  <% etlData.places.forEach((edge) => { %>
+    <% edge = edge.place %>
+    <div class="row whiteBox ">
+      <div class="col-sm-6 text-center align-self-center">
+        <% if(!(typeof edge == 'undefined')){%>
+          <% if(edge) { %>
+            <div class="col-sm-6 text-center align-self-center">
+
+              <h3>Place title:<%= !(typeof edge.title == 'undefined') ? edge.title : "PLACE_NAME" %></h3>
+              </br>
+              <h4>Longitude: <%= !(typeof edge.location.lng == 'undefined') ? edge.location.lng :0%></h4>
+              </br>
+              <h4>Latitude: <%= !(typeof edge.location.lat == 'undefined') ? edge.location.lat :0%></h4>
+              </br>
+              </br>
+
+            </div>
+          <% } %>
+
+
+        <%}%>
+
+
+      </div>
+
+      <div class="col-sm-6 text-center align-self-center">
+
+        <h3><%= !(typeof edge == 'undefined') ? edge.username : "username" %></h3>
+        <h4><%= !(typeof edge == 'undefined') ? (edge.email || edge.full_name) :"user@maildomain"%></h4>
+
+      </div>
+
+    </div>
+
+  <% }) %>
+<%}%>
+<% if(!(typeof etlData.hashtags == 'undefined')){ console.log('we got data here...')%>
+  <h1>Hashtags:</h1>
+  <h2>_________</h2>
+  </br>
+  <% etlData.hashtags.forEach((edge) => { %>
+    <% edge = edge.hashtag %>
+    <div class="row whiteBox ">
+      <div class="col-sm-6 text-center align-self-center">
+        <% if(!(typeof edge == 'undefined')){%>
+          <% if(edge) { %>
+            <div class="col-sm-6 text-center align-self-center">
+
+              <h3>Hashtag: <%= !(typeof edge.name == 'undefined') ? '#'+edge.name : '#'+"HASHTAG" %></h3>
+              </br>
+              <h4>Media count: <%= !(typeof edge.media_count == 'undefined') ? edge.media_count :0%></h4>
+              </br>
+              <h4>Posts count: <%= !(typeof edge.search_result_subtitle == 'undefined') ? edge.search_result_subtitle :0%></h4>
+              </br>
+              </br>
+
+            </div>
+          <% } %>
+
+
+        <%}%>
+
+
+      </div>
+
+      <div class="col-sm-6 text-center align-self-center">
+
+        <h3><%= !(typeof edge == 'undefined') ? edge.username : "username" %></h3>
+        <h4><%= !(typeof edge == 'undefined') ? (edge.email || edge.full_name) :"user@maildomain"%></h4>
+
+      </div>
+
+    </div>
+
+  <% }) %>
+<%}%>
+<% if(!(typeof etlData.users == 'undefined')){ console.log('we got data here...')%>
+  <h1>Users:</h1>
+<h2>_________</h2>
+</br>
+  <% etlData.users.forEach((edge) => { %>
+    <% edge = edge.user %>
+    <div class="row whiteBox ">
+
+      <div class="col-sm-6 text-center align-self-center">
+        <% if(!(typeof edge == 'undefined')){%>
+          <% if(edge.profile_pic_url) { %>
+            <img class="img-thumbnail" src="<%= !(typeof edge == 'undefined') ? edge.profile_pic_url:"" %>" alt="<%= edge ? etlData.username :"" %>">
+          <% } else { %>
+            <img class="img-thumbnail" src="<%= !(typeof edge == 'undefined') ? edge.profile_pic_url : "" %>" alt="<%= edge ? etlData.username : "" %>">
+          <% } %>
+        <%}%>
+
+
+      </div>
+
+      <div class="col-sm-6 text-center align-self-center">
+
+        <h1><%= !(typeof edge == 'undefined') ? edge.username : "username" %></h1>
+        <h4><%= !(typeof edge == 'undefined') ? (edge.email || edge.full_name) :"user@maildomain"%></h4>
+
+      </div>
+
+    </div>
+
+  <% }) %>
+<%}%>
+
