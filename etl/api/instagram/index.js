@@ -1,7 +1,7 @@
-var conf = require('../../../config');
-const CSRF_TOKEN = conf.CSRFTOKEN;
-const SESSION_ID = conf.SESSIONID;
-var USER_SELF = conf.USER_SELF;
+var config = require('../../../config');
+const CSRF_TOKEN = config.CSRFTOKEN;
+const SESSION_ID = config.SESSIONID;
+var USER_SELF = config.USER_SELF;
 console.log("Houman project's configurations initialized...");
 const Router = require("koa-Router");
 const Instagram = require('./instagram');
@@ -29,9 +29,12 @@ async function writeDatabase (data, service){
     }
   }
   if(data.length){
-    data.forEach(item=>{
-      if(item.node)item = item.node;
-      let recordData =  api.service(service)
+    for(var i=0; i<data.length; i++){
+      let item = data[i];
+      if(item.node) {
+        item = item.node;
+      }
+      let recordData =await api.service(service)
         .create(item)
         .then(result =>  {
           return result;
@@ -39,7 +42,7 @@ async function writeDatabase (data, service){
         .catch(err=>{
           console.log(err);
         });
-    })
+    }
   }
   else{
     let recordData = await api.service(service)
@@ -56,14 +59,14 @@ async function writeDatabase (data, service){
 const profileJson = async (ctx) => {
   var inputUser = ctx.request.query;
   var uoi = inputUser.username || Object.keys(ctx.request.query)[0];
-  const userData = await instagramClient.getUserDataByUsername(uoi).then((t) =>
+  let userData = await instagramClient.getUserDataByUsername(uoi).then((t) =>
   {
     return t;
   })
   console.log('Profile JSON data has fetched from Instagram for user name: '+uoi);
 
 // Set up a socket connection to our Instagram ETL API
-  const recordData = await api.service('/instagram/profiles')
+  let recordData = await api.service('/instagram/profiles')
     .create(userData.graphql.user)
     .then(result =>  {
       return result;
@@ -79,12 +82,12 @@ const profileJson = async (ctx) => {
 const profileSelfJson = async (ctx) => {
   var uoi = new String(instagramClient.userName);
   var uoi = inputUser.username || Object.keys(ctx.request.query)[0];
-  const userData = await instagramClient.getUserDataByUsername(uoi).then((t) =>
+  let userData = await instagramClient.getUserDataByUsername(uoi).then((t) =>
   {
     return t;
   })
   console.log('Profile JSON data has fetched from Instagram for self logged in account: '+uoi);
-  const recordData = await api.service('/instagram/profiles')
+  let recordData = await api.service('/instagram/profiles')
     .create(userData.graphql.user)
     .then(result =>  {
       return result;
@@ -101,16 +104,16 @@ const userPosts = async (ctx) => {
   var inputUser = ctx.request.query;
   var uoi = inputUser.username;
   var count = inputUser.count;
-  var userId = conf.userid;
-  const userData = await instagramClient.getUserDataByUsername(uoi).then((t) =>
+  var userId = config.userid;
+  let userData = await instagramClient.getUserDataByUsername(uoi).then((t) =>
   {
     return t.graphql.user;
   })
-  var posts = await instagramClient.getUserPosts(userData.id,count).then((p) =>
+  let posts = await instagramClient.getUserPosts(userData.id,count).then((p) =>
   {
     return p.data
   })
-  const writeToDatabase = await writeDatabase(posts,'/instagram/posts')
+  let writeToDatabase = await writeDatabase(posts,'/instagram/posts')
   ctx.status = 200;
   ctx.body = {
     results: posts
@@ -119,7 +122,7 @@ const userPosts = async (ctx) => {
 const userAllPosts = async (ctx) => {
   var inputUser = ctx.request.query;
   var uoi = inputUser.username;
-  const userData = await instagramClient.getUserDataByUsername(uoi).then((t) =>
+  let userData = await instagramClient.getUserDataByUsername(uoi).then((t) =>
   {
     return t;
   })
@@ -128,7 +131,7 @@ const userAllPosts = async (ctx) => {
   {
     return p
   })
-  const writeToDatabase = await writeDatabase(posts,'/instagram/posts')
+  let writeToDatabase = await writeDatabase(posts,'/instagram/posts')
   ctx.status = 200;
   ctx.body = {
     results: posts
@@ -138,10 +141,16 @@ const exploreTag = async (ctx) => {
   var inputTag = ctx.request.query;
   var tag = inputTag.tag;
   var quantity = inputTag.count || 50;
-  const tagsData = await instagramClient.explore('hashtag', tag, quantity).then((t) =>
+  let tagsData = await instagramClient.explore('hashtag', tag, quantity).then((t) =>
   {
     return t;
   })
+  config.activetag =tag;
+  let writeTagPostsToDatabase = await writeDatabase(tagsData,'/instagram/tag')
+
+
+
+
   ctx.status = 200;
   ctx.body = {
     results: tagsData

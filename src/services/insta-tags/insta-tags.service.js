@@ -13,10 +13,10 @@ module.exports = function (app) {
   };
 
   // Initialize our service with any options it requires
-  app.use('/instagram/tags', createService(options));
+  app.use('/instagram/tag', createService(options));
 
   // Get our initialized service so that we can register hooks
-  const service = app.service('instagram/tags');
+  const service = app.service('instagram/tag');
 
   service.hooks(hooks);
 };

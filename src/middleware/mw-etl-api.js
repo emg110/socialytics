@@ -47,7 +47,7 @@ module.exports = function (options = {}) {
       }
       else if(expr.indexOf('/instagram/posts')>=0){
         let etlApiEndpoint = serverUrl+expr;
-        const etlData = await getEndpointEtl(etlApiEndpoint);
+        let etlData = await getEndpointEtl(etlApiEndpoint);
         //res.redirect('/home',results);
         let userid = config.userid;
         res.render('pages/posts',{etlData, userid},function(err, html) {
@@ -57,6 +57,27 @@ module.exports = function (options = {}) {
       }
       else if(expr.indexOf('/instagram/allposts')>=0){
         let etlApiEndpoint = serverUrl+expr;
+        let etlData = await getEndpointEtl(etlApiEndpoint);
+        //res.redirect('/home',results);
+        let userid = config.userid;
+        if(etlData.length){
+          if(etlData.length> 100){
+            etlData = etlData.slice(0,100);
+            console.log('data has been cropped to 100 items to show for all posts but all posts have been saved to database successfully');
+          }
+          let finalData = {};
+          finalData.user = {};
+          finalData.user.edge_owner_to_timeline_media = {};
+          finalData.user.edge_owner_to_timeline_media.edges = etlData;
+          etlData = finalData;
+        }
+        res.render('pages/posts',{etlData, userid},function(err, html) {
+          if(err)console.log('ejs has returned this error: '+ err);
+          res.send(html);
+        });
+      }
+      else if(expr.indexOf('/instagram/explore/tag')>=0){
+        let etlApiEndpoint = serverUrl+expr.replace('/explore','');
         let etlData = await getEndpointEtl(etlApiEndpoint);
         //res.redirect('/home',results);
         let userid = config.userid;

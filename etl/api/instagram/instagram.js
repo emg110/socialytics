@@ -429,14 +429,13 @@ module.exports = class Instagram {
     return fetch('https://www.instagram.com/graphql/query/?query_id=17875800862117404&variables=' + variables,
       {
         'method': 'get',
-        'headers':this.getHeaders()
-        /*this.combineWithBaseHeader(
+        'headers':this.combineWithBaseHeader(
           {
             'accept': 'text/html,application/xhtml+xml,application/xml;q0.9,image/webp,image/apng,*.*;q=0.8',
             'accept-encoding': 'gzip, deflate, br',
-            'cookie': this.generateCookie()
+            'cookie': this.generateCookie(false)
           }
-        )*/
+        )
       }).then(res => {
       return res.text().then((response) => {
         //prepare convert to json
