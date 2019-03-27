@@ -18,8 +18,32 @@ const socketio = require('@feathersjs/socketio-client');
 const io = require('socket.io-client');
 const socket = io('http://localhost:8080');
 const api = client().configure(socketio(socket, {
-  timeout: 45000
+  timeout: 500000
 }));
+async function writeDatabase (data, service){
+  if(data.length){
+    data.forEach(item=>{
+      let recordData =  api.service(service)
+        .create(item)
+        .then(result =>  {
+          return result;
+        })
+        .catch(err=>{
+          console.log(err);
+        });
+    })
+  }
+  else{
+    let recordData = await api.service(service)
+      .create(data)
+      .then(result =>  {
+        return result;
+      })
+      .catch(err=>{
+        console.log(err);
+      });
+  }
+}
 //Async functions using Instagram client
 const profileJson = async (ctx) => {
   var inputUser = ctx.request.query;
@@ -69,15 +93,24 @@ const userPosts = async (ctx) => {
   var inputUser = ctx.request.query;
   var uoi = inputUser.username;
   var count = inputUser.count;
+  var userId = conf.userid;
   const userData = await instagramClient.getUserDataByUsername(uoi).then((t) =>
   {
-    return t;
+    return t.graphql.user;
   })
-  var userId = instagramClient.getUserIdByUserName(userData);
-  var posts = await instagramClient.getUserPosts(userId,count).then((p) =>
+  var posts = await instagramClient.getUserPosts(userData.id,count).then((p) =>
   {
-    return p
+    return p.data
   })
+  const writeToDatabase = await writeDatabase(posts,'/instagram/posts')
+  /*const recordData = await api.service('/instagram/posts')
+    .create(posts)
+    .then(result =>  {
+      return result;
+    })
+    .catch(err=>{
+      console.log(err);
+    });*/
   ctx.status = 200;
   ctx.body = {
     results: posts
@@ -95,6 +128,15 @@ const userAllPosts = async (ctx) => {
   {
     return p
   })
+  const writeToDatabase = await writeDatabase(posts,'/instagram/posts')
+  /*const recordData = await api.service('/instagram/posts')
+    .create(posts)
+    .then(result =>  {
+      return result;
+    })
+    .catch(err=>{
+      console.log(err);
+    });*/
   ctx.status = 200;
   ctx.body = {
     results: posts

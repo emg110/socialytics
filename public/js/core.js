@@ -35,6 +35,7 @@ function getEndpoint (endpoint, type){
   var location = document.getElementById('location-input').value;
   var query = document.getElementById('search-input').value;
   var count = document.getElementById('count-input').value || 50;
+  var shortcode = document.getElementById('shortcode-input').value;
   var url  =endpoint;
   switch (type) {
     case 'profile':
@@ -58,6 +59,125 @@ function getEndpoint (endpoint, type){
         }
       }
       break
+    case 'all-posts':
+      if(username.length !== undefined){
+        if(username.length>=3){
+          url  = endpoint+'username='+username;
+        }else{
+          url = "NA";
+        }
+      }
+      break
+
+    case 'tag-posts':
+      if(tag.length !== undefined){
+        if(tag.length>=3){
+          url  = endpoint+'tag='+tag+'&'+'count='+count;
+        }else{
+          url = "NA";
+        }
+      }
+      break
+    case 'location-posts':
+      if(location.length !== undefined){
+        if(location.length>=3){
+          url  = endpoint+'location='+location+'&'+'count='+count;
+        }else{
+          url = "NA";
+        }
+      }
+      break
+    case 'user-following':
+      if(username.length !== undefined){
+        if(username.length>=3){
+          url  = endpoint+'username='+username+'&'+'count='+count;
+        }else{
+          url = "NA";
+        }
+      }
+      break
+    case 'user-followers':
+      if(username.length !== undefined){
+        if(username.length>=3){
+          url  = endpoint+'username='+username+'&'+'count='+count;
+        }else{
+          url = "NA";
+        }
+      }
+      break
+    case 'search-posts':
+      if(query.length !== undefined){
+        if(query.length>=3){
+          url  = endpoint+'username='+query+'&'+'count='+count;
+        }else{
+          url = "NA";
+        }
+      }
+      break
+    case 'feed-posts':
+      if(count !== undefined){
+        if(count>=10){
+          url  = endpoint+'count='+count;
+        }else{
+          url = "NA";
+        }
+      }
+      break
+    case 'post-likes':
+      if(shortcode.length !== undefined){
+        if(shortcode.length>=3){
+          url  = endpoint+'shortcode='+shortcode+'&'+'count='+count;
+        }else{
+          url = "NA";
+        }
+      }
+      break
+    case 'post-comments':
+      if(shortcode.length !== undefined){
+        if(shortcode.length>=3){
+          url  = endpoint+'shortcode='+shortcode+'&'+'count='+count;
+        }else{
+          url = "NA";
+        }
+      }
+      break
+    case 'post-json':
+      if(shortcode.length !== undefined){
+        if(shortcode.length>=3){
+          url  = endpoint+'shortcode='+shortcode;
+        }else{
+          url = "NA";
+        }
+      }
+      break
+    case 'post-page':
+      if(shortcode.length !== undefined){
+        if(shortcode.length>=3){
+          url  = endpoint+'shortcode='+shortcode;
+        }else{
+          url = "NA";
+        }
+      }
+      break
+    case 'sugg-posts':
+      if(count !== undefined){
+        if(count>=10){
+          url  = endpoint+'count='+count;
+        }else{
+          url = "NA";
+        }
+      }
+      break
+    case 'sugg-people':
+      if(count !== undefined){
+        if(count>=10){
+          url  = endpoint+'count='+count;
+        }else{
+          url = "NA";
+        }
+      }
+      break
+
   }
   if(url !== "NA" && url.indexOf('http://')>=0){
   var xhr = new XMLHttpRequest();

@@ -2,7 +2,7 @@
 
 const fetch = require('node-fetch');
 const FormData = require('form-data');
-
+const config  = require('../../../config');
 module.exports = class Instagram {
   /**
    * Constructor
@@ -27,7 +27,7 @@ module.exports = class Instagram {
     this.postLikes = {};
     this.postComments = {};
 
-    this.essentialValues = {
+    this.cookieValues = {
       ig_cb: 1,
       sessionid: undefined,
       ds_user_id: undefined,
@@ -36,7 +36,9 @@ module.exports = class Instagram {
       rur: undefined,
       mid: undefined,
       shbts: undefined,
-      mcd: undefined
+      mcd: undefined,
+      urlgen:undefined
+
     };
 
     this.baseHeader = {
@@ -63,14 +65,16 @@ module.exports = class Instagram {
    * @return {String} cookie
    */
   generateCookie(simple) {
-    if (simple) return 'ig_cb=1'
-
+    if (simple) return 'ig_cb=1';
+    this.cookieValues.ds_user_id = config.userid;
+    this.cookieValues.csrftoken = config.csrftoken;
+    this.cookieValues.sessionid = config.sessionid;
     var cookie = ''
-    var keys = Object.keys(this.essentialValues)
+    var keys = Object.keys(this.cookieValues)
     for (var i = 0; i < keys.length; i++) {
       var key = keys[i];
-      if (this.essentialValues[key] !== undefined) {
-        cookie += key + '=' + this.essentialValues[key] + (i < keys.length - 1 ? '; ' : '')
+      if (this.cookieValues[key] !== undefined) {
+        cookie += key + '=' + this.cookieValues[key] + (i < keys.length - 1 ? '; ' : '')
       }
     }
 
@@ -89,24 +93,24 @@ module.exports = class Instagram {
   }
 
   /**
-   * @name updateEssentialValues
+   * @name updateCookieValues
    * @desc Update essential values
-   * @description Updates essentialValues object with src object's values if they exist.
+   * @description Updates cookieValues object with src object's values if they exist.
    * @tutorial assumes that essential values will be extracted from a cookie unless specified by the isHTML bool
    * @param {Object} src
    * @param {Boolean} isHTML
    * @return {Object}
    */
-  updateEssentialValues(src, isHTML) {
+  updateCookieValues(src, isHTML) {
     if (!isHTML) {
-      var keys = Object.keys(this.essentialValues)
+      var keys = Object.keys(this.cookieValues)
       for (var i = 0; i < keys.length; i++) {
         var key = keys[i];
-        if (!this.essentialValues[key])
+        if (!this.cookieValues[key])
           for (let cookie in src)
             if (src[cookie].includes(key) && !src[cookie].includes(key + '=""')) {
               var cookieValue = src[cookie].split(';')[0].replace(key + '=', '')
-              this.essentialValues[key] = cookieValue
+              this.cookieValues[key] = cookieValue
               break;
             }
       }
@@ -119,9 +123,10 @@ module.exports = class Instagram {
 
       var json = JSON.parse(subStr);
 
-      this.essentialValues.csrftoken = json.config.csrf_token;
+      this.cookieValues.csrftoken = json.config.csrf_token;
       this.rollout_hash = json.rollout_hash;
     }
+
   }
 
   /**
@@ -143,11 +148,11 @@ module.exports = class Instagram {
             }
           )
       }).then(t => {
-      this.updateEssentialValues(t.headers.get('set-cookie'))
+      this.updateCookieValues(t.headers.get('set-cookie'))
       return t.text()
     }).then(html => {
-      this.updateEssentialValues(html, true)
-      return this.essentialValues.csrftoken
+      this.updateCookieValues(html, true)
+      return this.cookieValues.csrftoken
     }).catch((err) =>
       console.log('Failed to get instagram csrf token: '+ err)
     )
@@ -193,7 +198,7 @@ module.exports = class Instagram {
             'accept-encoding': 'gzip, deflate, br',
             'content-length': formdata.length,
             'content-type': 'application/x-www-form-urlencoded',
-            'cookie': 'ig_cb=' + this.essentialValues.ig_cb+';'+'csrftoken='+ this.csrfToken+';',
+            'cookie': 'ig_cb=' + this.cookieValues.ig_cb+';'+'csrftoken='+ this.csrfToken+';',
             'x-csrftoken': this.csrfToken,
             'x-instagram-ajax': this.rollout_hash,
             'x-requested-with': 'XMLHttpRequest',
@@ -203,9 +208,9 @@ module.exports = class Instagram {
 
     return fetch('https://www.instagram.com/accounts/login/ajax/', options).then(
       t => {
-        this.updateEssentialValues(t.headers.get('set-cookie'));
+        this.updateCookieValues(t.headers.get('set-cookie'));
         this.userName = username;
-        return this.essentialValues.sessionid;
+        return this.cookieValues.sessionid;
       }).catch(() =>
       console.log('Instagram authentication failed...')
     )
@@ -236,7 +241,7 @@ module.exports = class Instagram {
           {
             'accept': 'text/html,application/xhtml+xml,application/xml;q0.9,image/webp,image/apng,*.*;q=0.8',
             'accept-encoding': 'gzip, deflate, br',
-            'cookie': this.generateCookie()
+            'cookie': this.generateCookie(false)
           }
         )
     }
@@ -261,8 +266,8 @@ module.exports = class Instagram {
    */
   getUserDataById(userId, first, after) {
     after = after ? after : "";
-    first = first ? first : 50;
-    first = first <= 50 ? first : 50;
+    first = first ? first : 12;
+    first = first <= 12 ? first : 12;
     var url = 'https://www.instagram.com/graphql/query/?query_id=17851374694183129' + '&id=' + userId + '&first=' + first + '&after=' + after;
     return fetch(url,
       {
@@ -281,17 +286,25 @@ module.exports = class Instagram {
    * @param {Integer} first default - 50
    * @param {String} after
    * @return {Object} Promise
-   * @tutorial for under 50 post sampling
+   * @tutorial for post sampling
    */
   getUserPosts(userId, first, after) {
     after = after ? after : "";
-    first = first ? first : 50;
-    first = first > 50 ? first : 50;
+    first = first ? first : 12;
+    first = first > 12 ? first : 12;
     var url = 'https://www.instagram.com/graphql/query/?query_id=17888483320059182' + '&id=' + userId + '&first=' + first + '&after=' + after;
     return fetch(url,
       {
-        headers: this.getHeaders(),
-      }).then(t => t.json().then(r => r))
+        headers:  this.combineWithBaseHeader(
+            {
+              'accept': 'text/html,application/xhtml+xml,application/xml;q0.9,image/webp,image/apng,*.*;q=0.8',
+              'accept-encoding': 'gzip, deflate, br',
+              'cookie': this.generateCookie(false)
+            }
+          )
+      }).then(t => t.json().then(r => r)).catch(e=>{
+      console.log(e);
+    })
   }
 
   /**
@@ -329,14 +342,13 @@ module.exports = class Instagram {
     return fetch('https://www.instagram.com/graphql/query/?query_id=17888483320059182&variables=' + variables,
       {
         'method': 'get',
-        'headers':this.getHeaders()
-          /*this.combineWithBaseHeader(
-            {
-              'accept': 'text/html,application/xhtml+xml,application/xml;q0.9,image/webp,image/apng,*.*;q=0.8',
-              'accept-encoding': 'gzip, deflate, br',
-              'cookie': this.generateCookie()
-            }
-          )*/
+        'headers':this.combineWithBaseHeader(
+          {
+            'accept': 'text/html,application/xhtml+xml,application/xml;q0.9,image/webp,image/apng,*.*;q=0.8',
+            'accept-encoding': 'gzip, deflate, br',
+            'cookie': this.generateCookie(false)
+          }
+        )
       }).then(res => {
       return res.text().then((response) => {
         //prepare convert to json
@@ -351,7 +363,7 @@ module.exports = class Instagram {
         }
 
         if (json.status === 'ok') {
-          self.userPosts[userId] = self.userPosts[userId].concat(json.data.user.edge_owner_to_timeline_media.edges)
+          self.userPosts[userId.toString()] = self.userPosts[userId.toString()].concat(json.data.user.edge_owner_to_timeline_media.edges)
 
           if (json.data.user.edge_owner_to_timeline_media.page_info.has_next_page) {
             let after = json.data.user.edge_owner_to_timeline_media.page_info.end_cursor
@@ -362,11 +374,12 @@ module.exports = class Instagram {
               }, this.paginationDelay);
             });
           } else {
-            self.receivePromises[userId] = undefined
-            return self.userPosts[userId]
+            self.receivePromises[userId.toString()] = undefined
+            return self.userPosts[userId.toString()]
           }
 
-        } else {
+        }
+        else {
           return new Promise((resolve) => {
             console.log(json);
             console.log('request failed, retrying in ' + this.paginationDelay / 1000 + ' seconds');
@@ -380,54 +393,6 @@ module.exports = class Instagram {
         console.log('Instagram returned error:' + e)
       })
     })
-    /*var currentPostsPage = {};
-    var userDataArray = [];
-    const userId = async (un) => {
-      var uoi = un;
-      const userData = await instagramClient.getUserDataByUsername(uoi).then((t) =>
-      {
-        return t;
-      })
-      let id = instagramClient.getUserIdByUserName(userData);
-      return id
-
-    }
-    const userMedia = async (uoid, first, after) => {
-      const media = await instagramClient.getUserPosts(uoid, first, after).then((m) =>
-      {
-        return m;
-      })
-      return media
-
-    }
-    const uoid = await userId(uoi).then((i)=>{
-
-      return i;
-    });
-
-
-    const userPosts = await userMedia(uoid, 50, "").then((p)=>{
-      if(p){
-        currentPostsPage = p.data ? p.data.user.edge_owner_to_timeline_media.page_info : "";
-        userDataArray = p.data ? userDataArray.concat(p.data.user.edge_owner_to_timeline_media.edges) : userDataArray;
-      }
-      return p;
-    });
-    if(instagramClient.getUserPostsNextPage(currentPostsPage) !== false){
-      var extraDataObj = {};
-      while(instagramClient.getUserPostsNextPage(currentPostsPage) !== false){
-        let nextPage = instagramClient.getUserPostsNextPage(currentPostsPage);
-        extraDataObj[nextPage]= await userMedia(uoid, 50, nextPage).then((p)=>{
-          if(p){
-            currentPostsPage = p.data ? p.data.user.edge_owner_to_timeline_media.page_info : "";
-            userDataArray = p.data ? userDataArray.concat(p.data.user.edge_owner_to_timeline_media.edges) : userDataArray;
-          }
-          return p;
-        });
-      }
-
-    }
-    userPosts.data.user.edge_owner_to_timeline_media.edges = userDataArray;*/
   }
 
   /**
@@ -448,7 +413,7 @@ module.exports = class Instagram {
     if (typeof self.receivePromises[tag] !== 'undefined' && !selfSelf)
       return 0
 
-    first = (n<=50)? n : 50;
+    first = (n<=12)? n : 12;
 
     const query = {
       tag_name: tag,
@@ -541,7 +506,7 @@ module.exports = class Instagram {
     if (typeof self.receivePromises[location] !== 'undefined' && !selfSelf)
       return 0
 
-    first = (n<=50)? n : 50;
+    first = (n<=12)? n : 12;
 
     const query = {
       id: location,
@@ -670,7 +635,7 @@ module.exports = class Instagram {
     if (typeof self.receivePromises[userId] !== 'undefined' && !selfSelf)
       return 0
 
-    first = (n<=50)? n : 50;
+    first = (n<=12)? n : 12;
 
     const query = {
       id: userId,
@@ -759,7 +724,7 @@ module.exports = class Instagram {
     if (typeof self.receivePromises[userId] !== 'undefined' && !selfSelf)
       return 0
 
-    first = (n<=50)? n : 50;
+    first = (n<=12)? n : 12;
 
     const query = {
       id: userId,
@@ -855,7 +820,7 @@ module.exports = class Instagram {
    * @return {Object} Promise
    */
   getUserFeed(n) {
-    n = n ? n : 50;
+    n = n ? n : 12;
     var url = 'https://www.instagram.com/graphql/query/?query_id=17842794232208280&variables={"fetch_media_item_count":' + n + ',"fetch_media_item_cursor":"","fetch_comment_count":10,"fetch_like":10,"has_stories":false}'
     return fetch(url,
       {
@@ -883,7 +848,7 @@ module.exports = class Instagram {
 
     if (typeof self.receivePromises[userId] !== 'undefined' && !selfSelf)
       return 0
-    fetch_media_item_count = (n<=50)? n : 50;
+    fetch_media_item_count = (n<=12)? n : 12;
 
     const query = {
       fetch_media_item_cursor: fetch_media_item_cursor,
