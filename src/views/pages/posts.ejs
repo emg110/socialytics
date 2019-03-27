@@ -1,0 +1,49 @@
+<div class="row">
+  <% etlData.user.edge_owner_to_timeline_media.edges.forEach((edge) => { %>
+    <% edge = edge.node %>
+    <div class="col-md-4  align-self-center">
+      <div class="card">
+        <div class="card-header">
+          <% if(edge.edge_media_to_caption){ %>
+            <%=edge.edge_media_to_caption.edges[0]? edge.edge_media_to_caption.edges[0].node.text:"CARD HEADER" %>
+          <%}else {%>
+            <%="CARD HEADER"%>
+          <%}%>
+
+        </div>
+
+        <div class="card-body">
+          <a href="/edges/<%= edge.id %>">
+            <img class="img-fluid" src="<%= edge.thumbnail_src %>" alt="<%= edge.edge_media_to_caption? edge.edge_media_to_caption.edges[0]:[] %>">
+          </a>
+
+          <p class="yellowStars">
+            <% if(edge.edge_media_preview_like.count) { %><%=edge.edge_media_preview_like.count+' '%> &starf; <% } %>
+          </p>
+          <% if (edge.owner){%>
+            <% if(edge.owner.id==userid) { %>
+
+            <div class="row">
+
+              <div class="col-6 align-self-center">
+                <a href="/edges/<%= edge.id %>/edit" class="btn btn-primary">Edit</a>
+              </div>
+
+              <div class="col-6 align-self-center">
+                <form method="POST" action="/edges/<%= edge.id %>">
+                  <input type="hidden" name="_method" value="DELETE">
+                  <button class="btn btn-danger">Delete</button>
+                </form>
+              </div>
+
+            </div>
+
+          <% } %>
+          <%}%>
+        </div>
+      </div>
+    </div>
+
+  <% }) %>
+
+</div>

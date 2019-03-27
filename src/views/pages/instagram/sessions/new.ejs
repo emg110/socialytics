@@ -1,0 +1,51 @@
+<div class="row justify-content-center">
+  <div class="col-md-5 text-center">
+    <img id="phones" class="img-fluid" src="assets/images/phones.png" alt="phones">
+  </div>
+
+  <div class="col-md-5 text-center align-self-center">
+
+    <div class="whiteBox">
+
+      <a href="/">
+        <img class="img-fluid mx-auto d-block" src="/assets/images/logo.png" alt="instagram logo">
+      </a>
+
+      <br>
+
+      <p>
+        Log in to see photos and videos from your friends.
+      </p>
+
+      <a class="btn btn-primary col-10" href="<%=  %>" target="_blank">Login with Instagram</a>
+
+      <p class="text-uppercase">Or</p>
+
+      <form class="col-11 text-center justify-content-center" method="POST" action="/login">
+
+        <div class="text-center form-group justify-content-center">
+          <input type="text" class="form-control" name="email" id="email" placeholder="Email" required>
+          <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
+        </div>
+
+        <button class="btn btn-primary">Login</button>
+
+      </form>
+
+    </div>
+
+    <p class="whiteBox">
+      Don't have an account? <a href="/register">Register</a>
+    </p>
+
+    <br>
+
+    <p>
+      Get the app.
+    </p>
+    <img src="assets/images/app-store.png">
+    <img src="assets/images/google-play.png">
+
+  </div>
+
+</div>

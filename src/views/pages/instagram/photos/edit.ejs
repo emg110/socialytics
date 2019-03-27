@@ -1,0 +1,18 @@
+<h1>Edit Photo</h1>
+
+<form method="POST" action="/photos/<%= photo.id %>">
+  <input type="hidden" name="_method" value="PUT">
+
+  <div class="form-group">
+    <label for="name">Caption</label>
+    <input type="text" name="caption" id="caption" class="form-control" value="<%= photo.caption %>" required>
+  </div>
+
+  <div class="form-group">
+    <label for="stars">Stars</label>
+    <input type="number" name="stars" id="stars" class="form-control" value="<%= photo.stars %>" required>
+  </div>
+
+  <button class="btn btn-primary">Edit</button>
+
+</form>
