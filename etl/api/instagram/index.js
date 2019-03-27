@@ -185,6 +185,8 @@ const userFollowing = async (ctx) => {
   {
     return t;
   })
+  let writeFollowingToDatabase = await writeDatabase(userFollowingData,'/instagram/following')
+
   ctx.status = 200;
   ctx.body = {
     results: userFollowingData
@@ -199,10 +201,12 @@ const userFollowers = async (ctx) => {
     return t;
   })
   var userId = instagramClient.getUserIdByUserName(userData);
-  const userFollowersData = await instagramClient.getUserFollowers(count,userId).then((t) =>
+  let userFollowersData = await instagramClient.getUserFollowers(count,userId).then((t) =>
   {
     return t;
   })
+  let writeFollowersToDatabase = await writeDatabase(userFollowersData,'/instagram/followers')
+
   ctx.status = 200;
   ctx.body = {
     results: userFollowersData

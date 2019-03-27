@@ -1,0 +1,28 @@
+<% if(!(typeof etlData.edges == 'undefined')){ console.log('we got data here...')%>
+  <% etlData.edges.forEach((edge) => { %>
+  <% edge = edge.node %>
+  <div class="row whiteBox ">
+
+    <div class="col-sm-6 text-center align-self-center">
+      <% if(!(typeof edge == 'undefined')){%>
+        <% if(edge.profile_pic_url) { %>
+          <img class="img-thumbnail" src="<%= !(typeof edge == 'undefined') ? edge.profile_pic_url:"" %>" alt="<%= edge ? etlData.username :"" %>">
+        <% } else { %>
+          <img class="img-thumbnail" src="<%= !(typeof edge == 'undefined') ? edge.profile_pic_url : "" %>" alt="<%= edge ? etlData.username : "" %>">
+        <% } %>
+      <%}%>
+
+
+    </div>
+
+    <div class="col-sm-6 text-center align-self-center">
+
+      <h1><%= !(typeof edge == 'undefined') ? edge.username : "username" %></h1>
+      <h4><%= !(typeof edge == 'undefined') ? (edge.email || edge.full_name) :"user@maildomain"%></h4>
+
+    </div>
+
+  </div>
+
+<% }) %>
+<%}%>
