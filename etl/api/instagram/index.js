@@ -234,6 +234,7 @@ const userFeedPosts = async (ctx) => {
   {
     return t;
   })
+  let writeFeedToDatabase = await writeDatabase(userData,'/instagram/feed')
   ctx.status = 200;
   ctx.body = {
     results: userData

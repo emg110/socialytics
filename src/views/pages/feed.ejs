@@ -1,0 +1,31 @@
+<div class="row">
+  <% etlData.forEach((edge) => { %>
+    <% edge = edge.node %>
+    <div class="col-md-4  align-self-center">
+      <div class="card">
+        <div class="card-header">
+          <% if(edge.edge_media_to_caption){ %>
+            <%=edge.edge_media_to_caption.edges[0]? edge.edge_media_to_caption.edges[0].node.text:"CARD HEADER" %>
+          <%}else {%>
+            <%="CARD HEADER"%>
+          <%}%>
+
+        </div>
+
+        <div class="card-body">
+          <a href="/edges/<%= edge.id %>">
+            <img class="img-fluid" src="<%= edge.display_url %>" alt="<%= edge.edge_media_to_caption? edge.edge_media_to_caption.edges[0]:[] %>">
+          </a>
+
+          <p class="yellowStars">
+            <%if(edge.edge_media_preview_like){%>
+              <% if(edge.edge_media_preview_like.count) { %><%=edge.edge_media_preview_like.count+' '%> &starf; <% } %>
+            <%}else{ %><%=edge.edge_liked_by? edge.edge_liked_by.count : '---'+' '%> &starf; <%}%>
+          </p>
+        </div>
+      </div>
+    </div>
+
+  <% }) %>
+
+</div>
