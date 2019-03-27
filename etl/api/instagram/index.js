@@ -21,8 +21,16 @@ const api = client().configure(socketio(socket, {
   timeout: 500000
 }));
 async function writeDatabase (data, service){
+  if(data.user){
+    if(data.user.edge_owner_to_timeline_media){
+      if(data.user.edge_owner_to_timeline_media.edges){
+        data = data.user.edge_owner_to_timeline_media.edges
+      }
+    }
+  }
   if(data.length){
     data.forEach(item=>{
+      if(item.node)item = item.node;
       let recordData =  api.service(service)
         .create(item)
         .then(result =>  {
@@ -103,14 +111,6 @@ const userPosts = async (ctx) => {
     return p.data
   })
   const writeToDatabase = await writeDatabase(posts,'/instagram/posts')
-  /*const recordData = await api.service('/instagram/posts')
-    .create(posts)
-    .then(result =>  {
-      return result;
-    })
-    .catch(err=>{
-      console.log(err);
-    });*/
   ctx.status = 200;
   ctx.body = {
     results: posts
@@ -129,14 +129,6 @@ const userAllPosts = async (ctx) => {
     return p
   })
   const writeToDatabase = await writeDatabase(posts,'/instagram/posts')
-  /*const recordData = await api.service('/instagram/posts')
-    .create(posts)
-    .then(result =>  {
-      return result;
-    })
-    .catch(err=>{
-      console.log(err);
-    });*/
   ctx.status = 200;
   ctx.body = {
     results: posts
