@@ -161,10 +161,12 @@ const exploreLocation = async (ctx) => {
   var locationName = inputLocation.location;
   var quantity = inputLocation.count || 50;
   var locationId = await instagramClient.getLocationIdByName(locationName);
-  const locData = await instagramClient.explore('location',locationId,  quantity).then((t) =>
+  let locData = await instagramClient.explore('location',locationId,  quantity).then((t) =>
   {
     return t;
   })
+  config.activelocation =locationName;
+  let writeTagPostsToDatabase = await writeDatabase(locData,'/instagram/location')
   ctx.status = 200;
   ctx.body = {
     results: locData

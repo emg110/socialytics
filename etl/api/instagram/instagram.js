@@ -342,11 +342,11 @@ module.exports = class Instagram {
     return fetch('https://www.instagram.com/graphql/query/?query_id=17888483320059182&variables=' + variables,
       {
         'method': 'get',
-        'headers':this.combineWithBaseHeader(
+        'headers':self.combineWithBaseHeader(
           {
             'accept': 'text/html,application/xhtml+xml,application/xml;q0.9,image/webp,image/apng,*.*;q=0.8',
             'accept-encoding': 'gzip, deflate, br',
-            'cookie': this.generateCookie(false)
+            'cookie': self.generateCookie(false)
           }
         )
       }).then(res => {
@@ -522,14 +522,13 @@ module.exports = class Instagram {
     return fetch('https://www.instagram.com/graphql/query/?query_hash=ac38b90f0f3981c42092016a37c59bf7&variables=' + variables,
       {
         'method': 'get',
-        'headers':this.getHeaders()
-        /*this.combineWithBaseHeader(
+        'headers':self.combineWithBaseHeader(
           {
             'accept': 'text/html,application/xhtml+xml,application/xml;q0.9,image/webp,image/apng,*.*;q=0.8',
             'accept-encoding': 'gzip, deflate, br',
-            'cookie': this.generateCookie()
+            'cookie': self.generateCookie(false)
           }
-        )*/
+        )
       }).then(res => {
       return res.text().then((response) => {
         //prepare convert to json
@@ -652,7 +651,13 @@ module.exports = class Instagram {
     return fetch('https://www.instagram.com/graphql/query/?query_id=17851374694183129&variables=' + variables,
       {
         'method': 'get',
-        'headers': self.getHeaders()
+        'headers': self.combineWithBaseHeader(
+          {
+            'accept': 'text/html,application/xhtml+xml,application/xml;q0.9,image/webp,image/apng,*.*;q=0.8',
+            'accept-encoding': 'gzip, deflate, br',
+            'cookie': self.generateCookie(false)
+          }
+        )
       }).then(res => {
       return res.text().then((response) => {
         //prepare convert to json
@@ -741,7 +746,13 @@ module.exports = class Instagram {
     return fetch('https://www.instagram.com/graphql/query/?query_id=17874545323001329&variables=' + variables,
       {
         'method': 'get',
-        'headers': self.getHeaders()
+        'headers': self.combineWithBaseHeader(
+          {
+            'accept': 'text/html,application/xhtml+xml,application/xml;q0.9,image/webp,image/apng,*.*;q=0.8',
+            'accept-encoding': 'gzip, deflate, br',
+            'cookie': self.generateCookie(false)
+          }
+        )
       }).then(res => {
       return res.text().then((response) => {
         //prepare convert to json
@@ -801,10 +812,17 @@ module.exports = class Instagram {
    * @tutorial Place id path --> r.places[0].place.location['pk'], r.places[1].place.location['pk'], ...
    */
   commonSearch(q, rankToken) {
+    const self = this
     rankToken = rankToken ? rankToken : ''
     return fetch('https://www.instagram.com/web/search/topsearch/?context=blended&query=' + q + '&rank_token=' + rankToken,
       {
-        headers: this.getHeaders() // no required
+        headers: self.combineWithBaseHeader(
+          {
+            'accept': 'text/html,application/xhtml+xml,application/xml;q0.9,image/webp,image/apng,*.*;q=0.8',
+            'accept-encoding': 'gzip, deflate, br',
+            'cookie': self.generateCookie(false)
+          }
+        )
       }).then(t => t.json().then(r => r))
   }
 
@@ -819,11 +837,18 @@ module.exports = class Instagram {
    * @return {Object} Promise
    */
   getUserFeed(n) {
+    const self = this
     n = n ? n : 12;
     var url = 'https://www.instagram.com/graphql/query/?query_id=17842794232208280&variables={"fetch_media_item_count":' + n + ',"fetch_media_item_cursor":"","fetch_comment_count":10,"fetch_like":10,"has_stories":false}'
     return fetch(url,
       {
-        headers: this.getHeaders(),
+        headers: self.combineWithBaseHeader(
+          {
+            'accept': 'text/html,application/xhtml+xml,application/xml;q0.9,image/webp,image/apng,*.*;q=0.8',
+            'accept-encoding': 'gzip, deflate, br',
+            'cookie': self.generateCookie(false)
+          }
+        )
       }).then(t => t.json().then(r => r)
     )
   }
@@ -864,14 +889,13 @@ module.exports = class Instagram {
     return fetch('https://www.instagram.com/graphql/query/?query_id=17842794232208280&variables=' + variables,
       {
         'method': 'get',
-        'headers':this.getHeaders()
-        /*this.combineWithBaseHeader(
+        'headers':self.combineWithBaseHeader(
           {
             'accept': 'text/html,application/xhtml+xml,application/xml;q0.9,image/webp,image/apng,*.*;q=0.8',
             'accept-encoding': 'gzip, deflate, br',
-            'cookie': this.generateCookie()
+            'cookie': self.generateCookie(false)
           }
-        )*/
+        )
       }).then(res => {
       return res.text().then((response) => {
         //prepare convert to json
@@ -933,7 +957,13 @@ module.exports = class Instagram {
   getMediaInfoByUrl(url) {
     return fetch('https://api.instagram.com/oembed/?url=' + url,
       {
-        'headers': this.getHeaders()
+        'headers': self.combineWithBaseHeader(
+          {
+            'accept': 'text/html,application/xhtml+xml,application/xml;q0.9,image/webp,image/apng,*.*;q=0.8',
+            'accept-encoding': 'gzip, deflate, br',
+            'cookie': self.generateCookie(false)
+          }
+        )
       }).then(t => t.json().then(r => r))
   }
 
@@ -948,7 +978,13 @@ module.exports = class Instagram {
   getPostJson(shortcode) {
     return fetch('https://www.instagram.com/p/'+shortcode+'/?__a=1',
       {
-        'headers': this.getHeaders()
+        'headers': self.combineWithBaseHeader(
+          {
+            'accept': 'text/html,application/xhtml+xml,application/xml;q0.9,image/webp,image/apng,*.*;q=0.8',
+            'accept-encoding': 'gzip, deflate, br',
+            'cookie': self.generateCookie(false)
+          }
+        )
       }).then(t => t.json().then(r => r))
   }
 
@@ -963,7 +999,13 @@ module.exports = class Instagram {
   getPostPage(shortcode) {
     return fetch('https://www.instagram.com/p/'+shortcode,
       {
-        'headers': this.getHeaders()
+        'headers': self.combineWithBaseHeader(
+          {
+            'accept': 'text/html,application/xhtml+xml,application/xml;q0.9,image/webp,image/apng,*.*;q=0.8',
+            'accept-encoding': 'gzip, deflate, br',
+            'cookie': self.generateCookie(false)
+          }
+        )
       }).then(t => t.text().then(r => r))
   }
 
@@ -1009,7 +1051,13 @@ module.exports = class Instagram {
     return fetch('https://www.instagram.com/graphql/query/?query_id=17864450716183058&variables=' + variables,
       {
         'method': 'get',
-        'headers': self.getHeaders()
+        'headers': self.combineWithBaseHeader(
+          {
+            'accept': 'text/html,application/xhtml+xml,application/xml;q0.9,image/webp,image/apng,*.*;q=0.8',
+            'accept-encoding': 'gzip, deflate, br',
+            'cookie': self.generateCookie(false)
+          }
+        )
       }).then(res => {
       return res.text().then((response) => {
         //prepare convert to json
@@ -1090,7 +1138,13 @@ module.exports = class Instagram {
     return fetch('https://www.instagram.com/graphql/query/?query_id=17852405266163336&variables=' + variables,
       {
         'method': 'get',
-        'headers': self.getHeaders()
+        'headers': self.combineWithBaseHeader(
+          {
+            'accept': 'text/html,application/xhtml+xml,application/xml;q0.9,image/webp,image/apng,*.*;q=0.8',
+            'accept-encoding': 'gzip, deflate, br',
+            'cookie': self.generateCookie(false)
+          }
+        )
       }).then(res => {
       return res.text().then((response) => {
         //prepare convert to json
@@ -1170,7 +1224,13 @@ module.exports = class Instagram {
     return fetch('https://www.instagram.com/graphql/query/?query_id=17863787143139595&variables=' + variables,
       {
         'method': 'get',
-        'headers': self.getHeaders()
+        'headers': self.combineWithBaseHeader(
+          {
+            'accept': 'text/html,application/xhtml+xml,application/xml;q0.9,image/webp,image/apng,*.*;q=0.8',
+            'accept-encoding': 'gzip, deflate, br',
+            'cookie': self.generateCookie(false)
+          }
+        )
       }).then(res => {
       return res.text().then((response) => {
         //prepare convert to json
@@ -1254,7 +1314,13 @@ module.exports = class Instagram {
     return fetch(url,
       {
         'method': 'get',
-        'headers': this.getHeaders()
+        'headers': self.combineWithBaseHeader(
+          {
+            'accept': 'text/html,application/xhtml+xml,application/xml;q0.9,image/webp,image/apng,*.*;q=0.8',
+            'accept-encoding': 'gzip, deflate, br',
+            'cookie': self.generateCookie(false)
+          }
+        )
       }).then(res => {
       return res.text().then((response) => {
         //prepare convert to json
@@ -1317,6 +1383,7 @@ module.exports = class Instagram {
    */
 
   follow(userId, isUnfollow) {
+    const self = this
     const headers =
       {
         'referer': 'https://www.instagram.com/',
@@ -1332,7 +1399,13 @@ module.exports = class Instagram {
     return fetch('https://www.instagram.com/web/friendships/' + userId + (isUnfollow === 1 ? '/unfollow' : '/follow'),
       {
         'method': 'post',
-        'headers': this.getHeaders()//headers
+        'headers': self.combineWithBaseHeader(
+          {
+            'accept': 'text/html,application/xhtml+xml,application/xml;q0.9,image/webp,image/apng,*.*;q=0.8',
+            'accept-encoding': 'gzip, deflate, br',
+            'cookie': self.generateCookie(false)
+          }
+        )
       }).then(res => {
       return res
     })
@@ -1347,10 +1420,17 @@ module.exports = class Instagram {
    * @return {Object} Promise
    */
   like(postId) {
+    const self = this
     return fetch('https://www.instagram.com/web/likes/' + postId + '/like/',
       {
         'method': 'POST',
-        'headers': this.getHeaders()
+        'headers': self.combineWithBaseHeader(
+          {
+            'accept': 'text/html,application/xhtml+xml,application/xml;q0.9,image/webp,image/apng,*.*;q=0.8',
+            'accept-encoding': 'gzip, deflate, br',
+            'cookie': self.generateCookie(false)
+          }
+        )
       }).then(t =>
       t.json().then(r => r)
     )
@@ -1365,10 +1445,17 @@ module.exports = class Instagram {
    * @return {Object} Promise
    */
   unlike(postId) {
+    const self = this
     return fetch('https://www.instagram.com/web/likes/' + postId + '/unlike/',
       {
         'method': 'POST',
-        'headers': this.getHeaders()
+        'headers': self.combineWithBaseHeader(
+          {
+            'accept': 'text/html,application/xhtml+xml,application/xml;q0.9,image/webp,image/apng,*.*;q=0.8',
+            'accept-encoding': 'gzip, deflate, br',
+            'cookie': self.generateCookie(false)
+          }
+        )
       }).then(t =>
       t.json().then(r => r)
     )

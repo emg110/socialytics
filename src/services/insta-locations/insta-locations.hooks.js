@@ -1,13 +1,13 @@
-
+const hookInstaLocationVersion = require('../../hooks/hook-insta-location-version');
 
 module.exports = {
   before: {
     all: [],
     find: [],
     get: [],
-    create: [],
-    update: [],
-    patch: [],
+    create: [hookInstaLocationVersion()],
+    update: [hookInstaLocationVersion()],
+    patch: [hookInstaLocationVersion()],
     remove: []
   },
 
