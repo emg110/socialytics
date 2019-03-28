@@ -968,11 +968,10 @@ module.exports = class Instagram {
   }
 
   /**
-   * @name getMediaInfoByUrl
-   * @desc Get media info by url
-   * @description Gets media info (only not media content) given an instagram media url
-   * @example url = https://www.instagram.com/p/BT1ynUvhvaR/
-   * @param {String} url
+   * @name getPostJson
+   * @desc Get post json
+   * @description Gets post in JSON format by given shortcode
+   * @param {String} shortcode
    * @return {Object} Promise
    */
   getPostJson(shortcode) {
@@ -989,11 +988,10 @@ module.exports = class Instagram {
   }
 
   /**
-   * @name getMediaInfoByUrl
-   * @desc Get media info by url
-   * @description Gets media info (only not media content) given an instagram media url
-   * @example url = https://www.instagram.com/p/BT1ynUvhvaR/
-   * @param {String} url
+   * @name getPostPage
+   * @desc Get post page
+   * @description Gets post in HTML format by given shortcode
+   * @param {String} shortcode
    * @return {Object} Promise
    */
   getPostPage(shortcode) {
@@ -1109,9 +1107,9 @@ module.exports = class Instagram {
   }
 
   /**
-   * @name getPostLikes
-   * @desc Get post likes
-   * @description Gets post likes by count and post's short code
+   * @name getPostComments
+   * @desc Get post comments
+   * @description Gets post comments by count and post's short code
    */
   getPostComments(n, postId, after, first, commentsCounter, selfSelf) {
     const self = this
@@ -1196,9 +1194,9 @@ module.exports = class Instagram {
   }
 
   /**
-   * @name getPostLikes
-   * @desc Get post likes
-   * @description Gets post likes by count and post's short code
+   * @name getSuggestedPosts
+   * @desc Get suggested posts
+   * @description Gets suggested posts by instagram for current user
    */
   getSuggestedPosts(n, after, first, sugPostCounter, selfSelf) {
     const self = this
@@ -1282,9 +1280,9 @@ module.exports = class Instagram {
   }
 
   /**
-   * @name getPostLikes
-   * @desc Get post likes
-   * @description Gets post likes by count and post's short code
+   * @name getSuggestedPPeople
+   * @desc Get suggested people
+   * @description Gets suggested people by instagram for current user
    */
   getSuggestedPeople(n, fetch_media_cursor, fetch_media_count, sugPeopleCounter, selfSelf) {
     const self = this
