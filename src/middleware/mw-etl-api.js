@@ -48,7 +48,7 @@ module.exports = function (options = {}) {
       else if(expr.indexOf('/instagram/posts')>=0){
         let etlApiEndpoint = serverUrl+expr;
         let etlData = await getEndpointEtl(etlApiEndpoint);
-        //res.redirect('/home',results);
+
         let userid = config.userid;
         res.render('pages/posts',{etlData, userid},function(err, html) {
           if(err)console.log('ejs has returned this error: '+ err);
@@ -58,7 +58,7 @@ module.exports = function (options = {}) {
       else if(expr.indexOf('/instagram/allposts')>=0){
         let etlApiEndpoint = serverUrl+expr;
         let etlData = await getEndpointEtl(etlApiEndpoint);
-        //res.redirect('/home',results);
+
         let userid = config.userid;
         if(etlData.length){
           if(etlData.length> 100){
@@ -79,7 +79,7 @@ module.exports = function (options = {}) {
       else if(expr.indexOf('/instagram/explore/tag')>=0){
         let etlApiEndpoint = serverUrl+expr.replace('/explore','');
         let etlData = await getEndpointEtl(etlApiEndpoint);
-        //res.redirect('/home',results);
+
         let userid = config.userid;
         if(etlData.length){
           if(etlData.length> 100){
@@ -100,7 +100,7 @@ module.exports = function (options = {}) {
       else if(expr.indexOf('/instagram/explore/location')>=0){
         let etlApiEndpoint = serverUrl+expr.replace('/explore','');
         let etlData = await getEndpointEtl(etlApiEndpoint);
-        //res.redirect('/home',results);
+
         let userid = config.userid;
         if(etlData.length){
           if(etlData.length> 100){
@@ -182,6 +182,15 @@ module.exports = function (options = {}) {
         let etlData = await getEndpointEtl(etlApiEndpoint);
         let userid = config.userid;
         res.render('pages/feed',{etlData, userid},function(err, html) {
+          if(err)console.log('ejs has returned this error: '+ err);
+          res.send(html);
+        });
+      }
+      else if(expr.indexOf('/instagram/suggested/posts')>=0){
+        let etlApiEndpoint = serverUrl+expr;
+        let etlData = await getEndpointEtl(etlApiEndpoint);
+        let userid = config.userid;
+        res.render('pages/posts',{etlData, userid},function(err, html) {
           if(err)console.log('ejs has returned this error: '+ err);
           res.send(html);
         });

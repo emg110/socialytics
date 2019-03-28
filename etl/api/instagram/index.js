@@ -311,6 +311,7 @@ const suggestedPosts = async (ctx) => {
   {
     return t;
   })
+  let writeToDatabase = await writeDatabase(suggestedPostsData,'/instagram/posts')
   ctx.status = 200;
   ctx.body = {
     results: suggestedPostsData
@@ -323,6 +324,7 @@ const suggestedPeople = async (ctx) => {
   {
     return t;
   })
+  let writeToDatabase = await writeDatabase(suggestedPeopleData,'/instagram/profile')
   ctx.status = 200;
   ctx.body = {
     results: suggestedPeopleData
