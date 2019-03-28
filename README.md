@@ -15,11 +15,11 @@ and you have to change the parameters directly inside URI. The login process is 
 
 **`TODO:`**
 
-1- Add Instagram login form as start page for frontend and store the session-id and csrf_token on server side (with security in mind!)
+1- ~~Add Instagram login form as start page for frontend and store the session-id and csrf_token on server side (with security in mind!)~~
 
 2- Add UI components for parameters
 
-3- Implement database loading (NeDB for time being with support for MongoDB, Postgress, ElasticSearch and Redis).
+3- ~~Implement database loading (NeDB for time being with support for MongoDB, Postgress, ElasticSearch and Redis).~~
 
 4- Add progress , start and stop for every ETL operation.
 
@@ -43,7 +43,7 @@ and you have to change the parameters directly inside URI. The login process is 
 
 4- In CMD go to project root folder
 
-5- Run: _pm2 start_ OR Run: _npm install_ then Run:_npm start_
+5- Run: _npm install_ then Run: _pm2 start src/_ OR Run:_npm start_
 
 6- Go to localhost:8080 and start analysing Instagram!
 
