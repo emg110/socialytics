@@ -279,7 +279,6 @@ const postComments = async (ctx) => {
     results: postCommentsData
   }
 }
-//DONE
 const postJson = async (ctx) => {
   var inputPost = ctx.request.query;
   var postId = inputPost.shortcode;
@@ -346,7 +345,7 @@ instagramRouter.get("/instagram/allfeed", allFeedPosts);
 instagramRouter.get("/instagram/likes", postLikes);
 instagramRouter.get("/instagram/comments", postComments);
 instagramRouter.get("/instagram/post", postJson);
-instagramRouter.get("/instagram/page", postPage);
+instagramRouter.get("/instagram/post/page", postPage);
 instagramRouter.get("/instagram/suggested/posts", suggestedPosts);
 instagramRouter.get("/instagram/suggested/people", suggestedPeople);
 

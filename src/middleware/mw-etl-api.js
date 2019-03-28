@@ -248,6 +248,37 @@ module.exports = function (options = {}) {
         }
 
       }
+      else if(expr.indexOf('/instagram/post/page')>=0){
+        let etlApiEndpoint = serverUrl+expr;
+        let etlData = await getEndpointEtl(etlApiEndpoint);
+        if(etlData){
+          res.send(etlData);
+        }else{
+          res.send('<h1>NO SUCH POST</h1>>')
+        }
+
+      }
+      else if(expr.indexOf('/instagram/post')>=0){
+        let etlApiEndpoint = serverUrl+expr;
+        let etlData = await getEndpointEtl(etlApiEndpoint);
+        if(etlData.graphql){
+          let userid = config.userid;
+          let finalData = {};
+          finalData = etlData.graphql.shortcode_media;
+          etlData = finalData;
+          res.render('pages/post',{etlData, userid},function(err, html) {
+            if(err){
+              console.log('ejs has returned this error: '+ err);
+            }
+            res.send(html);
+
+          });
+        }else{
+          res.send('<h1>NO SUCH POST</h1>>')
+        }
+
+      }
+
     }
 
 

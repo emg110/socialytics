@@ -32,6 +32,9 @@ module.exports = function (options = {}) {
         res.render('pages/engagement', {output});
         console.log('Rendering instagram engagement page');
         break;
+      case '/static/bundles/':
+        res.redirect(expr)
+        break;
       default:
         next();
         console.log('No routable views found, routing to ETL API: ' + expr + '!');

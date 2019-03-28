@@ -955,6 +955,7 @@ module.exports = class Instagram {
    * @return {Object} Promise
    */
   getMediaInfoByUrl(url) {
+    const self = this
     return fetch('https://api.instagram.com/oembed/?url=' + url,
       {
         'headers': self.combineWithBaseHeader(
@@ -975,6 +976,7 @@ module.exports = class Instagram {
    * @return {Object} Promise
    */
   getPostJson(shortcode) {
+    const self = this
     return fetch('https://www.instagram.com/p/'+shortcode+'/?__a=1',
       {
         'headers': self.combineWithBaseHeader(
@@ -995,6 +997,7 @@ module.exports = class Instagram {
    * @return {Object} Promise
    */
   getPostPage(shortcode) {
+    const self = this
     return fetch('https://www.instagram.com/p/'+shortcode,
       {
         'headers': self.combineWithBaseHeader(

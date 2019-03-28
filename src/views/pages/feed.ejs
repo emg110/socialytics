@@ -19,8 +19,8 @@
 
           <p class="yellowStars">
             <%if(edge.edge_media_preview_like){%>
-              <% if(edge.edge_media_preview_like.count) { %><%=edge.edge_media_preview_like.count+' '%> &starf; <% } %>
-            <%}else{ %><%=edge.edge_liked_by? edge.edge_liked_by.count : '---'+' '%> &starf; <%}%>
+              <% if(edge.edge_media_preview_like.count) { %><%=edge.edge_media_preview_like.count+' '%> &hearts; <% } %>
+            <%}else{ %><%=edge.edge_liked_by? edge.edge_liked_by.count : '---'+' '%> &hearts; <%}%>
           </p>
         </div>
       </div>

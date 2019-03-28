@@ -3,13 +3,13 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="imgModalLabel"><%= photo.caption %></h5>
+        <h5 class="modal-title" id="imgModalLabel"><%= etlData.edge_media_to_caption.edges[0] ? etlData.edge_media_to_caption.edges[0].node.text : etlData.id %></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <img class="img-fluid" src="<%= photo.imageSRC %>" alt="<%= photo.caption %>">
+        <img class="img-fluid" src="<%= etlData.thumbnail_src %>" alt="<%= etlData.edge_media_to_caption.edges[0] ? etlData.edge_media_to_caption.edges[0].node.text : etlData.id %>">
       </div>
     </div>
   </div>
@@ -23,17 +23,19 @@
     <div class="card">
 
       <div class="card-header">
-        <%= photo.caption %>
-        <small>by <%= photo.createdBy.username %></small>
+        <%= etlData.edge_media_to_caption.edges[0] ? etlData.edge_media_to_caption.edges[0].node.text : etlData.id %>
+        <small>by <%= etlData.owner.username %></small>
       </div>
 
       <div class="card-body">
-        <a data-toggle="modal" id="pop" data-target="#imgModal" href="/photos/<%= photo.id %>">
-          <img class="img-fluid" src="<%= photo.imageSRC %>" alt="<%= photo.caption %>">
+        <a data-toggle="modal" id="pop" data-target="#imgModal" href="/etlDatas/<%= etlData.id %>">
+          <img class="img-fluid" src="<%= etlData.media_preview %>" alt="<%= etlData.edge_media_to_caption.edges[0] ? etlData.edge_media_to_caption.edges[0].node.text : etlData.id %>">
         </a>
 
         <p class="yellowStars">
-          <% while(photo.stars--) { %> &starf; <% } %>
+          <%if(etlData.edge_media_preview_like){%>
+            <% if(etlData.edge_media_preview_like.count) { %><%=etlData.edge_media_preview_like.count+' '%> &hearts; <% } %>
+          <%}else{ %><%=etlData.edge_liked_by.count+' '%> &hearts; <%}%>
         </p>
       </div>
 
@@ -43,7 +45,7 @@
 
   <div class="col-md-6">
 
-    <% if(photo.comments.length !== 0) { %>
+    <% if(etlData.edge_media_preview_comment.edges.length !== 0) { %>
 
       <div class="card">
 
@@ -52,13 +54,14 @@
         </div>
 
         <ul id="comments" class="list-group">
-          <% photo.comments.forEach((comment) => { %>
+          <% etlData.edge_media_preview_comment.edges.forEach((comment) => { %>
+            <% comment = comment.node %>
             <li class="list-group-item">
-              <p><%= comment.content %></p>
-              <small>by <%= comment.createdBy.username %></small>
+              <p><%= comment.text %></p>
+              <small>by <%= comment.owner.username %></small>
 
-              <% if(locals.isAuthenticated && comment.ownedBy(user)) { %>
-                <form method="POST" action="/photos/<%= photo.id %>/comments/<%= comment.id %>">
+              <% if(locals.isAuthenticated && (comment.owner.id == userid)) { %>
+                <form method="POST" action="/etlDatas/<%= etlData.id %>/comments/<%= comment.id %>">
                   <input type="hidden" name="_method" value="DELETE">
                   <button class="btn btn-danger">Delete this comment</button>
                 </form>
@@ -80,7 +83,7 @@
           Leave a comment:
         </div>
 
-        <form method="POST" action="/photos/<%= photo.id %>/comments">
+        <form method="POST" action="/etlDatas/<%= etlData.id %>/comments">
           <textarea class="form-control" rows="2" name="content" id="content" placeholder="Comment"></textarea>
           <button class="btn btn-primary">Leave your comment</button>
         </form>
