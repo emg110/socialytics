@@ -207,7 +207,7 @@ module.exports = function (options = {}) {
         let finalData = {};
         finalData.edges = etlData;
         etlData = finalData;
-        res.render('pages/follow',{etlData, userid},function(err, html) {
+        res.render('pages/people',{etlData, userid},function(err, html) {
           if(err)console.log('ejs has returned this error: '+ err);
           res.send(html);
         });
@@ -248,7 +248,7 @@ module.exports = function (options = {}) {
         }
 
       }
-      else if(expr.indexOf('/instagram/post/page')>=0){
+      /*else if(expr.indexOf('/instagram/post/page')>=0){
         let etlApiEndpoint = serverUrl+expr;
         let etlData = await getEndpointEtl(etlApiEndpoint);
         if(etlData){
@@ -257,7 +257,7 @@ module.exports = function (options = {}) {
           res.send('<h1>NO SUCH POST</h1>>')
         }
 
-      }
+      }*/
       else if(expr.indexOf('/instagram/post')>=0){
         let etlApiEndpoint = serverUrl+expr;
         let etlData = await getEndpointEtl(etlApiEndpoint);

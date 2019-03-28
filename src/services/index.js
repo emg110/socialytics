@@ -9,6 +9,7 @@ const instaFollowers = require('./insta-followers/insta-followers.service.js');
 const instaFollowing = require('./insta-following/insta-following.service.js');
 const instaFeed = require('./insta-feed/insta-feed.service.js');
 const instaSearch = require('./insta-search/insta-search.service.js');
+const instaMedia = require('./insta-media/insta-media.service.js');
 // eslint-disable-next-line no-unused-vars
 module.exports = function (app) {
   app.configure(instaPosts);
@@ -21,4 +22,5 @@ module.exports = function (app) {
   app.configure(instaFollowing);
   app.configure(instaFeed);
   app.configure(instaSearch);
+  app.configure(instaMedia);
 };

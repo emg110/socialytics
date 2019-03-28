@@ -37,7 +37,7 @@ module.exports = function (options = {}) {
         break;
       default:
         next();
-        console.log('No routable views found, routing to ETL API: ' + expr + '!');
+        console.log('No routable views found, routing to other APIs to check if they game this '  + '!');
     }
   };
 };

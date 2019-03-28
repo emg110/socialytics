@@ -257,13 +257,14 @@ const postLikes = async (ctx) => {
   var inputPost = ctx.request.query;
   var postId = inputPost.shortcode;
   var count = inputPost.count;
-  const userData = await instagramClient.getPostLikes(count, postId).then((t) =>
+  const likesData = await instagramClient.getPostLikes(count, postId).then((t) =>
   {
     return t;
   })
+  let writeLikesToDatabase = await writeDatabase(likesData,'/instagram/likes')
   ctx.status = 200;
   ctx.body = {
-    results: userData
+    results: likesData
   }
 }
 const postComments = async (ctx) => {
@@ -274,6 +275,7 @@ const postComments = async (ctx) => {
   {
     return t;
   })
+  let writeCommentsToDatabase = await writeDatabase(postCommentsData,'/instagram/comments')
   ctx.status = 200;
   ctx.body = {
     results: postCommentsData
@@ -282,16 +284,17 @@ const postComments = async (ctx) => {
 const postJson = async (ctx) => {
   var inputPost = ctx.request.query;
   var postId = inputPost.shortcode;
-  const postData = await instagramClient.getPostJson(postId).then((t) =>
+  const postMediaData = await instagramClient.getPostJson(postId).then((t) =>
   {
     return t;
   })
+  let writeMediaToDatabase = await writeDatabase(postMediaData,'/instagram/media')
   ctx.status = 200;
   ctx.body = {
-    results: postData
+    results: postMediaData
   }
 }
-const postPage = async (ctx) => {
+/*const postPage = async (ctx) => {
   var inputPost = ctx.request.query;
   var postId = inputPost.shortcode;
   const postData = await instagramClient.getPostPage(postId).then((t) =>
@@ -302,7 +305,7 @@ const postPage = async (ctx) => {
   ctx.body = {
     results: postData
   }
-}
+}*/
 const suggestedPosts = async (ctx) => {
   var inputCount = ctx.request.query;
   var count = inputCount.count;
@@ -345,7 +348,7 @@ instagramRouter.get("/instagram/allfeed", allFeedPosts);
 instagramRouter.get("/instagram/likes", postLikes);
 instagramRouter.get("/instagram/comments", postComments);
 instagramRouter.get("/instagram/post", postJson);
-instagramRouter.get("/instagram/post/page", postPage);
+/*instagramRouter.get("/instagram/post/page", postPage);*/
 instagramRouter.get("/instagram/suggested/posts", suggestedPosts);
 instagramRouter.get("/instagram/suggested/people", suggestedPeople);
 
