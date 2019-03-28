@@ -1,6 +1,7 @@
 /* Set the width of the sidebar to 250px (show it) */
 function openNav(id) {
-  document.getElementById(id).style.width = "30%";
+  document.getElementById(id).style.backgroundColor = "#111";
+  document.getElementById(id).style.width = "35%";
 }
 
 /* Set the width of the sidebar to 0 (hide it) */
@@ -12,6 +13,7 @@ function getEndpoint (endpoint, type){
     closeNav('insta-sidepanel');
     openNav('insta-sidepanel');
     document.getElementById('instagram-container').innerHTML=html;
+
     var username = document.getElementById('username-input').value;
     var tag = document.getElementById('tag-input').value;
     var location = document.getElementById('location-input').value;
@@ -167,6 +169,7 @@ function getEndpoint (endpoint, type){
       xhr.open("GET", url, true);
       xhr.onload = function(e) {
         var html = xhr.responseText;
+        document.getElementById('insta-sidepanel').style.backgroundColor = "#fff"
         document.getElementById('instagram-container').innerHTML=html;
       }
       xhr.send();
