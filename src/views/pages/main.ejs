@@ -79,6 +79,12 @@
           <br/>
         </li>
         <li>
+          <input class="endpoint-button" type="button"  value="Get all feed" onClick=getEndpoint("http://localhost:8080/instagram/allfeed?",'all-feed-posts')>
+          <!--<a  href="http://localhost:3003/api/instagram/feed?count=15">Get feed</a>-->
+          <!--<a  href="http://localhost:8080/instagram/feed?count=15">Get feed</a>-->
+          <br/>
+        </li>
+        <li>
           <input class="endpoint-button" type="button"  value="Get post likes" onClick=getEndpoint("http://localhost:8080/instagram/likes?",'post-likes')>
           <!--<a  href="http://localhost:3003/api/instagram/likes?shortcode=Bu1FtB-gxhE&count=65">Get post likes</a>-->
           <!--<a  href="http://localhost:8080/instagram/likes?shortcode=Bu1FtB-gxhE&count=65">Get post likes</a>-->
@@ -112,6 +118,18 @@
           <input class="endpoint-button" type="button"  value="Get suggested people" onClick=getEndpoint("http://localhost:8080/instagram/suggested/people?",'sugg-people')>
           <!--<a  href="http://localhost:3003/api/instagram/suggested/people?count=20">Get suggested people</a>-->
           <!--<a  href="http://localhost:8080/instagram/suggested/people?count=20">Get suggested people</a>-->
+          <br/>
+        </li>
+        <li>
+          <input class="endpoint-button" type="button"  value="Get posts engagement" onClick=getEndpoint("http://localhost:8080/instagram/engagement/posts?",'eng-posts')>
+          <br/>
+        </li>
+        <li>
+          <input class="endpoint-button" type="button"  value="Get profiles engagement" onClick=getEndpoint("http://localhost:8080/instagram/engagement/profiles?",'eng-profiles')>
+          <br/>
+        </li>
+        <li>
+          <input class="endpoint-button" type="button"  value="Get location engagement" onClick=getEndpoint("http://localhost:8080/instagram/engagement/locations?",'eng-locations')>
           <br/>
         </li>
       </ul>

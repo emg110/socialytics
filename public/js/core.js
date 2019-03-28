@@ -123,6 +123,8 @@ function getEndpoint (endpoint, type){
         }
       }
       break
+    case 'all-feed-posts':
+      break
     case 'post-likes':
       if(shortcode.length !== undefined){
         if(shortcode.length>=3){

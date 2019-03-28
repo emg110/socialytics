@@ -169,6 +169,18 @@ module.exports = function (options = {}) {
         let etlApiEndpoint = serverUrl+expr;
         let etlData = await getEndpointEtl(etlApiEndpoint);
         let userid = config.userid;
+        if(etlData.user)etlData = etlData.user;
+        if(etlData.edge_web_feed_timeline)etlData = etlData.edge_web_feed_timeline
+        if(etlData.edges)etlData = etlData.edges
+        res.render('pages/feed',{etlData, userid},function(err, html) {
+          if(err)console.log('ejs has returned this error: '+ err);
+          res.send(html);
+        });
+      }
+      else if(expr.indexOf('/instagram/allfeed')>=0){
+        let etlApiEndpoint = serverUrl+expr;
+        let etlData = await getEndpointEtl(etlApiEndpoint);
+        let userid = config.userid;
         res.render('pages/feed',{etlData, userid},function(err, html) {
           if(err)console.log('ejs has returned this error: '+ err);
           res.send(html);

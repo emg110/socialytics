@@ -226,18 +226,31 @@ const searchTop = async (ctx) => {
     results: searchData
   }
 }
-const userFeedPosts = async (ctx) => {
+const feedPosts = async (ctx) => {
   var input = ctx.request.query;
   var count = input.count;
-  var uoi = instagramClient.userName;
-  const userData = await instagramClient.getAllUserFeeds(count, uoi).then((t) =>
+  const feedData = await instagramClient.getUserFeed(count).then((t) =>
+  {
+    if(t.data)t=t.data
+    return t;
+  })
+  let writeFeedToDatabase = await writeDatabase(feedData,'/instagram/feed')
+  ctx.status = 200;
+  ctx.body = {
+    results: feedData
+  }
+}
+const allFeedPosts = async (ctx) => {
+  var input = ctx.request.query;
+  var count = input.count;
+  const feedData = await instagramClient.getAllUserFeeds(count).then((t) =>
   {
     return t;
   })
-  let writeFeedToDatabase = await writeDatabase(userData,'/instagram/feed')
+  let writeFeedToDatabase = await writeDatabase(feedData,'/instagram/feed')
   ctx.status = 200;
   ctx.body = {
-    results: userData
+    results: feedData
   }
 }
 const postLikes = async (ctx) => {
@@ -326,7 +339,8 @@ instagramRouter.get("/instagram/location", exploreLocation);
 instagramRouter.get("/instagram/following", userFollowing);
 instagramRouter.get("/instagram/followers", userFollowers);
 instagramRouter.get("/instagram/search", searchTop);
-instagramRouter.get("/instagram/feed", userFeedPosts);
+instagramRouter.get("/instagram/feed", feedPosts);
+instagramRouter.get("/instagram/allfeed", allFeedPosts);
 instagramRouter.get("/instagram/likes", postLikes);
 instagramRouter.get("/instagram/comments", postComments);
 instagramRouter.get("/instagram/post", postJson);
