@@ -43,7 +43,7 @@ and you have to change the parameters directly inside URI. The login process is 
 
 4- In CMD go to project root folder
 
-5- Run: _npm install_ then Run: _pm2 start src/_ OR Run:_npm start_
+5- Run: _npm install_ then Run:_npm start_  (or optionally Run: _pm2 start src/_)
 
 6- Go to localhost:8080 and start analysing Instagram!
 
