@@ -1,7 +1,5 @@
 <% if(!(typeof etlData.places == 'undefined')){ console.log('we got data here...')%>
-  <h1>Places:</h1>
-  <h2>_________</h2>
-  </br>
+  <h1 style="color:white;">Places:</h1>
   <% etlData.places.forEach((edge) => { %>
     <% edge = edge.place %>
     <div class="row whiteBox ">
@@ -9,15 +7,10 @@
         <% if(!(typeof edge == 'undefined')){%>
           <% if(edge) { %>
             <div class="col-sm-6 text-center align-self-center">
-
-              <h3>Place title:<%= !(typeof edge.title == 'undefined') ? edge.title : "PLACE_NAME" %></h3>
-              </br>
-              <h4>Longitude: <%= !(typeof edge.location.lng == 'undefined') ? edge.location.lng :0%></h4>
-              </br>
-              <h4>Latitude: <%= !(typeof edge.location.lat == 'undefined') ? edge.location.lat :0%></h4>
-              </br>
-              </br>
-
+              <h3 style="display:block;"><%= !(typeof edge.title == 'undefined') ? edge.title : "PLACE_NAME" %></h3>
+              <div style="height:100px" id="<%=edge.location.lat.toString()+'_'+edge.location.lng.toString()%>" class="map">
+              </div>
+              <h4 style="min-width:10%">[<%= !(typeof edge.location.lng == 'undefined') ? edge.location.lng :0%> , <%= !(typeof edge.location.lat == 'undefined') ? edge.location.lat :0%>]</h4>
             </div>
           <% } %>
 
@@ -29,8 +22,8 @@
 
       <div class="col-sm-6 text-center align-self-center">
 
-        <h3><%= !(typeof edge == 'undefined') ? edge.username : "username" %></h3>
-        <h4><%= !(typeof edge == 'undefined') ? (edge.email || edge.full_name) :"user@maildomain"%></h4>
+        <h3><%= !(typeof edge.location == 'undefined') ? edge.location.address : edge.slug %></h3>
+        <h4><%= !(typeof edge.location == 'undefined') ? edge.location.city :"--NO CITY INFO!"%></h4>
 
       </div>
 
@@ -39,9 +32,8 @@
   <% }) %>
 <%}%>
 <% if(!(typeof etlData.hashtags == 'undefined')){ console.log('we got data here...')%>
-  <h1>Hashtags:</h1>
-  <h2>_________</h2>
-  </br>
+  <h1 style="color:white;">Hashtags:</h1>
+
   <% etlData.hashtags.forEach((edge) => { %>
     <% edge = edge.hashtag %>
     <div class="row whiteBox ">
@@ -50,11 +42,11 @@
           <% if(edge) { %>
             <div class="col-sm-6 text-center align-self-center">
 
-              <h3>Hashtag: <%= !(typeof edge.name == 'undefined') ? '#'+edge.name : '#'+"HASHTAG" %></h3>
+              <h3><%= !(typeof edge.name == 'undefined') ? '#'+edge.name : '#'+"HASHTAG" %></h3>
               </br>
-              <h4>Media count: <%= !(typeof edge.media_count == 'undefined') ? edge.media_count :0%></h4>
+              <h4><%= !(typeof edge.media_count == 'undefined') ? edge.media_count :0%></h4>
               </br>
-              <h4>Posts count: <%= !(typeof edge.search_result_subtitle == 'undefined') ? edge.search_result_subtitle :0%></h4>
+              <h4><%= !(typeof edge.search_result_subtitle == 'undefined') ? edge.search_result_subtitle :0%></h4>
               </br>
               </br>
 
@@ -79,9 +71,7 @@
   <% }) %>
 <%}%>
 <% if(!(typeof etlData.users == 'undefined')){ console.log('we got data here...')%>
-  <h1>Users:</h1>
-<h2>_________</h2>
-</br>
+  <h1 style="color:white;">Users:</h1>
   <% etlData.users.forEach((edge) => { %>
     <% edge = edge.user %>
     <div class="row whiteBox ">

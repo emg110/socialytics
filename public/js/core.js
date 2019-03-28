@@ -108,7 +108,7 @@ function getEndpoint (endpoint, type){
     case 'search-posts':
       if(query.length !== undefined){
         if(query.length>=3){
-          url  = endpoint+'username='+query+'&'+'count='+count;
+          url  = endpoint+'query='+query+'&'+'count='+count;
         }else{
           url = "NA";
         }
@@ -196,3 +196,11 @@ function getEndpoint (endpoint, type){
     window.alert('please provide all required');
   }
 }
+/*function loadMap(divName){
+  var latlon = divName.split('_');
+  var coor = [latlon[0], latlon[1]];
+  var map = L.map(divName).setView(coor, 13);
+  map.invalidateSize();
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: ''}).addTo(map);
+  L.marker(coor).addTo(map).bindPopup('A pretty CSS3 popup.<br> Easily customizable.').openPopup();
+}*/

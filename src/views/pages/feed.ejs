@@ -17,7 +17,7 @@
             <img class="img-fluid" src="<%= edge.display_url %>" alt="<%= edge.edge_media_to_caption? edge.edge_media_to_caption.edges[0]:[] %>">
           </a>
 
-          <p class="yellowStars">
+          <p class="likes-comments">
             <%if(edge.edge_media_preview_like){%>
               <% if(edge.edge_media_preview_like.count) { %><%=edge.edge_media_preview_like.count+' '%> &hearts; <% } %>
             <%}else{ %><%=edge.edge_liked_by? edge.edge_liked_by.count : '---'+' '%> &hearts; <%}%>

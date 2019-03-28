@@ -17,10 +17,10 @@
     <h1><%= !(typeof etlData == 'undefined') ? etlData.username : "username" %></h1>
     <h4><%= !(typeof etlData == 'undefined') ? (etlData.email || etlData.full_name) :"user@maildomain"%></h4>
 
-    <form method="POST" action="/profile">
+   <!-- <form method="POST" action="/profile">
       <input type="hidden" name="_method" value="DELETE">
       <button type="button" class="btn btn-danger">Delete Account</button>
-    </form>
+    </form>-->
 
   </div>
 
@@ -44,24 +44,34 @@
               <img class="img-fluid" src="<%= edge.thumbnail_src %>" alt="<%= edge.edge_media_to_caption.edges[0] ? edge.edge_media_to_caption.edges[0].node.text : "" %>">
             </a>
 
-            <p class="yellowStars">
-              <% while(edge.edge_liked_by--) { %> &hearts; <% } %>
-            </p>
+            <div class="likes-comments">
+              <span style="color: rgb(249,5,5);">
+                <%if(edge.edge_media_preview_like){%>
+                  <% if(edge.edge_media_preview_like.count) { %><%=edge.edge_media_preview_like.count+' '%> &hearts; <% } %>
+                <%}else{ %><%=edge.edge_liked_by.count+' '%> &hearts; <%}%>
+              </span>
+              <span style="color: transparent;  text-shadow: 0 0 0 rgb(42, 170, 82);">
+                <%if(edge.edge_media_to_comment){%>
+                <%=edge.edge_media_to_comment.count+' '%> &#x1F5E8;
+                <%} %>
+              </span>
+
+            </div>
 
             <% if(edge.owner.id === etlData.id) { %>
 
               <div class="row">
 
                 <div class="col-6 align-self-center">
-                  <a href="/edges/<%= edge.id %>/edit" class="btn btn-primary">Edit</a>
+                  <!--<a href="/edges/<%= edge.id %>/edit" class="btn btn-primary">Edit</a>-->
                 </div>
 
-                <div class="col-6 align-self-center">
+               <!-- <div class="col-6 align-self-center">
                   <form method="POST" action="/edges/<%= edge.id %>">
                     <input type="hidden" name="_method" value="DELETE">
                     <button class="btn btn-danger">Delete</button>
                   </form>
-                </div>
+                </div>-->
 
               </div>
 

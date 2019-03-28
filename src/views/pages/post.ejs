@@ -32,7 +32,7 @@
           <img class="img-fluid" src="<%= etlData.media_preview %>" alt="<%= etlData.edge_media_to_caption.edges[0] ? etlData.edge_media_to_caption.edges[0].node.text : etlData.id %>">
         </a>
 
-        <p class="yellowStars">
+        <p class="likes-comments">
           <%if(etlData.edge_media_preview_like){%>
             <% if(etlData.edge_media_preview_like.count) { %><%=etlData.edge_media_preview_like.count+' '%> &hearts; <% } %>
           <%}else{ %><%=etlData.edge_liked_by.count+' '%> &hearts; <%}%>
