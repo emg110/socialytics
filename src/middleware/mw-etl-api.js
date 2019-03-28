@@ -190,10 +190,63 @@ module.exports = function (options = {}) {
         let etlApiEndpoint = serverUrl+expr;
         let etlData = await getEndpointEtl(etlApiEndpoint);
         let userid = config.userid;
+        let finalData = {};
+        finalData.user = {};
+        finalData.user.edge_owner_to_timeline_media = {};
+        finalData.user.edge_owner_to_timeline_media.edges = etlData;
+        etlData = finalData;
         res.render('pages/posts',{etlData, userid},function(err, html) {
           if(err)console.log('ejs has returned this error: '+ err);
           res.send(html);
         });
+      }
+      else if(expr.indexOf('/instagram/suggested/people')>=0){
+        let etlApiEndpoint = serverUrl+expr;
+        let etlData = await getEndpointEtl(etlApiEndpoint);
+        let userid = config.userid;
+        let finalData = {};
+        finalData.edges = etlData;
+        etlData = finalData;
+        res.render('pages/follow',{etlData, userid},function(err, html) {
+          if(err)console.log('ejs has returned this error: '+ err);
+          res.send(html);
+        });
+      }
+      else if(expr.indexOf('/instagram/likes')>=0){
+        let etlApiEndpoint = serverUrl+expr;
+        let etlData = await getEndpointEtl(etlApiEndpoint);
+        if(etlData.length>0){
+          let userid = config.userid;
+          let finalData = {};
+          finalData.edges = etlData;
+          etlData = finalData;
+
+          res.render('pages/likes',{etlData, userid},function(err, html) {
+            if(err)console.log('ejs has returned this error: '+ err);
+            res.send(html);
+          });
+        }else{
+          res.send('<h1>NO LIKES FOR SELECTED POST</h1>>')
+        }
+
+      }
+      else if(expr.indexOf('/instagram/comments')>=0){
+        let etlApiEndpoint = serverUrl+expr;
+        let etlData = await getEndpointEtl(etlApiEndpoint);
+        if(etlData.length>0){
+          let userid = config.userid;
+          let finalData = {};
+          finalData.edges = etlData;
+          etlData = finalData;
+
+          res.render('pages/comments',{etlData, userid},function(err, html) {
+            if(err)console.log('ejs has returned this error: '+ err);
+            res.send(html);
+          });
+        }else{
+          res.send('<h1>NO LIKES FOR SELECTED POST</h1>>')
+        }
+
       }
     }
 

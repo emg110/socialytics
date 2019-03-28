@@ -1080,7 +1080,8 @@ module.exports = class Instagram {
                   resolve(self.getPostLikes(n, postId, after, first , 1, 1));
                 }, this.paginationDelay);
               });
-            } else {
+            }
+            else {
               self.receivePromises[postId] = undefined
               return self.postLikes[postId]
             }
