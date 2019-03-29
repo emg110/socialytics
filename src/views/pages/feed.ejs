@@ -17,11 +17,24 @@
             <img class="img-fluid" src="<%= edge.display_url %>" alt="<%= edge.edge_media_to_caption? edge.edge_media_to_caption.edges[0]:[] %>">
           </a>
 
-          <p class="likes-comments">
+          <!--<p class="likes-comments">
             <%if(edge.edge_media_preview_like){%>
               <% if(edge.edge_media_preview_like.count) { %><%=edge.edge_media_preview_like.count+' '%> &hearts; <% } %>
-            <%}else{ %><%=edge.edge_liked_by? edge.edge_liked_by.count : '---'+' '%> &hearts; <%}%>
-          </p>
+            <%}else if(edge.edge_liked_by){ %><%=edge.edge_liked_by? edge.edge_liked_by.count : '-&#45;&#45;'+' '%> &hearts; <%}%>
+          </p>-->
+          <div class="likes-comments">
+              <span style="color: rgb(249,5,5);">
+                <%if(edge.edge_media_preview_like){%>
+                  <% if(edge.edge_media_preview_like.count) { %><%=edge.edge_media_preview_like.count+' '%> &hearts; <% } %>
+                <%}else if(edge.edge_liked_by){ %><%=edge.edge_liked_by.count+' '%> &hearts; <%}%>
+              </span>
+            <span style="color: transparent;  text-shadow: 0 0 0 rgb(42, 170, 82);">
+              <%if(edge.edge_media_to_comment){%>
+              <%=edge.edge_media_to_comment.count+' '%> &#x1F5E8;
+              <%} %>
+            </span>
+
+          </div>
         </div>
       </div>
     </div>

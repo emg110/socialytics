@@ -344,12 +344,17 @@ img {
 }
 
 .likes-comments {
-  color: gold;
-  font-size: 1.5em
+  color: black;
+  font-size: 1.2em
 }
 
 @media screen and (max-width: 768px) {
   #phones {
     display: none
   }
+}
+.card-body {
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 0.25rem;
 }

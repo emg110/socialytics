@@ -1,6 +1,8 @@
 <% if(!(typeof etlData.edges == 'undefined')){ console.log('we got data here...')%>
   <% etlData.edges.forEach((edge) => { %>
   <% edge = edge.node %>
+  <% var commentDate = new Date(parseInt(edge.created_at)*1000) %>
+  <% edge.created_at = commentDate.getFullYear()+'-'+commentDate.getMonth()+'-'+commentDate.getDay() %>
   <div class="row whiteBox ">
 
     <div class="col-sm-6 text-center align-self-center">
@@ -13,10 +15,11 @@
 
     <div class="col-sm-6 text-center align-self-center">
 
-      <h2>Profile:<%= !(typeof edge == 'undefined') ? edge.owner.username : "username" %></h2>
-      <h3>Full name:<%= !(typeof edge == 'undefined') ? (edge.owner.email || edge.owner.full_name) :"user@maildomain"%></h3>
-      <h3>Commented@:<%= !(typeof edge == 'undefined') ? edge.created_at : "0000/00/00" %></h3>
-
+      <h2><%= !(typeof edge == 'undefined') ? edge.owner.username : "username" %></h2>
+      <h3><%= !(typeof edge == 'undefined') ? edge.owner.full_name :"-"%></h3>
+      <h3><%= !(typeof edge == 'undefined') ? edge.created_at : "0000/00/00" %></h3>
+      </br>
+      <h4><%= !(typeof edge == 'undefined') ? edge.text : ":..." %></h4>
     </div>
 
   </div>

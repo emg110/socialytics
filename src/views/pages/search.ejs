@@ -1,5 +1,5 @@
 <% if(!(typeof etlData.places == 'undefined')){ console.log('we got data here...')%>
-  <h1 style="color:white;">Places:</h1>
+  <h1 style="color:black;">Places:</h1>
   <% etlData.places.forEach((edge) => { %>
     <% edge = edge.place %>
     <div class="row whiteBox ">
@@ -32,7 +32,7 @@
   <% }) %>
 <%}%>
 <% if(!(typeof etlData.hashtags == 'undefined')){ console.log('we got data here...')%>
-  <h1 style="color:white;">Hashtags:</h1>
+  <h1 style="color:black;">Hashtags:</h1>
 
   <% etlData.hashtags.forEach((edge) => { %>
     <% edge = edge.hashtag %>
@@ -71,7 +71,7 @@
   <% }) %>
 <%}%>
 <% if(!(typeof etlData.users == 'undefined')){ console.log('we got data here...')%>
-  <h1 style="color:white;">Users:</h1>
+  <h1 style="color:black;">Users:</h1>
   <% etlData.users.forEach((edge) => { %>
     <% edge = edge.user %>
     <div class="row whiteBox ">
