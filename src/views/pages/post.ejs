@@ -29,14 +29,21 @@
 
       <div class="card-body">
         <a data-toggle="modal" id="pop" data-target="#imgModal" href="/etlDatas/<%= etlData.id %>">
-          <img class="img-fluid" src="<%= etlData.media_preview %>" alt="<%= etlData.edge_media_to_caption.edges[0] ? etlData.edge_media_to_caption.edges[0].node.text : etlData.id %>">
+          <img class="img-fluid" src="<%= etlData.thumbnail_src %>" alt="<%= etlData.edge_media_to_caption.edges[0] ? etlData.edge_media_to_caption.edges[0].node.text : etlData.id %>">
         </a>
+        <div class="likes-comments">
+              <span style="color: rgb(249,5,5);">
+                <%if(etlData.edge_media_preview_like){%>
+                  <% if(etlData.edge_media_preview_like.count) { %><%=etlData.edge_media_preview_like.count+' '%> &hearts; <% } %>
+                <%}else if(etlData.edge_liked_by){ %><%=etlData.edge_liked_by.count+' '%> &hearts; <%}%>
+              </span>
+          <span style="color: transparent;  text-shadow: 0 0 0 rgb(42, 170, 82);">
+            <%if(etlData.edge_media_to_comment){%>
+            <%=etlData.edge_media_to_comment.count+' '%> &#x1F5E8;
+            <%} %>
+          </span>
 
-        <p class="likes-comments">
-          <%if(etlData.edge_media_preview_like){%>
-            <% if(etlData.edge_media_preview_like.count) { %><%=etlData.edge_media_preview_like.count+' '%> &hearts; <% } %>
-          <%}else{ %><%=etlData.edge_liked_by.count+' '%> &hearts; <%}%>
-        </p>
+        </div>
       </div>
 
     </div>
