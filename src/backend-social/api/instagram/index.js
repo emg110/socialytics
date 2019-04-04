@@ -1,4 +1,4 @@
-var config = require('../../../config');
+var config = require('../../../../config');
 const CSRF_TOKEN = config.CSRFTOKEN;
 const SESSION_ID = config.SESSIONID;
 var USER_SELF = config.USER_SELF;

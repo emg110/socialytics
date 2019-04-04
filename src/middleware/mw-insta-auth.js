@@ -1,5 +1,5 @@
 //const InstagramAuth = require('../../backend-social/api/instagram/instagram-auth');
-const Instagram = require('../../backend-social/api/instagram/instagram');
+const Instagram = require('../backend-social/api/instagram/instagram');
 const config = require('../../config')
 const instagram = new Instagram();
 async function getUser(uoi){

@@ -2,7 +2,7 @@
 
 const fetch = require('node-fetch');
 const FormData = require('form-data');
-const config  = require('../../../config');
+const config  = require('../../../../config');
 module.exports = class Instagram {
   /**
    * Constructor
