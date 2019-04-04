@@ -6,5 +6,13 @@ module.exports = {
     SESSION_ID:"",
     DEFAULT_PROFILES:[],
     DEFAULT_LOCATIONS:[],
-    DEFAULT_TAGS:[]
+    DEFAULT_TAGS:[],
+    DEFAULT_FORM_DATA:{
+      username:"emg110",
+      tag:"branding",
+      location:"faro",
+      query:"Algarve",
+      shortcode:"BvEmLzagqJE",
+      count:65
+    }
 };

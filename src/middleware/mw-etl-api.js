@@ -19,7 +19,7 @@ async function getEndpointEtl(etlApiEndpoint){
     }).then(t => t.json().catch((e) => {
     console.log('Instagram API returned an error:' + e)
   }).then(r => r));
-  console.log('Rendering results from etl API to browser client');
+  console.log('Rendering results from backend-social API to browser client');
   //res.render('pages/profile',{finalData});
   if(etlData.results)etlData = etlData.results;
   return etlData
