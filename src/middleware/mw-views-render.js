@@ -17,7 +17,7 @@ module.exports = function (options = {}) {
         break;
       case '/home':
         if(config.sessionid && config.csrftoken){
-          res.render('pages/index', { layout: 'layout-home' });
+          res.render('pages/index', { layout: 'layouts/layout-home' });
           console.log('Rendering home page');
         }else {
           res.redirect('/');

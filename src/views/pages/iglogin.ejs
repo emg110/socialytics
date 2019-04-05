@@ -1,6 +1,6 @@
 <div class="row justify-content-center">
   <div class="col-md-5 text-center">
-    <img id="instagram" class="img-fluid" src="images/phones.png" alt="Instagram">
+    <img id="instagram" class="img-fluid" src="img/phones.png" alt="Instagram">
   </div>
 
   <div class="col-md-5 text-center align-self-center">
@@ -8,41 +8,29 @@
     <div class="whiteBox">
 
       <a href="/">
-        <img class="img-fluid mx-auto d-block" src="images/logo.png" alt="instagram logo">
+        <img class="img-fluid mx-auto d-block" src="img/logo.png" alt="instagram logo">
       </a>
 
+
+
+
       <br>
-
-      <p>
-        Log in to use you'r own credentials to surf and analyse Instagram.
-      </p>
-
-      <a class="btn btn-primary col-10" href="<%=  %>" target="_blank">Login with Instagram</a>
-
-      <p class="text-uppercase">Or</p>
-
-      <form class="col-11 text-center justify-content-center" method="POST" action="/login">
-
-        <div class="text-center form-group justify-content-center">
-          <input type="text" class="form-control" name="email" id="email" placeholder="Email" required>
-          <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
+      <form class="text-center justify-content-center" method="POST" action="/login">
+        <p class="btn btn-primary">Login with Instagram</p>
+        <div style="display:inline-block;" class="text-center form-group justify-content-center">
+          <input style="display:block; margin:10px" type="text" class="form-control" name="email" id="email" placeholder="Email" required>
+          <input style="display:block; margin:10px" type="password" class="form-control" name="password" id="password" placeholder="Password" required>
         </div>
-
+        <br>
         <button class="btn btn-primary">Login</button>
 
       </form>
-
+      <p class="whiteBox">
+        Don't have an account? <a href="/register">Register</a>
+      </p>
     </div>
 
-    <p class="whiteBox">
-      Don't have an account? <a href="/register">Register</a>
-    </p>
 
-    <br>
-
-    <p>
-      Get the app.
-    </p>
 
   </div>
 

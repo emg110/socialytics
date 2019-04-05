@@ -102,7 +102,7 @@ a:focus {
 /* The sidepanel menu */
 .sidepanel {
   height: 100%; /* Specify a height */
-  width: 0; /* 0 width - change this with JavaScript */
+  width: 0; /* 0 width-change this with JavaScript */
   position: fixed; /* Stay in place */
   z-index: 1; /* Stay on top */
   top: 0;
@@ -290,7 +290,7 @@ footer .heart {
   padding: 15px
 }
 
-#phones {
+#edges {
   margin-top: 20px
 }
 
@@ -306,7 +306,7 @@ img {
 
 .jimbo {
   height: auto;
-  line-height: auto;
+  line-height: normal;
   background-position: center;
   background-size: cover;
   background-color: #aa000b;
@@ -349,7 +349,7 @@ img {
 }
 
 @media screen and (max-width: 768px) {
-  #phones {
+  #edges {
     display: none
   }
 }
@@ -357,4 +357,105 @@ img {
   -ms-flex: 1 1 auto;
   flex: 1 1 auto;
   padding: 0.25rem;
+}
+/*OLD STYLE*/
+
+body {
+  font-family : Karla,
+  sans-serif;
+  background-color :  #fafafa;
+  height : 100vh
+}
+input {
+  font-family : Karla,
+  sans-serif;
+  background-color :  #fafafa
+}
+a:link {
+  text-decoration : none
+}
+a {
+  color :  #003569;
+  font-weight : 700
+}
+#main {
+    margin : 0 auto;
+    padding : 0;
+    width : 100% ;
+    text-align : center
+  }
+footer {
+  height : 60px;
+  line-height : 60px;
+  margin-top : 20px;
+  bottom : 0;
+  border-top : 1px solid #e6e6e6;
+  border-bottom : 1px solid #e6e6e6;
+  background-color :  #fff
+}
+footer.heart {
+  color :  #cf2e31
+}
+#comments {
+    margin : 10px 0
+  }
+#leaveComment {
+    background-color :  #fff;
+    border : 1px solid #e6e6e6;
+    margin : 15px 0;
+    padding : 15px
+  }
+#edges {
+    margin-top : 20px
+  }
+a {
+  text-decoration : none
+}
+input {
+  margin : 5px;
+  background-color :  #fafafa
+}
+img {
+  margin : 5px 0
+}
+.jimbo {
+  height : auto;
+  line-height : normal;
+  background-position : center;
+  background-size : cover;
+  background-color :  #aa000b;
+  text-align : center;
+  color :  #fff
+}
+.img-thumbnail {
+         background :  #003569;
+         border : none
+       }
+.navbar {
+  border-bottom : 1px solid #e6e6e6
+}
+.btn {
+  margin : 10px
+}
+.card {
+  margin : 15px 0 0 0;
+  text-align : center
+}
+.card-header {
+          font-weight : 700
+        }
+.whiteBox {
+  background-color :  #fff;
+  border : 1px solid #e6e6e6;
+  padding : 15px;
+  margin : 15px
+}
+.yellowStars {
+  color : gold;
+  font-size : 1.5em
+}
+@media (max-width : 768px) {
+#edges {
+    display : none
+  }
 }

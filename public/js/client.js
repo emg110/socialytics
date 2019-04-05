@@ -8,11 +8,12 @@ function openNav(id) {
 function closeNav(id) {
   document.getElementById(id).style.width = "0";
 }
-function getEndpoint (endpoint, type){
-  if(type !=="form-data"){
+
+function getEndpoint(endpoint, type) {
+  if (type !== "form-data") {
     closeNav('insta-sidepanel');
     openNav('insta-sidepanel');
-    document.getElementById('instagram-container').innerHTML=html;
+    document.getElementById('instagram-container').innerHTML = html;
 
     var username = document.getElementById('username-input').value;
     var tag = document.getElementById('tag-input').value;
@@ -20,89 +21,89 @@ function getEndpoint (endpoint, type){
     var query = document.getElementById('search-input').value;
     var count = document.getElementById('count-input').value || 50;
     var shortcode = document.getElementById('shortcode-input').value;
-    var url  =endpoint;
+    var url = endpoint;
     switch (type) {
       case 'profile':
-        if(username.length !== undefined){
-          if(username.length>=3){
-            url  = endpoint+username;
-          }else{
+        if (username.length !== undefined) {
+          if (username.length >= 3) {
+            url = endpoint + username;
+          } else {
             url = "NA";
           }
         }
         break
       case 'whoami':
-        url  =endpoint;
+        url = endpoint;
         break
       case 'recent-posts':
-        if(username.length !== undefined){
-          if(username.length>=3){
-            url  = endpoint+'username='+username+'&'+'count='+count;
-          }else{
+        if (username.length !== undefined) {
+          if (username.length >= 3) {
+            url = endpoint + 'username=' + username + '&' + 'count=' + count;
+          } else {
             url = "NA";
           }
         }
         break
       case 'all-posts':
-        if(username.length !== undefined){
-          if(username.length>=3){
-            url  = endpoint+'username='+username;
-          }else{
+        if (username.length !== undefined) {
+          if (username.length >= 3) {
+            url = endpoint + 'username=' + username;
+          } else {
             url = "NA";
           }
         }
         break
 
       case 'tag-posts':
-        if(tag.length !== undefined){
-          if(tag.length>=3){
-            url  = endpoint+'tag='+tag+'&'+'count='+count;
-          }else{
+        if (tag.length !== undefined) {
+          if (tag.length >= 3) {
+            url = endpoint + 'tag=' + tag + '&' + 'count=' + count;
+          } else {
             url = "NA";
           }
         }
         break
       case 'location-posts':
-        if(location.length !== undefined){
-          if(location.length>=3){
-            url  = endpoint+'location='+location+'&'+'count='+count;
-          }else{
+        if (location.length !== undefined) {
+          if (location.length >= 3) {
+            url = endpoint + 'location=' + location + '&' + 'count=' + count;
+          } else {
             url = "NA";
           }
         }
         break
       case 'user-following':
-        if(username.length !== undefined){
-          if(username.length>=3){
-            url  = endpoint+'username='+username+'&'+'count='+count;
-          }else{
+        if (username.length !== undefined) {
+          if (username.length >= 3) {
+            url = endpoint + 'username=' + username + '&' + 'count=' + count;
+          } else {
             url = "NA";
           }
         }
         break
       case 'user-followers':
-        if(username.length !== undefined){
-          if(username.length>=3){
-            url  = endpoint+'username='+username+'&'+'count='+count;
-          }else{
+        if (username.length !== undefined) {
+          if (username.length >= 3) {
+            url = endpoint + 'username=' + username + '&' + 'count=' + count;
+          } else {
             url = "NA";
           }
         }
         break
       case 'search-posts':
-        if(query.length !== undefined){
-          if(query.length>=3){
-            url  = endpoint+'query='+query+'&'+'count='+count;
-          }else{
+        if (query.length !== undefined) {
+          if (query.length >= 3) {
+            url = endpoint + 'query=' + query + '&' + 'count=' + count;
+          } else {
             url = "NA";
           }
         }
         break
       case 'feed-posts':
-        if(count !== undefined){
-          if(count>=10){
-            url  = endpoint+'count='+count;
-          }else{
+        if (count !== undefined) {
+          if (count >= 10) {
+            url = endpoint + 'count=' + count;
+          } else {
             url = "NA";
           }
         }
@@ -110,87 +111,85 @@ function getEndpoint (endpoint, type){
       case 'all-feed-posts':
         break
       case 'post-likes':
-        if(shortcode.length !== undefined){
-          if(shortcode.length>=3){
-            url  = endpoint+'shortcode='+shortcode+'&'+'count='+count;
-          }else{
+        if (shortcode.length !== undefined) {
+          if (shortcode.length >= 3) {
+            url = endpoint + 'shortcode=' + shortcode + '&' + 'count=' + count;
+          } else {
             url = "NA";
           }
         }
         break
       case 'post-comments':
-        if(shortcode.length !== undefined){
-          if(shortcode.length>=3){
-            url  = endpoint+'shortcode='+shortcode+'&'+'count='+count;
-          }else{
+        if (shortcode.length !== undefined) {
+          if (shortcode.length >= 3) {
+            url = endpoint + 'shortcode=' + shortcode + '&' + 'count=' + count;
+          } else {
             url = "NA";
           }
         }
         break
       case 'post-json':
-        if(shortcode.length !== undefined){
-          if(shortcode.length>=3){
-            url  = endpoint+'shortcode='+shortcode;
-          }else{
+        if (shortcode.length !== undefined) {
+          if (shortcode.length >= 3) {
+            url = endpoint + 'shortcode=' + shortcode;
+          } else {
             url = "NA";
           }
         }
         break
       case 'post-page':
-        if(shortcode.length !== undefined){
-          if(shortcode.length>=3){
-            url  = endpoint+'shortcode='+shortcode;
-          }else{
+        if (shortcode.length !== undefined) {
+          if (shortcode.length >= 3) {
+            url = endpoint + 'shortcode=' + shortcode;
+          } else {
             url = "NA";
           }
         }
         break
       case 'sugg-posts':
-        if(count !== undefined){
-          if(count>=10){
-            url  = endpoint+'count='+count;
-          }else{
+        if (count !== undefined) {
+          if (count >= 10) {
+            url = endpoint + 'count=' + count;
+          } else {
             url = "NA";
           }
         }
         break
       case 'sugg-people':
-        if(count !== undefined){
-          if(count>=10){
-            url  = endpoint+'count='+count;
-          }else{
+        if (count !== undefined) {
+          if (count >= 10) {
+            url = endpoint + 'count=' + count;
+          } else {
             url = "NA";
           }
         }
         break
     }
-    if(url !== "NA" && url.indexOf('http://')>=0){
+    if (url !== "NA" && url.indexOf('http://') >= 0) {
       var xhr = new XMLHttpRequest();
       xhr.open("GET", url, true);
-      xhr.onload = function(e) {
+      xhr.onload = function (e) {
         var html = xhr.responseText;
         document.getElementById('insta-sidepanel').style.backgroundColor = "#fff"
-        document.getElementById('instagram-container').innerHTML=html;
+        document.getElementById('instagram-container').innerHTML = html;
       }
       xhr.send();
-    }
-    else{
+    } else {
       closeNav('insta-sidepanel');
       console.log('please provide all required');
       window.alert('please provide all required');
     }
-  }
-  else{
+  } else {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", endpoint, true);
-    xhr.onload = function(e) {
+    xhr.onload = function (e) {
       var txt = xhr.responseText;
       var json = JSON.parse(txt);
       document.getElementById('username-input').value = json.username;
-      document.getElementById('tag-input').value=json.tag;
-      document.getElementById('location-input').value=json.location;
-      document.getElementById('search-input').value=json.query;
-      document.getElementById('count-input').value =json.count;
+      document.getElementById('tag-input').value = json.tag;
+      document.getElementById('location-input').value = json.location;
+      document.getElementById('search-input').value = json.query;
+      document.getElementById('count-input').value = json.count;
       document.getElementById('shortcode-input').value = json.shortcode;
       console.log(json);
     }
@@ -198,6 +197,7 @@ function getEndpoint (endpoint, type){
   }
 
 }
+
 /*function loadMap(divName){
   var latlon = divName.split('_');
   var coor = [latlon[0], latlon[1]];

@@ -8,11 +8,11 @@ module.exports = {
     DEFAULT_LOCATIONS:[],
     DEFAULT_TAGS:[],
     DEFAULT_FORM_DATA:{
-      username:"emg110",
-      tag:"branding",
+      username:"s.and.m.artifacts",
+      tag:"s_and_m_artifacts",
       location:"faro",
       query:"Algarve",
-      shortcode:"BvEmLzagqJE",
+      shortcode:"BvzP4edAYPK",
       count:65
     }
 };

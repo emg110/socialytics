@@ -12,12 +12,12 @@ instagramClient.userName = (instagramClient.userName && instagramClient.userName
 console.log("Houman project's Instagram client has been initialized...");
 const instagramRouter = new Router({ prefix: "/api" });
 console.log("Houman project's Instagram API has started...");
-
-const client = require('@feathersjs/client');
+const feathers = require('@feathersjs/feathers');
+//const client = require('@feathersjs/client');
 const socketio = require('@feathersjs/socketio-client');
 const io = require('socket.io-client');
 const socket = io('http://localhost:8080');
-const api = client().configure(socketio(socket, {
+const api = feathers().configure(socketio(socket, {
   timeout: 500000
 }));
 async function writeDatabase (data, service){

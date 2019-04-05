@@ -11,7 +11,7 @@ module.exports = function (app) {
 
   app.use('/home',expressLayouts);
  /* app.get('/', function(req, res) {
-    res.render('pages/home', { layout: 'layout-home' });
+    res.render('pages/home', { layout: 'layouts/layout-home' });
   )*/
   //app.get('/', (req, res) => res.render('pages/home'));
   app.use(mwInstaAuth());
