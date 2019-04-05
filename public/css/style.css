@@ -138,6 +138,13 @@ a:focus {
   font-size: 36px;
   margin-left: 50px;
 }
+.sidepanel .backbtn {
+  position: absolute;
+  top: 0;
+  left: 25px;
+  font-size: 5.5em;
+  margin-right: 50px;
+}
 
 /* Style the button that is used to open the sidepanel */
 .instabtn {

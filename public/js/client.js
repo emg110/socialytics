@@ -19,14 +19,19 @@ function openNav(id) {
 function closeNav(id) {
     document.getElementById(id).style.width = "0";
 }
+function backNav() {
+    $("#instagram-post-container").hide();
+    $("#instagram-container").show();
+    $("#backbtn").hide();
+}
 
-function getEndpoint(endpoint, type) {
+function getEndpoint(endpoint, type, code) {
     $("#carosel").hide();
     $("#logo").show();
     if (type !== "form-data") {
         closeNav('insta-sidepanel');
         openNav('insta-sidepanel');
-        document.getElementById('instagram-container').innerHTML = html;
+        if(!code)document.getElementById('instagram-container').innerHTML = html;
 
         var username = document.getElementById('username-input').value;
         var tag = document.getElementById('tag-input').value;
@@ -142,7 +147,14 @@ function getEndpoint(endpoint, type) {
                 }
                 break
             case 'post-json':
-                if (shortcode.length !== undefined) {
+                if(code){
+                    if (code.length >= 3) {
+                        url = endpoint + 'shortcode=' + code;
+                    } else {
+                        url = "NA";
+                    }
+                }
+                else if (shortcode.length !== undefined) {
                     if (shortcode.length >= 3) {
                         url = endpoint + 'shortcode=' + shortcode;
                     } else {
@@ -184,7 +196,15 @@ function getEndpoint(endpoint, type) {
             xhr.onload = function (e) {
                 var html = xhr.responseText;
                 document.getElementById('insta-sidepanel').style.backgroundColor = "#fff"
-                document.getElementById('instagram-container').innerHTML = html;
+                if(code){
+                    $("#instagram-post-container").show();
+                    $("#instagram-container").hide();
+                    $("#backbtn").show();
+                    document.getElementById('instagram-post-container').innerHTML = html;
+                }else{
+                    document.getElementById('instagram-container').innerHTML = html;
+                }
+
                 /*document.getElementById('media-preview').src = ig_media_preview(document.getElementById('media-preview').src.replace('http://localhost:8080/',''));
                 document.getElementById('media-view').src = ig_media_preview(document.getElementById('media-view').src.replace('http://localhost:8080/',''));*/
 

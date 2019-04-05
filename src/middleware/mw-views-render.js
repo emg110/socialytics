@@ -29,8 +29,8 @@ module.exports = function (options = {}) {
         console.log('Rendering instagram engagement page');
         break;
       case '/login':
-        res.render('pages/engagement', {output});
-        console.log('Rendering instagram engagement page');
+        res.render('pages/login', {output});
+        console.log('Rendering login page');
         break;
       case '/instagram/form/data?':
         var formData = config.DEFAULT_FORM_DATA
