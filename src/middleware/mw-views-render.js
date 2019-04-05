@@ -39,7 +39,7 @@ module.exports = function (options = {}) {
         break;
       default:
         next();
-        console.log('No routable views found, routing to other APIs to check if they game this '  + '!');
+        console.log('Resource routing or unknown path '  + '!');
     }
   };
 };

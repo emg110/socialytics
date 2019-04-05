@@ -1,4 +1,5 @@
 <!-- Modal -->
+<%var mediaSrc  = etlData.display_url%>
 <div class="modal fade" id="imgModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -9,7 +10,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <img class="img-fluid" src="<%= etlData.thumbnail_src %>" alt="<%= etlData.edge_media_to_caption.edges[0] ? etlData.edge_media_to_caption.edges[0].node.text : etlData.id %>">
+        <img id="media-view" class="img-fluid" src="<%=mediaSrc%>" alt="<%= etlData.edge_media_to_caption.edges[0] ? etlData.edge_media_to_caption.edges[0].node.text : etlData.id %>">
       </div>
     </div>
   </div>
@@ -29,7 +30,7 @@
 
       <div class="card-body">
         <a data-toggle="modal" id="pop" data-target="#imgModal" href="/etlDatas/<%= etlData.id %>">
-          <img class="img-fluid" src="<%= etlData.thumbnail_src %>" alt="<%= etlData.edge_media_to_caption.edges[0] ? etlData.edge_media_to_caption.edges[0].node.text : etlData.id %>">
+          <img id="media-preview" class="img-fluid" src="<%=mediaSrc %>" alt="<%= etlData.edge_media_to_caption.edges[0] ? etlData.edge_media_to_caption.edges[0].node.text : etlData.id %>">
         </a>
         <div class="likes-comments">
               <span style="color: rgb(249,5,5);">

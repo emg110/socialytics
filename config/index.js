@@ -11,7 +11,7 @@ module.exports = {
       username:"s.and.m.artifacts",
       tag:"s_and_m_artifacts",
       location:"faro",
-      query:"Algarve",
+      query:"s.and.m.artifacts",
       shortcode:"BvzP4edAYPK",
       count:65
     }
