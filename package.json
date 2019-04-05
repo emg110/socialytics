@@ -45,6 +45,7 @@
     "feathers-findone": "latest",
     "@tensorflow/tfjs": "latest",
     "jquery": "^3.3.1",
+    "bootstrap": "latest",
     "compression": "latest",
     "cors": "latest",
     "crossfilter2": "latest",

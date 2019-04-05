@@ -26,6 +26,8 @@ img.logo {
   margin: 0 auto;
   max-width: 100%;
   margin-bottom: 30px;
+ /* -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);*/
 }
 
 img.UAlglogo {
@@ -160,6 +162,7 @@ a:focus {
   /* width: 180px; */
   /* height: 9%; */
   display: grid;
+  margin-right: 5px;
 }
 
 .form-container {
@@ -187,7 +190,7 @@ a:focus {
 #footer-container {
   margin-top: 20px;
   padding: 20px;
-  margin-left: 200px;
+  /*margin-left: 200px;*/
 }
 
 .endpoint-button {
@@ -234,8 +237,47 @@ svg path,
 svg rect {
   fill: #FF6700;
 }
+.github{
+  position:absolute;
+  top:0;
+  right:0;
+  cursor:pointer
+}
 
-/*this is text*/
+.github:hover {
+  animation: octocat-wave 560ms ease-in-out;
+}
+
+@keyframes octocat-wave {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  20% {
+    transform: rotate(-25deg);
+  }
+
+  40% {
+    transform: rotate(10deg);
+  }
+
+  60% {
+    transform: rotate(-25deg);
+  }
+
+  80% {
+    transform: rotate(10deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+
+
+
+/*this is me*/
 
 
 body {
@@ -455,6 +497,13 @@ img {
   font-size : 1.5em
 }
 @media (max-width : 768px) {
+  .github-corner:hover .octo-arm {
+    animation: none;
+  }
+
+  .github-corner .octo-arm {
+    animation: octocat-wave 560ms ease-in-out;
+  }
 #edges {
     display : none
   }

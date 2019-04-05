@@ -10,6 +10,8 @@ function closeNav(id) {
 }
 
 function getEndpoint(endpoint, type) {
+  $("#carosel").hide();
+  $("#logo").show();
   if (type !== "form-data") {
     closeNav('insta-sidepanel');
     openNav('insta-sidepanel');
@@ -198,6 +200,7 @@ function getEndpoint(endpoint, type) {
 
 }
 
+
 /*function loadMap(divName){
   var latlon = divName.split('_');
   var coor = [latlon[0], latlon[1]];
@@ -206,6 +209,31 @@ function getEndpoint(endpoint, type) {
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: ''}).addTo(map);
   L.marker(coor).addTo(map).bindPopup('A pretty CSS3 popup.<br> Easily customizable.').openPopup();
 }*/
+function carosel(){
+  $("#powerpoint").carousel();
+  // Enable Carousel Indicators
+  $(".item").click(function(){
+    $("#powerpoint").carousel(1);
+  });
+  // Enable Carousel Controls
+  $(".carousel-control-prev").click(function(){
+    $("#powerpoint").carousel("prev");
+  });
+}
+
+$("#carosel").hide();
+$("#logo").click(function(){
+  $("#carosel").show();
+  $("#logo").hide();
+});
+$("#github").click(function(){
+  window.open('https://houmanhadian.github.io/', '_blank');
+});
+
+
+
+
+
 var html = '<div class="loader loader--style1" title="0">\n' +
   '        <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"\n' +
   '             x="0px" y="0px"\n' +
