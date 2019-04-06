@@ -3,12 +3,12 @@
   <% edge = edge.node.user %>
   <div class="row whiteBox ">
 
-    <div class="col-sm-6 text-center align-self-center">
+    <div class="col-sm-6 text-center align-self-center" onClick=getEndpoint("http://localhost:8080/instagram/profile?","profile",<%= '"'+edge.username+'"' %>,"profile")>
       <% if(!(typeof edge == 'undefined')){%>
         <% if(edge.profile_pic_url) { %>
-          <img class="img-thumbnail" src="<%= !(typeof edge == 'undefined') ? edge.profile_pic_url:"" %>" alt="<%= edge ? etlData.username :"" %>">
+          <img class="img-thumbnail" src="<%= !(typeof edge == 'undefined') ? edge.profile_pic_url:"" %>" alt="<%= edge ? edge.username :"" %>">
         <% } else { %>
-          <img class="img-thumbnail" src="<%= !(typeof edge == 'undefined') ? edge.profile_pic_url : "" %>" alt="<%= edge ? etlData.username : "" %>">
+          <img class="img-thumbnail" src="<%= !(typeof edge == 'undefined') ? edge.profile_pic_url : "" %>" alt="<%= edge ? edge.username : "" %>">
         <% } %>
       <%}%>
 

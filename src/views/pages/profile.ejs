@@ -40,9 +40,9 @@
           </div>
 
           <div class="card-body">
-            <a href="/edges/<%= edge.id %>">
-              <img class="img-fluid" src="<%= edge.thumbnail_src %>" alt="<%= edge.edge_media_to_caption.edges[0] ? edge.edge_media_to_caption.edges[0].node.text : "" %>">
-            </a>
+              <div style="cursor:pointer" onClick=getEndpoint("http://localhost:8080/instagram/post?","post-json",<%= '"'+edge.shortcode+'"' %>,"post")>
+                  <img class="img-fluid" src="<%= edge.thumbnail_src %>" alt="<%= edge.edge_media_to_caption? edge.edge_media_to_caption.edges[0]:[] %>">
+              </div>
 
             <div class="likes-comments">
               <span style="color: rgb(249,5,5);">

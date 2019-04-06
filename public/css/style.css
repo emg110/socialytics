@@ -26,8 +26,8 @@ img.logo {
   margin: 0 auto;
   max-width: 100%;
   margin-bottom: 30px;
- /* -webkit-filter: grayscale(100%);
-  filter: grayscale(100%);*/
+  /* -webkit-filter: grayscale(100%);
+   filter: grayscale(100%);*/
 }
 
 img.UAlglogo {
@@ -138,6 +138,7 @@ a:focus {
   font-size: 36px;
   margin-left: 50px;
 }
+
 .sidepanel .backbtn {
   position: absolute;
   top: 0;
@@ -244,11 +245,12 @@ svg path,
 svg rect {
   fill: #FF6700;
 }
-.github{
-  position:absolute;
-  top:0;
-  right:0;
-  cursor:pointer
+
+.github {
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer
 }
 
 .github:hover {
@@ -280,8 +282,6 @@ svg rect {
     transform: rotate(0deg);
   }
 }
-
-
 
 
 /*this is me*/
@@ -348,7 +348,6 @@ a {
 }
 
 
-
 img {
   margin: 5px 0
 }
@@ -365,7 +364,8 @@ img {
 
 .img-thumbnail {
   background: #003569;
-  border: none
+  border: none;
+  cursor:pointer;
 }
 
 .navbar {
@@ -402,108 +402,126 @@ img {
     display: none
   }
 }
+
 .card-body {
   -ms-flex: 1 1 auto;
   flex: 1 1 auto;
   padding: 0.25rem;
 }
+
 /*OLD STYLE*/
 
 body {
-  font-family : Karla,
+  font-family: Karla,
   sans-serif;
-  background-color :  #fafafa;
-  height : 100vh
+  background-color: #fafafa;
+  height: 100vh
 }
+
 input {
-  font-family : Karla,
+  font-family: Karla,
   sans-serif;
-  background-color :  #fafafa
+  background-color: #fafafa
 }
+
 a:link {
-  text-decoration : none
+  text-decoration: none
 }
+
 a {
-  color :  #003569;
-  font-weight : 700
+  color: #003569;
+  font-weight: 700
 }
+
 #main {
-    margin : 0 auto;
-    padding : 0;
-    width : 100% ;
-    text-align : center
-  }
+  margin: 0 auto;
+  padding: 0;
+  width: 100%;
+  text-align: center
+}
+
 footer {
-  height : 60px;
-  line-height : 60px;
-  margin-top : 20px;
-  bottom : 0;
-  border-top : 1px solid #e6e6e6;
-  border-bottom : 1px solid #e6e6e6;
-  background-color :  #fff
+  height: 60px;
+  line-height: 60px;
+  margin-top: 20px;
+  bottom: 0;
+  border-top: 1px solid #e6e6e6;
+  border-bottom: 1px solid #e6e6e6;
+  background-color: #fff
 }
+
 footer.heart {
-  color :  #cf2e31
+  color: #cf2e31
 }
+
 #comments {
-    margin : 10px 0
-  }
+  margin: 10px 0
+}
+
 #leaveComment {
-    background-color :  #fff;
-    border : 1px solid #e6e6e6;
-    margin : 15px 0;
-    padding : 15px
-  }
+  background-color: #fff;
+  border: 1px solid #e6e6e6;
+  margin: 15px 0;
+  padding: 15px
+}
+
 #edges {
-    margin-top : 20px
-  }
+  margin-top: 20px
+}
+
 a {
-  text-decoration : none
+  text-decoration: none
 }
+
 input {
-  margin : 5px;
-  background-color :  #fafafa
+  margin: 5px;
+  background-color: #fafafa
 }
+
 img {
-  margin : 5px 0
+  margin: 5px 0
 }
+
 .jimbo {
-  height : auto;
-  line-height : normal;
-  background-position : center;
-  background-size : cover;
-  background-color :  #aa000b;
-  text-align : center;
-  color :  #fff
+  height: auto;
+  line-height: normal;
+  background-position: center;
+  background-size: cover;
+  background-color: #aa000b;
+  text-align: center;
+  color: #fff
 }
-.img-thumbnail {
-         background :  #003569;
-         border : none
-       }
+
 .navbar {
-  border-bottom : 1px solid #e6e6e6
+  border-bottom: 1px solid #e6e6e6
 }
+
 .btn {
-  margin : 10px
+  margin: 10px
 }
+
 .card {
-  margin : 15px 0 0 0;
-  text-align : center
+  margin: 15px 0 0 0;
+  text-align: center
 }
+
 .card-header {
-          font-weight : 700
-        }
+  font-weight: 700
+}
+
 .whiteBox {
-  background-color :  #fff;
-  border : 1px solid #e6e6e6;
-  padding : 15px;
-  margin : 15px
+  background-color: #fff;
+  border: 1px solid #e6e6e6;
+  padding: 15px;
+  margin: 15px
 }
+
 .yellowStars {
-  color : gold;
-  font-size : 1.5em
+  color: gold;
+  font-size: 1.5em
 }
-@media (max-width : 768px) {
+
+@media (max-width: 768px) {
   .github-corner:hover .octo-arm {
     animation: none;
   }
@@ -511,14 +529,17 @@ img {
   .github-corner .octo-arm {
     animation: octocat-wave 560ms ease-in-out;
   }
-#edges {
-    display : none
+
+  #edges {
+    display: none
   }
 }
-.stack-span img{
-    max-width:100px;
-    max-height:100px;
+
+.stack-span img {
+  max-width: 100px;
+  max-height: 100px;
 }
-.modal-backdrop{
-    z-index: 0;
+
+.modal-backdrop {
+  z-index: 0;
 }

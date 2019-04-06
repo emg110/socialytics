@@ -13,7 +13,7 @@
         </div>
 
         <div class="card-body">
-          <div style="cursor:pointer" onClick=getEndpoint("http://localhost:8080/instagram/post?","post-json",<%= '"'+edge.shortcode+'"' %>)>
+          <div style="cursor:pointer" onClick=getEndpoint("http://localhost:8080/instagram/post?","post-json",<%= '"'+edge.shortcode+'"' %>,"post")>
             <img class="img-fluid" src="<%= edge.thumbnail_src %>" alt="<%= edge.edge_media_to_caption? edge.edge_media_to_caption.edges[0]:[] %>">
           </div>
           <div class="likes-comments">

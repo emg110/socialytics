@@ -1,8 +1,10 @@
+window.results = [];
+window.currentFreeIndex = 0;
 function ig_media_preview(base64data) {
     var jpegtpl = "/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEABsaGikdKUEmJkFCLy8vQkc/Pj4/R0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0cBHSkpNCY0PygoP0c/NT9HR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR//AABEIABQAKgMBIgACEQEDEQH/xAGiAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgsQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+gEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoLEQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/AA==",
         t = atob(base64data),
         p = t.slice(3).split(""),
-        o = t.substring(0, 3).split("").map(function(e) {
+        o = t.substring(0, 3).split("").map(function (e) {
             return e.charCodeAt(0)
         }),
         c = atob(jpegtpl).split("");
@@ -10,6 +12,7 @@ function ig_media_preview(base64data) {
     c[160] = String.fromCharCode(o[2]);
     return base64data ? "data:image/jpeg;base64," + btoa(c.concat(p).join("")) : null
 };
+
 function openNav(id) {
     document.getElementById(id).style.backgroundColor = "#111";
     document.getElementById(id).style.width = "35%";
@@ -19,20 +22,44 @@ function openNav(id) {
 function closeNav(id) {
     document.getElementById(id).style.width = "0";
 }
+
 function backNav() {
+    var html = undefined;
+    var currentFreeIndex = window.currentFreeIndex;
+    var results = window.results
+    if(currentFreeIndex<2){
+        $("#backbtn").hide();
+    }
+    else if(currentFreeIndex>=2){
+        $("#backbtn").show();
+        html = results[currentFreeIndex-2].html;
+        window.results = results.slice(0,currentFreeIndex-1);
+        window.currentFreeIndex--;
+
+        if(window.currentFreeIndex<2) $("#backbtn").hide();
+    }
+
+
+    if(html !== undefined)document.getElementById('instagram-container').innerHTML = html;
+/*    $("#instagram-profile-container").hide();
+    $("#instagram-profiles-container").hide();
     $("#instagram-post-container").hide();
-    $("#instagram-container").show();
-    $("#backbtn").hide();
+    $("#instagram-posts-container").hide();*/
+    /*$("#instagram-container").show();*/
+
 }
 
-function getEndpoint(endpoint, type, code) {
+function getEndpoint(endpoint, type, code, target) {
+/*    $("#instagram-profile-container").hide();
+    $("#instagram-profiles-container").hide();
+    $("#instagram-post-container").hide();
+    $("#instagram-posts-container").hide();*/
     $("#carosel").hide();
     $("#logo").show();
     if (type !== "form-data") {
         closeNav('insta-sidepanel');
         openNav('insta-sidepanel');
-        if(!code)document.getElementById('instagram-container').innerHTML = html;
-
+        if (!code) document.getElementById('instagram-container').innerHTML = html;
         var username = document.getElementById('username-input').value;
         var tag = document.getElementById('tag-input').value;
         var location = document.getElementById('location-input').value;
@@ -42,7 +69,13 @@ function getEndpoint(endpoint, type, code) {
         var url = endpoint;
         switch (type) {
             case 'profile':
-                if (username.length !== undefined) {
+                if (code) {
+                    if (code.length >= 3) {
+                        url = endpoint + code;
+                    } else {
+                        url = "NA";
+                    }
+                } else if (username.length !== undefined) {
                     if (username.length >= 3) {
                         url = endpoint + username;
                     } else {
@@ -147,14 +180,13 @@ function getEndpoint(endpoint, type, code) {
                 }
                 break
             case 'post-json':
-                if(code){
+                if (code) {
                     if (code.length >= 3) {
                         url = endpoint + 'shortcode=' + code;
                     } else {
                         url = "NA";
                     }
-                }
-                else if (shortcode.length !== undefined) {
+                } else if (shortcode.length !== undefined) {
                     if (shortcode.length >= 3) {
                         url = endpoint + 'shortcode=' + shortcode;
                     } else {
@@ -190,21 +222,72 @@ function getEndpoint(endpoint, type, code) {
                 }
                 break
         }
+        if(target === 'main'){
+            window.results = [];
+            window.currentFreeIndex = 0;
+            $("#backbtn").hide();
+        }else{
+            $("#backbtn").show();
+        }
         if (url !== "NA" && url.indexOf('http://') >= 0) {
             var xhr = new XMLHttpRequest();
             xhr.open("GET", url, true);
             xhr.onload = function (e) {
                 var html = xhr.responseText;
-                document.getElementById('insta-sidepanel').style.backgroundColor = "#fff"
-                if(code){
-                    $("#instagram-post-container").show();
-                    $("#instagram-container").hide();
+                document.getElementById('insta-sidepanel').style.backgroundColor = "#fff";
+                var index = window.currentFreeIndex;
+                window.results[index]={html:html};
+                
+                document.getElementById('instagram-container').innerHTML = html;
+                window.currentFreeIndex++;
+                
+              /*  if (target == 'post') {
                     $("#backbtn").show();
-                    document.getElementById('instagram-post-container').innerHTML = html;
-                }else{
+                /!*    $("#instagram-post-container").show();
+                    $("#instagram-profile-container").hide();
+                    $("#instagram-container").hide();*!/
+
                     document.getElementById('instagram-container').innerHTML = html;
                 }
+                else if (target == 'posts') {
+                    $("#backbtn").show();
+               /!*     $("#instagram-posts-container").show();
+                    $("#instagram-profile-container").hide();
+                    $("#instagram-profiles-container").hide();
+                    $("#instagram-post-container").hide();
+                    $("#instagram-container").hide();*!/
 
+                    document.getElementById('instagram-container').innerHTML = html;
+                }
+                else if (target == 'profile') {
+                    $("#backbtn").show();
+                  /!*  $("#instagram-profile-container").show();
+                    $("#instagram-container").hide();
+                    $("#instagram-post-container").hide();
+                    $("#instagram-posts-container").hide();
+                    $("#instagram-profiles-container").hide();*!/
+
+                    document.getElementById('instagram-container').innerHTML = html;
+                }
+                else if (target == 'profiles') {
+                    $("#backbtn").show();
+                  /!*  $("#instagram-profiles-container").show();
+                    $("#instagram-profile-container").hide();
+                    $("#instagram-posts-container").hide();
+                    $("#instagram-post-container").hide();
+                    $("#instagram-container").hide();*!/
+
+                    document.getElementById('instagram-container').innerHTML = html;
+                }
+                else {
+                   /!* $("#instagram-container").show();
+                    $("#instagram-profile-container").hide();
+                    $("#instagram-profiles-container").hide();
+                    $("#instagram-post-container").hide();
+                    $("#instagram-posts-container").hide();*!/
+                    document.getElementById('instagram-container').innerHTML = html;
+                }
+*/
                 /*document.getElementById('media-preview').src = ig_media_preview(document.getElementById('media-preview').src.replace('http://localhost:8080/',''));
                 document.getElementById('media-view').src = ig_media_preview(document.getElementById('media-view').src.replace('http://localhost:8080/',''));*/
 
@@ -215,8 +298,7 @@ function getEndpoint(endpoint, type, code) {
             console.log('please provide all required');
             window.alert('please provide all required');
         }
-    }
-    else {
+    } else {
         var xhr = new XMLHttpRequest();
         xhr.open("GET", endpoint, true);
         xhr.onload = function (e) {
@@ -263,25 +345,25 @@ var socket = io('http://localhost:8080');
 var feathersClient = feathers().configure(feathers.socketio(socket));
 
 var posts = feathersClient.service('/instagram/posts');
-posts.on('created', (post) =>{
+posts.on('created', (post) => {
     var caption = 'POST WITH NO CAPTION';
     var pic = '';
     var title = 'Post:';
-    if(post.edge_media_to_caption){
-        if(post.edge_media_to_caption.edges[0]){
+    if (post.edge_media_to_caption) {
+        if (post.edge_media_to_caption.edges[0]) {
             caption = post.edge_media_to_caption.edges[0].node.text;
         }
     }
-    if(post.thumbnail_src){
+    if (post.thumbnail_src) {
         pic = post.thumbnail_src;
     }
 
     $.notify({
         // options
         icon: pic,
-        title:title,
-        message: caption.substring(0,100) + '...'
-    },{
+        title: title,
+        message: caption.substring(0, 100) + '...'
+    }, {
         // settings
         type: 'info',
         delay: 8000,
@@ -295,68 +377,68 @@ posts.on('created', (post) =>{
             '</div>'
     });
     //console.log('message created', message);
-} );
+});
 
 var profiles = feathersClient.service('/instagram/profiles');
-profiles.on('created', (profile) =>{
+profiles.on('created', (profile) => {
     var caption = 'PROFILE WITH NO NAME';
     var pic = '';
-    if(profile.full_name){
+    if (profile.full_name) {
         caption = profile.username;
     }
-    if(profile.profile_pic_url){
+    if (profile.profile_pic_url) {
         pic = profile.profile_pic_url;
     }
     $.notify({
         // options
         icon: pic,
         message: caption
-    },{
+    }, {
         // settings
         type: 'info',
         delay: 5000,
         icon_type: 'src',
     });
     //console.log('message created', message);
-} );
+});
 
 var searches = feathersClient.service('/instagram/search');
-searches.on('created', (search) =>{
+searches.on('created', (search) => {
     var result = 'Search results with: ';
-    if(search.places){
-        result+= search.places.length + ' Places | ';
+    if (search.places) {
+        result += search.places.length + ' Places | ';
     }
-    if(search.hashtags){
-        result+= search.hashtags.length +' Hashtags | ';
+    if (search.hashtags) {
+        result += search.hashtags.length + ' Hashtags | ';
     }
-    if(search.people){
-        result+= search.people.length +' People | ';
+    if (search.people) {
+        result += search.people.length + ' People | ';
     }
     $.notify({
         // options
         icon: 'glyphicon glyphicon-search',
         message: result
-    },{
+    }, {
         // settings
         type: 'info',
         delay: 5000,
         icon_type: 'class',
     });
     //console.log('message created', message);
-} );
+});
 
 var medias = feathersClient.service('/instagram/media');
-medias.on('created', (media) =>{
+medias.on('created', (media) => {
     var caption = 'POST WITH NO CAPTION';
     var pic = '';
     var title = 'Post:';
     media = media.graphql.shortcode_media || media;
-    if(media.edge_media_to_caption){
-        if(media.edge_media_to_caption.edges[0]){
+    if (media.edge_media_to_caption) {
+        if (media.edge_media_to_caption.edges[0]) {
             caption = media.edge_media_to_caption.edges[0].node.text;
         }
     }
-    if(media.media_preview){
+    if (media.media_preview) {
         pic = media.media_preview;
         pic = ig_media_preview(pic);
     }
@@ -364,9 +446,9 @@ medias.on('created', (media) =>{
     $.notify({
         // options
         icon: pic,
-        title:title,
+        title: title,
         message: caption
-    },{
+    }, {
         // settings
         type: 'info',
         delay: 8000,
@@ -380,7 +462,7 @@ medias.on('created', (media) =>{
             '</div>'
     });
     //console.log('message created', message);
-} );
+});
 
 $("#carosel").hide();
 $("#logo").click(function () {

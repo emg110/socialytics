@@ -1,21 +1,21 @@
 <div class="row">
   <% etlData.forEach((edge) => { %>
     <% edge = edge.node %>
-    <div class="col-md-4  align-self-center">
+    <% if(edge.display_url || edge.edge_media_to_caption){ %>
+        <div class="col-md-4  align-self-center">
       <div class="card">
         <div class="card-header">
           <% if(edge.edge_media_to_caption){ %>
             <%=edge.edge_media_to_caption.edges[0]? edge.edge_media_to_caption.edges[0].node.text:"CARD HEADER" %>
-          <%}else {%>
-            <%="CARD HEADER"%>
           <%}%>
+
 
         </div>
 
         <div class="card-body">
-          <a href="/edges/<%= edge.id %>">
+          <div style="cursor:pointer" onClick=getEndpoint("http://localhost:8080/instagram/post?","post-json",<%= '"'+edge.shortcode+'"' %>,"post")>
             <img class="img-fluid" src="<%= edge.display_url %>" alt="<%= edge.edge_media_to_caption? edge.edge_media_to_caption.edges[0]:[] %>">
-          </a>
+          </div>
 
           <!--<p class="likes-comments">
             <%if(edge.edge_media_preview_like){%>
@@ -38,7 +38,7 @@
         </div>
       </div>
     </div>
-
+    <%}%>
   <% }) %>
 
 </div>

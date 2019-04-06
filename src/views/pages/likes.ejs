@@ -3,12 +3,12 @@
   <% edge = edge.node %>
   <div class="row whiteBox ">
 
-    <div class="col-sm-6 text-center align-self-center">
+    <div style="cursor:pointer" class="col-sm-6 text-center align-self-center" onClick=getEndpoint("http://localhost:8080/instagram/profile?","profile",<%= '"'+edge.username+'"' %>,"profile") >
       <% if(!(typeof edge == 'undefined')){%>
         <% if(edge.profile_pic_url) { %>
-          <img class="img-thumbnail" src="<%= !(typeof edge == 'undefined') ? edge.profile_pic_url:"" %>" alt="<%= edge ? etlData.username :"" %>">
+          <img class="img-thumbnail" src="<%= !(typeof edge == 'undefined') ? edge.profile_pic_url:"" %>" alt="<%= edge ? edge.username :"" %>">
         <% } else { %>
-          <img class="img-thumbnail" src="<%= !(typeof edge == 'undefined') ? edge.profile_pic_url : "" %>" alt="<%= edge ? etlData.username : "" %>">
+          <img class="img-thumbnail" src="<%= !(typeof edge == 'undefined') ? edge.profile_pic_url : "" %>" alt="<%= edge ? edge.username : "" %>">
         <% } %>
       <%}%>
 
@@ -17,8 +17,8 @@
 
     <div class="col-sm-6 text-center align-self-center">
 
-      <h2><%= !(typeof edge == 'undefined') ? edge.username : "username" %></h2>
-      <h4><%= !(typeof edge == 'undefined') ? (edge.email || edge.full_name) :"user@maildomain"%></h4>
+      <h3><%= !(typeof edge == 'undefined') ? edge.username : "username" %></h3>
+      <h5><%= !(typeof edge == 'undefined') ? (edge.email || edge.full_name) :"user@maildomain"%></h5>
 
     </div>
 

@@ -29,7 +29,7 @@
       </div>
 
       <div class="card-body">
-        <a data-toggle="modal" id="pop" data-target="#imgModal" href="/etlDatas/<%= etlData.id %>">
+        <a style="cursor:pointer" data-toggle="modal" id="pop" data-target="#imgModal" href="/etlDatas/<%= etlData.id %>">
           <img id="media-preview" class="img-fluid" src="<%=mediaSrc %>" alt="<%= etlData.edge_media_to_caption.edges[0] ? etlData.edge_media_to_caption.edges[0].node.text : etlData.id %>">
         </a>
         <div class="likes-comments">
