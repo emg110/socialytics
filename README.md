@@ -52,7 +52,7 @@ needs to be completed~~. For now just links to API endpoints are available.
  
  M.Ghiasi (emg110@gmail.com), H.Hadian (a58976@ualg.pt)
 
-Special thanks to these great open source projects which paved the client's starting point:
+Special thanks to these great open source projects which paved the client's starting point but since changes required to make the tool complete , comprehensive and calibrated for analytics hence they have undergone great changes which left no place for branching and backward contribution via pull requests thus here we announce our gratitudes and in turn give back the whole effort to community, free and open source:
 
 [yatsenkolesh/instagram-nodejs](https://www.github.com/yatsenkolesh/instagram-nodejs)
 
