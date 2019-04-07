@@ -1,6 +1,6 @@
 <% if(!(typeof etlData.edges == 'undefined')){ console.log('we got data here...')%>
   <% etlData.edges.forEach((edge) => { %>
-  <% edge = edge.node.user %>
+  <% if(edge.node){if(edge.node.user){edge = edge.node.user}else{edge = edge.node}} %>
   <div class="row whiteBox ">
 
     <div class="col-sm-6 text-center align-self-center" onClick=getEndpoint("http://localhost:8080/instagram/profile?","profile",<%= '"'+edge.username+'"' %>,"profile")>

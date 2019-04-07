@@ -15,15 +15,11 @@ const middleware = require('./middleware');
 const services = require('./services');
 const appHooks = require('./app.hooks');
 const channels = require('./channels');
-const findOne = require('feathers-findone')
-
-
-
-
 const app = express(feathers());
 
 // Load app configuration
 app.configure(configuration());
+
 // Enable security, CORS, compression, favicon and body parsing
 app.use(helmet());
 app.use(cors());
@@ -45,10 +41,11 @@ app.configure(middleware);
 
 // Set up our services (see `services/index.js`)
 app.configure(services);
+
 // Set up event channels (see channels.js)
 app.configure(channels);
 
-app.configure(findOne());
+
 // Configure a middleware for 404s and the error handler
 app.use(express.notFound());
 app.use(express.errorHandler({ logger }));

@@ -1,13 +1,13 @@
-const hookInstaMediaVersion = require('../../hooks/hook-insta-media-version');
+
 
 module.exports = {
   before: {
     all: [],
     find: [],
     get: [],
-    create: [hookInstaMediaVersion()],
-    update: [hookInstaMediaVersion()],
-    patch: [hookInstaMediaVersion()],
+    create: [],
+    update: [],
+    patch: [],
     remove: []
   },
 

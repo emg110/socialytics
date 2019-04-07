@@ -1,13 +1,13 @@
-const hookInstaFollowVersion = require('../../hooks/hook-insta-follow-version');
+
 
 module.exports = {
   before: {
     all: [],
     find: [],
     get: [],
-    create: [hookInstaFollowVersion()],
-    update: [hookInstaFollowVersion()],
-    patch: [hookInstaFollowVersion()],
+    create: [],
+    update: [],
+    patch: [],
     remove: []
   },
 

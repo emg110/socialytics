@@ -195,6 +195,7 @@ module.exports = function (options = {}) {
         finalData.user.edge_owner_to_timeline_media = {};
         finalData.user.edge_owner_to_timeline_media.edges = etlData;
         etlData = finalData;
+
         res.render('pages/posts',{etlData, userid},function(err, html) {
           if(err)console.log('ejs has returned this error: '+ err);
           res.send(html);
@@ -261,11 +262,8 @@ module.exports = function (options = {}) {
       else if(expr.indexOf('/instagram/post')>=0){
         let etlApiEndpoint = serverUrl+expr;
         let etlData = await getEndpointEtl(etlApiEndpoint);
-        if(etlData.graphql){
+        if(etlData){
           let userid = config.userid;
-          let finalData = {};
-          finalData = etlData.graphql.shortcode_media;
-          etlData = finalData;
           res.render('pages/post',{etlData, userid},function(err, html) {
             if(err){
               console.log('ejs has returned this error: '+ err);

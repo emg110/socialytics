@@ -1,6 +1,6 @@
 <div class="row">
   <% etlData.forEach((edge) => { %>
-    <% edge = edge.node %>
+    <% if(edge.node)edge = edge.node %>
     <% if(edge.display_url || edge.edge_media_to_caption){ %>
         <div class="col-md-4  align-self-center">
       <div class="card">

@@ -42,7 +42,6 @@
     "@feathersjs/rest-client": "latest",
     "@feathersjs/socketio": "latest",
     "@feathersjs/socketio-client": "latest",
-    "feathers-findone": "latest",
     "@tensorflow/tfjs": "latest",
     "jquery": "^3.3.1",
     "bootstrap": "latest",

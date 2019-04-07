@@ -1,6 +1,6 @@
 <% if(!(typeof etlData.edges == 'undefined')){ console.log('we got data here...')%>
   <% etlData.edges.forEach((edge) => { %>
-  <% edge = edge.node %>
+  <% if(edge.node)edge = edge.node %>
   <% var commentDate = new Date(parseInt(edge.created_at)*1000) %>
   <% edge.created_at = commentDate.getFullYear()+'-'+commentDate.getMonth()+'-'+commentDate.getDay() %>
   <div class="row whiteBox ">

@@ -1,13 +1,11 @@
-const hookInstaSearchVersion = require('../../hooks/hook-insta-search-version');
-
 module.exports = {
   before: {
     all: [],
     find: [],
     get: [],
-    create: [hookInstaSearchVersion()],
-    update: [hookInstaSearchVersion()],
-    patch: [hookInstaSearchVersion()],
+    create: [],
+    update: [],
+    patch: [],
     remove: []
   },
 
