@@ -340,6 +340,40 @@ posts.on('created', (post) => {
   //console.log('message created', message);
 });
 
+var feeds = feathersClient.service('/instagram/feed');
+feeds.on('created', (feed) => {
+  var caption = 'FEED PROFILE WITH NO CAPTION';
+  var pic = picit(feed);
+  var title = 'Feed people:';
+  if (feed.edge_media_to_caption) {
+    if (feed.full_name.length>1) {
+      caption = feed.full_name;
+    }else{
+      caption = feed.username;
+    }
+  }
+
+  $.notify({
+    // options
+    icon: pic,
+    title: title,
+    message: caption.substring(0, 100) + '...'
+  }, {
+    // settings
+    type: 'info',
+    delay: 8000,
+    icon_type: 'src',
+    template: '<div style="width:15%" data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
+      '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+      '<span class="stack-span" data-notify="icon"></span> ' +
+      '<span data-notify="title">{1}</span> ' +
+      '<span data-notify="message">{2}</span>' +
+
+      '</div>'
+  });
+  //console.log('message created', message);
+});
+
 var profiles = feathersClient.service('/instagram/profiles');
 profiles.on('created', (profile) => {
   var caption = 'PROFILE WITH NO NAME';

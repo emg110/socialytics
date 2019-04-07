@@ -12,31 +12,41 @@ module.exports = function (options = {}) {
     //context.data.version = version;
     //console.log(context.data);
     var id = context.data.id;
-   /* if(!config.VERSIONING_DATA && !!config.UPSERT_DATA){
-      context.app.service(context.path).find({ id:id , limit:1}).then(page => {
-        if (page.total === 0) {
-          console.info(`No existing record found in service: ${context.path} with key: 'id:${id}'`)
-          return context
-        } else {
-          console.info(`Existing record found in service: ${context.path} with key: '${context.path}:${id}, updating...'`)
-          context.app.service(context.path).update(page.data[0]._id, context.data)
-          context.result = page.data[0];
-          return Promise.resolve(context)
-        }
-
-      })
-    }*/
     if (!!config.VERSIONING_DATA) {
       if (context.data['_id']) {
         delete context.data['_id']
       }
-      return context
     }
     else {
       if (context.data.id) {
-        context.data['_id'] = context.data.id
+        context.data['_id'] = id
       }
-      return context
     }
+    return context
+    /*if(!config.VERSIONING_DATA && !!config.UPSERT_DATA){
+      var check = await context.app.service(context.path).get(id).then(page => {
+        if (!page.id) {
+          console.info(`Record checked: No existing record found in service: ${context.path} with key: 'id:${id}'`)
+          return false
+        } else {
+          console.info(`Record checked: Existing record found in service: ${context.path} with key: '${context.path}:${id}, updating...'`)
+          context.app.service(context.path).update(page.data[0]._id, context.data)
+          context.result = page.data[0];
+          return true
+          //return Promise.resolve(context)
+        }
+
+      })
+      if(!!check){
+        return context
+      }else{
+        return Promise.reject(new Error(`Item with id:  ${page.data[0]._id} already exists in db`))
+      }
+
+    }else{
+      return context
+    }*/
+
+
   };
 };
