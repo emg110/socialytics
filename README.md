@@ -5,19 +5,19 @@ Houman Hadian's doctoral project code base
 
 This application is intended to provide batch and realtime (LAMBDA) ETL functionality on Instagram service APIs (private web API)
 in order to analyse brand engagement on Instagram via analytical models presented on 
-[Houman Hadian's doctoral project research papers](https://houmanhadian.github.io/). 
+[Houman Hadian's doctoral project research papers](https://houmanhadian.github.io/). This is an open source contribution in hope of producing side common benefits along with academic & scientific values. Soon to be published separately as NPM package with a more techy name indeed! We beleive that respecting diversity of tech tools in the wild there are still few full functionall browsing and analytics tools for social networks out there. Seeing a gap that could be filled makes the purpose to make a tool that can be reused for research, academic and scientific purposes. Noticible impacts on branding (place, product & service), tourism, marketing and behaivioral analytics sciences are envisioned and sought.
 
 **`Notice:` Work in progress!**
 
-The front end application is primitive HTML just for sake of testing and 
-needs to be completed. For now just links to API endpoints are available,
-and you have to change the parameters directly inside URI. The login process is still shakey and PM2 integration is being completed.
+~~The front end application is primitive HTML just for sake of testing and 
+needs to be completed~~. For now just links to API endpoints are available.
+~~and you have to change the parameters directly inside URI~~. The login process is still shakey and PM2 integration is being completed or even get removed because of the extent of resources and concerns ratio.
 
 **`TODO:`**
 
 1- ~~Add Instagram login form as start page for frontend and store the session-id and csrf_token on server side (with security in mind!)~~
 
-2- Add UI components for parameters
+2- ~~Add UI components for parameters~~
 
 3- ~~Implement database loading (NeDB for time being with support for MongoDB, Postgress, ElasticSearch and Redis).~~
 
