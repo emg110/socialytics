@@ -79,6 +79,7 @@
     "node-postgres-json": "latest",
     "objection": "latest",
     "pace-js": "latest",
+    "popper.js": "latest",
     "passport": "latest",
     "passport-local": "latest",
     "pg": "latest",

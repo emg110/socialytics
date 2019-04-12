@@ -12,10 +12,9 @@ module.exports = {
     tag: "s_and_m_artifacts",
     location: "faro",
     query: "s.and.m.artifacts",
-    shortcode: "BvzP4edAYPK",
+    shortcode: "BwE-N5mFizR",
     count: 65
   },
   // NOTICE: PLEASE DELETE ALL DB FILES INSIDE DATA FOLDER BEFORE CHANGING VERSIONING
-  VERSIONING_DATA: false,
-  UPSERT_DATA:true,
+  VERSIONING_DATA: true
 };

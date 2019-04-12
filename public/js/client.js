@@ -15,7 +15,7 @@ function ig_media_preview(base64data) {
 };
 
 function openNav(id) {
-  document.getElementById(id).style.backgroundColor = "#111";
+  //document.getElementById(id).style.backgroundColor = "#111";
   document.getElementById(id).style.width = "35%";
 }
 
@@ -263,7 +263,9 @@ function getEndpoint(endpoint, type, code, target) {
           window.counters[currentVal]=1;
           count = 1
         }
-        if(count>0)$('.disabled').append('<span style="background-color:white; color:#007bff; border-radius:50%;margin-left:10px " class="badge">'+count+'</span>');
+        if(count>0)$('.disabled').append('<span data-toggle="popover" data-trigger="hover" title="Last updated" data-content="'+doneDate+'" style="background-color:white; color:#007bff; border-radius:50%;margin-left:10px " class="badge pulse-default" >'+count+'</span>');
+        var elem = $('.disabled').find('span');
+        $(elem).popover();
         $('.disabled').removeClass('disabled');
 
       }

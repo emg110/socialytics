@@ -245,7 +245,7 @@ module.exports = function (options = {}) {
             res.send(html);
           });
         }else{
-          res.send('<h1>NO LIKES FOR SELECTED POST</h1>>')
+          res.send('<h1 style="background-color:grey;margin-left:10px;margin-right:10px;min-height: 45px; border-radius:22px;padding:10px;">  NO COMMENTS FOR SELECTED POST<span style="color:darkred;vertical-align: middle;" class="glyphicon glyphicon-info-sign"></span></h1>>')
         }
 
       }
