@@ -230,6 +230,11 @@ function getEndpoint(endpoint, type, code, target) {
       $("#backbtn").show();
     }
     if (url !== "NA" && url.indexOf('http://') >= 0) {
+      $('.fired').addClass('disabled');
+      $('.disabled').removeClass('fired');
+      $('.disabled').css('background-color','#e08e0b');
+
+      $('.disabled').append('<span id="loading" class="spinner-grow spinner-grow-sm"></span>');
       var xhr = new XMLHttpRequest();
       xhr.open("GET", url, true);
       xhr.onload = function (e) {
@@ -270,10 +275,19 @@ function getEndpoint(endpoint, type, code, target) {
 
       }
       xhr.send();
-    } else {
+    }
+    else {
       closeNav('insta-sidepanel');
       console.log('please provide all required');
       window.alert('please provide all required');
+      var currentVal = $('.disabled').val();
+      if(currentVal)currentVal = currentVal.replace('Loading... ','Get ');
+      $('.disabled').val(currentVal);
+      $('#loading').remove();
+      $('.disabled').css('background-color','#007bff');
+      $('.disabled').next().remove();
+      $('.btn .btn-primary').removeClass('disabled');
+
     }
   } else {
     var xhr = new XMLHttpRequest();
@@ -403,14 +417,11 @@ feeds.on('created', (feed) => {
 //             Loading..
 
 $('.btn-primary').on('click',function(){
-  $(this).addClass('disabled');
+  $(this).addClass('fired');
   var currentVal = $(this).val().replace('Get ','Loading... ');
   $(this).val(currentVal);
   //$(this).html(currentVal);
   $(this).find('span').remove();
-  this.style.backgroundColor = '#e08e0b';
-
-  $(this).append('<span id="loading" class="spinner-grow spinner-grow-sm"></span>');
 })
 
 var profiles = feathersClient.service('/instagram/profiles');
