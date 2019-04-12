@@ -1048,8 +1048,9 @@ module.exports = class Instagram {
 
     const variables = encodeURIComponent(JSON.stringify(query));
 
-    self.receivePromises[postId] = 1
-    return fetch('https://www.instagram.com/graphql/query/?query_id=17864450716183058&variables=' + variables,
+    self.receivePromises[postId] = 1;
+    var url = 'https://www.instagram.com/graphql/query/?query_id=17864450716183058&variables=' + variables;
+    return fetch(url ,
       {
         'method': 'get',
         'headers': self.combineWithBaseHeader(

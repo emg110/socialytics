@@ -1,6 +1,6 @@
 window.results = [];
 window.currentFreeIndex = 0;
-
+window.counters = {};
 function ig_media_preview(base64data) {
   var jpegtpl = "/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEABsaGikdKUEmJkFCLy8vQkc/Pj4/R0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0cBHSkpNCY0PygoP0c/NT9HR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR//AABEIABQAKgMBIgACEQEDEQH/xAGiAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgsQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+gEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoLEQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/AA==",
     t = atob(base64data),
@@ -242,6 +242,29 @@ function getEndpoint(endpoint, type, code, target) {
         window.currentFreeIndex++;
         /*document.getElementById('media-preview').src = ig_media_preview(document.getElementById('media-preview').src.replace('http://localhost:8080/',''));
         document.getElementById('media-view').src = ig_media_preview(document.getElementById('media-view').src.replace('http://localhost:8080/',''));*/
+        var currentVal = $('.disabled').val().replace('Loading... ','Get ');
+        $('.disabled').val(currentVal);
+        $('.disabled').css('background-color','#007bff');
+        $('#loading').remove();
+        var doneDate  = dayjs(Date.now()).format('YYYY MM-DD HH:mm:ss')
+        //<span class="badge">7</span>
+        $('.disabled').next().remove();
+        $('.disabled').after('<span style="color:lawngreen;" class="glyphicon glyphicon-ok"></span>');
+        var count = 0;
+        if(window.counters[currentVal]){
+          if(window.counters[currentVal]>=1){
+            count = window.counters[currentVal]+1;
+            window.counters[currentVal]++;
+          }else{
+            window.counters[currentVal]=1;
+            count = 1
+          }
+        }else{
+          window.counters[currentVal]=1;
+          count = 1
+        }
+        if(count>0)$('.disabled').append('<span style="background-color:white; color:#007bff; border-radius:50%;margin-left:10px " class="badge">'+count+'</span>');
+        $('.disabled').removeClass('disabled');
 
       }
       xhr.send();
@@ -373,6 +396,20 @@ feeds.on('created', (feed) => {
   });
   //console.log('message created', message);
 });
+
+//<span class="spinner-grow spinner-grow-sm"></span>
+//             Loading..
+
+$('.btn-primary').on('click',function(){
+  $(this).addClass('disabled');
+  var currentVal = $(this).val().replace('Get ','Loading... ');
+  $(this).val(currentVal);
+  //$(this).html(currentVal);
+  $(this).find('span').remove();
+  this.style.backgroundColor = '#e08e0b';
+
+  $(this).append('<span id="loading" class="spinner-grow spinner-grow-sm"></span>');
+})
 
 var profiles = feathersClient.service('/instagram/profiles');
 profiles.on('created', (profile) => {

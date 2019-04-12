@@ -52,8 +52,8 @@
   </div>
 
   <div class="col-md-6">
-
-    <% if(etlData.edge_media_preview_comment.edges.length !== 0) { %>
+    <% if(etlData.edge_media_preview_comment) { %>
+      <% if(etlData.edge_media_preview_comment.edges.length !== 0) { %>
 
       <div class="card">
 
@@ -82,7 +82,7 @@
       </div>
 
     <% } %>
-
+    <%}%>
     <% if(locals.isAuthenticated) { %>
 
       <div class="card">

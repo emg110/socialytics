@@ -124,7 +124,9 @@ const userPosts = async (ctx) => {
   })
   let posts = await instagramClient.getUserPosts(userData.id, count).then((p) => {
     return p.data
-  })
+  }).catch(err => {
+    console.log(err);
+  });
   let writeToDatabase = await writeDatabase(posts, '/instagram/posts')
   ctx.status = 200;
   ctx.body = {
@@ -140,7 +142,9 @@ const userAllPosts = async (ctx) => {
   var userId = instagramClient.getUserIdByUserName(userData);
   var posts = await instagramClient.getAllUserPosts(userId).then((p) => {
     return p
-  })
+  }).catch(err => {
+    console.log(err);
+  });
   let writeToDatabase = await writeDatabase(posts, '/instagram/posts')
   ctx.status = 200;
   ctx.body = {
@@ -153,7 +157,9 @@ const exploreTag = async (ctx) => {
   var quantity = inputTag.count || 50;
   let tagsData = await instagramClient.explore('hashtag', tag, quantity).then((t) => {
     return t;
-  })
+  }).catch(err => {
+    console.log(err);
+  });
   config.activetag = tag;
   let writeTagPostsToDatabase = await writeDatabase(tagsData, '/instagram/tag')
 
@@ -170,7 +176,9 @@ const exploreLocation = async (ctx) => {
   var locationId = await instagramClient.getLocationIdByName(locationName);
   let locData = await instagramClient.explore('location', locationId, quantity).then((t) => {
     return t;
-  })
+  }).catch(err => {
+    console.log(err);
+  });
   config.activelocation = locationName;
   let writeTagPostsToDatabase = await writeDatabase(locData, '/instagram/location')
   ctx.status = 200;
@@ -184,11 +192,15 @@ const userFollowing = async (ctx) => {
   var count = inputUser.count;
   const userData = await instagramClient.getUserDataByUsername(uoi).then((t) => {
     return t;
-  })
+  }).catch(err => {
+    console.log(err);
+  });
   var userId = instagramClient.getUserIdByUserName(userData);
   const userFollowingData = await instagramClient.getUserFollowing(count, userId).then((t) => {
     return t;
-  })
+  }).catch(err => {
+    console.log(err);
+  });
   let writeFollowingToDatabase = await writeDatabase(userFollowingData, '/instagram/following')
 
   ctx.status = 200;
@@ -202,11 +214,15 @@ const userFollowers = async (ctx) => {
   var count = inputUser.count;
   const userData = await instagramClient.getUserDataByUsername(uoi).then((t) => {
     return t;
-  })
+  }).catch(err => {
+    console.log(err);
+  });
   var userId = instagramClient.getUserIdByUserName(userData);
   let userFollowersData = await instagramClient.getUserFollowers(count, userId).then((t) => {
     return t;
-  })
+  }).catch(err => {
+    console.log(err);
+  });
   let writeFollowersToDatabase = await writeDatabase(userFollowersData, '/instagram/followers')
 
   ctx.status = 200;
@@ -220,7 +236,9 @@ const searchTop = async (ctx) => {
   config.activequery = query;
   const searchData = await instagramClient.commonSearch(query).then((t) => {
     return t;
-  })
+  }).catch(err => {
+    console.log(err);
+  });
   let writeSearchToDatabase = await writeDatabase(searchData, '/instagram/search')
   ctx.status = 200;
   ctx.body = {
@@ -233,7 +251,9 @@ const feedPosts = async (ctx) => {
   const feedData = await instagramClient.getUserFeed(count).then((t) => {
     if (t.data) t = t.data
     return t;
-  })
+  }).catch(err => {
+    console.log(err);
+  });
   let writeFeedPostsToDatabase = await writeDatabase(feedData.user.edge_web_feed_timeline.edges, '/instagram/posts')
 
   ctx.status = 200;
@@ -246,7 +266,9 @@ const allFeedPosts = async (ctx) => {
   var count = input.count;
   const feedData = await instagramClient.getAllUserFeeds(count).then((t) => {
     return t;
-  })
+  }).catch(err => {
+    console.log(err);
+  });
   let writeFeedPostsToDatabase = await writeDatabase(feedData, '/instagram/posts')
 
 
@@ -262,7 +284,9 @@ const postLikes = async (ctx) => {
   var count = inputPost.count;
   const likesData = await instagramClient.getPostLikes(count, postId).then((t) => {
     return t;
-  })
+  }).catch(err => {
+    console.log(err);
+  });
   let writeLikesToDatabase = await writeDatabase(likesData, '/instagram/likes')
   ctx.status = 200;
   ctx.body = {
@@ -275,7 +299,9 @@ const postComments = async (ctx) => {
   var count = inputPost.count;
   const postCommentsData = await instagramClient.getPostComments(count, postId).then((t) => {
     return t;
-  })
+  }).catch(err => {
+    console.log(err);
+  });
   let writeCommentsToDatabase = await writeDatabase(postCommentsData, '/instagram/comments')
   ctx.status = 200;
   ctx.body = {
@@ -287,7 +313,9 @@ const postJson = async (ctx) => {
   var postId = inputPost.shortcode;
   const postMediaData = await instagramClient.getPostJson(postId).then((t) => {
     return t;
-  })
+  }).catch(err => {
+    console.log(err);
+  });
   let writeMediaToDatabase = await writeDatabase(postMediaData, '/instagram/media')
   ctx.status = 200;
   ctx.body = {
@@ -311,7 +339,9 @@ const suggestedPosts = async (ctx) => {
   var count = inputCount.count;
   const suggestedPostsData = await instagramClient.getSuggestedPosts(count).then((t) => {
     return t;
-  })
+  }).catch(err => {
+    console.log(err);
+  });
   let writeToDatabase = await writeDatabase(suggestedPostsData, '/instagram/posts')
   ctx.status = 200;
   ctx.body = {
@@ -323,7 +353,9 @@ const suggestedPeople = async (ctx) => {
   var count = inputCount.count;
   const suggestedPeopleData = await instagramClient.getSuggestedPeople(count).then((t) => {
     return t;
-  })
+  }).catch(err => {
+    console.log(err);
+  });
   for(var i=0;i<suggestedPeopleData.length;i++){
     if(suggestedPeopleData[i].node){
       if(suggestedPeopleData[i].node.user){
