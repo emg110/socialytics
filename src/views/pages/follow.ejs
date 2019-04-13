@@ -3,7 +3,7 @@
   <% if(edge.node)edge = edge.node %>
   <div class="row whiteBox ">
 
-    <div class="col-sm-6 text-center align-self-center" style="cursor:pointer" onClick=getEndpoint("http://localhost:8080/instagram/profile?","profile",<%= '"'+edge.username+'"' %>,"profile")>
+    <div class="col-sm-6 text-center align-self-center" style="cursor:pointer;max-width: 150px;" onClick=getEndpoint("http://localhost:8080/instagram/profile?","profile",<%= '"'+edge.username+'"' %>,"profile")>
       <% if(!(typeof edge == 'undefined')){%>
         <% if(edge.profile_pic_url) { %>
           <img class="usr-img-thumbnail" src="<%= !(typeof edge == 'undefined') ? edge.profile_pic_url:"" %>" alt="<%= edge ? edge.username :"" %>">
@@ -17,8 +17,8 @@
 
     <div class="col-sm-6 text-center align-self-center">
 
-      <h2><%= !(typeof edge == 'undefined') ? edge.username : "username" %></h2>
-      <h4><%= !(typeof edge == 'undefined') ? (edge.email || edge.full_name) :"user@maildomain"%></h4>
+      <h4><%= !(typeof edge == 'undefined') ? edge.username : "username" %></h4>
+      <h6><%= !(typeof edge == 'undefined') ? (edge.email || edge.full_name) :"user@maildomain"%></h6>
 
     </div>
 

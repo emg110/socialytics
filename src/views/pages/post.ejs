@@ -3,15 +3,18 @@
 <div class="modal fade" id="imgModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="imgModalLabel"><%= etlData.edge_media_to_caption.edges[0] ? etlData.edge_media_to_caption.edges[0].node.text : etlData.id %></h5>
+      <div class="modal-body">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-      </div>
-      <div class="modal-body">
         <img id="media-view" class="img-fluid" src="<%=mediaSrc%>" alt="<%= etlData.edge_media_to_caption.edges[0] ? etlData.edge_media_to_caption.edges[0].node.text : etlData.id %>">
       </div>
+      <div class="modal-header">
+
+        <h5 class="modal-title" id="imgModalLabel"><%= etlData.edge_media_to_caption.edges[0] ? etlData.edge_media_to_caption.edges[0].node.text : etlData.id %></h5>
+
+      </div>
+
     </div>
   </div>
 </div>
@@ -22,12 +25,6 @@
   <div class="col-md-6">
 
     <div class="card">
-
-      <div class="card-header">
-        <%= etlData.edge_media_to_caption.edges[0] ? etlData.edge_media_to_caption.edges[0].node.text : etlData.id %>
-        <small>by <%= etlData.owner.username %></small>
-      </div>
-
       <div class="card-body">
         <a style="cursor:pointer" data-toggle="modal" id="pop" data-target="#imgModal" href="/etlDatas/<%= etlData.id %>">
           <img id="media-preview" class="img-fluid" src="<%=mediaSrc %>" alt="<%= etlData.edge_media_to_caption.edges[0] ? etlData.edge_media_to_caption.edges[0].node.text : etlData.id %>">
@@ -46,6 +43,12 @@
 
         </div>
       </div>
+      <div class="card-header">
+        <%= etlData.edge_media_to_caption.edges[0] ? etlData.edge_media_to_caption.edges[0].node.text : etlData.id %>
+        <small>by <%= etlData.owner.username %></small>
+      </div>
+
+
 
     </div>
 
