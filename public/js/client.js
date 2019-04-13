@@ -56,13 +56,13 @@ function getEndpoint(endpoint, type, code, container) {
   if (type !== "form-data") {
     closeNav('insta-sidepanel');
     openNav('insta-sidepanel');
-    if (!code) document.getElementById('instagram-container').innerHTML = html;
-    var username = document.getElementById('username-input').value;
-    var tag = document.getElementById('tag-input').value;
-    var location = document.getElementById('location-input').value;
+    document.getElementById('instagram-container').innerHTML = html;
+    var username = document.getElementById('username-input').value || code;
+    var tag = document.getElementById('tag-input').value || code;
+    var location = document.getElementById('location-input').value || code;
     var query = document.getElementById('search-input').value;
     var count = document.getElementById('count-input').value || 50;
-    var shortcode = document.getElementById('shortcode-input').value;
+    var shortcode = document.getElementById('shortcode-input').value || code;
     var url = endpoint;
     switch (type) {
       case 'profile':
@@ -224,9 +224,9 @@ function getEndpoint(endpoint, type, code, container) {
       window.currentFreeIndex = 0;
       $("#backbtn").hide();
     }
-    else {
+    /*else {
       $("#backbtn").show();
-    }
+    }*/
     if (url !== "NA" && url.indexOf('http://') >= 0) {
       $('.fired').addClass('disabled');
       $('.disabled').removeClass('fired');
@@ -242,6 +242,10 @@ function getEndpoint(endpoint, type, code, container) {
         window.results[index] = {html: html};
 
         document.getElementById('instagram-container').innerHTML = html;
+        if (container !== 'main') {
+          $("#backbtn").show();
+        }
+
         window.currentFreeIndex++;
         var currentVal = $('.disabled').val();
         if (currentVal) {
@@ -498,13 +502,13 @@ var searches = feathersClient.service('/instagram/search');
 searches.on('created', (search) => {
   var result = 'Search results with: ';
   if (search.places) {
-    result += search.places.length + ' Places | ';
+    result += '<span class="glyphicon glyphicon-map-marker"></span>'+ search.places.length + '  Places | ';
   }
   if (search.hashtags) {
-    result += search.hashtags.length + ' Hashtags | ';
+    result += '<span class="glyphicon glyphicon-tags"></span>'+ search.hashtags.length + '  Hashtags | ';
   }
   if (search.users) {
-    result += search.users.length + ' Users | ';
+    result += '<span class="glyphicon glyphicon-user"></span>'+ search.users.length + '  Users | ';
   }
   $.notify({
     // options
@@ -513,7 +517,7 @@ searches.on('created', (search) => {
   }, {
     // settings
     type: 'info',
-    delay: 5000,
+    delay: 12000,
     icon_type: 'class',
   });
   //console.log('message created', message);

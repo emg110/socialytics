@@ -1,102 +1,86 @@
-<% if(!(typeof etlData.places == 'undefined')){ console.log('we got data here...')%>
-  <h1 style="color:black;">Places:</h1>
-  <% etlData.places.forEach((edge) => { %>
-    <% edge = edge.place %>
-    <div class="row whiteBox ">
-      <div class="col-sm-6 text-center align-self-center">
-        <% if(!(typeof edge == 'undefined')){%>
-          <% if(edge) { %>
-            <div class="col-sm-6 text-center align-self-center">
-              <h3 style="display:block;"><%= !(typeof edge.title == 'undefined') ? edge.title : "PLACE_NAME" %></h3>
-              <div style="height:100px" id="<%=edge.location.lat.toString()+'_'+edge.location.lng.toString()%>" class="map">
-              </div>
-              <h4 style="min-width:10%">[<%= !(typeof edge.location.lng == 'undefined') ? edge.location.lng :0%> , <%= !(typeof edge.location.lat == 'undefined') ? edge.location.lat :0%>]</h4>
-            </div>
-          <% } %>
+<% if(!(typeof etlData.places == 'undefined')){ console.log('we got data here...') %>
 
+<h1 style="color: #fff; vertical-align: middle; padding: 10px;  background-color: grey;"><span class="glyphicon glyphicon-map-marker"></span> Places:</h1>
+<% etlData.places.forEach((edge) => { %>
+  <% edge = edge.place %>
+  <div style="padding:2px;margin:2px;" class="row whiteBox">
+    <div class="col-sm-6" style="min-width:100%;">
+      <% if(!(typeof edge == 'undefined')){ %>
+        <% if(edge) { %>
+          <div class="col-sm-6" style="min-width:100%; float:left">
+            <h4 style="cursor:pointer;display: inline-block;padding: 5px; margin: 5px; color: white; background-color: #81ec81;" onClick=getEndpoint("http://localhost:8080/instagram/location?","location-posts","<%= edge.title.replace(' ','') %>","location-posts") ><%= !(typeof edge.title == 'undefined') ? edge.title : 'PLACE_NAME' %></h4>
+            <h6 style="min-width:10%;display: inline-block;min-width:100%;padding: 5px; min-width: 75px; margin: 5px; color: white; background-color: #e08e0b;">[<%= !(typeof edge.location.lng == 'undefined') ? edge.location.lng : 0 %>
+              , <%= !(typeof edge.location.lat == 'undefined') ? edge.location.lat : 0 %>]</h6>
 
-        <%}%>
+            <h4 style="display: inline-block;"><%= !(typeof edge.location == 'undefined') ? edge.location.city : "--NO CITY INFO!" %></h4>
+            <h6 style="display: inline-block;"><%= !(typeof edge.location == 'undefined') ? edge.location.address : edge.slug %></h6>
+          </div>
+        <% } %>
 
-
-      </div>
-
-      <div class="col-sm-6 text-center align-self-center">
-
-        <h3><%= !(typeof edge.location == 'undefined') ? edge.location.address : edge.slug %></h3>
-        <h4><%= !(typeof edge.location == 'undefined') ? edge.location.city :"--NO CITY INFO!"%></h4>
-
-      </div>
+      <% } %>
 
     </div>
 
-  <% }) %>
-<%}%>
-<% if(!(typeof etlData.hashtags == 'undefined')){ console.log('we got data here...')%>
-  <h1 style="color:black;">Hashtags:</h1>
+  </div>
 
-  <% etlData.hashtags.forEach((edge) => { %>
-    <% edge = edge.hashtag %>
-    <div class="row whiteBox ">
-      <div class="col-sm-6 text-center align-self-center">
-        <% if(!(typeof edge == 'undefined')){%>
-          <% if(edge) { %>
-            <div class="col-sm-6 text-center align-self-center">
+<% }) %>
+<% } %>
+<% if(!(typeof etlData.hashtags == 'undefined')){ console.log('we got data here...') %>
 
-              <h3><%= !(typeof edge.name == 'undefined') ? '#'+edge.name : '#'+"HASHTAG" %></h3>
-              </br>
-              <h4><%= !(typeof edge.media_count == 'undefined') ? edge.media_count :0%></h4>
-              </br>
-              <h4><%= !(typeof edge.search_result_subtitle == 'undefined') ? edge.search_result_subtitle :0%></h4>
-              </br>
-              </br>
+<h1 style="color: #fff; vertical-align: middle; background-color: grey;padding: 10px;"><span style="padding-right:5px" class="glyphicon glyphicon-tags"></span>  Hashtags:</h1>
+<% etlData.hashtags.forEach((edge) => { %>
+  <% edge = edge.hashtag %>
+  <div style="padding:2px;margin:2px;" class="row whiteBox ">
+    <div style="min-width:100%; float:left" class="col-sm-6">
+      <% if(!(typeof edge == 'undefined')){ %>
+        <% if(edge) { %>
+          <div style="min-width:100%" class="col-sm-6">
 
-            </div>
-          <% } %>
+            <h4 style="cursor:pointer;display: inline-block;padding: 5px; min-width: 75px; margin: 5px; color: white; background-color: #81ec81;" onClick=getEndpoint("http://localhost:8080/instagram/tag?","tag-posts","<%= edge.name %>","tag-posts")><%= !(typeof edge.name == 'undefined') ? '#' + edge.name : '#' + "HASHTAG" %></h4>
 
 
-        <%}%>
+            <h6 style="display: inline-block;padding: 5px; min-width: 75px; margin: 5px; color: white; background-color: #e08e0b;"><%= !(typeof edge.search_result_subtitle == 'undefined') ? edge.search_result_subtitle : 0 %></h6>
 
+          </div>
+        <% } %>
 
-      </div>
+      <% } %>
+    </div>
 
-      <div class="col-sm-6 text-center align-self-center">
+  </div>
 
-        <h3><%= !(typeof edge == 'undefined') ? edge.username : "username" %></h3>
-        <h4><%= !(typeof edge == 'undefined') ? (edge.email || edge.full_name) :"user@maildomain"%></h4>
+<% }) %>
+<% } %>
+<% if(!(typeof etlData.users == 'undefined')){ console.log('we got data here...') %>
 
-      </div>
+<h1 style="color: #fff; vertical-align: middle; padding: 10px;  background-color: grey;padding: 10px;"><span class="glyphicon glyphicon-user"></span> Users:</h1>
+<% etlData.users.forEach((edge) => { %>
+  <% edge = edge.user %>
+  <div class="row whiteBox ">
+
+    <div class="col-sm-6 text-center align-self-center" style="cursor:pointer; max-width: 150px;"
+         onClick=getEndpoint("http://localhost:8080/instagram/profile?","profile","<%= edge.username %>","profile")>
+      <% if(!(typeof edge == 'undefined')){ %>
+        <% if(edge.profile_pic_url) { %>
+          <img class="usr-img-thumbnail" src="<%= !(typeof edge == 'undefined') ? edge.profile_pic_url : "" %>"
+               alt="<%= edge ? edge.username : "" %>">
+        <% } else { %>
+          <img class="usr-img-thumbnail" src="<%= !(typeof edge == 'undefined') ? edge.profile_pic_url : "" %>"
+               alt="<%= edge ? edge.username : "" %>">
+        <% } %>
+      <% } %>
 
     </div>
 
-  <% }) %>
-<%}%>
-<% if(!(typeof etlData.users == 'undefined')){ console.log('we got data here...')%>
-  <h1 style="color:black;">Users:</h1>
-  <% etlData.users.forEach((edge) => { %>
-    <% edge = edge.user %>
-    <div class="row whiteBox ">
+    <div class="col-sm-6 text-center align-self-center">
 
-      <div class="col-sm-6 text-center align-self-center" style="cursor:pointer" onClick=getEndpoint("http://localhost:8080/instagram/profile?","profile",<%= '"'+edge.username+'"' %>,"profile")>
-        <% if(!(typeof edge == 'undefined')){%>
-          <% if(edge.profile_pic_url) { %>
-            <img class="usr-img-thumbnail" src="<%= !(typeof edge == 'undefined') ? edge.profile_pic_url:"" %>" alt="<%= edge ? edge.username :"" %>">
-          <% } else { %>
-            <img class="usr-img-thumbnail" src="<%= !(typeof edge == 'undefined') ? edge.profile_pic_url : "" %>" alt="<%= edge ? edge.username : "" %>">
-          <% } %>
-        <%}%>
-
-
-      </div>
-
-      <div class="col-sm-6 text-center align-self-center">
-
-        <h2><%= !(typeof edge == 'undefined') ? edge.username : "username" %></h2>
-        <h4><%= !(typeof edge == 'undefined') ? (edge.email || edge.full_name) :"user@maildomain"%></h4>
-
-      </div>
+      <h4><%= !(typeof edge == 'undefined') ? edge.username : "username" %></h4>
+      <h6><%= !(typeof edge == 'undefined') ? (edge.email || edge.full_name) : "user@maildomain" %></h6>
 
     </div>
 
-  <% }) %>
-<%}%>
+  </div>
+
+<% }) %>
+<% } %>
 

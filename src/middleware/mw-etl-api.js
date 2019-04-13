@@ -76,7 +76,7 @@ module.exports = function (options = {}) {
           res.send(html);
         });
       }
-      else if(expr.indexOf('/instagram/explore/tag')>=0){
+      else if(expr.indexOf('/instagram/tag')>=0){
         let etlApiEndpoint = serverUrl+expr.replace('/explore','');
         let etlData = await getEndpointEtl(etlApiEndpoint);
 
@@ -97,7 +97,7 @@ module.exports = function (options = {}) {
           res.send(html);
         });
       }
-      else if(expr.indexOf('/instagram/explore/location')>=0){
+      else if(expr.indexOf('/instagram/location')>=0){
         let etlApiEndpoint = serverUrl+expr.replace('/explore','');
         let etlData = await getEndpointEtl(etlApiEndpoint);
 
