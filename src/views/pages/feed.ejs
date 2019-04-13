@@ -1,44 +1,46 @@
 <div class="row">
   <% etlData.forEach((edge) => { %>
-    <% if(edge.node)edge = edge.node %>
+    <% if (edge.node) edge = edge.node %>
     <% if(edge.display_url || edge.edge_media_to_caption){ %>
-        <div class="col-md-4  align-self-center">
-      <div class="card">
-        <div class="card-header">
-          <% if(edge.edge_media_to_caption){ %>
-            <%=edge.edge_media_to_caption.edges[0]? edge.edge_media_to_caption.edges[0].node.text:"CARD HEADER" %>
-          <%}%>
+      <div class="col-md-4  align-self-center">
+        <div class="card" style="height:300px; min-height:300px;font-size:12px;overflow-y: hidden;">
+          <div class="card-body">
+            <div style="cursor:pointer"
+                 onClick=getEndpoint("http://localhost:8080/instagram/post?","post-json",<%= '"' + edge.shortcode + '"' %>,"post")>
+              <img class="img-fluid" src="<%= edge.display_url %>"
+                   alt="<%= edge.edge_media_to_caption ? edge.edge_media_to_caption.edges[0] : [] %>">
+            </div>
 
-
-        </div>
-
-        <div class="card-body">
-          <div style="cursor:pointer" onClick=getEndpoint("http://localhost:8080/instagram/post?","post-json",<%= '"'+edge.shortcode+'"' %>,"post")>
-            <img class="img-fluid" src="<%= edge.display_url %>" alt="<%= edge.edge_media_to_caption? edge.edge_media_to_caption.edges[0]:[] %>">
-          </div>
-
-          <!--<p class="likes-comments">
-            <%if(edge.edge_media_preview_like){%>
-              <% if(edge.edge_media_preview_like.count) { %><%=edge.edge_media_preview_like.count+' '%> &hearts; <% } %>
-            <%}else if(edge.edge_liked_by){ %><%=edge.edge_liked_by? edge.edge_liked_by.count : '-&#45;&#45;'+' '%> &hearts; <%}%>
+            <!--<p class="likes-comments">
+            <% if(edge.edge_media_preview_like){ %>
+              <% if(edge.edge_media_preview_like.count) { %><%= edge.edge_media_preview_like.count+' ' %> &hearts; <% } %>
+            <% }else if(edge.edge_liked_by){ %><%= edge.edge_liked_by? edge.edge_liked_by.count : '-&#45;&#45;' + ' ' %> &hearts; <% } %>
           </p>-->
-          <div class="likes-comments">
+            <div class="likes-comments">
               <span style="color: rgb(249,5,5);">
-                <%if(edge.edge_media_preview_like){%>
-                  <% if(edge.edge_media_preview_like.count) { %><%=edge.edge_media_preview_like.count+' '%> &hearts; <% } %>
-                <%}else if(edge.edge_liked_by){ %><%=edge.edge_liked_by.count+' '%> &hearts; <%}%>
+                <% if(edge.edge_media_preview_like){ %>
+                  <% if(edge.edge_media_preview_like.count) { %><%= edge.edge_media_preview_like.count+' ' %>
+                  &hearts; <% } %>
+                <% }else if(edge.edge_liked_by){ %>
+                  <%= edge.edge_liked_by.count+' ' %> &hearts;
+                <% } %>
               </span>
-            <span style="color: transparent;  text-shadow: 0 0 0 rgb(42, 170, 82);">
-              <%if(edge.edge_media_to_comment){%>
-              <%=edge.edge_media_to_comment.count+' '%> &#x1F5E8;
-              <%} %>
-            </span>
+              <span style="color: transparent;  text-shadow: 0 0 0 rgb(42, 170, 82);">
+                <% if(edge.edge_media_to_comment){ %>
+                  <%= edge.edge_media_to_comment.count+' ' %> &#x1F5E8;
+                <% } %>
+              </span>
 
+            </div>
+          </div>
+          <div class="card-header" style="">
+            <% if(edge.edge_media_to_caption){ %>
+            <%= edge.edge_media_to_caption.edges[0]? edge.edge_media_to_caption.edges[0].node.text:"CARD HEADER" %>
+            <% } %>
           </div>
         </div>
       </div>
-    </div>
-    <%}%>
+    <% } %>
   <% }) %>
 
 </div>
