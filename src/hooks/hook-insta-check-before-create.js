@@ -12,12 +12,10 @@ module.exports = function (options = {}) {
     //context.data.version = version;
     //console.log(context.data);
     var id = context.data.id;
-    if (!!config.VERSIONING_DATA) {
+    if (config.VERSIONING_DATA=== false) {
       if (context.data['_id']) {
         delete context.data['_id'];
       }
-    }
-    else {
       if (context.data.id) {
         context.data['_id'] = id;
       }

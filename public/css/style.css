@@ -367,7 +367,13 @@ img {
   border: none;
   cursor:pointer;
 }
-
+.usr-img-thumbnail {
+  background: #111;
+  border: none;
+  max-width:75px;
+  border-radius:50%;
+  cursor:pointer;
+}
 .navbar {
   border-bottom: 1px solid #e6e6e6
 }
@@ -536,8 +542,8 @@ img {
 }
 
 .stack-span img {
-  max-width: 100px;
-  max-height: 100px;
+  max-width: 50px;
+  max-height: 50px;
 }
 
 .modal-backdrop {

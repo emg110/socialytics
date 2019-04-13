@@ -390,9 +390,9 @@ posts.on('created', (post) => {
     template: '<div style="width:15%" data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
       '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
       '<span class="stack-span" data-notify="icon"></span> ' +
+      '</br>'+
       '<span data-notify="title">{1}</span> ' +
       '<span data-notify="message">{2}</span>' +
-
       '</div>'
   });
   //console.log('message created', message);

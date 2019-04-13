@@ -3,9 +3,9 @@
   <div class="col-sm-6 text-center align-self-center">
     <% if(!(typeof etlData == 'undefined')){%>
       <% if(etlData.profile_pic_url) { %>
-        <img class="img-thumbnail" src="<%= !(typeof etlData == 'undefined') ? etlData.profile_pic_url:"" %>" alt="<%= etlData ? etlData.username :"" %>">
+        <img class="usr-img-thumbnail" src="<%= !(typeof etlData == 'undefined') ? etlData.profile_pic_url:"" %>" alt="<%= etlData ? etlData.username :"" %>">
       <% } else { %>
-        <img class="img-thumbnail" src="<%= !(typeof etlData == 'undefined') ? etlData.profile_pic_url : "" %>" alt="<%= etlData ? etlData.username : "" %>">
+        <img class="usr-img-thumbnail" src="<%= !(typeof etlData == 'undefined') ? etlData.profile_pic_url : "" %>" alt="<%= etlData ? etlData.username : "" %>">
       <% } %>
     <%}%>
 

@@ -7,9 +7,9 @@
       <div style="cursor:pointer" class="col-sm-6 text-center align-self-center" onClick=getEndpoint("http://localhost:8080/instagram/profile?","profile",<%= '"'+edge.owner.username+'"' %>,"profile") >
           <% if(!(typeof edge == 'undefined')){%>
               <% if(edge.owner.profile_pic_url) { %>
-                  <img class="img-thumbnail" src="<%= !(typeof edge == 'undefined') ? edge.owner.profile_pic_url:"" %>" alt="<%= edge ? edge.owner.username :"" %>">
+                  <img class="usr-img-thumbnail" src="<%= !(typeof edge == 'undefined') ? edge.owner.profile_pic_url:"" %>" alt="<%= edge ? edge.owner.username :"" %>">
               <% } else { %>
-                  <img class="img-thumbnail" src="<%= !(typeof edge == 'undefined') ? edge.owner.profile_pic_url : "" %>" alt="<%= edge ? edge.owner.username : "" %>">
+                  <img class="usr-img-thumbnail" src="<%= !(typeof edge == 'undefined') ? edge.owner.profile_pic_url : "" %>" alt="<%= edge ? edge.owner.username : "" %>">
               <% } %>
           <%}%>
       </div>

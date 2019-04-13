@@ -6,9 +6,9 @@
     <div class="col-sm-6 text-center align-self-center" style="cursor:pointer" onClick=getEndpoint("http://localhost:8080/instagram/profile?","profile",<%= '"'+edge.username+'"' %>,"profile")>
       <% if(!(typeof edge == 'undefined')){%>
         <% if(edge.profile_pic_url) { %>
-          <img class="img-thumbnail" src="<%= !(typeof edge == 'undefined') ? edge.profile_pic_url:"" %>" alt="<%= edge ? edge.username :"" %>">
+          <img class="usr-img-thumbnail" src="<%= !(typeof edge == 'undefined') ? edge.profile_pic_url:"" %>" alt="<%= edge ? edge.username :"" %>">
         <% } else { %>
-          <img class="img-thumbnail" src="<%= !(typeof edge == 'undefined') ? edge.profile_pic_url : "" %>" alt="<%= edge ? edge.username : "" %>">
+          <img class="usr-img-thumbnail" src="<%= !(typeof edge == 'undefined') ? edge.profile_pic_url : "" %>" alt="<%= edge ? edge.username : "" %>">
         <% } %>
       <%}%>
 
