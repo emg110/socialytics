@@ -45,7 +45,7 @@
       </div>
       <div class="card-header">
         <%= etlData.edge_media_to_caption.edges[0] ? etlData.edge_media_to_caption.edges[0].node.text : etlData.id %>
-        <small style="cursor:pointer;background-color: #81ec81;padding:3px" onClick=getEndpoint("http://localhost:8080/instagram/profile?","profile","<%= etlData.owner.username %>","profile")></br>by <%= etlData.owner.username %></small>
+        <small style="cursor:pointer;background-color: #81ec81;padding:3px" onClick=getEndpoint("http://localhost:8080/instagram/profile?","profile","<%= etlData.owner.username %>","profile")></br><span class="glyphicon glyphicon-user"> <%= etlData.owner.username %></small>
       </div>
 
 
@@ -69,7 +69,7 @@
             <% comment = comment.node %>
             <li class="list-group-item">
               <p><%= comment.text %></p>
-              <small style="cursor:pointer;background-color: #81ec81;padding:3px" onClick=getEndpoint("http://localhost:8080/instagram/profile?","profile","<%= comment.owner.username %>","profile")>by <%= comment.owner.username %></small>
+              <small style="cursor:pointer;background-color: #81ec81;padding:3px" onClick=getEndpoint("http://localhost:8080/instagram/profile?","profile","<%= comment.owner.username %>","profile")><span class="glyphicon glyphicon-user"> <%= comment.owner.username %></small>
 
               <% if(locals.isAuthenticated && (comment.owner.id == userid)) { %>
                 <form method="POST" action="/etlDatas/<%= etlData.id %>/comments/<%= comment.id %>">
