@@ -243,8 +243,6 @@ function getEndpoint(endpoint, type, code, container) {
 
         document.getElementById('instagram-container').innerHTML = html;
         window.currentFreeIndex++;
-        /*document.getElementById('media-preview').src = ig_media_preview(document.getElementById('media-preview').src.replace('http://localhost:8080/',''));
-        document.getElementById('media-view').src = ig_media_preview(document.getElementById('media-view').src.replace('http://localhost:8080/',''));*/
         var currentVal = $('.disabled').val();
         if (currentVal) {
           currentVal = currentVal.replace('Loading... ', 'Get ');
@@ -274,6 +272,46 @@ function getEndpoint(endpoint, type, code, container) {
         var elem = $('.disabled').find('span');
         $(elem).popover();
         $('.disabled').removeClass('disabled');
+        var options = {
+          width:'100%',
+          height:'50px',
+          type: 'line',
+          lineColor: '#003f7f',
+          fillColor: '#5690c9',
+          lineWidth: 3,
+          highlightLineColor: '#ffffff'
+        };
+        engagementData =  $('#sparkline-data').attr('sparkline-data')
+        if(engagementData){
+          engagementData = engagementData.split(',') || [];
+          if(engagementData.length>=1){
+            $('#sparkline').sparkline(engagementData, options)
+          }
+        }
+      /*  var myChart = echarts.init(document.getElementById('sparkline'));
+
+        // specify chart configuration item and data
+        var option = {
+          title: {
+            text: 'Engagement activity'
+          },
+          tooltip: {},
+          legend: {
+            data:['Engagement']
+          },
+          xAxis: {
+            data: ["shirt","cardign","chiffon shirt","pants","heels","socks"]
+          },
+          yAxis: {},
+          series: [{
+            name: 'Engagement',
+            type: 'bar',
+            data: engagementData
+          }]
+        };
+
+        // use configuration item and data specified to show chart
+        myChart.setOption(option);*/
 
       }
       xhr.send();

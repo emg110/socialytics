@@ -2,54 +2,41 @@
   <% etlData.user.edge_owner_to_timeline_media.edges.forEach((edge) => { %>
     <% edge = edge.node %>
     <div class="col-md-4  align-self-center">
-      <div class="card">
-        <div class="card-header">
-          <% if(edge.edge_media_to_caption){ %>
-            <%=edge.edge_media_to_caption.edges[0]? edge.edge_media_to_caption.edges[0].node.text:"CARD HEADER" %>
-          <%}else {%>
-            <%="CARD HEADER"%>
-          <%}%>
-
+      <div class="card-body">
+        <div style="cursor:pointer" onClick=getEndpoint("http://localhost:8080/instagram/post?","post-json",<%= '"'+edge.shortcode+'"' %>,"post")>
+          <img class="img-fluid" src="<%= edge.thumbnail_src %>" alt="<%= edge.edge_media_to_caption? edge.edge_media_to_caption.edges[0]:[] %>">
         </div>
-
-        <div class="card-body">
-          <div style="cursor:pointer" onClick=getEndpoint("http://localhost:8080/instagram/post?","post-json",<%= '"'+edge.shortcode+'"' %>,"post")>
-            <img class="img-fluid" src="<%= edge.thumbnail_src %>" alt="<%= edge.edge_media_to_caption? edge.edge_media_to_caption.edges[0]:[] %>">
-          </div>
-          <div class="likes-comments">
+        <div class="likes-comments">
               <span style="color: rgb(249,5,5);">
-                <%if(edge.edge_media_preview_like){%>
-                  <% if(edge.edge_media_preview_like.count) { %><%=edge.edge_media_preview_like.count+' '%> &hearts; <% } %>
-                <%}else{ %><%=edge.edge_liked_by.count+' '%> &hearts; <%}%>
+                <% if(edge.edge_media_preview_like){ %>
+                  <% if(edge.edge_media_preview_like.count) { %><%= edge.edge_media_preview_like.count+' ' %>
+                  &hearts; <% } %>
+                <% }else{ %>
+                <%= edge.edge_liked_by.count+' ' %> &hearts;
+                <% } %>
               </span>
-            <span style="color: transparent;  text-shadow: 0 0 0 rgb(42, 170, 82);">
-              <%if(edge.edge_media_to_comment){%>
-              <%=edge.edge_media_to_comment.count+' '%> &#x1F5E8;
-              <%} %>
-            </span>
+              <span style="color: transparent;  text-shadow: 0 0 0 rgb(42, 170, 82);">
+                <% if(edge.edge_media_to_comment){ %>
+                <%= edge.edge_media_to_comment.count+' ' %> &#x1F5E8;
+                <% } %>
+              </span>
 
-          </div>
-          <% if (edge.owner){%>
-            <% if(edge.owner.id==userid) { %>
-
-           <!-- <div class="row">
-
-              &lt;!&ndash;<div class="col-6 align-self-center">
-                <a href="/edges/<%= edge.id %>/edit" class="btn btn-primary">Edit</a>
-              </div>&ndash;&gt;
-
-             &lt;!&ndash; <div class="col-6 align-self-center">
-                <form method="POST" action="/edges/<%= edge.id %>">
-                  <input type="hidden" name="_method" value="DELETE">
-                  <button class="btn btn-danger">Delete</button>
-                </form>
-              </div>&ndash;&gt;
-
-            </div>-->
-
-          <% } %>
-          <%}%>
         </div>
+        <% if (edge.owner){%>
+          <% if(edge.owner.id==userid) { %>
+          <% } %>
+        <%}%>
+      </div>
+      <div class="card" style="height:100px; min-height:100px; overflow-y: hidden">
+        <div class="card-header" style="font-size:12px">
+          <% if(edge.edge_media_to_caption){ %>
+            <%=edge.edge_media_to_caption.edges[0]? edge.edge_media_to_caption.edges[0].node.text:"CARD WITH NO CAPTION----------------------------------------------------------------------------------------------" %>
+          <%}else {%>
+            <%="CARD HEADER"%>           <%}%>
+
+        </div>
+
+
       </div>
     </div>
 

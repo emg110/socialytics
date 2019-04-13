@@ -2,20 +2,19 @@
 
   <div class="col-sm-6 text-center align-self-center">
     <% if(!(typeof etlData == 'undefined')){%>
+    <%var likes=0,comments=0,followers=1, posts = 0,engagement = 0, engagementData = []  %>
+      <% if(etlData.edge_followed_by)followers = etlData.edge_followed_by.count? parseInt(etlData.edge_followed_by.count):1%>
       <% if(etlData.profile_pic_url) { %>
         <img class="usr-img-thumbnail" src="<%= !(typeof etlData == 'undefined') ? etlData.profile_pic_url:"" %>" alt="<%= etlData ? etlData.username :"" %>">
       <% } else { %>
         <img class="usr-img-thumbnail" src="<%= !(typeof etlData == 'undefined') ? etlData.profile_pic_url : "" %>" alt="<%= etlData ? etlData.username : "" %>">
       <% } %>
     <%}%>
-
-
   </div>
-
   <div class="col-sm-6 text-center align-self-center">
 
-    <h2><%= !(typeof etlData == 'undefined') ? etlData.username : "username" %></h2>
-    <h4><%= !(typeof etlData == 'undefined') ? (etlData.email || etlData.full_name) :"user@maildomain"%></h4>
+    <h4><%= !(typeof etlData == 'undefined') ? etlData.username : "username" %></h4>
+    <h6><%= !(typeof etlData == 'undefined') ? (etlData.email || etlData.full_name) :"user@maildomain"%></h6>
 
    <!-- <form method="POST" action="/profile">
       <input type="hidden" name="_method" value="DELETE">
@@ -23,26 +22,26 @@
     </form>-->
 
   </div>
-
+  <div id="sparkline" style="width:100%"></div>
 </div>
 
 <div class="row">
   <% if(!(typeof etlData.edge_owner_to_timeline_media.edges == 'undefined')){ console.log('we got data here...')%>
     <% etlData.edge_owner_to_timeline_media.edges.forEach((edge) => { %>
-    <% edge = edge.node %>
+    <% posts++  %>
+    <% if(edge.node)edge = edge.node %>
+    <% if(edge.edge_liked_by) {likes = edge.edge_liked_by.count? parseInt(edge.edge_liked_by.count): 0} %>
+    <% if(edge.edge_media_to_comment) {likes = edge.edge_media_to_comment.count? parseInt(edge.edge_media_to_comment.count): 0} %>
+    <% engagement = ((likes + comments) / followers) * 100;%>
+    <%engagementData.push(engagement);%>
     <% if(edge.owner.id === etlData.id) { %>
 
       <div class="col-md-4  align-self-center">
         <div class="card">
-
-          <div class="card-header">
-            <%= edge.edge_media_to_caption.edges[0] ? edge.edge_media_to_caption.edges[0].node.text : "" %>
-          </div>
-
           <div class="card-body">
-              <div style="cursor:pointer" onClick=getEndpoint("http://localhost:8080/instagram/post?","post-json",<%= '"'+edge.shortcode+'"' %>,"post")>
-                  <img class="img-fluid" src="<%= edge.thumbnail_src %>" alt="<%= edge.edge_media_to_caption? edge.edge_media_to_caption.edges[0]:[] %>">
-              </div>
+            <div style="cursor:pointer" onClick=getEndpoint("http://localhost:8080/instagram/post?","post-json","<%=edge.shortcode%>","post")>
+              <img class="img-fluid" src="<%= edge.thumbnail_src %>" alt="<%= edge.edge_media_to_caption? edge.edge_media_to_caption.edges[0]:[] %>">
+            </div>
 
             <div class="likes-comments">
               <span style="color: rgb(249,5,5);">
@@ -66,7 +65,7 @@
                   <!--<a href="/edges/<%= edge.id %>/edit" class="btn btn-primary">Edit</a>-->
                 </div>
 
-               <!-- <div class="col-6 align-self-center">
+                <!-- <div class="col-6 align-self-center">
                   <form method="POST" action="/edges/<%= edge.id %>">
                     <input type="hidden" name="_method" value="DELETE">
                     <button class="btn btn-danger">Delete</button>
@@ -78,6 +77,11 @@
             <% } %>
 
           </div>
+          <div class="card-header" style="max-height:100px; overflow-y: hidden;font-size:12px">
+            <%= edge.edge_media_to_caption.edges[0] ? edge.edge_media_to_caption.edges[0].node.text : "" %>
+          </div>
+
+
         </div>
       </div>
 
@@ -87,3 +91,4 @@
   <%}%>
 
 </div>
+<div id="sparkline-data" style="display:none" sparkline-data="<%=engagementData.toString()%>"></div>
