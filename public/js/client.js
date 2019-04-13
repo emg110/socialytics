@@ -1,6 +1,7 @@
 window.results = [];
 window.currentFreeIndex = 0;
 window.counters = {};
+
 function ig_media_preview(base64data) {
   var jpegtpl = "/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEABsaGikdKUEmJkFCLy8vQkc/Pj4/R0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0cBHSkpNCY0PygoP0c/NT9HR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR//AABEIABQAKgMBIgACEQEDEQH/xAGiAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgsQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+gEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoLEQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/AA==",
     t = atob(base64data),
@@ -49,11 +50,7 @@ function backNav() {
 
 }
 
-function getEndpoint(endpoint, type, code, target) {
-  /*    $("#instagram-profile-container").hide();
-      $("#instagram-profiles-container").hide();
-      $("#instagram-post-container").hide();
-      $("#instagram-posts-container").hide();*/
+function getEndpoint(endpoint, type, code, container) {
   $("#carosel").hide();
   $("#logo").show();
   if (type !== "form-data") {
@@ -222,18 +219,19 @@ function getEndpoint(endpoint, type, code, target) {
         }
         break
     }
-    if (target === 'main') {
+    if (container === 'main') {
       window.results = [];
       window.currentFreeIndex = 0;
       $("#backbtn").hide();
-    } else {
+    }
+    else {
       $("#backbtn").show();
     }
     if (url !== "NA" && url.indexOf('http://') >= 0) {
       $('.fired').addClass('disabled');
       $('.disabled').removeClass('fired');
-      $('.disabled').css('background-color','#e08e0b');
-
+      $('.btn-primary').removeClass('fired');
+      $('.disabled').css('background-color', '#e08e0b');
       $('.disabled').append('<span id="loading" class="spinner-grow spinner-grow-sm"></span>');
       var xhr = new XMLHttpRequest();
       xhr.open("GET", url, true);
@@ -247,28 +245,32 @@ function getEndpoint(endpoint, type, code, target) {
         window.currentFreeIndex++;
         /*document.getElementById('media-preview').src = ig_media_preview(document.getElementById('media-preview').src.replace('http://localhost:8080/',''));
         document.getElementById('media-view').src = ig_media_preview(document.getElementById('media-view').src.replace('http://localhost:8080/',''));*/
-        var currentVal = $('.disabled').val().replace('Loading... ','Get ');
+        var currentVal = $('.disabled').val();
+        if (currentVal) {
+          currentVal = currentVal.replace('Loading... ', 'Get ');
+        }
+
         $('.disabled').val(currentVal);
-        $('.disabled').css('background-color','#007bff');
-        $('#loading').remove();
-        var doneDate  = dayjs(Date.now()).format('YYYY MM-DD HH:mm:ss')
+        $('.disabled').css('background-color', '#007bff');
+        $('.disabled').find('#loading').remove();
+        var doneDate = dayjs(Date.now()).format('YYYY MM-DD HH:mm:ss')
         //<span class="badge">7</span>
         $('.disabled').next().remove();
         $('.disabled').after('<span style="color:lawngreen;" class="glyphicon glyphicon-ok"></span>');
         var count = 0;
-        if(window.counters[currentVal]){
-          if(window.counters[currentVal]>=1){
-            count = window.counters[currentVal]+1;
+        if (window.counters[currentVal]) {
+          if (window.counters[currentVal] >= 1) {
+            count = window.counters[currentVal] + 1;
             window.counters[currentVal]++;
-          }else{
-            window.counters[currentVal]=1;
+          } else {
+            window.counters[currentVal] = 1;
             count = 1
           }
-        }else{
-          window.counters[currentVal]=1;
+        } else {
+          window.counters[currentVal] = 1;
           count = 1
         }
-        if(count>0)$('.disabled').append('<span data-toggle="popover" data-trigger="hover" title="Last updated" data-content="'+doneDate+'" style="background-color:white; color:#007bff; border-radius:50%;margin-left:10px " class="badge pulse-default" >'+count+'</span>');
+        if (count > 0) $('.disabled').append('<span data-toggle="popover" data-trigger="hover" title="Last updated" data-content="' + doneDate + '" style="background-color:white; color:#007bff; border-radius:50%;margin-left:10px " class="badge pulse-default" >' + count + '</span>');
         var elem = $('.disabled').find('span');
         $(elem).popover();
         $('.disabled').removeClass('disabled');
@@ -281,15 +283,19 @@ function getEndpoint(endpoint, type, code, target) {
       console.log('please provide all required');
       window.alert('please provide all required');
       var currentVal = $('.disabled').val();
-      if(currentVal)currentVal = currentVal.replace('Loading... ','Get ');
+      if (currentVal) currentVal = currentVal.replace('Loading... ', 'Get ');
       $('.disabled').val(currentVal);
       $('#loading').remove();
-      $('.disabled').css('background-color','#007bff');
+      $('.disabled').css('background-color', '#007bff');
       $('.disabled').next().remove();
-      $('.btn .btn-primary').removeClass('disabled');
+      $('.disabled').removeClass('fired');
+      $('.btn-primary').removeClass('fired');
+      $('.btn-primary').removeClass('disabled');
+
 
     }
-  } else {
+  }
+  else {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", endpoint, true);
     xhr.onload = function (e) {
@@ -309,14 +315,6 @@ function getEndpoint(endpoint, type, code, target) {
 
 }
 
-/*function loadMap(divName){
-  var latlon = divName.split('_');
-  var coor = [latlon[0], latlon[1]];
-  var map = L.map(divName).setView(coor, 13);
-  map.invalidateSize();
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: ''}).addTo(map);
-  L.marker(coor).addTo(map).bindPopup('A pretty CSS3 popup.<br> Easily customizable.').openPopup();
-}*/
 function carosel() {
   $("#powerpoint").carousel();
   // Enable Carousel Indicators
@@ -342,11 +340,32 @@ function picit(item) {
   return pic
 }
 
+
+$("#carosel").hide();
+$("#logo").click(function () {
+  $("#carosel").show();
+  $("#logo").hide();
+});
+$("#github").click(function () {
+  window.open('https://houmanhadian.github.io/', '_blank');
+});
+
+$('.btn-primary').on('click', function () {
+  var endpoint = $(this).attr('click-target');
+  var type = $(this).attr('call-type');
+  if(type !== 'form-data') {
+    var currentVal = $(this).val().replace('Get ', 'Loading... ');
+    $(this).val(currentVal);
+    $(this).addClass('fired');
+    $(this).find('span').remove();
+  }
+  getEndpoint(endpoint, type, '', 'main');
+});
+
 // Socket.io is exposed as the `io` global.
 var socket = io('http://localhost:8080');
 // @feathersjs/client is exposed as the `feathers` global.
 var feathersClient = feathers().configure(feathers.socketio(socket));
-
 var posts = feathersClient.service('/instagram/posts');
 posts.on('created', (post) => {
   var caption = 'POST WITH NO CAPTION';
@@ -385,9 +404,9 @@ feeds.on('created', (feed) => {
   var pic = picit(feed);
   var title = 'Feed people:';
   if (feed.edge_media_to_caption) {
-    if (feed.full_name.length>1) {
+    if (feed.full_name.length > 1) {
       caption = feed.full_name;
-    }else{
+    } else {
       caption = feed.username;
     }
   }
@@ -412,17 +431,6 @@ feeds.on('created', (feed) => {
   });
   //console.log('message created', message);
 });
-
-//<span class="spinner-grow spinner-grow-sm"></span>
-//             Loading..
-
-$('.btn-primary').on('click',function(){
-  $(this).addClass('fired');
-  var currentVal = $(this).val().replace('Get ','Loading... ');
-  $(this).val(currentVal);
-  //$(this).html(currentVal);
-  $(this).find('span').remove();
-})
 
 var profiles = feathersClient.service('/instagram/profiles');
 profiles.on('created', (profile) => {
@@ -698,14 +706,6 @@ tags.on('created', (post) => {
 });
 
 
-$("#carosel").hide();
-$("#logo").click(function () {
-  $("#carosel").show();
-  $("#logo").hide();
-});
-$("#github").click(function () {
-  window.open('https://houmanhadian.github.io/', '_blank');
-});
 
 
 var html = '<div class="loader loader--style1" title="0">\n' +

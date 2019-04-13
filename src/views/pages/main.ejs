@@ -74,125 +74,75 @@
           Count: <input type="number" class="form-control" id="count-input" count=0><br>
         </div>
       </form>
-      <input value="Load sample data" type="button" class="btn btn-dark" onClick=getEndpoint("http://localhost:8080/instagram/form/data?",'form-data')>
+      <input value="Get sample data" type="button" class="btn btn-primary" click-target="http://localhost:8080/instagram/form/data?" call-type="form-data">
     </div>
     <div class="center-text" id="links-container">
       <ul class="endpoints">
         <li>
-          <button class="btn btn-primary" type="button"  value="Get user profile" onClick=getEndpoint("http://localhost:8080/instagram/profile?",'profile','','main')>Get user profile</button>
-          <!--<a  href="http://localhost:3003/api/instagram/profile?houmanproject">Get user profile</a>-->
-          <!--<a  href="http://localhost:8080/instagram/profile?houmanproject">Get user profile</a>-->
-          <!--<a  onclick="getData('http://localhost:8080/instagram/profile?')">Get user profile</a>-->
+          <button class="btn btn-primary" type="button"  value="Get user profile" click-target="http://localhost:8080/instagram/profile?" call-type="profile">Get user profile</button>
           <br/>
         </li>
         <li>
-          <button class="btn btn-primary" type="button"  value="Get current user profile" onClick=getEndpoint("http://localhost:8080/instagram/whoami",'whoami','','main')>Get current  user profile</button>
-          <!--<a  href="http://localhost:3003/api/instagram/whoami">Get logged in user</a>-->
-          <!-- <a  href="http://localhost:8080/instagram/whoami">Get logged in user</a>-->
+          <button class="btn btn-primary" type="button"  value="Get current user profile" click-target="http://localhost:8080/instagram/whoami" call-type="whoami">Get current  user profile</button>
           <br/>
         </li>
         <li>
-          <button class="btn btn-primary" type="button"  value="Get user recent posts" onClick=getEndpoint("http://localhost:8080/instagram/posts?",'recent-posts','','main')>Get user recent posts</button>
-          <!--<a  href="http://localhost:3003/api/instagram/posts?username=adidas">Get user recent posts</a>-->
-          <!--<a  href="http://localhost:8080/instagram/posts?username=adidas">Get user recent posts</a>-->
+          <button class="btn btn-primary" type="button"  value="Get user recent posts" click-target="http://localhost:8080/instagram/posts?" call-type="recent-posts">Get user recent posts</button>
           <br/>
         </li>
         <li>
-          <button class="btn btn-primary" type="button"  value="Get user all posts" onClick=getEndpoint("http://localhost:8080/instagram/allposts?",'all-posts','','main')>Get user all posts</button>
-          <!--<a  href="http://localhost:3003/api/instagram/allposts?username=adidas">Get user all posts</a>-->
-          <!--<a  href="http://localhost:8080/instagram/allposts?username=adidas">Get user all posts</a>-->
+          <button class="btn btn-primary" type="button"  value="Get user all posts" click-target="http://localhost:8080/instagram/allposts?" call-type="all-posts">Get user all posts</button>
           <br/>
         </li>
         <li>
-          <button class="btn btn-primary" type="button"  value="Get posts by tag" onClick=getEndpoint("http://localhost:8080/instagram/explore/tag?",'tag-posts','','main')>Get posts by tag</button>
-          <!--<a  href="http://localhost:3003/api/instagram/explore/tag?tag=houman&count=50">Explore by tag</a>-->
-          <!--<a  href="http://localhost:8080/instagram/explore/tag?tag=houman&count=50">Explore by tag</a>-->
+          <button class="btn btn-primary" type="button"  value="Get posts by tag" click-target="http://localhost:8080/instagram/explore/tag?" call-type="tag-posts">Get posts by tag</button>
           <br/>
         </li>
         <li>
-          <button class="btn btn-primary" type="button"  value="Get posts by location" onClick=getEndpoint("http://localhost:8080/instagram/explore/location?",'location-posts','','main')>Get posts by location</button>
-          <!--<a  href="http://localhost:3003/api/instagram/explore/location?location=tehran&count=50">Explore by location</a>-->
-          <!--<a  href="http://localhost:8080/instagram/explore/location?location=tehran&count=50">Explore by location</a>-->
+          <button class="btn btn-primary" type="button"  value="Get posts by location" click-target="http://localhost:8080/instagram/explore/location?" call-type="location-posts">Get posts by location</button>
           <br/>
         </li>
         <li>
-          <button class="btn btn-primary" type="button"  value="Get user followings" onClick=getEndpoint("http://localhost:8080/instagram/following?",'user-following','','main')>Get user followings</button>
-          <!--<a  href="http://localhost:3003/api/instagram/following?username=adidas&count=50">Get user's followings</a>-->
-          <!-- <a  href="http://localhost:8080/instagram/following?username=adidas&count=50">Get user's followings</a>-->
+          <button class="btn btn-primary" type="button"  value="Get user followings" click-target="http://localhost:8080/instagram/following?" call-type="user-following">Get user followings</button>
           <br/>
         </li>
         <li>
-          <button class="btn btn-primary" type="button"  value="Get user followers" onClick=getEndpoint("http://localhost:8080/instagram/followers?",'user-followers','','main')>Get user followers</button>
-          <!--<a  href="http://localhost:3003/api/instagram/followers?username=adidas&count=120">Get user followers</a>-->
-          <!--<a  href="http://localhost:8080/instagram/followers?username=adidas&count=120">Get user followers</a>-->
+          <button class="btn btn-primary" type="button"  value="Get user followers" click-target="http://localhost:8080/instagram/followers?" call-type="user-followers">Get user followers</button>
           <br/>
         </li>
         <li>
-          <button class="btn btn-primary" type="button"  value="Get search items" onClick=getEndpoint("http://localhost:8080/instagram/search?",'search-posts','','main')>Get search items</button>
-          <!--<a  href="http://localhost:3003/api/instagram/search?query=instagram">Search Instagram</a>-->
-          <!--<a  href="http://localhost:8080/instagram/search?query=instagram">Search Instagram</a>-->
+          <button class="btn btn-primary" type="button"  value="Get search items" click-target="http://localhost:8080/instagram/search?" call-type="search-posts">Get search items</button>
           <br/>
         </li>
         <li>
-          <button class="btn btn-primary" type="button"  value="Get feed" onClick=getEndpoint("http://localhost:8080/instagram/feed?",'feed-posts','','main')>Get feed</button>
-          <!--<a  href="http://localhost:3003/api/instagram/feed?count=15">Get feed</a>-->
-          <!--<a  href="http://localhost:8080/instagram/feed?count=15">Get feed</a>-->
+          <button class="btn btn-primary" type="button"  value="Get feed" click-target="http://localhost:8080/instagram/feed?" call-type="feed-posts">Get feed</button>
           <br/>
         </li>
         <li>
-          <button class="btn btn-primary" type="button"  value="Get all feed" onClick=getEndpoint("http://localhost:8080/instagram/allfeed?",'all-feed-posts','','main')>Get all feed</button>
-          <!--<a  href="http://localhost:3003/api/instagram/feed?count=15">Get feed</a>-->
-          <!--<a  href="http://localhost:8080/instagram/feed?count=15">Get feed</a>-->
+          <button class="btn btn-primary" type="button"  value="Get all feed" click-target="http://localhost:8080/instagram/allfeed?" call-type="all-feed-posts">Get all feed</button>
           <br/>
         </li>
         <li>
-          <button class="btn btn-primary" type="button"  value="Get post likes" onClick=getEndpoint("http://localhost:8080/instagram/likes?",'post-likes','','main')>Get post likes</button>
-          <!--<a  href="http://localhost:3003/api/instagram/likes?shortcode=Bu1FtB-gxhE&count=65">Get post likes</a>-->
-          <!--<a  href="http://localhost:8080/instagram/likes?shortcode=Bu1FtB-gxhE&count=65">Get post likes</a>-->
+          <button class="btn btn-primary" type="button"  value="Get post likes" click-target="http://localhost:8080/instagram/likes?" call-type="post-likes">Get post likes</button>
           <br/>
         </li>
         <li>
-          <button class="btn btn-primary" type="button"  value="Get post comments" onClick=getEndpoint("http://localhost:8080/instagram/comments?",'post-comments','','main')>Get post comments</button>
-          <!--<a  href="http://localhost:3003/api/instagram/comments?shortcode=Bu6dTjrFnI-&count=165">Get post comments</a>-->
-          <!--<a  href="http://localhost:8080/instagram/comments?shortcode=Bu6dTjrFnI-&count=165">Get post comments</a>-->
+          <button class="btn btn-primary" type="button"  value="Get post comments" click-target="http://localhost:8080/instagram/comments?" call-type="post-comments">Get post comments</button>
           <br/>
         </li>
         <li>
-          <button class="btn btn-primary" type="button"  value="Get post media" onClick=getEndpoint("http://localhost:8080/instagram/post?",'post-json','','main')>Get post media</button>
-          <!--<a  href="http://localhost:3003/api/instagram/post?shortcode=Bu6dTjrFnI-">Get post</a>-->
-          <!--<a  href="http://localhost:8080/instagram/post?shortcode=Bu6dTjrFnI-">Get post media</a>-->
-          <br/>
-        </li>
-     <!--   <li>
-          <input class="btn btn-primary" type="button"  value="Get post HTML page" onClick=getEndpoint("http://localhost:8080/instagram/post/page?",'post-page')>
-          &lt;!&ndash;<a   href="http://localhost:3003/api/instagram/post/page?shortcode=Bu6dTjrFnI-">Get post HTML page</a>&ndash;&gt;
-          &lt;!&ndash;<a   href="http://localhost:8080/instagram/post/page?shortcode=Bu6dTjrFnI-">Get post HTML page</a>&ndash;&gt;
-          <br/>
-        </li>-->
-        <li>
-          <button class="btn btn-primary" type="button"  value="Get suggested posts" onClick=getEndpoint("http://localhost:8080/instagram/suggested/posts?",'sugg-posts','','main')>Get suggested posts</button>
-          <!--<a  href="http://localhost:3003/api/instagram/suggested/posts?count=20">Get suggested posts</a>-->
-          <!--<a  href="http://localhost:8080/instagram/suggested/posts?count=20">Get suggested posts</a>-->
+          <button class="btn btn-primary" type="button"  value="Get post media" click-target="http://localhost:8080/instagram/post?" call-type="post-json">Get post media</button>
           <br/>
         </li>
         <li>
-          <button class="btn btn-primary" type="button"  value="Get suggested people" onClick=getEndpoint("http://localhost:8080/instagram/suggested/people?",'sugg-people','','main')>Get suggested people</button>
-          <!--<a  href="http://localhost:3003/api/instagram/suggested/people?count=20">Get suggested people</a>-->
-          <!--<a  href="http://localhost:8080/instagram/suggested/people?count=20">Get suggested people</a>-->
-          <br/>
-        </li>
-<!--        <li>
-          <input class="btn btn-primary" type="button"  value="Get posts engagement" onClick=getEndpoint("http://localhost:8080/instagram/engagement/posts?",'eng-posts')>
+          <button class="btn btn-primary" type="button"  value="Get suggested posts" click-target="http://localhost:8080/instagram/suggested/posts?" call-type="sugg-posts">Get suggested posts</button>
           <br/>
         </li>
         <li>
-          <input class="btn btn-primary" type="button"  value="Get profiles engagement" onClick=getEndpoint("http://localhost:8080/instagram/engagement/profiles?",'eng-profiles')>
+          <button class="btn btn-primary" type="button"  value="Get suggested people" click-target="http://localhost:8080/instagram/suggested/people?"  call-type="sugg-people">Get suggested people</button>
           <br/>
         </li>
-        <li>
-          <input class="btn btn-primary" type="button"  value="Get location engagement" onClick=getEndpoint("http://localhost:8080/instagram/engagement/locations?",'eng-locations')>
-          <br/>
-        </li>-->
+
       </ul>
     </div>
 
