@@ -57,12 +57,12 @@ function getEndpoint(endpoint, type, code, container) {
     closeNav('insta-sidepanel');
     openNav('insta-sidepanel');
     document.getElementById('instagram-container').innerHTML = html;
-    var username = document.getElementById('username-input').value || code;
-    var tag = document.getElementById('tag-input').value || code;
-    var location = document.getElementById('location-input').value || code;
+    var username = code.length>0 ? code : document.getElementById('username-input').value;
+    var tag = code.length>0 ? code : document.getElementById('tag-input').value;
+    var location = code.length>0 ? code : document.getElementById('location-input').value;
     var query = document.getElementById('search-input').value;
     var count = document.getElementById('count-input').value || 50;
-    var shortcode = document.getElementById('shortcode-input').value || code;
+    var shortcode = code.length>0 ? code : document.getElementById('shortcode-input').value;
     var url = endpoint;
     switch (type) {
       case 'profile':
