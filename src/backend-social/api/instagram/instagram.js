@@ -186,6 +186,7 @@ module.exports = class Instagram {
    * @return {Object} Promise
    */
   auth(username, password) {
+    var self=this;
     var formdata = 'username=' + username + '&password=' + password + '&queryParams=%7B%7D'
 
     var options = {
@@ -198,7 +199,7 @@ module.exports = class Instagram {
             'accept-encoding': 'gzip, deflate, br',
             'content-length': formdata.length,
             'content-type': 'application/x-www-form-urlencoded',
-            'cookie': 'ig_cb=' + this.cookieValues.ig_cb+';'+'csrftoken='+ this.csrfToken+';',
+            'cookie': self.generateCookie(false),
             'x-csrftoken': this.csrfToken,
             'x-instagram-ajax': this.rollout_hash,
             'x-requested-with': 'XMLHttpRequest',

@@ -1,14 +1,14 @@
 var config = require('../../../../config');
 const CSRF_TOKEN = config.CSRFTOKEN;
-const SESSION_ID = config.SESSIONID;
-var USER_SELF = config.USER_SELF;
+const sessionid = config.SESSIONID;
+var userid = config.userid;
 console.log("Houman project's configurations initialized...");
 const Router = require("koa-Router");
 const Instagram = require('./instagram');
 const instagramClient = new Instagram();
 instagramClient.csrfToken = (instagramClient.csrfToken && instagramClient.csrfToken.length > 5) ? instagramClient.csrfToken : CSRF_TOKEN;
-instagramClient.sessionId = (instagramClient.sessionId && instagramClient.sessionId.length > 5) ? instagramClient.sessionId : SESSION_ID;
-instagramClient.userName = (instagramClient.userName && instagramClient.userName.length > 2) ? instagramClient.sessionId : USER_SELF;
+instagramClient.sessionId = (instagramClient.sessionId && instagramClient.sessionId.length > 5) ? instagramClient.sessionId : sessionid;
+instagramClient.userName = (instagramClient.userName && instagramClient.userName.length > 2) ? instagramClient.sessionId : userid;
 console.log("Houman project's Instagram client has been initialized...");
 const instagramRouter = new Router({prefix: "/api"});
 console.log("Houman project's Instagram API has started...");

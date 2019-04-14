@@ -3188,10 +3188,10 @@ exports.makeUrl = function makeUrl(path) {
   var app = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   var get = typeof app.get === 'function' ? app.get.bind(app) : function () {};
   var env = get('env') || "development";
-  var host = get('host') || process.env.HOST_NAME || 'localhost';
+  var host = get('host') || process.env.host_NAME || 'localhost';
   var protocol = env === 'development' || env === 'test' || env === undefined ? 'http' : 'https';
-  var PORT = get('port') || process.env.PORT || 3030;
-  var port = env === 'development' || env === 'test' || env === undefined ? ":".concat(PORT) : '';
+  var port = get('port') || process.env.port || 3030;
+  var port = env === 'development' || env === 'test' || env === undefined ? ":".concat(port) : '';
   path = path || '';
   return "".concat(protocol, "://").concat(host).concat(port, "/").concat(exports.stripSlashes(path));
 };

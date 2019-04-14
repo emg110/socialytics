@@ -33,7 +33,7 @@ module.exports = function (options = {}) {
         console.log('Rendering login page');
         break;
       case '/instagram/form/data?':
-        var formData = config.DEFAULT_FORM_DATA
+        var formData = config.default_form_data
 
         res.json(formData)
         break;

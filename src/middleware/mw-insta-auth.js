@@ -1,7 +1,22 @@
-//const InstagramAuth = require('../../backend-social/api/instagram/instagram-auth');
 const Instagram = require('../backend-social/api/instagram/instagram');
 const config = require('../../config')
 const instagram = new Instagram();
+const fs = require('fs');
+async function writeConfig(){
+  if(config.sessionid){
+
+    let configString = JSON.stringify(config);
+    configString = 'module.exports = '+configString;
+    let writeConfig = await fs.writeFile("./config/index.js", configString, 'utf8', function (err) {
+      if (err) {
+        console.log("An error occured while writing configurations back to config/index.js File.");
+        return console.log(err);
+      }
+
+      console.log("Configurations have been saved.");
+    });
+  }
+}
 async function getUser(uoi){
   const userData = await instagram.getUserDataByUsername(uoi).then(t => {
     return t;
@@ -21,40 +36,44 @@ module.exports =  function (options = {}) {
       case '/authenticate':
         if(req.body.username){
           config.username =req.body.username;
-          var uoi = config.username;
-          /*//let username = req.body.username;
-          //let password = req.body.password;
-          req.params.user = await instagram.getCsrfToken().then((csrf) =>
+          let username = req.body.username || config.userid;
+          let password = req.body.password;
+          var csrftoken = await instagram.getCsrfToken().then((csrf) =>
           {
-            instagram.csrfToken = csrf;
+            instagram.csrftoken = csrf;
             return csrf;
           }).catch(console.error);
-          req.params.user = await InstagramAuth.login(username, password).then((output)=>{
-            return output
-          });*/
-
-          const csrf = await instagram.getCsrfToken().then((csrf) =>
+          var sessionid = await instagram.auth(username, password).then((sessionid)=>{
+            instagram.sessionid = sessionid;
+            return sessionid
+          });
+          req.body.sessionid = sessionid;
+          req.body.csrftoken = csrftoken;
+          config.sessionid = sessionid;
+          config.csrftoken = csrftoken;
+         /* const csrf = await instagram.getCsrfToken().then((csrf) =>
           {
-            instagram.csrfToken = csrf;
+            instagram.csrftoken = csrf;
             return csrf;
-          }).catch(console.error);
-          if(!(instagram.sessionId && instagram.sessionId.length > 3)){
-            instagram.sessionId = config.SESSION_ID;
-            instagram.userId = req.body.username;
-            req.body.sessionid  = config.SESSION_ID;
+          }).catch(console.error);*/
+          if(!(instagram.sessionid && instagram.sessionid.length > 3)){
+            instagram.sessionid = config.sessionid;
+            instagram.userid = req.body.username;
+            req.body.sessionid  = config.sessionid;
           }
-          req.body.sessionid = instagram.sessionId;
-          req.body.csrfToken = instagram.csrfToken;
-          config.sessionid = instagram.sessionId;
-          config.csrftoken = instagram.csrfToken;
+          req.body.sessionid = instagram.sessionid;
+          req.body.csrfToken = instagram.csrftoken;
+          config.sessionid = instagram.sessionid;
+          config.csrftoken = instagram.csrftoken;
           var userId = "";
           if(config.userid){
             userId = config.userid;
             instagram.cookieValues.ds_user_id = userId;
           }else{
-            userId = await getUser(uoi).then(userId=>userId);
+            userId = await getUser(username).then(userId=>userId);
             config.userid = userId;
           }
+          writeConfig();
           console.log('Authenticated! Now rendering home page');
           next();
         }

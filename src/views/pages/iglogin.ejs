@@ -15,15 +15,14 @@
 
 
       <br>
-      <form class="text-center justify-content-center" method="POST" action="/login">
+      <form class="text-center justify-content-center" method="POST" action="/authenticate">
         <p class="btn btn-primary">Login with Instagram</p>
         <div style="display:inline-block;" class="text-center form-group justify-content-center">
-          <input style="display:block; margin:10px" type="text" class="form-control" name="email" id="email" placeholder="Email" required>
+          <input style="display:block; margin:10px" type="text" class="form-control" name="username" id="username" placeholder="Username" required>
           <input style="display:block; margin:10px" type="password" class="form-control" name="password" id="password" placeholder="Password" required>
         </div>
         <br>
-        <button class="btn btn-primary">Login</button>
-
+      <button class="btn btn-primary">Login</button>
       </form>
       <p class="whiteBox">
         Don't have an account? <a href="/register">Register</a>

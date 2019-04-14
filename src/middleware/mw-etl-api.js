@@ -38,7 +38,7 @@ module.exports = function (options = {}) {
         });
       }
       else if(expr.indexOf('/instagram/whoami')>=0){
-        expr = expr.replace('/instagram/whoami','/instagram/profile') + "?"+ config.username
+        expr = expr.replace('/instagram/whoami','/instagram/profile') + "?"+ config.userid
         let etlApiEndpoint = serverUrl+expr;
         const etlData = await getEndpointEtl(etlApiEndpoint);
         res.render('pages/profile',{etlData},function(err, html) {

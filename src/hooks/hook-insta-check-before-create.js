@@ -7,12 +7,12 @@ module.exports = function (options = {}) {
   return async context => {
     //let id = context.data.id;
     //let profile_user = context.data.username;
-    //let account_user = config.username
+    //let account_user = config.userid
     //var version = context.version || "ig-profile"+"-id-"+id+"-un-"+profile_user+"-v-"+ Date.now()+'-acc-'+ account_user;
     //context.data.version = version;
     //console.log(context.data);
     var id = context.data.id;
-    if (config.VERSIONING_DATA=== false) {
+    if (config.versioning=== false) {
       if (context.data['_id']) {
         delete context.data['_id'];
       }
@@ -21,7 +21,7 @@ module.exports = function (options = {}) {
       }
     }
     return context
-    /*if(!config.VERSIONING_DATA && !!config.UPSERT_DATA){
+    /*if(!config.versioning && !!config.UPSERT_DATA){
       var check = await context.app.service(context.path).get(id).then(page => {
         if (!page.id) {
           console.info(`Record checked: No existing record found in service: ${context.path} with key: 'id:${id}'`)
