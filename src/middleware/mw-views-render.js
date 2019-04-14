@@ -24,9 +24,17 @@ module.exports = function (options = {}) {
         }
 
         break;
-      case '/engagement':
-        res.render('pages/engagement', {output});
-        console.log('Rendering instagram engagement page');
+      case '/dashboards/engagement':
+        res.render('pages/dashboards-engagement');
+        console.log('Rendering instagram engagement dashboard page');
+        break;
+      case '/dashboards/stats':
+        res.render('pages/dashboards-stats');
+        console.log('Rendering instagram stats dashboard page');
+        break;
+      case '/dashboards/explore':
+        res.render('pages/dashboards-explore');
+        console.log('Rendering instagram explore dashboard page');
         break;
       case '/login':
         res.render('pages/login', {output});

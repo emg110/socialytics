@@ -63,4 +63,7 @@ Special thanks to these great open source projects which paved the client's star
 [FDMcreative/instagram-clone-ejs](https://github.com/FDMcreative/instagram-clone-ejs)
 
 
+[parsakafi/instagram-engagement-rate](https://github.com/parsakafi/instagram-engagement-rate)
+
+
 
