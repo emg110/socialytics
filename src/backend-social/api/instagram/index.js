@@ -6,9 +6,9 @@ console.log("Houman project's configurations initialized...");
 const Router = require("koa-Router");
 const Instagram = require('./instagram');
 const instagramClient = new Instagram();
-instagramClient.csrfToken = (instagramClient.csrfToken && instagramClient.csrfToken.length > 5) ? instagramClient.csrfToken : CSRF_TOKEN;
-instagramClient.sessionId = (instagramClient.sessionId && instagramClient.sessionId.length > 5) ? instagramClient.sessionId : sessionid;
-instagramClient.userName = (instagramClient.userName && instagramClient.userName.length > 2) ? instagramClient.sessionId : userid;
+instagramClient.csrftoken = (instagramClient.csrftoken && instagramClient.csrftoken.length > 5) ? instagramClient.csrftoken : CSRF_TOKEN;
+instagramClient.sessionid = (instagramClient.sessionid && instagramClient.sessionid.length > 5) ? instagramClient.sessionid : sessionid;
+instagramClient.userid = (instagramClient.userid && instagramClient.userid.length > 2) ? instagramClient.sessionid : userid;
 console.log("Houman project's Instagram client has been initialized...");
 const instagramRouter = new Router({prefix: "/api"});
 console.log("Houman project's Instagram API has started...");
@@ -95,7 +95,7 @@ const profileJson = async (ctx) => {
   }
 }
 const profileSelfJson = async (ctx) => {
-  var uoi = new String(instagramClient.userName);
+  var uoi = new String(instagramClient.userid);
   var uoi = inputUser.username || Object.keys(ctx.request.query)[0];
   let userData = await instagramClient.getUserDataByUsername(uoi).then((t) => {
     return t;

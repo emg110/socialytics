@@ -7,10 +7,10 @@ module.exports = class Instagram {
   /**
    * Constructor
    */
-  constructor(csrfToken, sessionId) {
-    this.csrfToken = csrfToken;
-    this.sessionId = sessionId;
-    this.userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36';
+  constructor(csrftoken, sessionid) {
+    this.csrftoken = csrftoken;
+    this.sessionid = sessionid;
+    this.userAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36'
     this.userPosts = {};
     this.userFeedPosts = {};
     this.suggestedPosts = {};
@@ -28,7 +28,6 @@ module.exports = class Instagram {
     this.postComments = {};
 
     this.cookieValues = {
-      ig_cb: 1,
       sessionid: undefined,
       ds_user_id: undefined,
       csrftoken: undefined,
@@ -37,7 +36,8 @@ module.exports = class Instagram {
       mid: undefined,
       shbts: undefined,
       mcd: undefined,
-      urlgen:undefined
+      urlgen:undefined,
+      ig_cb: 1,
 
     };
 
@@ -49,7 +49,7 @@ module.exports = class Instagram {
       'user-agent': this.userAgent,
     };
     this.userId = "";
-    this.userName = "";
+    this.userid = "";
     this.people = {};
     this.tags = {};
     this.locations = {};
@@ -68,7 +68,13 @@ module.exports = class Instagram {
     if (simple) return 'ig_cb=1';
     this.cookieValues.ds_user_id = config.userid;
     this.cookieValues.csrftoken = config.csrftoken;
-    this.cookieValues.sessionid = config.sessionid;
+    if(config.sessionid){
+      if(config.sessionid.length>5){
+        this.cookieValues.sessionid = config.sessionid;
+      }
+    }else{
+      delete this.cookieValues.sessionid;
+    }
     var cookie = ''
     var keys = Object.keys(this.cookieValues)
     for (var i = 0; i < keys.length; i++) {
@@ -173,8 +179,8 @@ module.exports = class Instagram {
       'user-agent': this.userAgent,
       'x-instagram-ajax': '1',
       'x-requested-with': 'XMLHttpRequest',
-      'x-csrftoken': this.csrfToken,
-      cookie: ' sessionid=' + this.sessionId + '; csrftoken=' + this.csrfToken + ';'
+      'x-csrftoken': this.csrftoken,
+      cookie:  this.generateCookie(false)
     }
   }
 
@@ -186,32 +192,32 @@ module.exports = class Instagram {
    * @return {Object} Promise
    */
   auth(username, password) {
-    var self=this;
     var formdata = 'username=' + username + '&password=' + password + '&queryParams=%7B%7D'
-
+    var self = this;
     var options = {
       method: 'POST',
       body: formdata,
       headers:
         this.combineWithBaseHeader(
           {
-            'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-            'accept-encoding': 'gzip, deflate, br',
-            'content-length': formdata.length,
-            'content-type': 'application/x-www-form-urlencoded',
-            'cookie': self.generateCookie(false),
-            'x-csrftoken': this.csrfToken,
-            'x-instagram-ajax': this.rollout_hash,
-            'x-requested-with': 'XMLHttpRequest',
+            'accept'            : '*/*',
+            'accept-encoding'   : 'gzip, deflate, br',
+            'content-length'    : formdata.length,
+            'content-type'      : 'application/x-www-form-urlencoded',
+            'cookie'            : 'ig_cb=' + this.cookieValues.ig_cb,
+            'x-csrftoken'       : this.csrftoken,
+            'x-instagram-ajax'  : this.rollout_hash,
+            'x-requested-with'  : 'XMLHttpRequest',
           }
         )
     }
 
-    return fetch('https://www.instagram.com/accounts/login/ajax/', options).then(
+    return fetch('https://www.instagram.com/accounts/login/ajax', options).then(
       t => {
-        this.updateCookieValues(t.headers.get('set-cookie'));
-        this.userName = username;
-        return this.cookieValues.sessionid;
+        let res = t.headers.get('set-cookie');
+        self.updateCookieValues(res);
+        self.userid = username;
+        return self.cookieValues.sessionid;
       }).catch(() =>
       console.log('Instagram authentication failed...')
     )
@@ -1292,7 +1298,7 @@ module.exports = class Instagram {
    */
   getSuggestedPeople(n, fetch_media_cursor, fetch_media_count, sugPeopleCounter, selfSelf) {
     const self = this
-    var userId = this.userName;
+    var userId = this.userid;
     if (!selfSelf)
       self.suggestedPosts[userId] = []
 
@@ -1397,7 +1403,7 @@ module.exports = class Instagram {
         'content-type': 'application/json',
         'x-requested-with': 'XMLHttpRequest',
         'x-csrftoken': undefined,
-        cookie: ' sessionid=' + this.sessionId + '; csrftoken=' + this.csrfToken + '; mid=WPL0LQAEAAGG3XL5-xHXzClnpqA3; rur=ASH; mid=WRN1_AAEAAE07QksztCl3OCnLj8Y;'
+        cookie: ' sessionid=' + this.sessionid + '; csrftoken=' + this.csrftoken + '; mid=WPL0LQAEAAGG3XL5-xHXzClnpqA3; rur=ASH; mid=WRN1_AAEAAE07QksztCl3OCnLj8Y;'
       }
 
     return fetch('https://www.instagram.com/web/friendships/' + userId + (isUnfollow === 1 ? '/unfollow' : '/follow'),
@@ -1560,8 +1566,8 @@ module.exports = class Instagram {
           'user-agent': this.userAgent,
           'x-instagram-ajax': '1',
           'x-requested-with': 'XMLHttpRequest',
-          'x-csrftoken': this.csrfToken,
-          cookie: 'csrftoken=' + this.csrfToken
+          'x-csrftoken': this.csrftoken,
+          cookie: 'csrftoken=' + this.csrftoken
         }
       })
         .then(res => res.json())

@@ -1,20 +1,21 @@
 module.exports = {
-  "ENVIRONMENT": "development",
-  "PORT": "3003",
-  "HOST": "localhost",
-  "userid": "",
-  "sessionid": "",
-  "csrftoken": "",
-  "profiles": [],
-  "locations": [],
-  "tags": [],
-  "default_form_data": {
-    "username": "s.and.m.artifacts",
-    "tag": "s_and_m_artifacts",
-    "location": "faro",
-    "query": "faro",
-    "shortcode": "BwE-N5mFizR",
-    "count": 65
+  ENVIRONMENT: process.env.NODE_ENV || "development",
+  PORT: process.env.PORT || "3003",
+  HOST: process.env.HOST || "localhost",
+  userid: "houmanproject",
+  sessionid: "",
+  csrftoken:"",
+  profiles: [],
+  locations: [],
+  tags: [],
+  default_form_data: {
+    username: "s.and.m.artifacts",
+    tag: "s_and_m_artifacts",
+    location: "faro",
+    query: "faro",
+    shortcode: "BwE-N5mFizR",
+    count: 65
   },
-  "versioning": false,
-}
+  // NOTICE: PLEASE DELETE ALL DB FILES INSIDE DATA FOLDER BEFORE CHANGING VERSIONING
+  versioning: false
+};
