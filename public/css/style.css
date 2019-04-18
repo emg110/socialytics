@@ -110,7 +110,7 @@ a:focus {
   width: 0; /* 0 width-change this with JavaScript */
   position: fixed; /* Stay in place */
   z-index: 1; /* Stay on top */
-  top: 0;
+  top: 66px;
   left: 0;
   background-color: #fff; /* Black*/
   overflow-x: hidden; /* Disable horizontal scroll */
@@ -196,6 +196,7 @@ a:focus {
 
 #content-container {
   width: 100%;
+  margin-bottom: -38px;
 }
 
 #footer-container {
@@ -546,5 +547,13 @@ img {
 .modal-backdrop {
   z-index: 0;
 }
-
-
+.verified{
+  color:lightgreen;
+}
+.private-account{
+  color:darkred;
+}
+.byline{
+  color: cadetblue;
+  font-size: 1.1em;
+}

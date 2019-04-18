@@ -3,7 +3,7 @@
   padding-right: 15px;
   margin-left: auto;
   margin-right: auto;
-  margin-top:20px;
+  margin-top:66px;
 }
 
 /* GRID */
@@ -144,6 +144,9 @@
   .grid-split-columns {
     grid-template-columns: repeat(4, 1fr);
   }
+  .grid-split-quadro-columns {
+    grid-template-columns: repeat(8, 1fr);
+  }
 }
 
 .chart-wrapper {
@@ -197,3 +200,4 @@
     margin-bottom: 0;
   }
 }
+

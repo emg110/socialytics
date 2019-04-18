@@ -7,12 +7,21 @@
       <% if(!(typeof edge == 'undefined')){%>
         <% if(edge.profile_pic_url) { %>
           <img class="usr-img-thumbnail" src="<%= !(typeof edge == 'undefined') ? edge.profile_pic_url:"" %>" alt="<%= edge ? edge.username :"" %>">
-        <% } else { %>
-          <img class="usr-img-thumbnail" src="<%= !(typeof edge == 'undefined') ? edge.profile_pic_url : "" %>" alt="<%= edge ? edge.username : "" %>">
-        <% } %>
+        <% }  %>
       <%}%>
-
-
+        <div style="min-width: 100px; display: inline-block;" class="col-sm-6 text-center align-self-center">
+          <% if(!!edge.is_verified) { %>
+            <span class="verified glyphicon glyphicon-ok" title="Verified Account"></span><span class="verified glyphicon glyphicon-user" alt="Verified Account"></span>
+          <% }else{ %>
+            <span class="not-verified glyphicon glyphicon-user" title="Not verified!"></span>
+          <%}%>
+          <% if(!!edge.followed_by_viewer) { %>
+            <span class="glyphicon glyphicon-star" title="Followed Account"></span>
+          <% } %>
+          <% if(!!edge.requested_by_viewer) { %>
+            <span class="glyphicon glyphicon-envelope" title="Outgoing request"></span>
+          <% } %>
+        </div>
     </div>
 
     <div class="col-sm-6 text-center align-self-center">

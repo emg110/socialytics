@@ -60,23 +60,37 @@
 
     <div class="col-sm-6 text-center align-self-center" style="cursor:pointer; max-width: 150px;"
          onClick=getEndpoint("http://localhost:8080/instagram/profile?","profile","<%= edge.username %>","profile")>
-      <% if(!(typeof edge == 'undefined')){ %>
-        <% if(edge.profile_pic_url) { %>
-          <img class="usr-img-thumbnail" src="<%= !(typeof edge == 'undefined') ? edge.profile_pic_url : "" %>"
-               alt="<%= edge ? edge.username : "" %>">
-        <% } else { %>
-          <img class="usr-img-thumbnail" src="<%= !(typeof edge == 'undefined') ? edge.profile_pic_url : "" %>"
-               alt="<%= edge ? edge.username : "" %>">
-        <% } %>
-      <% } %>
-
+        <% if(!(typeof edge == 'undefined')){ %>
+            <% if(edge.profile_pic_url) { %>
+              <img class="usr-img-thumbnail" src="<%= !(typeof edge == 'undefined') ? edge.profile_pic_url : "" %>"
+                   alt="<%= edge ? edge.username : "" %>">
+            <% } %>
+        <%}%>
+        <div style="min-width: 100px; display: inline-block;" class="col-sm-6 text-center align-self-center">
+            <% if(!!edge.is_private) { %>
+              <span class="private-account glyphicon glyphicon-lock" title="Private Account"></span>
+            <% } %>
+            <% if(!!edge.is_verified) { %>
+              <span class="verified glyphicon glyphicon-ok" title="Verified Account"></span><span class="verified glyphicon glyphicon-user" alt="Verified Account"></span>
+            <% }else{ %>
+              <span class="not-verified glyphicon glyphicon-user" title="Not verified!"></span>
+            <%}%>
+            <% if(!!edge.following) { %>
+              <span class="glyphicon glyphicon-star" title="Followed Account"></span>
+            <% } %>
+            <% if(!!edge.outgoing_request) { %>
+              <span class="glyphicon glyphicon-envelope" title="Outgoing request"></span>
+            <% } %>
+            <% if(edge.byline) { %>
+              <span class="byline" title="Followers count"></br><%=edge.byline.replace(' followers','')%></span>
+            <% } %>
+        </div>
     </div>
 
     <div class="col-sm-6 text-center align-self-center">
 
       <h4><%= !(typeof edge == 'undefined') ? edge.username : "username" %></h4>
       <h6><%= !(typeof edge == 'undefined') ? (edge.email || edge.full_name) : "user@maildomain" %></h6>
-
     </div>
 
   </div>
