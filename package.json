@@ -1,14 +1,14 @@
 {
-  "name": "houman-project",
+  "name": "socialytics",
   "version": "1.0.0",
   "private": true,
   "description": "Houman Hadian's doctoral project analytics platform codebase",
   "keywords": [],
-  "homepage": "https://www.github.com/emg110/houman-project",
+  "homepage": "https://www.github.com/emg110/socialytics",
   "bugs": {},
   "repository": {
     "type": "git",
-    "url": "https://www.github.com/emg110/houman-project.git"
+    "url": "https://www.github.com/emg110/socialytics.git"
   },
   "license": "MIT",
   "main": "etl/index.js",
