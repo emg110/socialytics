@@ -1,9 +1,9 @@
 ![houmanhadian.github.io](./public/img/hhadianproject.png?raw=true "Houman Hadian's Doctoral Project")
-# houman-project:
-Houman Hadian's doctoral project code base
+# Socialytics:
+Tool developed during Houman Hadian's doctoral project as code base for social APIs ETL and analytics.
 @UAlg.pt
 
-This application is intended to provide batch and realtime (LAMBDA) ETL functionality on Instagram service APIs (private web API)
+Socialytics, is intended to provide batch and realtime (LAMBDA) ETL functionality on Instagram service APIs (private web API)
 in order to analyse brand engagement on Instagram via analytical models presented on 
 [Houman Hadian's doctoral project research papers](https://houmanhadian.github.io/). This is an open source contribution in hope of producing side common benefits along with academic & scientific values. Soon to be published separately as NPM package with a more techy name indeed! We beleive that respecting diversity of tech tools in the wild there are still few full functional FOSS tools for browsing and analytics on social networks out there. Seeing a gap that could be filled makes the purpose to make a tool that can be reused for research, academic and scientific purposes. Noticible impacts on branding (place, product & service), tourism, marketing and behaivioral analytics sciences are envisioned and sought.
 
