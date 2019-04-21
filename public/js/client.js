@@ -441,7 +441,7 @@ $("#logo").click(function () {
   $("#logo").hide();
 });
 $("#github").click(function () {
-  window.open('https://houmanhadian.github.io/', '_blank');
+  window.open('https://github.com/emg110/houman-project/', '_blank');
 });
 
 $('.btn-primary').on('click', function () {

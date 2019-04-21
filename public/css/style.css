@@ -243,33 +243,44 @@ svg rect {
   position: absolute;
   top: 0;
   right: 0;
+  z-index: 3;
   cursor: pointer;
   margin:0;
 }
 
 .github:hover {
-  animation: octocat-wave 560ms ease-in-out;
+  -webkit-animation: flash linear 1s infinite;
+  animation: flash linear 1s infinite;
 }
-
+@-webkit-keyframes flash {
+  0% { opacity: 1; }
+  50% { opacity: .1; }
+  100% { opacity: 1; }
+}
+@keyframes flash {
+  0% { opacity: 1; }
+  50% { opacity: .1; }
+  100% { opacity: 1; }
+}
 @keyframes octocat-wave {
   0% {
     transform: rotate(0deg);
   }
 
   20% {
-    transform: rotate(-25deg);
+    transform: rotate(-10deg);
   }
 
   40% {
-    transform: rotate(10deg);
+    transform: rotate(5deg);
   }
 
   60% {
-    transform: rotate(-25deg);
+    transform: rotate(-10deg);
   }
 
   80% {
-    transform: rotate(10deg);
+    transform: rotate(5deg);
   }
 
   100% {
