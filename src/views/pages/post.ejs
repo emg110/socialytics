@@ -30,7 +30,7 @@
           <img id="media-preview" class="img-fluid" src="<%=mediaSrc %>" alt="<%= etlData.edge_media_to_caption.edges[0] ? etlData.edge_media_to_caption.edges[0].node.text : etlData.id %>">
         </a>
         <div class="likes-comments">
-              <span style="color: rgb(249,5,5);">
+                <span style="cursor:pointer; color: rgb(249,5,5);" onClick=getEndpoint("http://localhost:8080/instagram/likes?","post-likes","<%= etlData.shortcode %>","post-likes")>
                 <%if(etlData.edge_media_preview_like){%>
                   <% if(etlData.edge_media_preview_like.count) { %><%=etlData.edge_media_preview_like.count+' '%> &hearts; <% } %>
                 <%}else if(etlData.edge_liked_by){ %><%=etlData.edge_liked_by.count+' '%> &hearts; <%}%>

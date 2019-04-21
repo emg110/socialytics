@@ -1,28 +1,113 @@
 <div class="row whiteBox ">
-
-  <div class="col-sm-6 text-center align-self-center">
+  <div class="col-sm-6 profile-image">
     <% if(!(typeof etlData == 'undefined')){%>
-    <%var likes=0,comments=0,followers=1, posts = 0,engagement = 0, engagementData = []  %>
+      <%var likes=0,comments=0,followers=1, posts = 0,engagement = 0, engagementData = [], likesData=[], commentsData=[]  %>
       <% if(etlData.edge_followed_by)followers = etlData.edge_followed_by.count? parseInt(etlData.edge_followed_by.count):1%>
       <% if(etlData.profile_pic_url) { %>
         <img class="usr-img-thumbnail" src="<%= !(typeof etlData == 'undefined') ? etlData.profile_pic_url:"" %>" alt="<%= etlData ? etlData.username :"" %>">
-      <% } else { %>
-        <img class="usr-img-thumbnail" src="<%= !(typeof etlData == 'undefined') ? etlData.profile_pic_url : "" %>" alt="<%= etlData ? etlData.username : "" %>">
       <% } %>
     <%}%>
   </div>
-  <div class="col-sm-6 text-center align-self-center">
+  <div class="col-sm-6 profile-titles">
 
     <h4><%= !(typeof etlData == 'undefined') ? etlData.username : "username" %></h4>
     <h6><%= !(typeof etlData == 'undefined') ? (etlData.email || etlData.full_name) :"user@maildomain"%></h6>
 
-   <!-- <form method="POST" action="/profile">
-      <input type="hidden" name="_method" value="DELETE">
-      <button type="button" class="btn btn-danger">Delete Account</button>
-    </form>-->
-
+    <!-- <form method="POST" action="/profile">
+       <input type="hidden" name="_method" value="DELETE">
+       <button type="button" class="btn btn-danger">Delete Account</button>
+     </form>-->
   </div>
-  <div id="sparkline" style="width:100%"></div>
+
+  <div class="col-sm-6 profile-trends" style="">
+    <div id="sparkline-likes" style="width:51%;float:right;"></div>
+    <span class="badge badge-secondary trend-badge" style="">Likes:</span>
+    <div id="sparkline-comments" style="width:51%;float:right;"></div>
+    <span class="badge badge-secondary trend-badge" style="">Comments:</span>
+    <div id="sparkline" style="width:51%;float:right"></div>
+    <span class="badge badge-secondary trend-badge" style="">Engagement:</span>
+    <div id="sparkline-sentiments" style="width:51%;float:right"></div>
+    <span class="badge badge-secondary trend-badge" style="">Sentiment:</span>
+  </div>
+  <div class="col-sm-6 profile-boolean">
+    <div style="min-width: 100%; display: inline-block;font-size: 1em;" class="col-sm-6">
+      <% if(!!etlData.is_private) { %>
+        <h6 class="profile-boolean-indicator"><span class="private-account glyphicon glyphicon-lock" title="Private Account"></span>Private</h6>
+      <%  } %>
+      <% if(!!etlData.is_verified) { %>
+        <h6 class="profile-boolean-indicator"><span class="verified glyphicon glyphicon-ok" title="Verified Account"></span><span class="verified glyphicon glyphicon-user" alt="Verified Account"></span>Verified</h6>
+      <%  }else{ %>
+        <h6 class="profile-boolean-indicator"><span class="not-verified glyphicon glyphicon-user" title="Not verified!"></span>Not verified</h6>
+      <% }%>
+      <% if(!!etlData.followed_by_viewer) { %>
+        <h6 class="profile-boolean-indicator"><span class="glyphicon glyphicon-star" title="Followed account"></span>Followed by you</h6>
+      <%  } %>
+      <% if(!!etlData.follows_viewer) { %>
+        <h6 class="profile-boolean-indicator"><span class="glyphicon glyphicon-heart" title="Followed by account"></span>Follows you</h6>
+      <%  } %>
+      <% if(!!etlData.has_blocked_viewer) { %>
+        <h6 class="profile-boolean-indicator"><span class="glyphicon glyphicon-eye-close" title="Has blocked viewer"></span>Blocked you</h6>
+      <%  } %>
+      <% if(!!etlData.blocked_by_viewer) { %>
+        <h6 class="profile-boolean-indicator"><span class="glyphicon glyphicon-alert" title="Has blocked viewer"></span>Blocked by you</h6>
+      <%  } %>
+      <% if(!!etlData.country_block) { %>
+        <h6 class="profile-boolean-indicator"><span  style="color:red" class="glyphicon glyphicon-globe" title="Countery block"></span>Blocked country</h6>
+      <% } %>
+      <% if(!!etlData.has_channel) { %>
+        <h6 class="profile-boolean-indicator"><span class="glyphicon glyphicon-expand" title="Has channel"></span>Has channel</h6>
+      <%  } %>
+      <% if(!!etlData.requested_by_viewer) { %>
+        <h6 class="profile-boolean-indicator"><span class="glyphicon glyphicon-envelope" title="Requested by viewer"></span>Requested by you</h6>
+      <%  } %>
+      <% if(!!etlData.has_requested_viewer) { %>
+        <h6 class="profile-boolean-indicator"><span class="glyphicon glyphicon-download-alt" title="Requested viewer"></span>Requested you</h6>
+      <% } %>
+      <% if(!!etlData.is_business_account) { %>
+        <h6 class="profile-boolean-indicator"><span class="glyphicon glyphicon-bold" title="Business account"></span>Business account</h6>
+      <%  } %>
+      <% if(!!etlData.is_joined_recently) { %>
+        <h6 class="profile-boolean-indicator"><span class="glyphicon glyphicon-time" title="Joined recently"></span>Recently joined</h6>
+      <%  } %>
+    </div>
+  </div>
+  <div style="display:inline-block" class="col-sm-6 text-center align-self-center profile-counters">
+    <div style="background-color:lightgreen" class="byline-counter">
+      <% if(etlData.edge_followed_by) { %>
+      <span class="byline" title="Followers count"><%=etlData.edge_followed_by.count%> followers</span>
+      <% } %>
+    </div>
+    <div style="background-color:darkseagreen" class="byline-counter">
+      <% if(etlData.edge_follow) { %>
+      <span class="byline" title="Followers count"><%=etlData.edge_follow.count%> follows</span>
+      <% } %>
+    </div>
+    <div style="background-color:cadetblue" class="byline-counter">
+      <% if(etlData.edge_owner_to_timeline_media) { %>
+      <span class="byline" title="Followers count"><%=etlData.edge_owner_to_timeline_media.count%> posts</span>
+      <% } %>
+    </div>
+    <div style="background-color:lightblue" class="byline-counter">
+      <% if(etlData.edge_felix_video_timeline) { %>
+      <span class="byline" title="Followers count"><%=etlData.edge_felix_video_timeline.count%> felixs</span>
+      <% } %>
+    </div>
+    <div style="background-color:orange" class="byline-counter">
+      <% if(etlData.edge_saved_media) { %>
+      <span class="byline" title="Followers count"><%=etlData.edge_saved_media.count%> saves</span>
+      <% } %>
+    </div>
+    <div style="background-color:darkorange" class="byline-counter">
+      <% if(etlData.edge_mutual_followed_by) { %>
+      <span class="byline" title="Followers count"><%=etlData.edge_mutual_followed_by.count%> mutuals</span>
+      <% } %>
+    </div>
+    <div style="background-color:#ffbdf2" class="byline-counter">
+      <% if(etlData.edge_media_collections) { %>
+      <span class="byline" title="Followers count"><%=etlData.edge_media_collections.count%> collections</span>
+      <% } %>
+    </div>
+  </div>
 </div>
 
 <div class="row">
@@ -31,9 +116,11 @@
     <% posts++  %>
     <% if(edge.node)edge = edge.node %>
     <% if(edge.edge_liked_by) {likes = edge.edge_liked_by.count? parseInt(edge.edge_liked_by.count): 0} %>
-    <% if(edge.edge_media_to_comment) {likes = edge.edge_media_to_comment.count? parseInt(edge.edge_media_to_comment.count): 0} %>
+    <% if(edge.edge_media_to_comment) {comments = edge.edge_media_to_comment.count? parseInt(edge.edge_media_to_comment.count): 0} %>
     <% engagement = ((likes + comments) / followers) * 100;%>
     <%engagementData.push(engagement);%>
+    <%likesData.push(likes);%>
+    <%commentsData.push(comments);%>
     <% if(edge.owner.id === etlData.id) { %>
 
       <div class="col-md-4  align-self-center">
@@ -92,3 +179,5 @@
 
 </div>
 <div id="sparkline-data" style="display:none" sparkline-data="<%=engagementData.toString()%>"></div>
+<div id="sparkline-likes-data" style="display:none" sparkline-data="<%=likesData.toString()%>"></div>
+<div id="sparkline-comments-data" style="display:none" sparkline-data="<%=commentsData.toString()%>"></div>

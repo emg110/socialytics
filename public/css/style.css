@@ -554,6 +554,54 @@ img {
   color:darkred;
 }
 .byline{
-  color: cadetblue;
+  display: inline-block;
+  color: black;
   font-size: 1.1em;
+}
+.profile-trends{
+  display: inline-block;
+}
+.trend-badge{
+  display: inline-block;
+  width: 63%;
+  margin-right: -28px;
+  text-align: left;
+  float: right;
+  margin-bottom: 10px;
+}
+.profile-boolean{
+  position: absolute;
+  display: inline-block;
+  padding-left: 10px;
+  font-family: Karla, sans-serif;
+  top: 180px;
+}
+.profile-boolean-indicator{
+  display: block;
+  padding: 1px;
+  margin: 8px;
+  font-family: Karla, sans-serif;
+}
+
+.profile-titles{
+  display: inline-block;
+  max-width: 27%;
+  margin-left: -17px;
+  top: 10px;
+}
+.profile-image{
+  display: inline-block;
+  max-width: 100px;
+}
+.profile-counters{
+  background-color: #495057;
+  min-width: 103%;
+  font-size: 0.7em;
+  /* margin-left: -16px; */
+
+}
+.byline-counter{
+  display: inline-block;
+  padding: 3px;
+  margin: 3px;
 }

@@ -280,20 +280,68 @@ function getEndpoint(endpoint, type, code, container) {
         var elem = $('.disabled').find('span');
         $(elem).popover();
         $('.disabled').removeClass('disabled');
-        var options = {
-          width:'100%',
-          height:'50px',
+        var optionsEngagement = {
+          width:'150px',
+          height:'40px',
+          type: 'line',
+          lineColor: '#e0c526',
+          fillColor: '#e08e0b',
+          lineWidth: 3,
+          highlightLineColor: '#ffffff'
+        };
+        var optionsLikes = {
+          width:'150px',
+          height:'40px',
+          type: 'line',
+          lineColor: '#44ff6e',
+          fillColor: '#21c936',
+          lineWidth: 3,
+          highlightLineColor: '#ffffff'
+        };
+        var optionsComments = {
+          width:'150px',
+          height:'40px',
           type: 'line',
           lineColor: '#003f7f',
           fillColor: '#5690c9',
           lineWidth: 3,
           highlightLineColor: '#ffffff'
         };
-        engagementData =  $('#sparkline-data').attr('sparkline-data')
+        var optionsSentiments = {
+          width:'150px',
+          height:'40px',
+          type: 'line',
+          lineColor: '#7f2e29',
+          fillColor: '#c9424a',
+          lineWidth: 3,
+          highlightLineColor: '#ffffff'
+        };
+        engagementData =  $('#sparkline-data').attr('sparkline-data');
+        likesData =  $('#sparkline-likes-data').attr('sparkline-data');
+        commentsData =  $('#sparkline-comments-data').attr('sparkline-data');
+        sentimentData =  $('#sparkline-likes-data').attr('sparkline-data');
         if(engagementData){
           engagementData = engagementData.split(',') || [];
           if(engagementData.length>=1){
-            $('#sparkline').sparkline(engagementData, options)
+            $('#sparkline').sparkline(engagementData, optionsEngagement)
+          }
+        }
+        if(likesData){
+          likesData = likesData.split(',') || [];
+          if(likesData.length>=1){
+            $('#sparkline-likes').sparkline(likesData, optionsLikes)
+          }
+        }
+        if(commentsData){
+          commentsData = commentsData.split(',') || [];
+          if(commentsData.length>=1){
+            $('#sparkline-comments').sparkline(commentsData, optionsComments)
+          }
+        }
+        if(sentimentData){
+          sentimentData = sentimentData.split(',') || [];
+          if(sentimentData.length>=1){
+            $('#sparkline-sentiments').sparkline(sentimentData, optionsSentiments)
           }
         }
       /*  var myChart = echarts.init(document.getElementById('sparkline'));
