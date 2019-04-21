@@ -1,4 +1,4 @@
-<div class="row whiteBox ">
+<div class="row whiteBox-profile ">
   <div class="col-sm-6 profile-image">
     <% if(!(typeof etlData == 'undefined')){%>
       <%var likes=0,comments=0,followers=1, posts = 0,engagement = 0, engagementData = [], likesData=[], commentsData=[]  %>
@@ -74,17 +74,17 @@
   <div style="display:inline-block" class="col-sm-6 text-center align-self-center profile-counters">
     <div style="background-color:lightgreen" class="byline-counter">
       <% if(etlData.edge_followed_by) { %>
-      <span class="byline" title="Followers count"><%=etlData.edge_followed_by.count%> followers</span>
+      <span class="byline" title="Followers count" onClick=getEndpoint("http://localhost:8080/instagram/followers?","user-followers","<%=etlData.username%>","followers")><%=etlData.edge_followed_by.count%> followers</span>
       <% } %>
     </div>
     <div style="background-color:darkseagreen" class="byline-counter">
       <% if(etlData.edge_follow) { %>
-      <span class="byline" title="Followers count"><%=etlData.edge_follow.count%> follows</span>
+      <span class="byline" title="Followings count" onClick=getEndpoint("http://localhost:8080/instagram/following?","user-following","<%=etlData.username%>","following")><%=etlData.edge_follow.count%> follows</span>
       <% } %>
     </div>
     <div style="background-color:cadetblue" class="byline-counter">
       <% if(etlData.edge_owner_to_timeline_media) { %>
-      <span class="byline" title="Followers count"><%=etlData.edge_owner_to_timeline_media.count%> posts</span>
+      <span class="byline" title="Posts count" onClick=getEndpoint("http://localhost:8080/instagram/posts?","recent-posts","<%=etlData.username%>","posts")><%=etlData.edge_owner_to_timeline_media.count%> posts</span>
       <% } %>
     </div>
     <div style="background-color:lightblue" class="byline-counter">
