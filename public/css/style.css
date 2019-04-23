@@ -94,10 +94,10 @@ a:focus {
 
 .endpoints {
   display: inline-block;
-  columns: 4;
+  columns: 2;
   list-style: none;
-  -webkit-columns: 4;
-  -moz-columns: 4;
+  -webkit-columns: 2;
+  -moz-columns: 2;
 }
 
 .endpoints li {
