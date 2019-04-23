@@ -631,3 +631,15 @@ img {
 #social-sidepanel{
   position:fixed;
 }
+.navbar-session-counters{
+  list-style: none;
+  margin-left: 100px;
+  margin-top:15px;
+}
+.nav-item{
+  display:inline-block;
+  margin:5px;
+}
+.nav-counter{
+  font-size: 1em;
+}
