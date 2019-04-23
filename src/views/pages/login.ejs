@@ -3,11 +3,12 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0" />
-  <title>Houman Hadian's Doctoral Project @ualg / Instagram Credentials </title>
+  <title>Socialytics login </title>
   <link rel="shortcut icon" href="favicon.ico">
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/base.css">
   <link rel="stylesheet" href="/css/app.css">
+  <%- include ../layouts/layouts-javascripts-head.ejs %>
 </head>
 <body>
 <button class="instabtn" onclick="openNav('sidepanel-login')">&#9776; Instagram </button>
@@ -25,14 +26,14 @@
         <form class="form" method="post" action="/authenticate">
           <input type="hidden" name="strategy" value="local">
           <fieldset>
-            <input class="block" type="username" name="username" placeholder="username">
+            <input style="cursor:pointer;" class="block" type="username" name="username" placeholder="username" autocomplete="username">
           </fieldset>
 <!--
           <fieldset>
             <input class="block form-control" type="password" name="password" placeholder="password">
           </fieldset>-->
 
-          <button type="submit" id="login" class="button button-primary block signup">
+          <button style="cursor:pointer;" type="submit" id="login" class="button button-primary block signup">
             Use this Instagram account
           </button>
         </form>

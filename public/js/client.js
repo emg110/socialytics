@@ -1,6 +1,7 @@
-window.results = [];
-window.currentFreeIndex = 0;
-window.counters = {};
+var ls = window.localStorage;
+if(!ls.getItem('results'))ls.setItem('results',JSON.stringify([]));
+if(!ls.getItem('currentFreeIndex'))ls.setItem('currentFreeIndex','0')
+if(!ls.getItem('counters'))ls.setItem('counters',JSON.stringify({'empty':''}))
 Holder.addTheme("white", {
   bg: "#fff",
   fg: "#a7a7a7",
@@ -31,17 +32,18 @@ function closeNav(id) {
 
 function backNav() {
   var html = undefined;
-  var currentFreeIndex = window.currentFreeIndex;
-  var results = window.results
+  var currentFreeIndex = parseInt(ls.getItem('currentFreeIndex'));
+  var results = JSON.parse(ls.getItem('results'));
   if (currentFreeIndex < 2) {
     $("#backbtn").hide();
   } else if (currentFreeIndex >= 2) {
     $("#backbtn").show();
     html = results[currentFreeIndex - 2].html;
-    window.results = results.slice(0, currentFreeIndex - 1);
-    window.currentFreeIndex--;
-
-    if (window.currentFreeIndex < 2) $("#backbtn").hide();
+    results = results.slice(0, currentFreeIndex - 1);
+    currentFreeIndex--;
+    ls.setItem('results',JSON.stringify(results));
+    ls.setItem('currentFreeIndex',currentFreeIndex.toString())
+    if (currentFreeIndex < 2) $("#backbtn").hide();
   }
 
 
@@ -224,8 +226,8 @@ function getEndpoint(endpoint, type, code, container) {
         break
     }
     if (container === 'main') {
-      window.results = [];
-      window.currentFreeIndex = 0;
+      ls.setItem('results',JSON.stringify([]));
+      ls.setItem('currentFreeIndex','0');
       $("#backbtn").hide();
     }
     /*else {
@@ -242,15 +244,17 @@ function getEndpoint(endpoint, type, code, container) {
       xhr.onload = function (e) {
         var html = xhr.responseText;
         document.getElementById('insta-sidepanel').style.backgroundColor = "#fff";
-        var index = window.currentFreeIndex;
-        window.results[index] = {html: html};
+        var index = parseInt(ls.getItem('currentFreeIndex'));
+        var results = JSON.parse(ls.getItem('results'));
+        var counters = JSON.parse(ls.getItem('counters'));
+        results[index] = {html: html};
 
         document.getElementById('instagram-container').innerHTML = html;
         if (container !== 'main') {
           $("#backbtn").show();
         }
 
-        window.currentFreeIndex++;
+        index++;
         var currentVal = $('.disabled').val();
         if (currentVal) {
           currentVal = currentVal.replace('Loading... ', 'Get ');
@@ -264,16 +268,16 @@ function getEndpoint(endpoint, type, code, container) {
         $('.disabled').next().remove();
         $('.disabled').after('<span style="color:lawngreen;" class="glyphicon glyphicon-ok"></span>');
         var count = 0;
-        if (window.counters[currentVal]) {
-          if (window.counters[currentVal] >= 1) {
-            count = window.counters[currentVal] + 1;
-            window.counters[currentVal]++;
+        if (counters[currentVal]) {
+          if (counters[currentVal] >= 1) {
+            count = counters[currentVal] + 1;
+            counters[currentVal]++;
           } else {
-            window.counters[currentVal] = 1;
+            counters[currentVal] = 1;
             count = 1
           }
         } else {
-          window.counters[currentVal] = 1;
+          counters[currentVal] = 1;
           count = 1
         }
         if (count > 0) $('.disabled').append('<span data-toggle="popover" data-trigger="hover" title="Last updated" data-content="' + doneDate + '" style="background-color:white; color:#007bff; border-radius:50%;margin-left:10px " class="badge pulse-default" >' + count + '</span>');
@@ -344,6 +348,9 @@ function getEndpoint(endpoint, type, code, container) {
             $('#sparkline-sentiments').sparkline(sentimentData, optionsSentiments)
           }
         }
+        ls.setItem('results',JSON.stringify(results));
+        ls.setItem('currentFreeIndex',index.toString());
+        ls.setItem('counters',JSON.stringify(counters));
       /*  var myChart = echarts.init(document.getElementById('sparkline'));
 
         // specify chart configuration item and data
