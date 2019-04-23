@@ -625,3 +625,9 @@ img {
   padding: 3px;
   margin: 3px;
 }
+.etl-btn{
+  min-width:200px;
+}
+#social-sidepanel{
+  position:fixed;
+}

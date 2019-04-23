@@ -1,5 +1,4 @@
 var htmlNoData = '<div class="loader loader--style1" title="0">  NO DATA HERE...</div>';
-
 var htmlLoading = '<div class="loader loader--style1" title="0">\n' +
   '        <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"\n' +
   '             x="0px" y="0px"\n' +
@@ -83,8 +82,8 @@ function getEndpoint(endpoint, type, code, container) {
   $("#carosel").hide();
   $("#logo").show();
   if (type !== "form-data") {
-    closeNav('insta-sidepanel');
-    openNav('insta-sidepanel');
+    closeNav('social-sidepanel');
+    openNav('social-sidepanel');
     document.getElementById('instagram-container').innerHTML = htmlLoading;
     var username = code.length>0 ? code : document.getElementById('username-input').value;
     var tag = code.length>0 ? code : document.getElementById('tag-input').value;
@@ -266,7 +265,10 @@ function getEndpoint(endpoint, type, code, container) {
       xhr.open("GET", url, true);
       xhr.onload = function (e) {
         var html = xhr.responseText;
-        document.getElementById('insta-sidepanel').style.backgroundColor = "#fff";
+        document.getElementById('social-sidepanel').style.backgroundColor = "#fff";
+        OverlayScrollbars(document.getElementById('social-sidepanel'), {
+          className : "os-theme-dark",
+        });
         var index = parseInt(ls.getItem('currentFreeIndex'));
         var results = JSON.parse(ls.getItem('results'));
         var counters = JSON.parse(ls.getItem('counters'));
@@ -403,7 +405,7 @@ function getEndpoint(endpoint, type, code, container) {
       xhr.send();
     }
     else {
-      closeNav('insta-sidepanel');
+      closeNav('social-sidepanel');
       console.log('please provide all required');
       window.alert('please provide all required');
       var currentVal = $('.disabled').val();
