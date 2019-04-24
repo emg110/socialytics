@@ -36,7 +36,7 @@ for(i in Object.keys(ctrs)){
   var value = ctrs[Object.keys(ctrs)[i]];
   if(key !== "empty"){
     var querySelector = "[value="+"'"+key+"'"+"]"
-    $(querySelector).append('<span data-toggle="popover" data-trigger="hover" title="Last updated" data-content="' + 'Page refreshed!' + '" style="background-color:white; color:#007bff; border-radius:50%;margin-left:10px; width:25px;height:25px;vertical-align: middle " class="badge pulse-default" >' + value + '</span>');
+    $(querySelector).append('<span data-toggle="popover" data-trigger="hover" title="Last updated" data-content="' + 'Page refreshed!' + '" style="" class="badge pulse-default etl-badge" >' + value + '</span>');
   }
 }
 function ig_media_preview(base64data) {
@@ -130,7 +130,7 @@ function render(html, container){
   }
   if (count > 0) {
     $('.disabled').find('span').remove()
-    $('.disabled').append('<span data-toggle="popover" data-trigger="hover" title="Last updated" data-content="' + doneDate + '" style="background-color:white; color:#007bff; border-radius:50%;margin-left:10px; width:25px;height:25px;vertical-align: middle " class="badge pulse-default" >' + count + '</span>');
+    $('.disabled').append('<span data-toggle="popover" data-trigger="hover" title="Last updated" data-content="' + doneDate + '" style="" class="badge pulse-default etl-badge" >' + count + '</span>');
   }
   var elem = $('.disabled').find('span');
   $(elem).popover();
