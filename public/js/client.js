@@ -18,7 +18,9 @@ var htmlLoading = '<div class="loader loader--style1" title="0">\n' +
   '          </path>\n' +
   '  </svg>\n' +
   '      </div>';
-
+OverlayScrollbars(document.querySelectorAll('body'), {
+  className : "os-theme-dark",
+});
 var ls = window.localStorage;
 if(!ls.getItem('results'))ls.setItem('results',JSON.stringify([]));
 if(!ls.getItem('currentFreeIndex'))ls.setItem('currentFreeIndex','0');

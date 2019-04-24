@@ -201,8 +201,16 @@ a:focus {
 
 #footer-container {
   margin-top: 20px;
-  padding: 20px;
-  /*margin-left: 200px;*/
+  /* padding: 20px; */
+  bottom: 0;
+  z-index: 5;
+  text-align: right;
+  width: 100%;
+  /* float: right; */
+  /* right: 0; */
+  position: fixed;
+  vertical-align: bottom;
+  /* margin-left: 200px; */
 }
 
 .endpoint-button {
@@ -629,6 +637,21 @@ img {
   min-width:200px;
   text-align: left;
 }
+/*@media (max-width: 768px) {
+  .etl-btn {
+    padding:2px 4px;
+    font-size:80%;
+    line-height: 1;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 992px) {
+  .etl-btn {
+    padding:4px 9px;
+    font-size:90%;
+    line-height: 1.2;
+  }
+}*/
 #social-sidepanel{
   position:fixed;
 }
