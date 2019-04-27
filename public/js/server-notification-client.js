@@ -4,7 +4,7 @@ var socket = io('http://localhost:8080');
 var feathersClient = feathers().configure(feathers.socketio(socket));
 var posts = feathersClient.service('/instagram/posts');
 posts.on('created', (post) => {
-  if(window.bulkevent!== true){
+  if(!window.bulkevent){
     var caption = 'POST WITH NO CAPTION';
     var pic = picit(post);
     var title = 'Post:';

@@ -73,8 +73,9 @@ function render(html, container){
   $('.disabled').find('#loading').remove();
   var doneDate = dayjs(Date.now()).format('YYYY MM-DD HH:mm:ss')
   //<span class="badge">7</span>
-  $('.disabled').next().remove();
+  if($('.disabled').next().hasClass('glyphicon'))$('.disabled').next().remove();
   $('.disabled').after('<span style="color:lawngreen;" class="glyphicon glyphicon-ok"></span>');
+
   var count = 0;
   if (counters[currentVal]) {
     if (counters[currentVal] >= 1) {
@@ -259,7 +260,6 @@ function getEndpoint(endpoint, type, code, container) {
       case 'all-posts':
         if (username.length !== undefined) {
           if (username.length >= 3) {
-            window.bulkevent = true;
             url = endpoint + 'username=' + username;
           } else {
             url = "NA";
@@ -322,7 +322,6 @@ function getEndpoint(endpoint, type, code, container) {
         }
         break
       case 'all-feed-posts':
-        window.bulkevent = true;
         break
       case 'post-likes':
         if (shortcode.length !== undefined) {
@@ -451,7 +450,6 @@ function picit(item) {
 }
 
 $('.btn-primary').on('click', function () {
-  window.bulkevent = false;
   var endpoint = $(this).attr('click-target');
   var type = $(this).attr('call-type');
   if(type !== 'form-data') {
