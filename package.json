@@ -11,7 +11,7 @@
     "url": "https://www.github.com/emg110/socialytics.git"
   },
   "license": "MIT",
-  "main": "etl/index.js",
+  "main": "src/index.js",
   "directories": {
     "lib": "src",
     "config": "config/",

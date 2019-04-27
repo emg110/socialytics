@@ -453,16 +453,18 @@ function picit(item) {
 }
 
 $('.btn-primary').on('click', function () {
-  var endpoint = $(this).attr('click-target');
-  var type = $(this).attr('call-type');
-  if(type !== 'form-data') {
-    //var currentVal = $(this).val().replace('Get ', 'Loading... ');
-    //$(this).val(currentVal);
-    $(this).addClass('fired');
-    //$(this).find('span').remove();
+  if(!$(this).hasClass('disabled')){
+    var endpoint = $(this).attr('click-target');
+    var type = $(this).attr('call-type');
+    if(type !== 'form-data') {
+      //var currentVal = $(this).val().replace('Get ', 'Loading... ');
+      //$(this).val(currentVal);
+      $(this).addClass('fired');
+      //$(this).find('span').remove();
+    }
+    var caller = this;
+    getEndpoint(endpoint, type, '', 'main',caller);
   }
-  var caller = this;
-  getEndpoint(endpoint, type, '', 'main',caller);
 });
 
 
