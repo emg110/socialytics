@@ -47,7 +47,7 @@ function backNav() {
 
 }
 
-function render(html, container){
+function render(html, container, caller){
   document.getElementById('social-sidepanel').style.backgroundColor = "#fff";
   OverlayScrollbars(document.getElementById('social-sidepanel'), {
     className : "os-theme-dark",
@@ -63,18 +63,18 @@ function render(html, container){
   }
 
   index++;
-  var currentVal = $('.disabled').val();
+  var currentVal = $(caller).val();
   /*if (currentVal) {
     currentVal = currentVal.replace('Loading... ', 'Get ');
   }*/
 
-  $('.disabled').val(currentVal);
-  $('.disabled').css('background-color', '#007bff');
-  $('.disabled').find('#loading').remove();
+  $(caller).val(currentVal);
+  $(caller).css('background-color', '#007bff');
+  $(caller).find('#loading').remove();
   var doneDate = dayjs(Date.now()).format('YYYY MM-DD HH:mm:ss')
   //<span class="badge">7</span>
-  if($('.disabled').next().hasClass('glyphicon'))$('.disabled').next().remove();
-  $('.disabled').after('<span style="color:lawngreen;" class="glyphicon glyphicon-ok"></span>');
+  if($(caller).next().hasClass('glyphicon'))$(caller).next().remove();
+  $(caller).after('<span style="color:lawngreen;" class="glyphicon glyphicon-ok"></span>');
 
   var count = 0;
   if (counters[currentVal]) {
@@ -90,12 +90,12 @@ function render(html, container){
     count = 1
   }
   if (count > 0) {
-    $('.disabled').find('span').remove()
-    $('.disabled').append('<span data-toggle="popover" data-trigger="hover" title="Last updated" data-content="' + doneDate + '" style="" class="badge pulse-default etl-badge" >' + count + '</span>');
+    $(caller).find('span').remove()
+    $(caller).append('<span data-toggle="popover" data-trigger="hover" title="Last updated" data-content="' + doneDate + '" style="" class="badge pulse-default etl-badge" >' + count + '</span>');
   }
-  var elem = $('.disabled').find('span');
+  var elem = $(caller).find('span');
   $(elem).popover();
-  $('.disabled').removeClass('disabled');
+  $(caller).removeClass('disabled');
   var optionsEngagement = {
     width:'150px',
     height:'40px',
@@ -189,7 +189,7 @@ function render(html, container){
     myChart.setOption(option);*/
 }
 
-function norender(){
+function norender(caller){
   closeNav('social-sidepanel');
   console.log('Did not provide all required input data');
   window.alert('please provide all required');
@@ -197,11 +197,11 @@ function norender(){
   //if (currentVal) currentVal = currentVal.replace('Loading... ', 'Get ');
   //$('.disabled').val(currentVal);
   $('#loading').remove();
-  $('.disabled').css('background-color', '#007bff');
+  $(caller).css('background-color', '#007bff');
   //$('.disabled').next().remove();
-  $('.disabled').removeClass('fired');
-  $('.btn-primary').removeClass('fired');
-  $('.btn-primary').removeClass('disabled');
+  $(caller).removeClass('fired');
+  //$(caller).removeClass('fired');
+  $(caller).removeClass('disabled');
 }
 
 function renderText(txt){
@@ -215,7 +215,7 @@ function renderText(txt){
   console.log(json);
 }
 
-function getEndpoint(endpoint, type, code, container) {
+function getEndpoint(endpoint, type, code, container, caller) {
   $("#carosel").hide();
   $("#logo").show();
   if (type !== "form-data") {
@@ -390,24 +390,27 @@ function getEndpoint(endpoint, type, code, container) {
       $("#backbtn").hide();
     }
     if (url !== "NA" && url.indexOf('http://') >= 0) {
-      $('.fired').addClass('disabled');
-      $('.disabled').removeClass('fired');
-      $('.btn-primary').removeClass('fired');
-      $('.disabled').css('background-color', '#e08e0b');
-      $('.disabled').append('<span id="loading" class="spinner-grow spinner-grow-sm"></span>');
+      if(caller){
+        $(caller).addClass('disabled');
+        $(caller).removeClass('fired');
+        //$(caller).removeClass('fired');
+        $(caller).css('background-color', '#e08e0b');
+        $(caller).append('<span id="loading" class="spinner-grow spinner-grow-sm"></span>');
+
+      }
       var xhr = new XMLHttpRequest();
       xhr.timeout = 0;
       xhr.open("GET", url, true);
       xhr.onload = function (e) {
         var html = xhr.responseText;
         if(html.length){
-          if(html.length>0)render(html,container);
+          if(html.length>0)render(html,container, caller);
         }
       }
       xhr.send();
     }
     else {
-      norender();
+      norender(caller);
     }
   }
   else {
@@ -458,7 +461,8 @@ $('.btn-primary').on('click', function () {
     $(this).addClass('fired');
     //$(this).find('span').remove();
   }
-  getEndpoint(endpoint, type, '', 'main');
+  var caller = this;
+  getEndpoint(endpoint, type, '', 'main',caller);
 });
 
 
