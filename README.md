@@ -66,4 +66,6 @@ Special thanks to these great open source projects which paved the client's star
 [parsakafi/instagram-engagement-rate](https://github.com/parsakafi/instagram-engagement-rate)
 
 
+[arve0/feathers-nedb-fuzzy-search](https://github.com/arve0/feathers-nedb-fuzzy-search)
+
 

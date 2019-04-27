@@ -2,6 +2,7 @@
 const log = require('./hooks/log');
 const hookInstaCheckBeforeCreate = require('./hooks/hook-insta-check-before-create');
 const hookInstaVersionBeforeCreate = require('./hooks/hook-insta-version-before-create');
+
 module.exports = {
   before: {
     all: [ log() ],

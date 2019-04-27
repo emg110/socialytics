@@ -12,11 +12,19 @@ function getHeaders() {
     'x-requested-with': 'XMLHttpRequest'
   }
 }
+function timeout(ms, promise) {
+  return new Promise(function(resolve, reject) {
+    setTimeout(function() {
+      reject(new Error("timeout"))
+    }, ms)
+    promise.then(resolve, reject)
+  })
+}
 async function getEndpointEtl(etlApiEndpoint){
-  let etlData = await fetch(etlApiEndpoint,
+  let etlData = await timeout(50000000,fetch(etlApiEndpoint,
     {
       headers: getHeaders(),
-    }).then(t => t.json().catch((e) => {
+    })).then(t => t.json().catch((e) => {
     console.log('Instagram API returned an error:' + e)
   }).then(r => r));
   console.log('Rendering results from backend-social API to browser client');
@@ -56,25 +64,37 @@ module.exports = function (options = {}) {
         });
       }
       else if(expr.indexOf('/instagram/allposts')>=0){
+        req.setTimeout(50000000000)
         let etlApiEndpoint = serverUrl+expr;
         let etlData = await getEndpointEtl(etlApiEndpoint);
 
         let userid = config.userid;
-        if(etlData.length){
-          if(etlData.length> 100){
+        var dataLength = etlData.length
+        if(dataLength){
+         /* if(etlData.length> 100){
             etlData = etlData.slice(0,100);
             console.log('data has been cropped to 100 items to show for all posts but all posts have been saved to database successfully');
-          }
+          }*/
           let finalData = {};
           finalData.user = {};
           finalData.user.edge_owner_to_timeline_media = {};
-          finalData.user.edge_owner_to_timeline_media.edges = etlData;
+          finalData.user.edge_owner_to_timeline_media.edges = [];
+          if(dataLength > 100){
+            for(var i=0;i<100;i++){
+              finalData.user.edge_owner_to_timeline_media.edges.push(etlData[i])
+            }
+          }else{
+            finalData.user.edge_owner_to_timeline_media.edges = etlData
+          }
+         console.log('All '+ etlData.length + ' posts have been collected from instagram')
+
           etlData = finalData;
         }
         res.render('pages/posts',{etlData, userid},function(err, html) {
           if(err)console.log('ejs has returned this error: '+ err);
           res.send(html);
         });
+        /*res.send('<div><p>There found '+dataLength+' records!</p></div>');*/
       }
       else if(expr.indexOf('/instagram/tag')>=0){
         let etlApiEndpoint = serverUrl+expr.replace('/explore','');
@@ -82,10 +102,11 @@ module.exports = function (options = {}) {
 
         let userid = config.userid;
         if(etlData.length){
-          if(etlData.length> 100){
+         /* if(etlData.length> 100){
             etlData = etlData.slice(0,100);
             console.log('data has been cropped to 100 items to show for all posts but all posts have been saved to database successfully');
-          }
+          }*/
+          console.log('All '+ etlData.length + ' tag posts have been collected from instagram')
           let finalData = {};
           finalData.user = {};
           finalData.user.edge_owner_to_timeline_media = {};
@@ -103,10 +124,11 @@ module.exports = function (options = {}) {
 
         let userid = config.userid;
         if(etlData.length){
-          if(etlData.length> 100){
+         /* if(etlData.length> 100){
             etlData = etlData.slice(0,100);
             console.log('data has been cropped to 100 items to show for all posts but all posts have been saved to database successfully');
-          }
+          }*/
+          console.log('All '+ etlData.length + ' location posts have been collected from instagram')
           let finalData = {};
           finalData.user = {};
           finalData.user.edge_owner_to_timeline_media = {};
@@ -123,10 +145,11 @@ module.exports = function (options = {}) {
         let etlData = await getEndpointEtl(etlApiEndpoint);
         let userid = config.userid;
         if(etlData.length){
-          if(etlData.length> 100){
+          /*if(etlData.length> 100){
             etlData = etlData.slice(0,100);
             console.log('data has been cropped to 100 items to show for all posts but all posts have been saved to database successfully');
-          }
+          }*/
+          console.log('All '+ etlData.length + ' following profiles have been collected from instagram')
           let finalData = {};
 
           finalData.edges = etlData;
@@ -142,13 +165,18 @@ module.exports = function (options = {}) {
         let etlData = await getEndpointEtl(etlApiEndpoint);
         let userid = config.userid;
         if(etlData.length){
-          if(etlData.length> 100){
+          /*if(etlData.length> 100){
             etlData = etlData.slice(0,100);
             console.log('data has been cropped to 100 items to show for all posts but all posts have been saved to database successfully');
-          }
+          }*/
           let finalData = {};
-
-          finalData.edges = etlData;
+          finalData.edges = [];
+          if(etlData.length > 100){
+            for(var i=0;i<50;i++){
+              finalData.edges.push(etlData[i])
+            }
+          }
+          console.log('All '+ etlData.length + ' follower profiles have been collected from instagram')
           etlData = finalData;
         }
         res.render('pages/follow',{etlData, userid},function(err, html) {

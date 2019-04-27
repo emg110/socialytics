@@ -18,7 +18,7 @@ const socketio = require('@feathersjs/socketio-client');
 const io = require('socket.io-client');
 const socket = io('http://localhost:8080');
 const api = feathers().configure(socketio(socket, {
-  timeout: 500000
+  timeout: 0
 }));
 
 async function writeDatabase(data, service) {

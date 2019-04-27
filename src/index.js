@@ -21,3 +21,4 @@ const etlServer = application.listen(PORT, () => {
   //console.log(`ETL Server Listening on ${host}:${port}`)
   logger.info('ETL Server Listening on http://%s:%d', HOST, PORT)
 });
+etlServer.timeout=60*60*1000;
