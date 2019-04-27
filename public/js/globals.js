@@ -22,6 +22,7 @@ OverlayScrollbars(document.querySelectorAll('body'), {
   className : "os-theme-dark",
 });
 var ls = window.localStorage;
+window.bulkevent = false;
 var socket = io('http://localhost:8080');
 if(!ls.getItem('results'))ls.setItem('results',JSON.stringify([]));
 if(!ls.getItem('currentFreeIndex'))ls.setItem('currentFreeIndex','0');

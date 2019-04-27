@@ -6,152 +6,170 @@
 <body>
 
 <!--<button class="instabtn" onclick="openNav('social-sidepanel')">&#9776; Instagram</button>-->
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-  <button class="instabtn" onclick="openNav('social-sidepanel')">&#9776;</button>
-  <ul class="navbar-nav">
-    <li class="nav-item active">
-      <h6 class="nav-link" href="#">Engagement</h6>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/home">Home</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/dashboards/explore">Data Explore</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/dashboards/stats">Brands stats</a>
-    </li>
-  </ul>
-</nav>
-<div class="main-contaier">
+<div id="alert-container" style="position:absolute;top:100px;right:0"></div>
+<div class="container">
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <img class="github" id="github" alt="Houman Hadian's project research tool on Github" src="/img/svg/github-corner-right.svg">
+    <div class="navbar-header">
+      <button class="instabtn" onclick="openNav('social-sidepanel')">&#9776;</button>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="../">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+             viewBox="76.39 132.243 15.35 22" width="20" height="20" fill="#777">
+          <defs>
+            <path id="a"
+                  d="M88.31 136.63c.29-.28.43-.63.43-1.05 0-.41-.14-.76-.43-1.04-.08-.09-.78-.78-.86-.87-.29-.28-.64-.43-1.05-.43-.41 0-.76.15-1.05.43-.75.75-6.78 6.77-7.53 7.53-.29.28-.43.63-.43 1.04 0 .42.14.76.43 1.05.75.75 6.78 6.77 7.53 7.53.29.28.64.42 1.05.42.41 0 .76-.14 1.05-.42.08-.09.78-.78.86-.87.29-.29.43-.63.43-1.04 0-.41-.14-.76-.43-1.05-.37-.38-2.24-2.25-5.61-5.61 3.37-3.37 5.24-5.24 5.61-5.62z" />
+          </defs>
+          <use xlink:href="#a" />
+          <use xlink:href="#a" />
+        </svg>
+      </a>
+      <a class="navbar-brand" href="#">Socialytics &raquo; Engagement</a>
+    </div>
+    <div class="navbar-collapse">
+      <ul class="navbar-nav nav main-nav">
+        <li><a href="/home">Home</a></li>
+        <li><a href="/dashboards/stats">Stats dashboard</a></li>
+        <li><a href="/dashboards/explore">Data explore</a></li>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="main-container">
   <div class="dash-container grid grid-split-centered">
     <div class="grid-split">
       <div class="grid-split-column">
-        <div class="chart-wrapper">
-          <div class="chart-title">
-            Cell Title
+        <div class="widget-wrapper">
+          <div class="widget-title">
+            Widget Title
           </div>
-          <div class="chart-stage">
+          <div class="widget-stage">
             <img data-src="holder.js/100px120?theme=white">
           </div>
-          <div class="chart-notes">
+          <div class="widget-notes">
             Notes about this chart
           </div>
         </div>
-        <div class="chart-wrapper">
-          <div class="chart-title">
-            Cell Title
+        <div class="widget-wrapper">
+          <div class="widget-title">
+            Widget Title
           </div>
-          <div class="chart-stage">
+          <div class="widget-stage">
             <img data-src="holder.js/100px120?theme=white">
           </div>
-          <div class="chart-notes">
+          <div class="widget-notes">
             Notes about this chart
           </div>
         </div>
       </div>
       <div class="grid-split-column grid-split-column--centered">
-        <div class="chart-wrapper">
-          <div class="chart-title">
-            Cell Title
+        <div class="widget-wrapper">
+          <div class="widget-title">
+            Widget Title
           </div>
-          <div class="chart-stage">
+          <div class="widget-stage">
             <img data-src="holder.js/100px325?theme=white">
           </div>
-          <div class="chart-notes">
+          <div class="widget-notes">
             Notes about this chart
           </div>
         </div>
       </div>
       <div class="grid-split-column">
-        <div class="chart-wrapper">
-          <div class="chart-title">
-            Cell Title
+        <div class="widget-wrapper">
+          <div class="widget-title">
+            Widget Title
           </div>
-          <div class="chart-stage">
+          <div class="widget-stage">
             <img data-src="holder.js/100px120?theme=white">
           </div>
-          <div class="chart-notes">
+          <div class="widget-notes">
             Notes about this chart
           </div>
         </div>
-        <div class="chart-wrapper">
-          <div class="chart-title">
-            Cell Title
+        <div class="widget-wrapper">
+          <div class="widget-title">
+            Widget Title
           </div>
-          <div class="chart-stage">
+          <div class="widget-stage">
             <img data-src="holder.js/100px120?theme=white">
           </div>
-          <div class="chart-notes">
+          <div class="widget-notes">
             Notes about this chart
           </div>
         </div>
       </div>
     </div>
 
-    <div class="chart-wrapper">
-      <div class="chart-title">
-        Cell Title
+    <div class="widget-wrapper">
+      <div class="widget-title">
+        Widget Title
       </div>
-      <div class="chart-stage">
+      <div class="widget-stage">
         <img data-src="holder.js/100px120?theme=white">
       </div>
-      <div class="chart-notes">
+      <div class="widget-notes">
         Notes about this chart
       </div>
     </div>
-    <div class="chart-wrapper">
-      <div class="chart-title">
-        Cell Title
+    <div class="widget-wrapper">
+      <div class="widget-title">
+        Widget Title
       </div>
-      <div class="chart-stage">
+      <div class="widget-stage">
         <img data-src="holder.js/100px120?theme=white">
       </div>
-      <div class="chart-notes">
+      <div class="widget-notes">
         Notes about this chart
       </div>
     </div>
-    <div class="chart-wrapper">
-      <div class="chart-title">
-        Cell Title
+    <div class="widget-wrapper">
+      <div class="widget-title">
+        Widget Title
       </div>
-      <div class="chart-stage">
+      <div class="widget-stage">
         <img data-src="holder.js/100px120?theme=white">
       </div>
-      <div class="chart-notes">
+      <div class="widget-notes">
         Notes about this chart
       </div>
     </div>
-    <div class="chart-wrapper">
-      <div class="chart-title">
-        Cell Title
+    <div class="widget-wrapper">
+      <div class="widget-title">
+        Widget Title
       </div>
-      <div class="chart-stage">
+      <div class="widget-stage">
         <img data-src="holder.js/100px120?theme=white">
       </div>
-      <div class="chart-notes">
+      <div class="widget-notes">
         Notes about this chart
       </div>
     </div>
-    <div class="chart-wrapper">
-      <div class="chart-title">
-        Cell Title
+    <div class="widget-wrapper">
+      <div class="widget-title">
+        Widget Title
       </div>
-      <div class="chart-stage">
+      <div class="widget-stage">
         <img data-src="holder.js/100px120?theme=white">
       </div>
-      <div class="chart-notes">
+      <div class="widget-notes">
         Notes about this chart
       </div>
     </div>
-    <div class="chart-wrapper">
-      <div class="chart-title">
-        Cell Title
+    <div class="widget-wrapper">
+      <div class="widget-title">
+        Widget Title
       </div>
-      <div class="chart-stage">
+      <div class="widget-stage">
         <img data-src="holder.js/100px120?theme=white">
       </div>
-      <div class="chart-notes">
+      <div class="widget-notes">
         Notes about this chart
       </div>
     </div>

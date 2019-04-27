@@ -322,6 +322,7 @@ function getEndpoint(endpoint, type, code, container) {
         }
         break
       case 'all-feed-posts':
+        window.bulkevent = true;
         break
       case 'post-likes':
         if (shortcode.length !== undefined) {
@@ -450,6 +451,7 @@ function picit(item) {
 }
 
 $('.btn-primary').on('click', function () {
+  window.bulkevent = false;
   var endpoint = $(this).attr('click-target');
   var type = $(this).attr('call-type');
   if(type !== 'form-data') {

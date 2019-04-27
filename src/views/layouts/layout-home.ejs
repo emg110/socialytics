@@ -3,32 +3,8 @@
 <head>
   <%- include ../layouts/layout-header.ejs %>
 </head>
-<body>
-
-
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-  <button class="instabtn" onclick="openNav('social-sidepanel')">&#9776;</button>
-  <ul class="navbar-nav">
-    <li class="nav-item active">
-      <h6 class="nav-link" href="#">Socialytics</h6>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/dashboards/stats">Brands stats</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/dashboards/explore">Data Explore</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/dashboards/engagement">Brand engagement</a>
-    </li>
-  </ul>
-  <ul style="color:white" class="navbar-session-counters" id="navbar-session-counters">
-
-    </ul>
-</nav>
-<div style="margin-top:66px" id="main-contaier" class="main-contaier">
-  <%- include ../pages/main.ejs %>
-</div>
+<body class="socialytics-dashboard">
+<%- include ../pages/main.ejs %>
 <%- include ../pages/sidepanel.ejs %>
 
 <%- include ../layouts/layout-footer.ejs %>
