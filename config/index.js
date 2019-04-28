@@ -1,6 +1,6 @@
 module.exports = {
   ENVIRONMENT: process.env.NODE_ENV || "development",
-  PORT: process.env.PORT || "3003",
+  PORT: process.env.PORT || "3010",
   HOST: process.env.HOST || "localhost",
   PROTOCOL: "http",
   UIPORT:"80",

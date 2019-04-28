@@ -15,7 +15,7 @@ apiServer.on('listening', () =>
 
 const { HOST, PORT } = require("../config");
 const application = require("./backend-social/app");
-const instagram = require('./backend-social/api/instagram/index').instagramClient;
+/*const instagram = require('./backend-social/api/instagram/index').instagramClient;*/
 console.log('**************************************');
 const etlServer = application.listen(PORT, () => {
   //console.log(`ETL Server Listening on ${host}:${port}`)

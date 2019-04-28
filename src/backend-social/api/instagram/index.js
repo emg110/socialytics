@@ -1,22 +1,23 @@
+const Router = require("koa-Router");
+const router = new Router({prefix: "/api"});
 var config = require('../../../../config');
 const CSRF_TOKEN = config.CSRFTOKEN;
 const sessionid = config.SESSIONID;
 var userid = config.userid;
 console.log("Socialytics configurations initialized...");
-const Router = require("koa-Router");
+
 const Instagram = require('./instagram');
 const instagramClient = new Instagram();
 instagramClient.csrftoken = (instagramClient.csrftoken && instagramClient.csrftoken.length > 5) ? instagramClient.csrftoken : CSRF_TOKEN;
 instagramClient.sessionid = (instagramClient.sessionid && instagramClient.sessionid.length > 5) ? instagramClient.sessionid : sessionid;
 instagramClient.userid = (instagramClient.userid && instagramClient.userid.length > 2) ? instagramClient.sessionid : userid;
 console.log("Socialytics Instagram client has been initialized...");
-const instagramRouter = new Router({prefix: "/api"});
 console.log("Socialytics Instagram API has started...");
 const feathers = require('@feathersjs/feathers');
 //const client = require('@feathersjs/client');
 const socketio = require('@feathersjs/socketio-client');
 const io = require('socket.io-client');
-const uri = (config.PROTOCOL+"://"+config.HOST+config.UIPORT==="80"? '':':'+config.UIPORT)+'/'
+const uri = (config.PROTOCOL+"//"+config.HOST+config.UIPORT==="80"? '':':'+config.UIPORT)+'/'
 const socket = io(uri);
 const api = feathers().configure(socketio(socket, {
   timeout: 0
@@ -374,25 +375,25 @@ const suggestedPeople = async (ctx) => {
   }
 }
 
-// Instagram client instagramRouter endpoints mapped to async functions to implement 100% async Rest json endpoints.
-instagramRouter.get("/instagram/profile", profileJson);
-instagramRouter.get("/instagram/whoami", profileSelfJson);
-instagramRouter.get("/instagram/posts", userPosts);
-instagramRouter.get("/instagram/allposts", userAllPosts);
-instagramRouter.get("/instagram/tag", exploreTag);
-instagramRouter.get("/instagram/location", exploreLocation);
-instagramRouter.get("/instagram/following", userFollowing);
-instagramRouter.get("/instagram/followers", userFollowers);
-instagramRouter.get("/instagram/search", searchTop);
-instagramRouter.get("/instagram/feed", feedPosts);
-instagramRouter.get("/instagram/allfeed", allFeedPosts);
-instagramRouter.get("/instagram/likes", postLikes);
-instagramRouter.get("/instagram/comments", postComments);
-instagramRouter.get("/instagram/post", postJson);
-/*instagramRouter.get("/instagram/post/page", postPage);*/
-instagramRouter.get("/instagram/suggested/posts", suggestedPosts);
-instagramRouter.get("/instagram/suggested/people", suggestedPeople);
+// Instagram client router endpoints mapped to async functions to implement 100% async Rest json endpoints.
+router.get("/instagram/profile", profileJson);
+router.get("/instagram/whoami", profileSelfJson);
+router.get("/instagram/posts", userPosts);
+router.get("/instagram/allposts", userAllPosts);
+router.get("/instagram/tag", exploreTag);
+router.get("/instagram/location", exploreLocation);
+router.get("/instagram/following", userFollowing);
+router.get("/instagram/followers", userFollowers);
+router.get("/instagram/search", searchTop);
+router.get("/instagram/feed", feedPosts);
+router.get("/instagram/allfeed", allFeedPosts);
+router.get("/instagram/likes", postLikes);
+router.get("/instagram/comments", postComments);
+router.get("/instagram/post", postJson);
+/*router.get("/instagram/post/page", postPage);*/
+router.get("/instagram/suggested/posts", suggestedPosts);
+router.get("/instagram/suggested/people", suggestedPeople);
 
 
-module.exports = {instagramRouter, instagramClient};
+module.exports = router
 

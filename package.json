@@ -21,7 +21,7 @@
     "dev": "nodemon src/",
     "eslint": "eslint src/. test/. --config .eslintrc.json",
     "jest": "jest",
-    "start": "node ./src",
+    "start": "node src/index.js",
     "start-all": "",
     "test": "npm run eslint && NODE_ENV= npm run jest",
     "start-ui": "react-scripts start ./frontend/src",
