@@ -33,6 +33,10 @@ async function getUser(uoi){
 module.exports =  function (options = {}) {
   return async function mwInstaAuth(req, res, next) {
     let expr = req.originalUrl;
+    if(req.body.sessionid){
+      var sessionid = req.body.sessionid;
+      config.sessionid = sessionid;
+    }
     switch (expr) {
       case '/authenticate':
         if(req.body.username && req.body.password && !config.sessionid){

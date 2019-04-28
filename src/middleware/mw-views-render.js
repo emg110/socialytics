@@ -4,14 +4,6 @@ module.exports = function (options = {}) {
     let expr = req.originalUrl;
     let output = {};
     switch (expr) {
-      case '/':
-        if(config.sessionid && config.csrftoken){
-          res.redirect('/home');
-        } else {
-          res.render('pages/login');
-          console.log('Rendering login page to authenticate');
-        }
-        break;
       case '/authenticate':
         res.redirect('/');
         break;
@@ -44,6 +36,14 @@ module.exports = function (options = {}) {
         var formData = config.default_form_data
 
         res.json(formData)
+        break;
+      case '/':
+        if(config.sessionid){
+          res.redirect('/home');
+        } else {
+          res.render('pages/login');
+          console.log('Rendering login page to authenticate');
+        }
         break;
       default:
         next();
