@@ -3,7 +3,7 @@
   <% if(edge.node)edge = edge.node %>
   <div class="row whiteBox ">
 
-    <div style="cursor:pointer" class="col-sm-6 text-center align-self-center" onClick=getEndpoint("http://localhost:8080/instagram/profile?","profile",<%= '"'+edge.username+'"' %>,"profile") >
+    <div style="cursor:pointer" class="col-sm-6 text-center align-self-center" onClick=getEndpoint("/instagram/profile?","profile",<%= '"'+edge.username+'"' %>,"profile") >
       <% if(!(typeof edge == 'undefined')){%>
         <% if(edge.profile_pic_url) { %>
           <img class="usr-img-thumbnail" src="<%= !(typeof edge == 'undefined') ? edge.profile_pic_url:"" %>" alt="<%= edge ? edge.username :"" %>">

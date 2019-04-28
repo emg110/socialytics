@@ -8,7 +8,7 @@
       <% if(!(typeof edge == 'undefined')){ %>
         <% if(edge) { %>
           <div class="col-sm-6" style="min-width:100%; float:left">
-            <h4 style="cursor:pointer;display: inline-block;padding: 5px; margin: 5px; color: white; background-color: #81ec81;" onClick=getEndpoint("http://localhost:8080/instagram/location?","location-posts","<%= edge.title.replace(' ','') %>","location-posts") ><%= !(typeof edge.title == 'undefined') ? edge.title : 'PLACE_NAME' %></h4>
+            <h4 style="cursor:pointer;display: inline-block;padding: 5px; margin: 5px; color: white; background-color: #81ec81;" onClick=getEndpoint("/instagram/location?","location-posts","<%= edge.title.replace(' ','') %>","location-posts") ><%= !(typeof edge.title == 'undefined') ? edge.title : 'PLACE_NAME' %></h4>
             <h6 style="min-width:10%;display: inline-block;min-width:100%;padding: 5px; min-width: 75px; margin: 5px; color: white; background-color: #e08e0b;">[<%= !(typeof edge.location.lng == 'undefined') ? edge.location.lng : 0 %>
               , <%= !(typeof edge.location.lat == 'undefined') ? edge.location.lat : 0 %>]</h6>
 
@@ -36,7 +36,7 @@
         <% if(edge) { %>
           <div style="min-width:100%" class="col-sm-6">
 
-            <h4 style="cursor:pointer;display: inline-block;padding: 5px; min-width: 75px; margin: 5px; color: white; background-color: #81ec81;" onClick=getEndpoint("http://localhost:8080/instagram/tag?","tag-posts","<%= edge.name %>","tag-posts")><%= !(typeof edge.name == 'undefined') ? '#' + edge.name : '#' + "HASHTAG" %></h4>
+            <h4 style="cursor:pointer;display: inline-block;padding: 5px; min-width: 75px; margin: 5px; color: white; background-color: #81ec81;" onClick=getEndpoint("/instagram/tag?","tag-posts","<%= edge.name %>","tag-posts")><%= !(typeof edge.name == 'undefined') ? '#' + edge.name : '#' + "HASHTAG" %></h4>
 
 
             <h6 style="display: inline-block;padding: 5px; min-width: 75px; margin: 5px; color: white; background-color: #e08e0b;"><%= !(typeof edge.search_result_subtitle == 'undefined') ? edge.search_result_subtitle : 0 %></h6>
@@ -59,7 +59,7 @@
   <div class="row whiteBox ">
 
     <div class="col-sm-6 text-center align-self-center" style="cursor:pointer; max-width: 150px;"
-         onClick=getEndpoint("http://localhost:8080/instagram/profile?","profile","<%= edge.username %>","profile")>
+         onClick=getEndpoint("/instagram/profile?","profile","<%= edge.username %>","profile")>
         <% if(!(typeof edge == 'undefined')){ %>
             <% if(edge.profile_pic_url) { %>
               <img class="usr-img-thumbnail" src="<%= !(typeof edge == 'undefined') ? edge.profile_pic_url : "" %>"

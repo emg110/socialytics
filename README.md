@@ -43,7 +43,7 @@ in order to analyse brand engagement on Instagram via analytical models presente
 
 5- Run: _npm install_ then Run:_npm start_  (or optionally Run: _pm2 start src/_)
 
-6- Go to localhost:8080 and start analysing Instagram!
+6- Go to localhost:8080 (Check the config for port) and start analysing Instagram!
 
 
 **`Contributors:`**

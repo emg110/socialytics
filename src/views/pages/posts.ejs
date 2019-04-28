@@ -5,11 +5,11 @@
 
       <div class="card" style="max-height:300px; min-height:300px; overflow-y: hidden">
         <div class="card-body">
-          <div style="cursor:pointer" onClick=getEndpoint("http://localhost:8080/instagram/post?","post-json",<%= '"'+edge.shortcode+'"' %>,"post")>
+          <div style="cursor:pointer" onClick=getEndpoint("/instagram/post?","post-json",<%= '"'+edge.shortcode+'"' %>,"post")>
             <img class="img-fluid" src="<%= edge.thumbnail_src %>" alt="<%= edge.edge_media_to_caption? edge.edge_media_to_caption.edges[0]:[] %>">
           </div>
           <div class="likes-comments">
-              <span style="cursor:pointer; color: rgb(249,5,5);" onClick=getEndpoint("http://localhost:8080/instagram/likes?","post-likes","<%= edge.shortcode %>","post-likes")>
+              <span style="cursor:pointer; color: rgb(249,5,5);" onClick=getEndpoint("/instagram/likes?","post-likes","<%= edge.shortcode %>","post-likes")>
                 <% if(edge.edge_media_preview_like){ %>
                   <% if(edge.edge_media_preview_like.count) { %><%= edge.edge_media_preview_like.count+' ' %> &hearts;
                   <% } %>
@@ -18,7 +18,7 @@
                   <%= edge.edge_liked_by.count+' ' %> &hearts;
                 <% } %>
               </span>
-              <span style="cursor:pointer; color: transparent;  text-shadow: 0 0 0 rgb(42, 170, 82);" onClick=getEndpoint("http://localhost:8080/instagram/comments?","post-comments","<%= edge.shortcode %>","post-comments")>
+              <span style="cursor:pointer; color: transparent;  text-shadow: 0 0 0 rgb(42, 170, 82);" onClick=getEndpoint("/instagram/comments?","post-comments","<%= edge.shortcode %>","post-comments")>
                 <% if(edge.edge_media_to_comment){ %>
                   <%= edge.edge_media_to_comment.count+' ' %> &#x1F5E8;
                 <% } %>

@@ -2,6 +2,8 @@ module.exports = {
   ENVIRONMENT: process.env.NODE_ENV || "development",
   PORT: process.env.PORT || "3003",
   HOST: process.env.HOST || "localhost",
+  PROTOCOL: "http",
+  UIPORT:"80",
   userid: "houmanproject",
   sessionid: "",
   csrftoken:"",

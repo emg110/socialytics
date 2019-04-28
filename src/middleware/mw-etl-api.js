@@ -1,13 +1,16 @@
 const request = require('request');
-const serverUrl = 'http://localhost:3003/api';
+
 const config = require('../../config');
+const serverUrl = config.PROTOCOL+"://"+config.HOST+':'+config.PORT+'/api';
 const fetch = require('node-fetch');
 const ejs = require('ejs')
 const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36';
+const uri = (config.PROTOCOL+"://"+config.HOST+config.UIPORT==="80"? '':':'+config.UIPORT)+'/'
+
 function getHeaders() {
   return {
-    'referer': 'http://localhost:8080/',
-    'origin': 'http://localhost:8080/',
+    'referer': uri,
+    'origin': uri,
     'user-agent': userAgent,
     'x-requested-with': 'XMLHttpRequest'
   }

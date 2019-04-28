@@ -261,6 +261,7 @@ function getEndpoint(endpoint, type, code, container, caller) {
         if (username.length !== undefined) {
           if (username.length >= 3) {
             url = endpoint + 'username=' + username;
+            window.bulkevent=true;
           } else {
             url = "NA";
           }
@@ -389,7 +390,7 @@ function getEndpoint(endpoint, type, code, container, caller) {
       ls.setItem('currentFreeIndex','0');
       $("#backbtn").hide();
     }
-    if (url !== "NA" && url.indexOf('http://') >= 0) {
+    if (url !== "NA" ) {
       if(caller){
         $(caller).addClass('disabled');
         $(caller).removeClass('fired');
@@ -405,6 +406,7 @@ function getEndpoint(endpoint, type, code, container, caller) {
         var html = xhr.responseText;
         if(html.length){
           if(html.length>0)render(html,container, caller);
+          window.bulkevent=false;
         }
       }
       xhr.send();
@@ -466,5 +468,3 @@ $('.btn-primary').on('click', function () {
     getEndpoint(endpoint, type, '', 'main',caller);
   }
 });
-
-

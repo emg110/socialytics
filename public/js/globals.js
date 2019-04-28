@@ -23,11 +23,17 @@ OverlayScrollbars(document.querySelectorAll('body'), {
 });
 var ls = window.localStorage;
 window.bulkevent = false;
-var socket = io('http://localhost:8080');
+var socketUri = window.location.protocol+'//'+window.location.host+':'+ (window.location.port? window.location.port : '80');
+console.log(socketUri);
+var socket = io(socketUri);
+/*window.alert(window.location.href)
+window.alert(window.location.host)
+window.alert(window.location.hostname)
+window.alert(window.location.pathname)*/
 if(!ls.getItem('results'))ls.setItem('results',JSON.stringify([]));
 if(!ls.getItem('currentFreeIndex'))ls.setItem('currentFreeIndex','0');
 if(!ls.getItem('counters'))ls.setItem('counters',JSON.stringify({'empty':''}));
-document.getElementById('instagram-container').innerHTML = htmlNoData;
+if(document.getElementById('instagram-container'))document.getElementById('instagram-container').innerHTML = htmlNoData;
 Holder.addTheme("white", {
   bg: "#fff",
   fg: "#a7a7a7",

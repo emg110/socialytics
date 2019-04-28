@@ -1,9 +1,9 @@
 {
   "host": "localhost",
-  "port": 8080,
+  "port": 80,
   "public": "../public/",
   "paginate": {
-    "default": 12,
+    "default": 10000,
     "max": 100
   },
   "nedb": "../data"

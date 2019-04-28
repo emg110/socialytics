@@ -1,5 +1,5 @@
 // Socket.io is exposed as the `io` global.
-var socket = io('http://localhost:8080');
+/*var socket = io(window.location.protocol+window.location.host);*/
 // @feathersjs/client is exposed as the `feathers` global.
 var feathersClient = feathers().configure(feathers.socketio(socket));
 var posts = feathersClient.service('/instagram/posts');
