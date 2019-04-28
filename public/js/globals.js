@@ -1,5 +1,5 @@
-var htmlNoData = '<div class="loader loader--style1" title="0">  NO DATA HERE...</div>';
-var htmlLoading = '<div class="loader loader--style1" title="0">\n' +
+var htmlNoData = htmlNoData || '<div class="loader loader--style1" title="0">  NO DATA HERE...</div>';
+var htmlLoading = htmlLoading || '<div class="loader loader--style1" title="0">\n' +
   '        <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"\n' +
   '             x="0px" y="0px"\n' +
   '             width="150px" height="150px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">\n' +
@@ -21,11 +21,11 @@ var htmlLoading = '<div class="loader loader--style1" title="0">\n' +
 OverlayScrollbars(document.querySelectorAll('body'), {
   className : "os-theme-dark",
 });
-var ls = window.localStorage;
+var ls = ls || window.localStorage;
 window.bulkevent = false;
-var socketUri = window.location.protocol+'//'+window.location.host+':'+ (window.location.port? window.location.port : '80');
+var socketUri = window.location.protocol+'//'+window.location.host
 console.log(socketUri);
-var socket = io(socketUri);
+var socket = socket || io(socketUri);
 /*window.alert(window.location.href)
 window.alert(window.location.host)
 window.alert(window.location.hostname)

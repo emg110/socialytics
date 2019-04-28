@@ -24,6 +24,6 @@ application.use(cors({
 
 application
     .use(router.routes())
-  /*  .use(router.allowedMethods());*/
+    .use(router.allowedMethods());
 
 module.exports = application;

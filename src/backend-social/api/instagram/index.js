@@ -17,7 +17,8 @@ const feathers = require('@feathersjs/feathers');
 //const client = require('@feathersjs/client');
 const socketio = require('@feathersjs/socketio-client');
 const io = require('socket.io-client');
-const uri = (config.PROTOCOL+"//"+config.HOST+config.UIPORT==="80"? '':':'+config.UIPORT)+'/'
+const uri = (config.PROTOCOL+"://"+config.HOST+':'+config.UIPORT)+'/';
+console.log('socket uri= '+uri);
 const socket = io(uri);
 const api = feathers().configure(socketio(socket, {
   timeout: 0

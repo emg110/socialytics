@@ -3,7 +3,7 @@ module.exports = {
   PORT: process.env.PORT || "3010",
   HOST: process.env.HOST || "localhost",
   PROTOCOL: "http",
-  UIPORT:"80",
+  UIPORT:"8080",
   userid: "houmanproject",
   sessionid: "",
   csrftoken:"",

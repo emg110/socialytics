@@ -5,8 +5,8 @@ const serverUrl = config.PROTOCOL+"://"+config.HOST+':'+config.PORT+'/api';
 const fetch = require('node-fetch');
 const ejs = require('ejs')
 const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36';
-const uri = (config.PROTOCOL+"://"+config.HOST+config.UIPORT==="80"? '':':'+config.UIPORT)+'/'
-
+const uri = config.PROTOCOL+"://"+config.HOST+':'+config.UIPORT+'/'
+console.log(uri);
 function getHeaders() {
   return {
     'referer': uri,
@@ -15,19 +15,19 @@ function getHeaders() {
     'x-requested-with': 'XMLHttpRequest'
   }
 }
-function timeout(ms, promise) {
+/*function timeout(ms, promise) {
   return new Promise(function(resolve, reject) {
     setTimeout(function() {
       reject(new Error("timeout"))
     }, ms)
     promise.then(resolve, reject)
   })
-}
+}*/
 async function getEndpointEtl(etlApiEndpoint){
-  let etlData = await timeout(50000000,fetch(etlApiEndpoint,
+  let etlData = await fetch(etlApiEndpoint,
     {
       headers: getHeaders(),
-    })).then(t => t.json().catch((e) => {
+    }).then(t => t.json().catch((e) => {
     console.log('Instagram API returned an error:' + e)
   }).then(r => r));
   console.log('Rendering results from backend-social API to browser client');
