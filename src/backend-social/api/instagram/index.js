@@ -1,79 +1,18 @@
-const Router = require("koa-Router");
-const router = new Router({prefix: "/api"});
 var config = require('../../../../config');
-const CSRF_TOKEN = config.CSRFTOKEN;
-const sessionid = config.SESSIONID;
+const csrftoken = config.csrftoken;
+const sessionid = config.sessionid;
 var userid = config.userid;
 console.log("Socialytics configurations initialized...");
-
 const Instagram = require('./instagram');
 const instagramClient = new Instagram();
-instagramClient.csrftoken = (instagramClient.csrftoken && instagramClient.csrftoken.length > 5) ? instagramClient.csrftoken : CSRF_TOKEN;
+instagramClient.csrftoken = (instagramClient.csrftoken && instagramClient.csrftoken.length > 5) ? instagramClient.csrftoken : csrftoken;
 instagramClient.sessionid = (instagramClient.sessionid && instagramClient.sessionid.length > 5) ? instagramClient.sessionid : sessionid;
 instagramClient.userid = (instagramClient.userid && instagramClient.userid.length > 2) ? instagramClient.sessionid : userid;
 console.log("Socialytics Instagram client has been initialized...");
 console.log("Socialytics Instagram API has started...");
-const feathers = require('@feathersjs/feathers');
-//const client = require('@feathersjs/client');
-const socketio = require('@feathersjs/socketio-client');
-const io = require('socket.io-client');
-const uri = (config.PROTOCOL+"://"+config.HOST+':'+config.UIPORT)+'/';
-console.log('socket uri= '+uri);
-const socket = io(uri);
-const api = feathers().configure(socketio(socket, {
-  timeout: 0
-}));
+const Router = require("koa-router");
 
-async function writeDatabase(data, service) {
-  if (data.user) {
-    if (data.user.edge_owner_to_timeline_media) {
-      if (data.user.edge_owner_to_timeline_media.edges) {
-        data = data.user.edge_owner_to_timeline_media.edges
-      }
-    }
-  }
-  if (data.graphql) {
-    if (data.graphql.shortcode_media) {
-      for (i in data.graphql.shortcode_media) {
-        data[i] = data.graphql.shortcode_media[i]
-      }
-      delete data.graphql.shortcode_media
-      delete data.graphql
-
-    }
-  }
-  if (data.length) {
-    for (var i = 0; i < data.length; i++) {
-      let item = data[i];
-      if (item.node) {
-        item = item.node;
-      } else if (item.user) {
-        item = data.user
-      }
-      let recordData = await api.service(service)
-        .create(item)
-        .then(result => {
-          return result;
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }
-  } else {
-    if (data.user) {
-      if (Object.keys(data).length <= 1) data = data.user
-    }
-    let recordData = await api.service(service)
-      .create(data)
-      .then(result => {
-        return result;
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }
-}
-
+const router = new Router({ prefix: "/api" });
 //Async functions using Instagram client
 const profileJson = async (ctx) => {
   var inputUser = ctx.request.query;
@@ -376,6 +315,71 @@ const suggestedPeople = async (ctx) => {
   }
 }
 
+const feathers = require('@feathersjs/feathers');
+//const client = require('@feathersjs/client');
+const socketio = require('@feathersjs/socketio-client');
+const io = require('socket.io-client');
+const uri = (config.PROTOCOL+"://"+config.HOST+':'+config.UIPORT)+'/';
+console.log('socket uri= '+uri);
+const socket = io(uri);
+const api = feathers().configure(socketio(socket, {
+  timeout: 0
+}));
+async function writeDatabase(data, service) {
+  if (data.user) {
+    if (data.user.edge_owner_to_timeline_media) {
+      if (data.user.edge_owner_to_timeline_media.edges) {
+        data = data.user.edge_owner_to_timeline_media.edges
+      }
+    }
+  }
+  if (data.graphql) {
+    if (data.graphql.shortcode_media) {
+      for (i in data.graphql.shortcode_media) {
+        data[i] = data.graphql.shortcode_media[i]
+      }
+      delete data.graphql.shortcode_media
+      delete data.graphql
+
+    }
+  }
+  if (data.length) {
+    for (var i = 0; i < data.length; i++) {
+      let item = data[i];
+      if (item.node) {
+        item = item.node;
+      } else if (item.user) {
+        item = data.user
+      }
+      let recordData = await api.service(service)
+        .create(item)
+        .then(result => {
+          return result;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  } else {
+    if (data.user) {
+      if (Object.keys(data).length <= 1) data = data.user
+    }
+    let recordData = await api.service(service)
+      .create(data)
+      .then(result => {
+        return result;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+}
+
+
+router.get("/etl-health-check", async (ctx) => {
+  ctx.status = 200;
+  ctx.body = { result: "ok" };
+});
 // Instagram client router endpoints mapped to async functions to implement 100% async Rest json endpoints.
 router.get("/instagram/profile", profileJson);
 router.get("/instagram/whoami", profileSelfJson);
@@ -394,7 +398,15 @@ router.get("/instagram/post", postJson);
 /*router.get("/instagram/post/page", postPage);*/
 router.get("/instagram/suggested/posts", suggestedPosts);
 router.get("/instagram/suggested/people", suggestedPeople);
+module.exports = router;
 
 
-module.exports = router
+
+
+
+
+
+
+
+
 

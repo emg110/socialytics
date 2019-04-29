@@ -181,10 +181,37 @@
 <%- include ../pages/sidepanel-dashboards.ejs %>
 <%- include ../layouts/layout-footer.ejs %>
 <script>
-  $("#stats-container").ready(getServiceData('find', 'instagram/posts',{$search: 'BwE-N5mFizR',$fields:['shortcode'],$deep:false }, undefined, { createdAt: -1}).then(data=>{
-    console.log('Data: ' + JSON.stringify(data) );
-    window.alert('Data: ' +JSON.stringify(data))
-  }));
+
+  function getStatsData(){
+    getEndpoint('/instagram/sets/data?', 'form-data', '', 'main', undefined);
+    var seta =[],setb=[];
+    setTimeout('1000',function(){
+      seta = document.getElementById('seta').value.split(',');
+      setb = document.getElementById('setb').value.split(',');
+      var promiseArr = [];
+      var userid = '',username='';
+      for (i in seta){
+        getServiceData('find', 'instagram/profiles',{$limit:1,$search: seta[i],$fields:['username'],$deep:false }, undefined, { createdAt: -1}).then(userProfile=>{
+          userid = userProfile.id;
+          console.log('this userid is been queued for stats data gathering '+userid)
+          //TODO:
+         // username = userProfile.username;
+          setTimeout('200',function(){
+            promiseArr.push(getServiceData('find', 'instagram/posts',{$search: userid,$fields:['owner.id'],$deep:false }, undefined, { createdAt: -1}))
+          })
+        })
+      }
+      Promise.all(promiseArr).then(posts=>{
+        console.log('These are posts for stats by seta and setb:'+ posts)
+      })
+
+    })
+   /* getServiceData('find', 'instagram/posts',{$search: 'BwE-N5mFizR',$fields:['shortcode'],$deep:false }, undefined, { createdAt: -1}).then(data=>{
+      console.log('Data: ' + JSON.stringify(data) );
+      window.alert('Data: ' +JSON.stringify(data))
+    })*/
+  }
+  $("#stats-container").ready(getStatsData());
 </script>
 </body>
 </html>

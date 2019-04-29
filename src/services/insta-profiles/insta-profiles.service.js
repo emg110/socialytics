@@ -2,7 +2,7 @@
 const createService = require('feathers-nedb');
 const createModel = require('../../models/insta-profiles.model');
 const hooks = require('./insta-profiles.hooks');
-
+const search = require('../../feathers-nedb-search')
 module.exports = function (app) {
   const Model = createModel(app);
   const paginate = app.get('paginate');
@@ -10,6 +10,7 @@ module.exports = function (app) {
   const options = {
     Model,
     id:'id',
+    whitelist: [ '$regex','$where' ],
     paginate
   };
 
@@ -20,4 +21,12 @@ module.exports = function (app) {
   const service = app.service('instagram/profiles');
 
   service.hooks(hooks);
+  service.hooks({
+    before: {
+      find: search({
+        fields: ['id','username'],
+        deep: false
+      })
+    }
+  })
 };

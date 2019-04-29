@@ -25,7 +25,7 @@ module.exports = function (app) {
   service.hooks({
     before: {
       find: search({
-        fields: ['shortcode'],
+        fields: ['shortcode','owner.id'],
         deep: false
       })
     }

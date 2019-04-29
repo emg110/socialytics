@@ -205,19 +205,30 @@ function norender(caller){
 }
 
 function renderText(txt){
+  console.log('rendering text...')
   var json = JSON.parse(txt);
-  document.getElementById('username-input').value = json.username;
-  document.getElementById('tag-input').value = json.tag;
-  document.getElementById('location-input').value = json.location;
-  document.getElementById('search-input').value = json.query;
-  document.getElementById('count-input').value = json.count;
-  document.getElementById('shortcode-input').value = json.shortcode;
+  if(json.username)document.getElementById('username-input').value = json.username;
+  if(json.username)document.getElementById('tag-input').value = json.tag;
+  if(json.username)document.getElementById('location-input').value = json.location;
+  if(json.username)document.getElementById('search-input').value = json.query;
+  if(json.username)document.getElementById('count-input').value = json.count;
+  if(json.username)document.getElementById('shortcode-input').value = json.shortcode;
+  if(json.seta){
+    console.log('set A found');
+    document.getElementById('seta').value = json.seta.toString();
+  }
+  if(json.setb){
+    console.log('set B found');
+    document.getElementById('setb').value = json.setb.toString();
+  }
   console.log(json);
 }
 
 function getEndpoint(endpoint, type, code, container, caller) {
+  console.log('now starting getting endpoint data...')
   $("#carosel").hide();
   $("#logo").show();
+  var xhr = new XMLHttpRequest();
   if (type !== "form-data") {
     closeNav('social-sidepanel');
     openNav('social-sidepanel');
@@ -399,7 +410,7 @@ function getEndpoint(endpoint, type, code, container, caller) {
         $(caller).append('<span id="loading" class="spinner-grow spinner-grow-sm"></span>');
 
       }
-      var xhr = new XMLHttpRequest();
+
       xhr.timeout = 0;
       xhr.open("GET", url, true);
       xhr.onload = function (e) {
@@ -416,7 +427,8 @@ function getEndpoint(endpoint, type, code, container, caller) {
     }
   }
   else {
-    var xhr = new XMLHttpRequest();
+    console.log('form data...')
+    xhr = new XMLHttpRequest();
     xhr.timeout = 0;
     xhr.open("GET", endpoint, true);
     xhr.onload = function (e) {
@@ -465,6 +477,7 @@ $('.btn-primary').on('click', function () {
       //$(this).find('span').remove();
     }
     var caller = this;
+    console.log(caller)
     getEndpoint(endpoint, type, '', 'main',caller);
   }
 });
