@@ -25,30 +25,57 @@ module.exports = function (options = {}) {
 
         break;
       case '/dashboards/engagement':
-        res.render('pages/dashboards-engagement');
-        console.log('Rendering instagram engagement dashboard page');
+        if(config.sessionid && config.csrftoken){
+          res.render('pages/dashboards-engagement');
+          console.log('Rendering instagram engagement dashboard page');
+        }else {
+          res.redirect('/');
+        }
         break;
       case '/dashboards/stats':
-        res.render('pages/dashboards-stats');
-        console.log('Rendering instagram stats dashboard page');
+
+        if(config.sessionid && config.csrftoken){
+          res.render('pages/dashboards-stats');
+          console.log('Rendering instagram stats dashboard page');
+        }else {
+          res.redirect('/');
+        }
         break;
       case '/dashboards/explore':
-        res.render('pages/dashboards-explore');
-        console.log('Rendering instagram explore dashboard page');
+        if(config.sessionid && config.csrftoken){
+          res.render('pages/dashboards-explore');
+          console.log('Rendering instagram explore dashboard page');
+        }else {
+          res.redirect('/');
+        }
         break;
       case '/login':
-        res.render('pages/login', {output});
-        console.log('Rendering login page');
+        if(config.sessionid && config.csrftoken){
+          res.render('pages/login', {output});
+          console.log('Rendering login page');
+        }else {
+          res.redirect('/');
+        }
         break;
       case '/instagram/form/data?':
-        var formData = config.default_form_data
+        if(config.sessionid && config.csrftoken){
+          var formData = config.default_form_data
+          res.json(formData)
+          console.log('Rendering form data');
+        }else {
+          res.redirect('/');
+        }
 
-        res.json(formData)
         break;
       case '/instagram/sets/data?':
-        var setsData = {seta:config.seta,setb:config.setb}
+        if(config.sessionid && config.csrftoken){
+          var setsData = {seta:config.seta,setb:config.setb}
+          res.json(setsData)
+          console.log('Rendering sets data');
+        }else {
+          res.redirect('/');
+        }
 
-        res.json(setsData)
         break;
       default:
         next();
