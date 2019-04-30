@@ -31,8 +31,22 @@ app.use('/', express.static(app.get('public')));
 
 // Set up Plugins and providers
 app.configure(express.rest());
-app.configure(socketio());
+//app.configure(socketio());
+app.configure(socketio(function(io) {
+  io.on('connection', function(socket) {
+    socket.emit('instagram', { text: 'A client connected!' });
+    socket.on('cube', function (data) {
+      console.log(data)
+    });
+  });
 
+  // Registering Socket.io middleware
+  io.use(function (socket, next) {
+    // Exposing a request property to services and hooks
+    socket.feathers.referrer = socket.request.referrer;
+    next();
+  });
+}));
 
 // Configure other middleware (see `middleware/index.js`)
 app.configure(middleware);

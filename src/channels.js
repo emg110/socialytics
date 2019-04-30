@@ -16,6 +16,9 @@ module.exports = function(app) {
     app.channel('insta-profiles').join(connection);
     app.channel('insta-posts').join(connection);*/
       app.channel('instagram').join(connection);
+      app.channel('events').join(connection);
+      app.channel('data').join(connection);
+      app.channel('instagram-news').join(connection);
   });
 
   app.on('login', (authResult, { connection }) => {

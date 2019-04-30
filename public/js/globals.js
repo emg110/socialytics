@@ -18,6 +18,66 @@ var htmlLoading = htmlLoading || '<div class="loader loader--style1" title="0">\
   '          </path>\n' +
   '  </svg>\n' +
   '      </div>';
+var powerpoint = '<div id="powerpoint" class="carousel slide" data-ride="carousel">\n' +
+  '\n' +
+  '              <!-- Indicators -->\n' +
+  '              <ul class="carousel-indicators">\n' +
+  '                <li data-target="#powerpoint" data-slide-to="0" class="active"></li>\n' +
+  '                <li data-target="#powerpoint" data-slide-to="1"></li>\n' +
+  '                <li data-target="#powerpoint" data-slide-to="2"></li>\n' +
+  '                <li data-target="#powerpoint" data-slide-to="3"></li>\n' +
+  '                <li data-target="#powerpoint" data-slide-to="4"></li>\n' +
+  '                <li data-target="#powerpoint" data-slide-to="5"></li>\n' +
+  '                <li data-target="#powerpoint" data-slide-to="6"></li>\n' +
+  '                <li data-target="#powerpoint" data-slide-to="7"></li>\n' +
+  '                <li data-target="#powerpoint" data-slide-to="8"></li>\n' +
+  '                <li data-target="#powerpoint" data-slide-to="9"></li>\n' +
+  '                <li data-target="#powerpoint" data-slide-to="10"></li>\n' +
+  '              </ul>\n' +
+  '\n' +
+  '              <!-- The slideshow -->\n' +
+  '              <div class="carousel-inner">\n' +
+  '                <div class="carousel-item active">\n' +
+  '                  <img style="max-width:100%;max-height:450px" src="img/ppt/Slide1.jpg" alt="Slide #1">\n' +
+  '                </div>\n' +
+  '                <div class="carousel-item">\n' +
+  '                  <img style="max-width:100%;max-height:450px" src="img/ppt/Slide2.jpg" alt="Slide #2">\n' +
+  '                </div>\n' +
+  '                <div class="carousel-item">\n' +
+  '                  <img style="max-width:100%;max-height:450px" src="img/ppt/Slide3.jpg" alt="Slide #3">\n' +
+  '                </div>\n' +
+  '                <div class="carousel-item">\n' +
+  '                  <img style="max-width:100%;max-height:450px" src="img/ppt/Slide4.jpg" alt="Slide #4">\n' +
+  '                </div>\n' +
+  '                <div class="carousel-item">\n' +
+  '                  <img style="max-width:100%;max-height:450px" src="img/ppt/Slide5.jpg" alt="Slide #5">\n' +
+  '                </div>\n' +
+  '                <div class="carousel-item">\n' +
+  '                  <img style="max-width:100%;max-height:450px" src="img/ppt/Slide6.jpg" alt="Slide #6">\n' +
+  '                </div>\n' +
+  '                <div class="carousel-item">\n' +
+  '                  <img style="max-width:100%;max-height:450px" src="img/ppt/Slide7.jpg" alt="Slide #7">\n' +
+  '                </div>\n' +
+  '                <div class="carousel-item">\n' +
+  '                  <img style="max-width:100%;max-height:450px" src="img/ppt/Slide8.jpg" alt="Slide #8">\n' +
+  '                </div>\n' +
+  '                <div class="carousel-item">\n' +
+  '                  <img style="max-width:100%;max-height:450px" src="img/ppt/Slide9.jpg" alt="Slide #9">\n' +
+  '                </div>\n' +
+  '                <div class="carousel-item">\n' +
+  '                  <img style="max-width:100%;max-height:450px" src="img/ppt/Slide10.jpg" alt="Slide #10">\n' +
+  '                </div>\n' +
+  '              </div>\n' +
+  '\n' +
+  '              <!-- Left and right controls -->\n' +
+  '              <a class="carousel-control-prev" href="#powerpoint" data-slide="prev">\n' +
+  '                <span class="carousel-control-prev-icon"></span>\n' +
+  '              </a>\n' +
+  '              <a class="carousel-control-next" href="#powerpoint" data-slide="next">\n' +
+  '                <span class="carousel-control-next-icon"></span>\n' +
+  '              </a>\n' +
+  '\n' +
+  '            </div>';
 OverlayScrollbars(document.querySelectorAll('body'), {
   className : "os-theme-dark",
 });
@@ -55,7 +115,16 @@ $("#carosel").hide();
 $("#logo").click(function () {
   $("#carosel").show();
   $("#logo").hide();
+  $("#carosel").html(powerpoint);
+  $("#powerpoint").carousel();
+// Enable Carousel Indicators
+  $(".item").click(function () {
+    $("#powerpoint").carousel(1);
+  });
+// Enable Carousel Controls
+  $(".carousel-control-prev").click(function () {
+    $("#powerpoint").carousel("prev");
+  });
 });
-$("#github").click(function () {
-  window.open('https://github.com/emg110/socialytics/', '_blank');
-});
+
+

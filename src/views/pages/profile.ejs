@@ -91,19 +91,19 @@
     <div style="background-color:lightgreen" class="byline-counter">
       <% if(etlData.edge_followed_by) { %>
       <span class="byline" title="Followers count"
-            onClick=getEndpoint("/instagram/followers?","user-followers","<%= etlData.username %>","followers")><%= etlData.edge_followed_by.count %> followers</span>
+            onClick=getEndpointData("/instagram/followers?","user-followers","<%= etlData.username %>","followers")><%= etlData.edge_followed_by.count %> followers</span>
       <% } %>
     </div>
     <div style="background-color:darkseagreen" class="byline-counter">
       <% if(etlData.edge_follow) { %>
       <span class="byline" title="Followings count"
-            onClick=getEndpoint("/instagram/following?","user-following","<%= etlData.username %>","following")><%= etlData.edge_follow.count %> follows</span>
+            onClick=getEndpointData("/instagram/following?","user-following","<%= etlData.username %>","following")><%= etlData.edge_follow.count %> follows</span>
       <% } %>
     </div>
     <div style="background-color:cadetblue" class="byline-counter">
       <% if(etlData.edge_owner_to_timeline_media) { %>
       <span class="byline" title="Posts count"
-            onClick=getEndpoint("/instagram/posts?","recent-posts","<%= etlData.username %>","posts")><%= etlData.edge_owner_to_timeline_media.count %> posts</span>
+            onClick=getEndpointData("/instagram/posts?","recent-posts","<%= etlData.username %>","posts")><%= etlData.edge_owner_to_timeline_media.count %> posts</span>
       <% } %>
     </div>
     <div style="background-color:lightblue" class="byline-counter">
@@ -150,14 +150,14 @@
       <div class="card">
         <div class="card-body">
           <div style="cursor:pointer"
-               onClick=getEndpoint("/instagram/post?","post-json","<%= edge.shortcode %>","post")>
+               onClick=getEndpointData("/instagram/post?","post-json","<%= edge.shortcode %>","post")>
             <img class="img-fluid" src="<%= edge.thumbnail_src %>"
                  alt="<%= edge.edge_media_to_caption ? edge.edge_media_to_caption.edges[0] : [] %>">
           </div>
 
           <div class="likes-comments">
               <span style="cursor:pointer; color: rgb(249,5,5);"
-                    onClick=getEndpoint("/instagram/likes?","post-likes","<%= edge.shortcode %>","post-likes")>
+                    onClick=getEndpointData("/instagram/likes?","post-likes","<%= edge.shortcode %>","post-likes")>
                 <% if(edge.edge_media_preview_like){ %>
                   <% if(edge.edge_media_preview_like.count) { %><%= edge.edge_media_preview_like.count+' ' %>
                   &hearts; <% } %>
@@ -166,7 +166,7 @@
                 <% } %>
               </span>
             <span style="cursor:pointer; color: transparent;  text-shadow: 0 0 0 rgb(42, 170, 82);"
-                  onClick=getEndpoint("/instagram/comments?","post-comments","<%= edge.shortcode %>","post-comments")>
+                  onClick=getEndpointData("/instagram/comments?","post-comments","<%= edge.shortcode %>","post-comments")>
               <% if(edge.edge_media_to_comment){ %>
               <%= edge.edge_media_to_comment.count+' ' %> &#x1F5E8;
               <% } %>

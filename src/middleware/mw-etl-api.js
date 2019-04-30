@@ -23,7 +23,7 @@ function getHeaders() {
     promise.then(resolve, reject)
   })
 }*/
-async function getEndpointEtl(etlApiEndpoint){
+async function getEndpointDataEtl(etlApiEndpoint){
   let etlData = await fetch(etlApiEndpoint,
     {
       headers: getHeaders(),
@@ -43,7 +43,7 @@ module.exports = function (options = {}) {
       let expr = req.originalUrl;
       if(expr.indexOf('/instagram/profile')>=0){
         let etlApiEndpoint = serverUrl+expr;
-        const etlData = await getEndpointEtl(etlApiEndpoint);
+        const etlData = await getEndpointDataEtl(etlApiEndpoint);
         res.render('pages/profile',{etlData},function(err, html) {
           res.send(html);
         });
@@ -51,14 +51,14 @@ module.exports = function (options = {}) {
       else if(expr.indexOf('/instagram/whoami')>=0){
         expr = expr.replace('/instagram/whoami','/instagram/profile') + "?"+ config.userid
         let etlApiEndpoint = serverUrl+expr;
-        const etlData = await getEndpointEtl(etlApiEndpoint);
+        const etlData = await getEndpointDataEtl(etlApiEndpoint);
         res.render('pages/profile',{etlData},function(err, html) {
           res.send(html);
         });
       }
       else if(expr.indexOf('/instagram/posts')>=0){
         let etlApiEndpoint = serverUrl+expr;
-        let etlData = await getEndpointEtl(etlApiEndpoint);
+        let etlData = await getEndpointDataEtl(etlApiEndpoint);
 
         let userid = config.userid;
         res.render('pages/posts',{etlData, userid},function(err, html) {
@@ -69,7 +69,7 @@ module.exports = function (options = {}) {
       else if(expr.indexOf('/instagram/allposts')>=0){
         req.setTimeout(50000000000)
         let etlApiEndpoint = serverUrl+expr;
-        let etlData = await getEndpointEtl(etlApiEndpoint);
+        let etlData = await getEndpointDataEtl(etlApiEndpoint);
 
         let userid = config.userid;
         var dataLength = etlData.length
@@ -101,7 +101,7 @@ module.exports = function (options = {}) {
       }
       else if(expr.indexOf('/instagram/tag')>=0){
         let etlApiEndpoint = serverUrl+expr.replace('/explore','');
-        let etlData = await getEndpointEtl(etlApiEndpoint);
+        let etlData = await getEndpointDataEtl(etlApiEndpoint);
 
         let userid = config.userid;
         if(etlData.length){
@@ -123,7 +123,7 @@ module.exports = function (options = {}) {
       }
       else if(expr.indexOf('/instagram/location')>=0){
         let etlApiEndpoint = serverUrl+expr.replace('/explore','');
-        let etlData = await getEndpointEtl(etlApiEndpoint);
+        let etlData = await getEndpointDataEtl(etlApiEndpoint);
 
         let userid = config.userid;
         if(etlData.length){
@@ -145,7 +145,7 @@ module.exports = function (options = {}) {
       }
       else if(expr.indexOf('/instagram/following')>=0){
         let etlApiEndpoint = serverUrl+expr
-        let etlData = await getEndpointEtl(etlApiEndpoint);
+        let etlData = await getEndpointDataEtl(etlApiEndpoint);
         let userid = config.userid;
         if(etlData.length){
           /*if(etlData.length> 100){
@@ -165,7 +165,7 @@ module.exports = function (options = {}) {
       }
       else if(expr.indexOf('/instagram/followers')>=0){
         let etlApiEndpoint = serverUrl+expr
-        let etlData = await getEndpointEtl(etlApiEndpoint);
+        let etlData = await getEndpointDataEtl(etlApiEndpoint);
         let userid = config.userid;
         if(etlData.length){
           /*if(etlData.length> 100){
@@ -189,7 +189,7 @@ module.exports = function (options = {}) {
       }
       else if(expr.indexOf('/instagram/search')>=0){
         let etlApiEndpoint = serverUrl+expr;
-        let etlData = await getEndpointEtl(etlApiEndpoint);
+        let etlData = await getEndpointDataEtl(etlApiEndpoint);
         let userid = config.userid;
         res.render('pages/search',{etlData, userid},function(err, html) {
           if(err)console.log('ejs has returned this error: '+ err);
@@ -198,7 +198,7 @@ module.exports = function (options = {}) {
       }
       else if(expr.indexOf('/instagram/feed')>=0){
         let etlApiEndpoint = serverUrl+expr;
-        let etlData = await getEndpointEtl(etlApiEndpoint);
+        let etlData = await getEndpointDataEtl(etlApiEndpoint);
         let userid = config.userid;
         if(etlData.user)etlData = etlData.user;
         if(etlData.edge_web_feed_timeline)etlData = etlData.edge_web_feed_timeline;
@@ -210,7 +210,7 @@ module.exports = function (options = {}) {
       }
       else if(expr.indexOf('/instagram/allfeed')>=0){
         let etlApiEndpoint = serverUrl+expr;
-        let etlData = await getEndpointEtl(etlApiEndpoint);
+        let etlData = await getEndpointDataEtl(etlApiEndpoint);
         let userid = config.userid;
         res.render('pages/feed',{etlData, userid},function(err, html) {
           if(err)console.log('ejs has returned this error: '+ err);
@@ -219,7 +219,7 @@ module.exports = function (options = {}) {
       }
       else if(expr.indexOf('/instagram/suggested/posts')>=0){
         let etlApiEndpoint = serverUrl+expr;
-        let etlData = await getEndpointEtl(etlApiEndpoint);
+        let etlData = await getEndpointDataEtl(etlApiEndpoint);
         let userid = config.userid;
         let finalData = {};
         finalData.user = {};
@@ -234,7 +234,7 @@ module.exports = function (options = {}) {
       }
       else if(expr.indexOf('/instagram/suggested/people')>=0){
         let etlApiEndpoint = serverUrl+expr;
-        let etlData = await getEndpointEtl(etlApiEndpoint);
+        let etlData = await getEndpointDataEtl(etlApiEndpoint);
         let userid = config.userid;
         let finalData = {};
         finalData.edges = etlData;
@@ -246,7 +246,7 @@ module.exports = function (options = {}) {
       }
       else if(expr.indexOf('/instagram/likes')>=0){
         let etlApiEndpoint = serverUrl+expr;
-        let etlData = await getEndpointEtl(etlApiEndpoint);
+        let etlData = await getEndpointDataEtl(etlApiEndpoint);
         if(etlData.length>0){
           let userid = config.userid;
           let finalData = {};
@@ -264,7 +264,7 @@ module.exports = function (options = {}) {
       }
       else if(expr.indexOf('/instagram/comments')>=0){
         let etlApiEndpoint = serverUrl+expr;
-        let etlData = await getEndpointEtl(etlApiEndpoint);
+        let etlData = await getEndpointDataEtl(etlApiEndpoint);
         if(etlData.length>0){
           let userid = config.userid;
           let finalData = {};
@@ -282,7 +282,7 @@ module.exports = function (options = {}) {
       }
       /*else if(expr.indexOf('/instagram/post/page')>=0){
         let etlApiEndpoint = serverUrl+expr;
-        let etlData = await getEndpointEtl(etlApiEndpoint);
+        let etlData = await getEndpointDataEtl(etlApiEndpoint);
         if(etlData){
           res.send(etlData);
         }else{
@@ -292,7 +292,7 @@ module.exports = function (options = {}) {
       }*/
       else if(expr.indexOf('/instagram/post')>=0){
         let etlApiEndpoint = serverUrl+expr;
-        let etlData = await getEndpointEtl(etlApiEndpoint);
+        let etlData = await getEndpointDataEtl(etlApiEndpoint);
         if(etlData){
           let userid = config.userid;
           res.render('pages/post',{etlData, userid},function(err, html) {

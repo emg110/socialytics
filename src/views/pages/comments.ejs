@@ -4,7 +4,7 @@
   <% var commentDate = new Date(parseInt(edge.created_at)*1000) %>
   <% edge.created_at = commentDate.getFullYear()+'-'+commentDate.getMonth()+'-'+commentDate.getDay() %>
   <div class="row whiteBox ">
-      <div style="cursor:pointer" class="col-sm-6 text-center align-self-center" onClick=getEndpoint("/instagram/profile?","profile",<%= '"'+edge.owner.username+'"' %>,"profile") >
+      <div style="cursor:pointer" class="col-sm-6 text-center align-self-center" onClick=getEndpointData("/instagram/profile?","profile",<%= '"'+edge.owner.username+'"' %>,"profile") >
           <% if(!(typeof edge == 'undefined')){%>
               <% if(edge.owner.profile_pic_url) { %>
                   <img class="usr-img-thumbnail" src="<%= !(typeof edge == 'undefined') ? edge.owner.profile_pic_url:"" %>" alt="<%= edge ? edge.owner.username :"" %>">

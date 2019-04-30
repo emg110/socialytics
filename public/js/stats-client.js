@@ -68,6 +68,7 @@ function chartit(container, data){
    myChart.setOption(option);
 }
 function getStatsData() {
+
   window.dataArrSetA = [];
   window.useridArr = [];
   window.dataArrSetB = [];
@@ -76,7 +77,7 @@ function getStatsData() {
   var userid = '';
   var i = 0;
   if (seta.length && setb.length) {
-    var getServiceData = getServiceData || undefined;
+    getSocketData('cube','this data is needed').then(data=>console.log(data))
     for (i = 0; i < seta.length; i++) {
       getServiceData('find', 'instagram/profiles', {
         $search: seta[i],
