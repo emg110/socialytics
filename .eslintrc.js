@@ -1,9 +1,33 @@
 module.exports = {
-    "extends": "airbnb",
-    "rules": {
-        "indent": [2, 4],
-        "quotes": [2, "double"],
-        "linebreak-style": [2, "unix"],
-        "no-console": [0]
-    }
+  "env": {
+    "es6": true,
+    "node": true,
+    "jest": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2017
+  },
+  "extends": [
+    "standard",
+    "airbnb",
+    "eslint:recommended"
+  ],
+  "rules": {
+    "indent": [
+      "error",
+      2
+    ],
+    "linebreak-style": [
+      "error",
+      "unix"
+    ],
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "semi": [
+      "error",
+      "always"
+    ]
+  }
 };

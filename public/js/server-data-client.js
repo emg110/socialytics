@@ -26,7 +26,7 @@ function getServiceData(method, service,filters, limit, sort){
   if(sort && sort !== undefined){
     options.$sort = sort;
   }
-  console.log(method, service,filters, limit, sort)
+  //console.log(method, service,filters, limit, sort)
   for (i in filters){
     options[i]= filters[i];
   }

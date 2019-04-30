@@ -59,9 +59,10 @@ module.exports = function () {
       delete hook.params.query.$deep
       hook.params.query.$where = fuzzySearch(hook.params.query.$search, options)
       delete hook.params.query.$search
-    }else{
+    }
+    else{
       for (let field in query) {
-        if(query[field].$search && field.indexOf('$') == -1) {
+        if(query[field].$search && field.indexOf('$') === -1) {
           query[field] = { $regex: new RegExp(query[field].$search, 'i') }
           delete query[field].$search
         }

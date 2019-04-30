@@ -2,9 +2,11 @@
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav('dashboard-sidepanel')">&times;</a>
   <a href="javascript:void(0)" value="" style="display:none" id="backbtn" class="backbtn" onclick="backNav()">&#8406</a>
   <div id="dashboard-container">
-    <div class="loader loader--style1" title="0">  NO FILTERS HERE...</div>
+    <div id="noDataMsg" class="loader loader--style1" title="0">  NO FILTERS HERE...</div>
     <textarea style="display:block; padding:5px; margin:10px; width:95%;min-height:200px" id="seta" class="seta"></textarea>
     <textarea style="display:block; padding:5px; margin:10px; width:95%;min-height:200px" id="setb" class="setb"></textarea>
-    <input style="text-align:center;display:block; padding:5px; margin:20px; min-width:25%" value="Get research sets" type="button" class="btn btn-primary" click-target="/instagram/sets/data?" call-type="form-data">
+    <input style="text-align:center;display:block; padding:5px; margin:20px; min-width:25%" value="Reset filters" type="button" class="btn btn-primary" click-target="/instagram/sets/data?" call-type="form-data">
+    <input id="getDataBtn" onclick="getStatsData()" style="text-align:center;display:block; padding:5px; margin:20px; min-width:25%" value="Get research sets data" type="button" class="btn btn-primary" call-type="form-data">
+    <div id="counter" class="loader loader--style1" title="0">0</div>
   </div>
 </div>

@@ -23,10 +23,7 @@ module.exports = function (app) {
   service.hooks(hooks);
   service.hooks({
     before: {
-      find: search({
-        fields: ['id','username'],
-        deep: false
-      })
+      find: search()
     }
   })
 };
