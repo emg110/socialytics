@@ -1,4 +1,3 @@
-
 function chartit(container, data){
     var myChart = echarts.init(document.getElementById(container));
 
@@ -77,6 +76,7 @@ function getStatsData() {
   var userid = '';
   var i = 0;
   if (seta.length && setb.length) {
+    var getServiceData = getServiceData || undefined;
     for (i = 0; i < seta.length; i++) {
       getServiceData('find', 'instagram/profiles', {
         $search: seta[i],

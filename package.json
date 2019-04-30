@@ -127,6 +127,22 @@
       "eslint:recommended"
     ]
   },
+  "jshint": {
+    "node": true,
+    "esversion":6,
+    "esnext":false,
+    "bitwise": true,
+    "eqeqeq": true,
+    "immed": true,
+    "latedef": "nofunc",
+    "newcap": true,
+    "noarg": true,
+    "regexp": true,
+    "undef": true,
+    "smarttabs": true,
+    "asi": true,
+    "debug": true
+  },
   "browserslist": [
     ">0.2%",
     "not dead",

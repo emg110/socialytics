@@ -1,6 +1,7 @@
 {
   "node": true,
-  "esnext": true,
+  "esnext": false,
+  "esversion":6,
   "bitwise": true,
   "eqeqeq": true,
   "immed": true,
