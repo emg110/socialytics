@@ -2,14 +2,16 @@
 const createService = require('feathers-nedb');
 const createModel = require('../../models/insta-media.model');
 const hooks = require('./insta-media.hooks');
-
+const search = require('../../feathers-nedb-search')
 module.exports = function (app) {
   const Model = createModel(app);
   const paginate = app.get('paginate');
 
   const options = {
     Model,
-    paginate
+    whitelist: [ '$regex','$where' ],
+    paginate,
+    multi:true
   };
 
   // Initialize our service with any options it requires
@@ -19,4 +21,9 @@ module.exports = function (app) {
   const service = app.service('instagram/media');
 
   service.hooks(hooks);
+  service.hooks({
+    before: {
+      find: search()
+    }
+  })
 };

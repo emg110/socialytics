@@ -235,7 +235,7 @@ function getEndpointData(endpoint, type, code, container, caller) {
     xhr.open("GET", endpoint, true);
     xhr.onload = function (e) {
       var txt = xhr.responseText;
-      renderText(txt);
+      renderFormData(txt);
     }
     xhr.send();
 

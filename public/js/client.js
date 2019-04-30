@@ -2,7 +2,6 @@ function openNav(id) {
   //document.getElementById(id).style.backgroundColor = "#111";
   document.getElementById(id).style.width = "35%";
 }
-
 /* Set the width of the sidebar to 0 (hide it) */
 function closeNav(id) {
   document.getElementById(id).style.width = "0";
@@ -51,6 +50,7 @@ $('.btn-primary').on('click', function () {
     }
   }
 });
+
 $("#github").click(function () {
   window.open('https://github.com/emg110/socialytics/', '_blank');
 });

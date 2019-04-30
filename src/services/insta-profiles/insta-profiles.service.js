@@ -11,7 +11,8 @@ module.exports = function (app) {
     Model,
     id:'id',
     whitelist: [ '$regex','$where' ],
-    paginate
+    paginate,
+    multi:true
   };
 
   // Initialize our service with any options it requires
