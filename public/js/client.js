@@ -54,3 +54,28 @@ $('.btn-primary').on('click', function () {
 $("#github").click(function () {
   window.open('https://github.com/emg110/socialytics/', '_blank');
 });
+// wait for the DOM to be loaded
+/*$(document).ready(function() {
+  // bind 'myForm' and provide a simple callback function
+  $('#login-form').ajaxForm(function(res) {
+    alert("Thank you for your comment!" + res);
+    console.log("Thank you for your comment!" + res);
+  })
+})*/
+
+$("#secret").ready(function() {
+
+  var username = $("#secret").attr('username').trim();
+  if(username){
+    var accesstoken = $("#secret").attr('token');
+    if(accesstoken){
+      ls.setItem(username, accesstoken);
+      $("#secret").attr('token','');
+    }
+    var path = window.location.pathname
+    var url = window.location.protocol+'//'+window.location.host+path+'?username='+username
+    //window.location.replace(url)
+    window.history.pushState({},"socialytics", url);
+    //console.log(username,' :: ',accesstoken)
+  }
+})

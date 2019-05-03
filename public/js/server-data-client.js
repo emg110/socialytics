@@ -27,6 +27,8 @@ var socket = io(window.location.protocol+window.location.host);
   }
 });*/
 function getEndpointData(endpoint, type, code, container, caller) {
+  var user = $("#secret").attr('username').trim();
+  var accesstoken = ls.getItem(user);
   console.log('now starting getting endpoint data...')
   $("#carosel").hide();
   $("#logo").show();
@@ -214,7 +216,11 @@ function getEndpointData(endpoint, type, code, container, caller) {
       }
 
       xhr.timeout = 0;
+
       xhr.open("GET", url, true);
+      xhr.setRequestHeader('username', user)
+      xhr.setRequestHeader('accesstoken', accesstoken)
+      xhr.setRequestHeader('strategy', 'jwt')
       xhr.onload = function (e) {
         var html = xhr.responseText;
         if(html.length){

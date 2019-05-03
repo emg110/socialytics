@@ -3,57 +3,65 @@
 const fetch = require('node-fetch');
 const FormData = require('form-data');
 const config  = require('../../../../config');
+
 module.exports = class Instagram {
   /**
    * Constructor
    */
-  constructor(csrftoken, sessionid) {
-    this.csrftoken = csrftoken;
-    this.sessionid = sessionid;
-    this.userAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36'
-    this.userPosts = {};
-    this.userFeedPosts = {};
-    this.suggestedPosts = {};
-    this.suggestedPeople = {};
-    this.userIdFollowers = {};
-    this.userIdFollowing = {};
-    this.timeoutForCounter = 300;
-    this.timeoutForCounterValue = 30000;
-    this.paginationDelay = 5000;
-    this.receivePromises = {};
-    this.exploreByTypes = ['location', 'hashtag'];
-    this.tagPosts = {};
-    this.locationPosts = {};
-    this.postLikes = {};
-    this.postComments = {};
+  constructor(username) {
+    if(config.users[username]){
+      if(!config.users[username].instagram){
+        config.users[username].instagram = {}
+        config.users[username].instagram.userAgent =  'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36'
+        config.users[username].instagram.userPosts = {};
+        config.users[username].instagram.userFeedPosts = {};
+        config.users[username].instagram.suggestedPosts = {};
+        config.users[username].instagram.suggestedPeople = {};
+        config.users[username].instagram.userIdFollowers = {};
+        config.users[username].instagram.userIdFollowing = {};
+        config.users[username].instagram.timeoutForCounter = 300;
+        config.users[username].instagram.timeoutForCounterValue = 30000;
+        config.users[username].instagram.paginationDelay = 5000;
+        config.users[username].instagram.receivePromises = {};
+        config.users[username].instagram.exploreByTypes = ['location', 'hashtag'];
+        config.users[username].instagram.tagPosts = {};
+        config.users[username].instagram.locationPosts = {};
+        config.users[username].instagram.postLikes = {};
+        config.users[username].instagram.postComments = {};
+        config.users[username].instagram.people = {};
+        config.users[username].instagram.tags = {};
+        config.users[username].instagram.locations = {};
+        config.users[username].instagram.searchList = [];
+        config.users[username].instagram.cookieValues = {
+          sessionid: undefined,
+          ds_user_id: undefined,
+          csrftoken: undefined,
+          shbid: undefined,
+          rur: undefined,
+          mid: undefined,
+          shbts: undefined,
+          mcd: undefined,
+          urlgen:undefined,
+          ig_cb: 1,
 
-    this.cookieValues = {
-      sessionid: undefined,
-      ds_user_id: undefined,
-      csrftoken: undefined,
-      shbid: undefined,
-      rur: undefined,
-      mid: undefined,
-      shbts: undefined,
-      mcd: undefined,
-      urlgen:undefined,
-      ig_cb: 1,
-
-    };
-
-    this.baseHeader = {
-      'accept-langauge': 'en-US;q=0.9,en;q=0.8,es;q=0.7',
-      'origin': 'https://www.instagram.com',
-      'referer': 'https://www.instagram.com/',
-      'upgrade-insecure-requests': '1',
-      'user-agent': this.userAgent,
-    };
-    this.userId = "";
-    this.userid = "";
-    this.people = {};
-    this.tags = {};
-    this.locations = {};
-    this.searchList = [];
+        };
+        config.users[username].instagram.baseHeader = {
+          'accept-langauge': 'en-US;q=0.9,en;q=0.8,es;q=0.7',
+          'origin': 'https://www.instagram.com',
+          'referer': 'https://www.instagram.com/',
+          'upgrade-insecure-requests': '1',
+          'user-agent': config.users[username].instagram.userAgent,
+        };
+      }
+      this.username = username;
+      this.csrftoken  = config.users[username].csrftoken;
+      this.sessionid  = config.users[username].sessionid;
+      this.userAgent = config.users[username].instagram.userAgent;
+      this.config = "OK";
+}
+    else{
+      console.error('Instagram client initilization failed. config for username: '+ username + ' does not exist')
+    }
   }
 
   // ACCOUNT /////////////////////////////////////
@@ -66,21 +74,21 @@ module.exports = class Instagram {
    */
   generateCookie(simple) {
     if (simple) return 'ig_cb=1';
-    this.cookieValues.ds_user_id = config.userid;
-    this.cookieValues.csrftoken = config.csrftoken;
-    if(config.sessionid){
-      if(config.sessionid.length>5){
-        this.cookieValues.sessionid = config.sessionid;
+    config.users[this.username].instagram.cookieValues.ds_user_id = this.username;
+    config.users[this.username].instagram.cookieValues.csrftoken = this.csrftoken;
+    if(this.sessionid){
+      if(this.sessionid.length>5){
+        config.users[this.username].instagram.cookieValues.sessionid = this.sessionid;
       }
     }else{
-      delete this.cookieValues.sessionid;
+      delete config.users[this.username].instagram.cookieValues.sessionid;
     }
     var cookie = ''
-    var keys = Object.keys(this.cookieValues)
+    var keys = Object.keys(config.users[this.username].instagram.cookieValues)
     for (var i = 0; i < keys.length; i++) {
       var key = keys[i];
-      if (this.cookieValues[key] !== undefined) {
-        cookie += key + '=' + this.cookieValues[key] + (i < keys.length - 1 ? '; ' : '')
+      if (config.users[this.username].instagram.cookieValues[key] !== undefined) {
+        cookie += key + '=' + config.users[this.username].instagram.cookieValues[key] + (i < keys.length - 1 ? '; ' : '')
       }
     }
 
@@ -95,7 +103,7 @@ module.exports = class Instagram {
    * @return {Object}
    */
   combineWithBaseHeader(data) {
-    return Object.assign(this.baseHeader, data)
+    return Object.assign(config.users[this.username].instagram.baseHeader, data)
   }
 
   /**
@@ -109,14 +117,14 @@ module.exports = class Instagram {
    */
   updateCookieValues(src, isHTML) {
     if (!isHTML) {
-      var keys = Object.keys(this.cookieValues)
+      var keys = Object.keys(config.users[this.username].instagram.cookieValues)
       for (var i = 0; i < keys.length; i++) {
         var key = keys[i];
-        if (!this.cookieValues[key])
+        if (!config.users[this.username].instagram.cookieValues[key])
           for (let cookie in src)
             if (src[cookie].includes(key) && !src[cookie].includes(key + '=""')) {
               var cookieValue = src[cookie].split(';')[0].replace(key + '=', '')
-              this.cookieValues[key] = cookieValue
+              config.users[this.username].instagram.cookieValues[key] = cookieValue;
               break;
             }
       }
@@ -129,7 +137,8 @@ module.exports = class Instagram {
 
       var json = JSON.parse(subStr);
 
-      this.cookieValues.csrftoken = json.config.csrf_token;
+      this.csrftoken = json.config.csrf_token
+      config.users[this.username].instagram.cookieValues.csrftoken = this.csrftoken;
       this.rollout_hash = json.rollout_hash;
     }
 
@@ -158,7 +167,7 @@ module.exports = class Instagram {
       return t.text()
     }).then(html => {
       this.updateCookieValues(html, true)
-      return this.cookieValues.csrftoken
+      return this.csrftoken
     }).catch((err) =>
       console.log('Failed to get instagram csrf token: '+ err)
     )
@@ -204,7 +213,7 @@ module.exports = class Instagram {
             'accept-encoding'   : 'gzip, deflate, br',
             'content-length'    : formdata.length,
             'content-type'      : 'application/x-www-form-urlencoded',
-            'cookie'            : 'ig_cb=' + this.cookieValues.ig_cb,
+            'cookie'            : 'ig_cb=' + config.users[this.username].instagram.cookieValues.ig_cb,
             'x-csrftoken'       : this.csrftoken,
             'x-instagram-ajax'  : this.rollout_hash,
             'x-requested-with'  : 'XMLHttpRequest',
@@ -216,8 +225,7 @@ module.exports = class Instagram {
       t => {
         let res = t.headers.get('set-cookie');
         self.updateCookieValues(res);
-        self.userid = username;
-        return self.cookieValues.sessionid;
+        return config.users[self.username].instagram.cookieValues.sessionid;
       }).catch(() =>
       console.log('Instagram authentication failed...')
     )
@@ -328,9 +336,9 @@ module.exports = class Instagram {
     const self = this
 
     if (!selfSelf)
-      self.userPosts[userId] = []
+      config.users[self.username].instagram.userPosts[userId] = []
 
-    if (typeof self.receivePromises[userId] !== 'undefined' && !selfSelf)
+    if (typeof config.users[self.username].instagram.receivePromises[userId] !== 'undefined' && !selfSelf)
       return 0
 
     first = 50;
@@ -345,7 +353,7 @@ module.exports = class Instagram {
 
     const variables = encodeURIComponent(JSON.stringify(query));
 
-    self.receivePromises[userId] = 1
+    config.users[self.username].instagram.receivePromises[userId] = 1
     return fetch('https://www.instagram.com/graphql/query/?query_id=17888483320059182&variables=' + variables,
       {
         'method': 'get',
@@ -370,29 +378,29 @@ module.exports = class Instagram {
         }
 
         if (json.status === 'ok') {
-          self.userPosts[userId.toString()] = self.userPosts[userId.toString()].concat(json.data.user.edge_owner_to_timeline_media.edges)
+          config.users[self.username].instagram.userPosts[userId.toString()] = config.users[self.username].instagram.userPosts[userId.toString()].concat(json.data.user.edge_owner_to_timeline_media.edges)
 
           if (json.data.user.edge_owner_to_timeline_media.page_info.has_next_page) {
             let after = json.data.user.edge_owner_to_timeline_media.page_info.end_cursor
             return new Promise((resolve) => {
-              console.log('fetching next page in ' + this.paginationDelay / 1000 + ' seconds');
+              console.log('fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
               setTimeout(() => {
                 resolve(self.getAllUserPosts(userId, after, first, 1, 1));
-              }, this.paginationDelay);
+              }, config.users[self.username].instagram.paginationDelay);
             });
           } else {
-            self.receivePromises[userId.toString()] = undefined
-            return self.userPosts[userId.toString()]
+            config.users[self.username].instagram.receivePromises[userId.toString()] = undefined
+            return config.users[self.username].instagram.userPosts[userId.toString()]
           }
 
         }
         else {
           return new Promise((resolve) => {
             console.log(json);
-            console.log('request failed, retrying in ' + this.paginationDelay / 1000 + ' seconds');
+            console.log('request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
             setTimeout(() => {
               resolve(self.getAllUserPosts(userId, after, first, postsCounter, selfSelf));
-            }, this.paginationDelay);
+            }, config.users[self.username].instagram.paginationDelay);
           });
         }
 
@@ -415,9 +423,9 @@ module.exports = class Instagram {
     const self = this
 
     if (!selfSelf)
-      self.tagPosts[tag] = []
+      config.users[self.username].instagram.tagPosts[tag] = []
 
-    if (typeof self.receivePromises[tag] !== 'undefined' && !selfSelf)
+    if (typeof config.users[self.username].instagram.receivePromises[tag] !== 'undefined' && !selfSelf)
       return 0
 
     first = (n<=12)? n : 12;
@@ -432,7 +440,7 @@ module.exports = class Instagram {
 
     const variables = encodeURIComponent(JSON.stringify(query));
 
-    self.receivePromises[tag] = 1
+    config.users[self.username].instagram.receivePromises[tag] = 1
     return fetch('https://www.instagram.com/graphql/query/?query_id=17875800862117404&variables=' + variables,
       {
         'method': 'get',
@@ -457,34 +465,34 @@ module.exports = class Instagram {
         }
 
         if (json.status === 'ok') {
-          self.tagPosts[tag] = self.tagPosts[tag].concat(json.data.hashtag.edge_hashtag_to_media.edges)
-          if(self.tagPosts[tag].length < n){
+          config.users[self.username].instagram.tagPosts[tag] = config.users[self.username].instagram.tagPosts[tag].concat(json.data.hashtag.edge_hashtag_to_media.edges)
+          if(config.users[self.username].instagram.tagPosts[tag].length < n){
             if (json.data.hashtag.edge_hashtag_to_media.page_info.has_next_page) {
               let after = json.data.hashtag.edge_hashtag_to_media.page_info.end_cursor
               return new Promise((resolve) => {
-                console.log('fetching next page in ' + this.paginationDelay / 1000 + ' seconds');
+                console.log('fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
                 setTimeout(() => {
                   resolve(self.getAllTagPosts(n, tag, after, first, 1, 1));
-                }, this.paginationDelay);
+                }, config.users[self.username].instagram.paginationDelay);
               });
             }
             else {
-              self.receivePromises[tag] = undefined
-              return self.tagPosts[tag]
+              config.users[self.username].instagram.receivePromises[tag] = undefined
+              return config.users[self.username].instagram.tagPosts[tag]
             }
           }else {
-            self.receivePromises[tag] = undefined
-            return self.tagPosts[tag]
+            config.users[self.username].instagram.receivePromises[tag] = undefined
+            return config.users[self.username].instagram.tagPosts[tag]
           }
 
 
         } else {
           return new Promise((resolve) => {
             console.log(json);
-            console.log('request failed, retrying in ' + this.paginationDelay / 1000 + ' seconds');
+            console.log('request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
             setTimeout(() => {
               resolve(self.getAllTagPosts(n, tag, after, first, postsCounter, selfSelf));
-            }, this.paginationDelay);
+            }, config.users[self.username].instagram.paginationDelay);
           });
         }
 
@@ -507,9 +515,9 @@ module.exports = class Instagram {
     const self = this
     location = location || ''
     if (!selfSelf)
-      self.locationPosts[location] = []
+      config.users[self.username].instagram.locationPosts[location] = []
 
-    if (typeof self.receivePromises[location] !== 'undefined' && !selfSelf)
+    if (typeof config.users[self.username].instagram.receivePromises[location] !== 'undefined' && !selfSelf)
       return 0
 
     first = (n<=12)? n : 12;
@@ -524,7 +532,7 @@ module.exports = class Instagram {
 
     const variables = encodeURIComponent(JSON.stringify(query));
 
-    self.receivePromises[location] = 1
+    config.users[self.username].instagram.receivePromises[location] = 1
 
     return fetch('https://www.instagram.com/graphql/query/?query_hash=ac38b90f0f3981c42092016a37c59bf7&variables=' + variables,
       {
@@ -550,33 +558,33 @@ module.exports = class Instagram {
         }
 
         if (json.status === 'ok') {
-          self.locationPosts[location] = self.locationPosts[location].concat(json.data.location.edge_location_to_media.edges)
-          if(self.locationPosts[location].length < n){
+          config.users[self.username].instagram.locationPosts[location] = config.users[self.username].instagram.locationPosts[location].concat(json.data.location.edge_location_to_media.edges)
+          if(config.users[self.username].instagram.locationPosts[location].length < n){
             if (json.data.location.edge_location_to_media.page_info.has_next_page) {
               let after = json.data.location.edge_location_to_media.page_info.end_cursor
               return new Promise((resolve) => {
-                console.log('fetching next page in ' + this.paginationDelay / 1000 + ' seconds');
+                console.log('fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
                 setTimeout(() => {
                   resolve(self.getAllLocationPosts(n, location, after, first, 1, 1));
-                }, this.paginationDelay);
+                }, config.users[self.username].instagram.paginationDelay);
               });
             } else {
-              self.receivePromises[location] = undefined
-              return self.locationPosts[location]
+              config.users[self.username].instagram.receivePromises[location] = undefined
+              return config.users[self.username].instagram.locationPosts[location]
             }
           }else{
-            self.receivePromises[location] = undefined
-            return self.locationPosts[location]
+            config.users[self.username].instagram.receivePromises[location] = undefined
+            return config.users[self.username].instagram.locationPosts[location]
           }
 
 
         } else {
           return new Promise((resolve) => {
             console.log(json);
-            console.log('request failed, retrying in ' + this.paginationDelay / 1000 + ' seconds');
+            console.log('request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
             setTimeout(() => {
               resolve(self.getAllLocationPosts(n, location, after, first, postsCounter, selfSelf));
-            }, this.paginationDelay);
+            }, config.users[self.username].instagram.paginationDelay);
           });
         }
 
@@ -607,7 +615,7 @@ module.exports = class Instagram {
    * @tutorial Media(nodes) --> t.entry_data.TagPage[0].tag.media['nodes']
    */
   explore(by, q, mediaCounter) {
-    if (this.exploreByTypes.indexOf(by) === false)
+    if (config.users[this.username].instagram.exploreByTypes.indexOf(by) === false)
       throw 'search type ' + by + ' is not found'
 
     //exclusion for hashtag if not cursor
@@ -635,9 +643,9 @@ module.exports = class Instagram {
     const self = this
 
     if (!selfSelf)
-      self.userIdFollowers[userId] = []
+      config.users[self.username].instagram.userIdFollowers[userId] = []
 
-    if (typeof self.receivePromises[userId] !== 'undefined' && !selfSelf)
+    if (typeof config.users[self.username].instagram.receivePromises[userId] !== 'undefined' && !selfSelf)
       return 0
 
     first = (n<=12)? n : 12;
@@ -654,7 +662,7 @@ module.exports = class Instagram {
 
     const variables = encodeURIComponent(JSON.stringify(query));
 
-    self.receivePromises[userId] = 1
+    config.users[self.username].instagram.receivePromises[userId] = 1
     return fetch('https://www.instagram.com/graphql/query/?query_id=17851374694183129&variables=' + variables,
       {
         'method': 'get',
@@ -679,33 +687,33 @@ module.exports = class Instagram {
         }
 
         if (json.status === 'ok') {
-          self.userIdFollowers[userId] = self.userIdFollowers[userId].concat(json.data.user.edge_followed_by.edges)
-          if(self.userIdFollowers[userId].length < n){
+          config.users[self.username].instagram.userIdFollowers[userId] = config.users[self.username].instagram.userIdFollowers[userId].concat(json.data.user.edge_followed_by.edges)
+          if(config.users[self.username].instagram.userIdFollowers[userId].length < n){
             if (json.data.user.edge_followed_by.page_info.has_next_page) {
               let after = json.data.user.edge_followed_by.page_info.end_cursor
               return new Promise((resolve) => {
-                console.log('fetching next page in ' + this.paginationDelay / 1000 + ' seconds');
+                console.log('fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
                 setTimeout(() => {
                   resolve(self.getUserFollowers(n, userId, after, first , 1, 1));
-                }, this.paginationDelay);
+                }, config.users[self.username].instagram.paginationDelay);
               });
             } else {
-              self.receivePromises[userId] = undefined
-              return self.userIdFollowers[userId]
+              config.users[self.username].instagram.receivePromises[userId] = undefined
+              return config.users[self.username].instagram.userIdFollowers[userId]
             }
           }else {
-            self.receivePromises[userId] = undefined
-            return self.userIdFollowers[userId]
+            config.users[self.username].instagram.receivePromises[userId] = undefined
+            return config.users[self.username].instagram.userIdFollowers[userId]
           }
 
 
         } else {
           return new Promise((resolve) => {
             console.log(json);
-            console.log('request failed, retrying in ' + this.paginationDelay / 1000 + ' seconds');
+            console.log('request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
             setTimeout(() => {
               resolve(self.getUserFollowers(n, userId, after, first,  followersCounter, selfSelf));
-            }, this.paginationDelay);
+            }, config.users[self.username].instagram.paginationDelay);
           });
         }
 
@@ -730,9 +738,9 @@ module.exports = class Instagram {
     const self = this
 
     if (!selfSelf)
-      self.userIdFollowing[userId] = []
+      config.users[self.username].instagram.userIdFollowing[userId] = []
 
-    if (typeof self.receivePromises[userId] !== 'undefined' && !selfSelf)
+    if (typeof config.users[self.username].instagram.receivePromises[userId] !== 'undefined' && !selfSelf)
       return 0
 
     first = (n<=12)? n : 12;
@@ -749,7 +757,7 @@ module.exports = class Instagram {
 
     const variables = encodeURIComponent(JSON.stringify(query));
 
-    self.receivePromises[userId] = 1
+    config.users[self.username].instagram.receivePromises[userId] = 1
     return fetch('https://www.instagram.com/graphql/query/?query_id=17874545323001329&variables=' + variables,
       {
         'method': 'get',
@@ -774,33 +782,33 @@ module.exports = class Instagram {
         }
 
         if (json.status === 'ok') {
-          self.userIdFollowing[userId] = self.userIdFollowing[userId].concat(json.data.user.edge_follow.edges)
-          if(self.userIdFollowing[userId].length < n){
+          config.users[self.username].instagram.userIdFollowing[userId] = config.users[self.username].instagram.userIdFollowing[userId].concat(json.data.user.edge_follow.edges)
+          if(config.users[self.username].instagram.userIdFollowing[userId].length < n){
             if (json.data.user.edge_follow.page_info.has_next_page) {
               let after = json.data.user.edge_follow.page_info.end_cursor
               return new Promise((resolve) => {
-                console.log('fetching next page in ' + this.paginationDelay / 1000 + ' seconds');
+                console.log('fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
                 setTimeout(() => {
                   resolve(self.getUserFollowing(n, userId, after, first, 1, 1));
-                }, this.paginationDelay);
+                }, config.users[self.username].instagram.paginationDelay);
               });
             } else {
-              self.receivePromises[userId] = undefined
-              return self.userIdFollowing[userId]
+              config.users[self.username].instagram.receivePromises[userId] = undefined
+              return config.users[self.username].instagram.userIdFollowing[userId]
             }
           }else{
-            self.receivePromises[userId] = undefined
-            return self.userIdFollowing[userId]
+            config.users[self.username].instagram.receivePromises[userId] = undefined
+            return config.users[self.username].instagram.userIdFollowing[userId]
           }
 
 
         } else {
           return new Promise((resolve) => {
             console.log(json);
-            console.log('request failed, retrying in ' + this.paginationDelay / 1000 + ' seconds');
+            console.log('request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
             setTimeout(() => {
               resolve(self.getUserFollowing(n, userId, after, first, followingCounter, selfSelf));
-            }, this.paginationDelay);
+            }, config.users[self.username].instagram.paginationDelay);
           });
         }
 
@@ -873,11 +881,11 @@ module.exports = class Instagram {
    */
   getAllUserFeeds(n, fetch_media_item_cursor, fetch_media_item_count, postsCounter, selfSelf) {
     const self = this
-    var userId = this.userId;
+    var userId = self.username;
     if (!selfSelf)
-      self.userFeedPosts[userId] = []
+      config.users[self.username].instagram.userFeedPosts[userId] = []
 
-    if (typeof self.receivePromises[userId] !== 'undefined' && !selfSelf)
+    if (typeof config.users[self.username].instagram.receivePromises[userId] !== 'undefined' && !selfSelf)
       return 0
     fetch_media_item_count = (n<=12)? n : 12;
 
@@ -892,7 +900,7 @@ module.exports = class Instagram {
 
     const variables = encodeURIComponent(JSON.stringify(query));
 
-    self.receivePromises[userId] = 1
+    config.users[self.username].instagram.receivePromises[userId] = 1
     return fetch('https://www.instagram.com/graphql/query/?query_id=17842794232208280&variables=' + variables,
       {
         'method': 'get',
@@ -907,7 +915,6 @@ module.exports = class Instagram {
       return res.text().then((response) => {
         //prepare convert to json
         let json = response;
-
         try {
           json = JSON.parse(response)
         } catch (e) {
@@ -917,33 +924,33 @@ module.exports = class Instagram {
         }
 
         if (json.status === 'ok') {
-          self.userFeedPosts[userId] = self.userFeedPosts[userId].concat(json.data.user.edge_web_feed_timeline.edges)
-          if(self.userFeedPosts[userId].length < n){
+          config.users[self.username].instagram.userFeedPosts[userId] = config.users[self.username].instagram.userFeedPosts[userId].concat(json.data.user.edge_web_feed_timeline.edges)
+          if(config.users[self.username].instagram.userFeedPosts[userId].length < n){
             if (json.data.user.edge_web_feed_timeline.page_info.has_next_page) {
               let fetch_media_item_cursor = json.data.user.edge_web_feed_timeline.page_info.end_cursor;
               return new Promise((resolve) => {
-                console.log('fetching next page in ' + this.paginationDelay / 1000 + ' seconds');
+                console.log('fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
                 setTimeout(() => {
                   resolve(self.getAllUserPosts(n, userId, fetch_media_item_cursor, fetch_media_item_count, 1, 1));
-                }, this.paginationDelay);
+                }, config.users[self.username].instagram.paginationDelay);
               });
             } else {
-              self.receivePromises[userId] = undefined
-              return self.userFeedPosts[userId]
+              config.users[self.username].instagram.receivePromises[userId] = undefined
+              return config.users[self.username].instagram.userFeedPosts[userId]
             }
           }else {
-            self.receivePromises[userId] = undefined
-            return self.userFeedPosts[userId]
+            config.users[self.username].instagram.receivePromises[userId] = undefined
+            return config.users[self.username].instagram.userFeedPosts[userId]
           }
 
 
         } else {
           return new Promise((resolve) => {
             console.log(json);
-            console.log('request failed, retrying in ' + this.paginationDelay / 1000 + ' seconds');
+            console.log('request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
             setTimeout(() => {
               resolve(self.getAllUserFeeds(n, userId, fetch_media_item_cursor, fetch_media_item_count, postsCounter, selfSelf));
-            }, this.paginationDelay);
+            }, config.users[self.username].instagram.paginationDelay);
           });
         }
 
@@ -1038,9 +1045,9 @@ module.exports = class Instagram {
     const self = this
 
     if (!selfSelf)
-      self.postLikes[postId] = []
+      config.users[self.username].instagram.postLikes[postId] = []
 
-    if (typeof self.receivePromises[postId] !== 'undefined' && !selfSelf)
+    if (typeof config.users[self.username].instagram.receivePromises[postId] !== 'undefined' && !selfSelf)
       return 0
 
     first = (n<=50)? n : 50;
@@ -1055,7 +1062,7 @@ module.exports = class Instagram {
 
     const variables = encodeURIComponent(JSON.stringify(query));
 
-    self.receivePromises[postId] = 1;
+    config.users[self.username].instagram.receivePromises[postId] = 1;
     var url = 'https://www.instagram.com/graphql/query/?query_id=17864450716183058&variables=' + variables;
     return fetch(url ,
       {
@@ -1081,34 +1088,34 @@ module.exports = class Instagram {
         }
 
         if (json.status === 'ok') {
-          self.postLikes[postId] = self.postLikes[postId].concat(json.data.shortcode_media.edge_liked_by.edges)
-          if(self.postLikes[postId].length < n){
+          config.users[self.username].instagram.postLikes[postId] = config.users[self.username].instagram.postLikes[postId].concat(json.data.shortcode_media.edge_liked_by.edges)
+          if(config.users[self.username].instagram.postLikes[postId].length < n){
             if (json.data.shortcode_media.edge_liked_by.page_info.has_next_page) {
               let after = json.data.shortcode_media.edge_liked_by.page_info.end_cursor
               return new Promise((resolve) => {
-                console.log('fetching next page in ' + this.paginationDelay / 1000 + ' seconds');
+                console.log('fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
                 setTimeout(() => {
                   resolve(self.getPostLikes(n, postId, after, first , 1, 1));
-                }, this.paginationDelay);
+                }, config.users[self.username].instagram.paginationDelay);
               });
             }
             else {
-              self.receivePromises[postId] = undefined
-              return self.postLikes[postId]
+              config.users[self.username].instagram.receivePromises[postId] = undefined
+              return config.users[self.username].instagram.postLikes[postId]
             }
           }else {
-            self.receivePromises[postId] = undefined
-            return self.postLikes[postId]
+            config.users[self.username].instagram.receivePromises[postId] = undefined
+            return config.users[self.username].instagram.postLikes[postId]
           }
 
 
         } else {
           return new Promise((resolve) => {
             console.log(json);
-            console.log('request failed, retrying in ' + this.paginationDelay / 1000 + ' seconds');
+            console.log('request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
             setTimeout(() => {
               resolve(self.getPostLikes(n, postId, after, first,  likesCounter, selfSelf));
-            }, this.paginationDelay);
+            }, config.users[self.username].instagram.paginationDelay);
           });
         }
 
@@ -1127,9 +1134,9 @@ module.exports = class Instagram {
     const self = this
 
     if (!selfSelf)
-      self.postComments[postId] = []
+      config.users[self.username].instagram.postComments[postId] = []
 
-    if (typeof self.receivePromises[postId] !== 'undefined' && !selfSelf)
+    if (typeof config.users[self.username].instagram.receivePromises[postId] !== 'undefined' && !selfSelf)
       return 0
 
     first = (n<=50)? n : 50;
@@ -1144,7 +1151,7 @@ module.exports = class Instagram {
 
     const variables = encodeURIComponent(JSON.stringify(query));
 
-    self.receivePromises[postId] = 1
+    config.users[self.username].instagram.receivePromises[postId] = 1
     return fetch('https://www.instagram.com/graphql/query/?query_id=17852405266163336&variables=' + variables,
       {
         'method': 'get',
@@ -1169,33 +1176,33 @@ module.exports = class Instagram {
         }
 
         if (json.status === 'ok') {
-          self.postComments[postId] = self.postComments[postId].concat(json.data.shortcode_media.edge_media_to_comment.edges)
-          if(self.postComments[postId].length < n){
+          config.users[self.username].instagram.postComments[postId] = config.users[self.username].instagram.postComments[postId].concat(json.data.shortcode_media.edge_media_to_comment.edges)
+          if(config.users[self.username].instagram.postComments[postId].length < n){
             if (json.data.shortcode_media.edge_media_to_comment.page_info.has_next_page) {
               let after = json.data.shortcode_media.edge_media_to_comment.page_info.end_cursor
               return new Promise((resolve) => {
-                console.log('fetching next page in ' + this.paginationDelay / 1000 + ' seconds');
+                console.log('fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
                 setTimeout(() => {
                   resolve(self.getPostComments(n, postId, after, first , 1, 1));
-                }, this.paginationDelay);
+                }, config.users[self.username].instagram.paginationDelay);
               });
             } else {
-              self.receivePromises[postId] = undefined
-              return self.postComments[postId]
+              config.users[self.username].instagram.receivePromises[postId] = undefined
+              return config.users[self.username].instagram.postComments[postId]
             }
           }else {
-            self.receivePromises[postId] = undefined
-            return self.postComments[postId]
+            config.users[self.username].instagram.receivePromises[postId] = undefined
+            return config.users[self.username].instagram.postComments[postId]
           }
 
 
         } else {
           return new Promise((resolve) => {
             console.log(json);
-            console.log('request failed, retrying in ' + this.paginationDelay / 1000 + ' seconds');
+            console.log('request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
             setTimeout(() => {
               resolve(self.getPostComments(n, postId, after, first,  commentsCounter, selfSelf));
-            }, this.paginationDelay);
+            }, config.users[self.username].instagram.paginationDelay);
           });
         }
 
@@ -1212,11 +1219,11 @@ module.exports = class Instagram {
    */
   getSuggestedPosts(n, after, first, sugPostCounter, selfSelf) {
     const self = this
-    var userId = this.userId;
+    var userId = self.username;
     if (!selfSelf)
-      self.suggestedPosts[userId] = []
+      config.users[self.username].instagram.suggestedPosts[userId] = []
 
-    if (typeof self.receivePromises[userId] !== 'undefined' && !selfSelf)
+    if (typeof config.users[self.username].instagram.receivePromises[userId] !== 'undefined' && !selfSelf)
       return 0
 
     first = (n<=50)? n : 50;
@@ -1230,7 +1237,7 @@ module.exports = class Instagram {
 
     const variables = encodeURIComponent(JSON.stringify(query));
 
-    self.receivePromises[userId] = 1
+    config.users[self.username].instagram.receivePromises[userId] = 1
     return fetch('https://www.instagram.com/graphql/query/?query_id=17863787143139595&variables=' + variables,
       {
         'method': 'get',
@@ -1255,33 +1262,33 @@ module.exports = class Instagram {
         }
 
         if (json.status === 'ok') {
-          self.suggestedPosts[userId] = self.suggestedPosts[userId].concat(json.data.user.edge_web_discover_media.edges)
-          if(self.suggestedPosts[userId].length < n){
+          config.users[self.username].instagram.suggestedPosts[userId] = config.users[self.username].instagram.suggestedPosts[userId].concat(json.data.user.edge_web_discover_media.edges)
+          if(config.users[self.username].instagram.suggestedPosts[userId].length < n){
             if (json.data.user.edge_web_discover_media.page_info.has_next_page) {
               let after = json.data.user.edge_web_discover_media.page_info.end_cursor
               return new Promise((resolve) => {
-                console.log('fetching next page in ' + this.paginationDelay / 1000 + ' seconds');
+                console.log('fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
                 setTimeout(() => {
                   resolve(self.getSuggestedPosts(n, after, first , 1, 1));
-                }, this.paginationDelay);
+                }, config.users[self.username].instagram.paginationDelay);
               });
             } else {
-              self.receivePromises[userId] = undefined
-              return self.suggestedPosts[userId]
+              config.users[self.username].instagram.receivePromises[userId] = undefined
+              return config.users[self.username].instagram.suggestedPosts[userId]
             }
           }else {
-            self.receivePromises[userId] = undefined
-            return self.suggestedPosts[userId]
+            config.users[self.username].instagram.receivePromises[userId] = undefined
+            return config.users[self.username].instagram.suggestedPosts[userId]
           }
 
 
         } else {
           return new Promise((resolve) => {
             console.log(json);
-            console.log('request failed, retrying in ' + this.paginationDelay / 1000 + ' seconds');
+            console.log('request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
             setTimeout(() => {
               resolve(self.getSuggestedPosts(n, after, first,  sugPostCounter, selfSelf));
-            }, this.paginationDelay);
+            }, config.users[self.username].instagram.paginationDelay);
           });
         }
 
@@ -1298,11 +1305,11 @@ module.exports = class Instagram {
    */
   getSuggestedPeople(n, fetch_media_cursor, fetch_media_count, sugPeopleCounter, selfSelf) {
     const self = this
-    var userId = this.userid;
+    var userId = this.username;
     if (!selfSelf)
-      self.suggestedPosts[userId] = []
+      config.users[self.username].instagram.suggestedPosts[userId] = []
 
-    if (typeof self.receivePromises[userId] !== 'undefined' && !selfSelf)
+    if (typeof config.users[self.username].instagram.receivePromises[userId] !== 'undefined' && !selfSelf)
       return 0
 
 
@@ -1320,7 +1327,7 @@ module.exports = class Instagram {
     const variables = encodeURIComponent(JSON.stringify(query));
     var url = 'https://www.instagram.com/graphql/query/?query_hash=ae21d996d1918b725a934c0ed7f59a74&variables=%7B%22fetch_media_count%22%3A0%2C%22fetch_suggested_count%22%3A'+n+'%2C%22ignore_cache%22%3Atrue%2C%22filter_followed_friends%22%3Atrue%2C%22seen_ids%22%3A%5B%5D%2C%22include_reel%22%3Atrue%7D';
     //var tempURl = 'https://www.instagram.com/graphql/query/?query_hash=ae21d996d1918b725a934c0ed7f59a74' +'&variables='+ variables;
-    self.receivePromises[userId] = 1
+    config.users[self.username].instagram.receivePromises[userId] = 1
     return fetch(url,
       {
         'method': 'get',
@@ -1345,34 +1352,34 @@ module.exports = class Instagram {
         }
 
         if (json.status === 'ok') {
-          self.suggestedPeople[userId] = self.suggestedPeople[userId] || [];
-          self.suggestedPeople[userId] = self.suggestedPeople[userId].concat(json.data.user.edge_suggested_users.edges)
-          if(self.suggestedPeople[userId].length < n){
+          config.users[self.username].instagram.suggestedPeople[userId] = config.users[self.username].instagram.suggestedPeople[userId] || [];
+          config.users[self.username].instagram.suggestedPeople[userId] = config.users[self.username].instagram.suggestedPeople[userId].concat(json.data.user.edge_suggested_users.edges)
+          if(config.users[self.username].instagram.suggestedPeople[userId].length < n){
             if (json.data.user.edge_suggested_users.page_info.has_next_page && json.data.user.edge_suggested_users.page_info.end_cursor) {
               let fetch_media_cursor = json.data.user.edge_suggested_users.page_info.end_cursor
               return new Promise((resolve) => {
-                console.log('fetching next page in ' + this.paginationDelay / 1000 + ' seconds');
+                console.log('fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
                 setTimeout(() => {
                   resolve(self.getSuggestedPeople(n, fetch_media_cursor, fetch_media_count, 1, 1));
-                }, this.paginationDelay);
+                }, config.users[self.username].instagram.paginationDelay);
               });
             } else {
-              self.receivePromises[userId] = undefined
-              return self.suggestedPeople[userId]
+              config.users[self.username].instagram.receivePromises[userId] = undefined
+              return config.users[self.username].instagram.suggestedPeople[userId]
             }
           }else {
-            self.receivePromises[userId] = undefined
-            return self.suggestedPeople[userId]
+            config.users[self.username].instagram.receivePromises[userId] = undefined
+            return config.users[self.username].instagram.suggestedPeople[userId]
           }
 
 
         } else {
           return new Promise((resolve) => {
             console.log(json);
-            console.log('request failed, retrying in ' + this.paginationDelay / 1000 + ' seconds');
+            console.log('request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
             setTimeout(() => {
               resolve(self.getSuggestedPeople(n, fetch_media_cursor, fetch_media_count,  sugPeopleCounter, selfSelf));
-            }, this.paginationDelay);
+            }, config.users[self.username].instagram.paginationDelay);
           });
         }
 
@@ -1495,6 +1502,10 @@ module.exports = class Instagram {
    */
   getUserIdByUserName(json) {
     let id = json.graphql.user.id;
+    return id ? id : false
+  }
+  getUserFullNameByUserName(json) {
+    let id = json.graphql.user.full_name;
     return id ? id : false
   }
 

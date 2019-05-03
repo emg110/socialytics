@@ -1,85 +1,47 @@
 const config = require('../../config')
+const logger = require('../logger');
 module.exports = function (options = {}) {
   return function mwViewsRender(req, res, next) {
+    let username = req.body.username || req.query.username;
     let expr = req.originalUrl;
-    let output = {};
+    let userfilter = '?username='+username
+    let engagement = '/dashboards/engagement'+userfilter;
+    let stats = '/dashboards/stats'+userfilter;
+    let explore = '/dashboards/explore'+userfilter;
     switch (expr) {
       case '/':
-        if(config.sessionid){
-          res.redirect('/home');
-        } else {
-          res.render('pages/login');
-          console.log('Rendering login page to authenticate');
-        }
-        break;
-      case '/authenticate':
-        res.redirect('/');
-        break;
-      case '/home':
-        if(config.sessionid && config.csrftoken){
-          res.render('pages/index', { layout: 'layouts/layout-home' });
-          console.log('Rendering home page');
-        }else {
-          res.redirect('/');
-        }
+        res.render('pages/login');
+        console.log('info: Rendering login page to authenticate');
 
         break;
-      case '/dashboards/engagement':
-        if(config.sessionid && config.csrftoken){
-          res.render('pages/dashboards-engagement');
-          console.log('Rendering instagram engagement dashboard page');
-        }else {
-          res.redirect('/');
-        }
-        break;
-      case '/dashboards/stats':
 
-        if(config.sessionid && config.csrftoken){
-          res.render('pages/dashboards-stats');
-          console.log('Rendering instagram stats dashboard page');
-        }else {
-          res.redirect('/');
-        }
+      case engagement:
+        res.render('pages/dashboards-engagement',{username:username, accesstoken:''});
+        console.log('info: Rendering instagram engagement dashboard page');
         break;
-      case '/dashboards/explore':
-        if(config.sessionid && config.csrftoken){
-          res.render('pages/dashboards-explore');
-          console.log('Rendering instagram explore dashboard page');
-        }else {
-          res.redirect('/');
-        }
+      case stats:
+        res.render('pages/dashboards-stats',{username:username, accesstoken:''});
+        console.log('info: Rendering instagram stats dashboard page for: '+ username);
         break;
-      case '/login':
-        if(config.sessionid && config.csrftoken){
-          res.render('pages/login', {output});
-          console.log('Rendering login page');
-        }else {
-          res.redirect('/');
-        }
+      case explore:
+        res.render('pages/dashboards-explore',{username:username, accesstoken:''});
+        console.log('info: Rendering instagram explore dashboard page');
         break;
       case '/instagram/form/data?':
-        if(config.sessionid && config.csrftoken){
-          var formData = config.default_form_data
-          res.json(formData)
-          console.log('Rendering form data');
-        }else {
-          res.redirect('/');
-        }
+        var formData = config.default_form_data
+        res.json(formData)
+        console.log('info: Rendering form data');
 
         break;
       case '/instagram/sets/data?':
-        if(config.sessionid && config.csrftoken){
-          var setsData = {seta:config.seta,setb:config.setb}
-          res.json(setsData)
-          console.log('Rendering sets data');
-        }else {
-          res.redirect('/');
-        }
+        var setsData = {seta:config.seta,setb:config.setb}
+        res.json(setsData)
+        console.log('info: Rendering sets data');
 
         break;
       default:
         next();
-        console.log('Resource routing or unknown path '  + ':'+ expr);
+        console.log('info: Resource routing or unknown path'  + ': '+ expr);
     }
   };
 };

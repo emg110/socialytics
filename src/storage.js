@@ -1,14 +1,4 @@
-var config = require('../../../../config');
-const feathers = require('@feathersjs/feathers');
-//const client = require('@feathersjs/client');
-const socketio = require('@feathersjs/socketio-client');
-const io = require('socket.io-client');
-const uri = (config.PROTOCOL+"://"+config.HOST+':'+config.UIPORT)+'/';
-const socket = io(uri);
-const api = feathers().configure(socketio(socket, {
-  timeout: 0
-}));
-module.exports = async function writeDatabase(data, service) {
+module.exports = async function writeDatabase(fapi, data, service, account) {
   if (data.user) {
     if (data.user.edge_owner_to_timeline_media) {
       if (data.user.edge_owner_to_timeline_media.edges) {
@@ -46,9 +36,10 @@ module.exports = async function writeDatabase(data, service) {
 
         }
       }
+      item.account = account;
       items.push(item);
     }
-    let recordData = await api.service(service)
+    let recordData = await fapi.service(service)
       .create(items)
       .then(result => {
         return result;
@@ -58,7 +49,8 @@ module.exports = async function writeDatabase(data, service) {
       });
   }
   else {
-    let recordData = await api.service(service)
+    data.account = account;
+    let recordData = await fapi.service(service)
       .create(data)
       .then(result => {
         return result;

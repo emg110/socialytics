@@ -4,7 +4,7 @@
   <%- include ../layouts/layout-header.ejs %>
 </head>
 <body>
-
+<div style="display:none" id="secret" username="<%=username%>" token="<%=accesstoken%>"></div>
 <!--<button class="instabtn" onclick="openNav('social-sidepanel')">&#9776; Instagram</button>-->
 <div id="alert-container" style="position:absolute;top:100px;right:0"></div>
 <div class="container">
@@ -33,9 +33,9 @@
     </div>
     <div class="navbar-collapse">
       <ul class="navbar-nav nav main-nav">
-        <li><a href="/home">Home</a></li>
-        <li><a href="/dashboards/stats">Stats dashboard</a></li>
-        <li><a href="/dashboards/explore">Data explore</a></li>
+        <li><a id="home-link" href="/home?username=<%=username%>">Home</a></li>
+        <li><a href="/dashboards/stats?username=<%=username%>">Stats dashboard</a></li>
+        <li><a href="/dashboards/explore?username=<%=username%>">Data explore</a></li>
         </li>
       </ul>
     </div>

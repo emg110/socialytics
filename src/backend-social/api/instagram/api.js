@@ -1,42 +1,28 @@
 var config = require('../../../../config');
-const feathers = require('@feathersjs/feathers');
-//const client = require('@feathersjs/client');
-const socketio = require('@feathersjs/socketio-client');
-const io = require('socket.io-client');
-const uri = (config.PROTOCOL+"://"+config.HOST+':'+config.UIPORT)+'/';
-const socket = io(uri);
-const fapi = feathers().configure(socketio(socket, {
-  timeout: 0
-}));
-var userid = config.userid;
 console.log("Socialytics Instagram backend configurations initialized...");
-const writeDatabase = require('./storage');
+
 const Instagram = require('./instagram');
-const instagramClient = new Instagram();
-instagramClient.csrftoken = (instagramClient.csrftoken && instagramClient.csrftoken.length > 5) ? instagramClient.csrftoken : config.csrftoken;
-instagramClient.sessionid = (instagramClient.sessionid && instagramClient.sessionid.length > 5) ? instagramClient.sessionid : config.sessionid;
-instagramClient.userid = (instagramClient.userid && instagramClient.userid.length > 2) ? instagramClient.sessionid : userid;
+
 console.log("Socialytics Instagram client has been initialized...");
 console.log("Socialytics Instagram API has started...");
 //Async functions using Instagram client
 var api = {};
+
 api.profileJson = async (ctx) => {
-  if(config.sessionid && config.csrftoken){
+  var username = ctx.get('username')
+  var accesstoken = ctx.get('accesstoken')
+  var strategy = ctx.get('strategy')
+  var userconfig = config.users[username]
+  if(userconfig.sessionid && userconfig.csrftoken){
+    let instagramClient =  new Instagram(username.toLowerCase());
     var inputUser = ctx.request.query;
     var uoi = inputUser.username || Object.keys(ctx.request.query)[0];
     let userData = await instagramClient.getUserDataByUsername(uoi).then((t) => {
       return t;
-    })
+    }).catch(err => {
+      console.log(err);
+    });
     console.log('Profile JSON data has fetched from Instagram for user name: ' + uoi);
-
-// Set up a socket connection to our Instagram ETL API
-    let recordData = await fapi.service('/instagram/profiles').create(userData.graphql.user)
-      .then(result => {
-        return result;
-      })
-      .catch(err => {
-        console.log(err);
-      });
     ctx.status = 200;
     ctx.body = {
       results: userData.graphql.user
@@ -50,21 +36,20 @@ api.profileJson = async (ctx) => {
   }
 }
 api.profileSelfJson = async (ctx) => {
-  if(config.sessionid&&config.csrftoken){
-    var uoi = new String(instagramClient.userid);
-    var uoi = inputUser.username || Object.keys(ctx.request.query)[0];
+  var username = ctx.get('username')
+  var accesstoken = ctx.get('accesstoken')
+  var strategy = ctx.get('strategy')
+  var userconfig = config.users[username]
+  if(userconfig.sessionid && userconfig.csrftoken){
+    let instagramClient =  new Instagram(username.toLowerCase());
+    var uoi = new String(username);
+    //uoi = Object.keys(ctx.request.query)[0] || uoi;
     let userData = await instagramClient.getUserDataByUsername(uoi).then((t) => {
       return t;
+    }).catch(err => {
+      console.log(err);
     })
     console.log('Profile JSON data has fetched from Instagram for self logged in account: ' + uoi);
-    let recordData = await fapi.service('/instagram/profiles')
-      .create(userData.graphql.user)
-      .then(result => {
-        return result;
-      })
-      .catch(err => {
-        console.log(err);
-      });
     ctx.status = 200;
     ctx.body = {
       results: userData.graphql.user
@@ -79,11 +64,15 @@ api.profileSelfJson = async (ctx) => {
 
 }
 api.userPosts = async (ctx) => {
-  if(config.sessionid && config.csrftoken){
+  var username = ctx.get('username')
+  var accesstoken = ctx.get('accesstoken')
+  var strategy = ctx.get('strategy')
+  var userconfig = config.users[username]
+  if(userconfig.sessionid && userconfig.csrftoken){
+    let instagramClient =  new Instagram(username.toLowerCase());
     var inputUser = ctx.request.query;
     var uoi = inputUser.username;
     var count = inputUser.count;
-    var userId = config.userid;
     let userData = await instagramClient.getUserDataByUsername(uoi).then((t) => {
       return t.graphql.user;
     })
@@ -91,8 +80,7 @@ api.userPosts = async (ctx) => {
       return p.data
     }).catch(err => {
       console.log(err);
-    });
-    let writeToDatabase = await writeDatabase(posts, '/instagram/posts')
+    })
     ctx.status = 200;
     ctx.body = {
       results: posts
@@ -106,7 +94,12 @@ api.userPosts = async (ctx) => {
   }
 }
 api.userAllPosts = async (ctx) => {
-  if(config.sessionid && config.csrftoken){
+  var username = ctx.get('username')
+  var accesstoken = ctx.get('accesstoken')
+  var strategy = ctx.get('strategy')
+  var userconfig = config.users[username]
+  if(userconfig.sessionid && userconfig.csrftoken){
+    let instagramClient =  new Instagram(username.toLowerCase());
     var inputUser = ctx.request.query;
     var uoi = inputUser.username;
     let userData = await instagramClient.getUserDataByUsername(uoi).then((t) => {
@@ -118,7 +111,7 @@ api.userAllPosts = async (ctx) => {
     }).catch(err => {
       console.log(err);
     });
-    let writeToDatabase = await writeDatabase(posts, '/instagram/posts')
+    /*let writeToDatabase = await writeDatabase(socket, accesstoken,  posts, '/instagram/posts')*/
     ctx.status = 200;
     ctx.body = {
       results: posts
@@ -133,7 +126,12 @@ api.userAllPosts = async (ctx) => {
 
 }
 api.exploreTag = async (ctx) => {
-  if(config.sessionid && config.csrftoken){
+  var username = ctx.get('username')
+  var accesstoken = ctx.get('accesstoken')
+  var strategy = ctx.get('strategy')
+  var userconfig = config.users[username]
+  if(userconfig.sessionid && userconfig.csrftoken){
+    let instagramClient =  new Instagram(username.toLowerCase());
     var inputTag = ctx.request.query;
     var tag = inputTag.tag;
     var quantity = inputTag.count || 50;
@@ -143,7 +141,7 @@ api.exploreTag = async (ctx) => {
       console.log(err);
     });
     config.activetag = tag;
-    let writeTagPostsToDatabase = await writeDatabase(tagsData, '/instagram/tag')
+    /*let writeTagPostsToDatabase = await writeDatabase(socket, accesstoken,  tagsData, '/instagram/tag')*/
 
 
     ctx.status = 200;
@@ -159,7 +157,12 @@ api.exploreTag = async (ctx) => {
   }
 }
 api.exploreLocation = async (ctx) => {
-  if(config.sessionid && config.csrftoken){
+  var username = ctx.get('username')
+  var accesstoken = ctx.get('accesstoken')
+  var strategy = ctx.get('strategy')
+  var userconfig = config.users[username]
+  if(userconfig.sessionid && userconfig.csrftoken){
+    let instagramClient =  new Instagram(username.toLowerCase());
     var inputLocation = ctx.request.query;
     var locationName = inputLocation.location;
     var quantity = inputLocation.count || 50;
@@ -169,8 +172,8 @@ api.exploreLocation = async (ctx) => {
     }).catch(err => {
       console.log(err);
     });
-    config.activelocation = locationName;
-    let writeTagPostsToDatabase = await writeDatabase(locData, '/instagram/location')
+    userconfig.activelocation = locationName;
+    /*let writeTagPostsToDatabase = await writeDatabase(socket, accesstoken,  locData, '/instagram/location')*/
     ctx.status = 200;
     ctx.body = {
       results: locData
@@ -184,7 +187,12 @@ api.exploreLocation = async (ctx) => {
   }
 }
 api.userFollowing = async (ctx) => {
-  if(config.sessionid && config.csrftoken){
+  var username = ctx.get('username')
+  var accesstoken = ctx.get('accesstoken')
+  var strategy = ctx.get('strategy')
+  var userconfig = config.users[username]
+  if(userconfig.sessionid && userconfig.csrftoken){
+    let instagramClient =  new Instagram(username.toLowerCase());
     var inputUser = ctx.request.query;
     var uoi = inputUser.username;
     var count = inputUser.count;
@@ -199,7 +207,7 @@ api.userFollowing = async (ctx) => {
     }).catch(err => {
       console.log(err);
     });
-    let writeFollowingToDatabase = await writeDatabase(userFollowingData, '/instagram/following')
+    /*let writeFollowingToDatabase = await writeDatabase(socket, accesstoken,  userFollowingData, '/instagram/following')*/
 
     ctx.status = 200;
     ctx.body = {
@@ -214,7 +222,12 @@ api.userFollowing = async (ctx) => {
   }
 }
 api.userFollowers = async (ctx) => {
-  if(config.sessionid && config.csrftoken){
+  var username = ctx.get('username')
+  var accesstoken = ctx.get('accesstoken')
+  var strategy = ctx.get('strategy')
+  var userconfig = config.users[username]
+  if(userconfig.sessionid && userconfig.csrftoken){
+    let instagramClient =  new Instagram(username.toLowerCase());
     var inputUser = ctx.request.query;
     var uoi = inputUser.username;
     var count = inputUser.count;
@@ -229,7 +242,7 @@ api.userFollowers = async (ctx) => {
     }).catch(err => {
       console.log(err);
     });
-    let writeFollowersToDatabase = await writeDatabase(userFollowersData, '/instagram/followers')
+    /*let writeFollowersToDatabase = await writeDatabase(socket, accesstoken,  userFollowersData, '/instagram/followers')*/
 
     ctx.status = 200;
     ctx.body = {
@@ -244,7 +257,12 @@ api.userFollowers = async (ctx) => {
   }
 }
 api.searchTop = async (ctx) => {
-  if(config.sessionid && config.csrftoken){
+  var username = ctx.get('username')
+  var accesstoken = ctx.get('accesstoken')
+  var strategy = ctx.get('strategy')
+  var userconfig = config.users[username]
+  if(userconfig.sessionid && userconfig.csrftoken){
+    let instagramClient =  new Instagram(username.toLowerCase());
     var input = ctx.request.query;
     var query = input.query;
     config.activequery = query;
@@ -253,7 +271,7 @@ api.searchTop = async (ctx) => {
     }).catch(err => {
       console.log(err);
     });
-    let writeSearchToDatabase = await writeDatabase(searchData, '/instagram/search')
+    /*let writeSearchToDatabase = await writeDatabase(socket, accesstoken,  searchData, '/instagram/search')*/
     ctx.status = 200;
     ctx.body = {
       results: searchData
@@ -267,7 +285,12 @@ api.searchTop = async (ctx) => {
   }
 }
 api.feedPosts = async (ctx) => {
-  if(config.sessionid && config.csrftoken){
+  var username = ctx.get('username')
+  var accesstoken = ctx.get('accesstoken')
+  var strategy = ctx.get('strategy')
+  var userconfig = config.users[username]
+  if(userconfig.sessionid && userconfig.csrftoken){
+    let instagramClient =  new Instagram(username.toLowerCase());
     var input = ctx.request.query;
     var count = input.count;
     const feedData = await instagramClient.getUserFeed(count).then((t) => {
@@ -276,7 +299,7 @@ api.feedPosts = async (ctx) => {
     }).catch(err => {
       console.log(err);
     });
-    let writeFeedPostsToDatabase = await writeDatabase(feedData.user.edge_web_feed_timeline.edges, '/instagram/posts')
+    /*let writeFeedPostsToDatabase = await writeDatabase(socket, accesstoken,  feedData.user.edge_web_feed_timeline.edges, '/instagram/posts')*/
 
     ctx.status = 200;
     ctx.body = {
@@ -291,7 +314,12 @@ api.feedPosts = async (ctx) => {
   }
 }
 api.allFeedPosts = async (ctx) => {
-  if(config.sessionid && config.csrftoken){
+  var username = ctx.get('username')
+  var accesstoken = ctx.get('accesstoken')
+  var strategy = ctx.get('strategy')
+  var userconfig = config.users[username]
+  if(userconfig.sessionid && userconfig.csrftoken){
+    let instagramClient =  new Instagram(username.toLowerCase());
     var input = ctx.request.query;
     var count = input.count;
     const feedData = await instagramClient.getAllUserFeeds(count).then((t) => {
@@ -299,10 +327,8 @@ api.allFeedPosts = async (ctx) => {
     }).catch(err => {
       console.log(err);
     });
-    let writeFeedPostsToDatabase = await writeDatabase(feedData, '/instagram/posts')
+    /*let writeFeedPostsToDatabase = await writeDatabase(socket, accesstoken,  feedData, '/instagram/posts')*/
 
-
-    //let writeFeedToDatabase = await writeDatabase(feedData, '/instagram/feed');
     ctx.status = 200;
     ctx.body = {
       results: feedData
@@ -316,7 +342,12 @@ api.allFeedPosts = async (ctx) => {
   }
 }
 api.postLikes = async (ctx) => {
-  if(config.sessionid && config.csrftoken){
+  var username = ctx.get('username')
+  var accesstoken = ctx.get('accesstoken')
+  var strategy = ctx.get('strategy')
+  var userconfig = config.users[username]
+  if(userconfig.sessionid && userconfig.csrftoken){
+    let instagramClient =  new Instagram(username.toLowerCase());
     var inputPost = ctx.request.query;
     var postId = inputPost.shortcode;
     var count = inputPost.count;
@@ -325,7 +356,7 @@ api.postLikes = async (ctx) => {
     }).catch(err => {
       console.log(err);
     });
-    let writeLikesToDatabase = await writeDatabase(likesData, '/instagram/likes')
+    /*let writeLikesToDatabase = await writeDatabase(socket, accesstoken,  likesData, '/instagram/likes')*/
     ctx.status = 200;
     ctx.body = {
       results: likesData
@@ -339,7 +370,12 @@ api.postLikes = async (ctx) => {
   }
 }
 api.postComments = async (ctx) => {
-  if(config.sessionid && config.csrftoken){
+  var username = ctx.get('username')
+  var accesstoken = ctx.get('accesstoken')
+  var strategy = ctx.get('strategy')
+  var userconfig = config.users[username]
+  if(userconfig.sessionid && userconfig.csrftoken){
+    let instagramClient =  new Instagram(username.toLowerCase());
     var inputPost = ctx.request.query;
     var postId = inputPost.shortcode;
     var count = inputPost.count;
@@ -348,7 +384,7 @@ api.postComments = async (ctx) => {
     }).catch(err => {
       console.log(err);
     });
-    let writeCommentsToDatabase = await writeDatabase(postCommentsData, '/instagram/comments')
+    /*let writeCommentsToDatabase = await writeDatabase(socket, accesstoken,  postCommentsData, '/instagram/comments')*/
     ctx.status = 200;
     ctx.body = {
       results: postCommentsData
@@ -362,7 +398,12 @@ api.postComments = async (ctx) => {
   }
 }
 api.postJson = async (ctx) => {
-  if(config.sessionid && config.csrftoken){
+  var username = ctx.get('username')
+  var accesstoken = ctx.get('accesstoken')
+  var strategy = ctx.get('strategy')
+  var userconfig = config.users[username]
+  if(userconfig.sessionid && userconfig.csrftoken){
+    let instagramClient =  new Instagram(username.toLowerCase());
     var inputPost = ctx.request.query;
     var postId = inputPost.shortcode;
     const postMediaData = await instagramClient.getPostJson(postId).then((t) => {
@@ -370,7 +411,7 @@ api.postJson = async (ctx) => {
     }).catch(err => {
       console.log(err);
     });
-    let writeMediaToDatabase = await writeDatabase(postMediaData, '/instagram/media')
+    /*let writeMediaToDatabase = await writeDatabase(socket, accesstoken,  postMediaData, '/instagram/media')*/
     ctx.status = 200;
     ctx.body = {
       results: postMediaData
@@ -384,7 +425,12 @@ api.postJson = async (ctx) => {
   }
 }
 api.suggestedPosts = async (ctx) => {
-  if(config.sessionid && config.csrftoken){
+  var username = ctx.get('username')
+  var accesstoken = ctx.get('accesstoken')
+  var strategy = ctx.get('strategy')
+  var userconfig = config.users[username]
+  if(userconfig.sessionid && userconfig.csrftoken){
+    let instagramClient =  new Instagram(username.toLowerCase());
     var inputCount = ctx.request.query;
     var count = inputCount.count;
     const suggestedPostsData = await instagramClient.getSuggestedPosts(count).then((t) => {
@@ -392,7 +438,7 @@ api.suggestedPosts = async (ctx) => {
     }).catch(err => {
       console.log(err);
     });
-    let writeToDatabase = await writeDatabase(suggestedPostsData, '/instagram/posts')
+    /*let writeToDatabase = await writeDatabase(socket, accesstoken,  suggestedPostsData, '/instagram/posts')*/
     ctx.status = 200;
     ctx.body = {
       results: suggestedPostsData
@@ -406,7 +452,12 @@ api.suggestedPosts = async (ctx) => {
   }
 }
 api.suggestedPeople = async (ctx) => {
-  if(config.sessionid && config.csrftoken){
+  var username = ctx.get('username')
+  var accesstoken = ctx.get('accesstoken')
+  var strategy = ctx.get('strategy')
+  var userconfig = config.users[username]
+  if(userconfig.sessionid && userconfig.csrftoken){
+    let instagramClient =  new Instagram(username.toLowerCase());
     var inputCount = ctx.request.query;
     var count = inputCount.count;
     const suggestedPeopleData = await instagramClient.getSuggestedPeople(count).then((t) => {
@@ -424,7 +475,7 @@ api.suggestedPeople = async (ctx) => {
       }
 
     }
-    let writeToDatabase = await writeDatabase(suggestedPeopleData, '/instagram/feed')
+    /*let writeToDatabase = await writeDatabase(socket, accesstoken,  suggestedPeopleData, '/instagram/feed')*/
     ctx.status = 200;
     ctx.body = {
       results: suggestedPeopleData

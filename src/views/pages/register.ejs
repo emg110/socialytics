@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0" />
-  <title>Socialytics login </title>
+  <title>Socialytics registeration </title>
   <link rel="shortcut icon" href="favicon.ico">
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/base.css">
@@ -11,10 +11,9 @@
   <%- include ../layouts/layouts-javascripts-head.ejs %>
 </head>
 <body>
-<!--<button class="instabtn" onclick="openNav('sidepanel-login')">&#9776; Instagram </button>-->
 <!--<button class="twitrbtn" onclick="openNav()">&#9776; tw</button>-->
 <div id="app" class="flex flex-column">
-  <main class="login container">
+  <main class="registeration container">
     <div class="row">
       <div class="col-12 col-6-tablet push-3-tablet text-center heading">
         <h1 class="font-100">Instagram account:</h1>
@@ -23,28 +22,21 @@
     </div>
     <div class="row">
       <div class="col-12 col-6-tablet push-3-tablet col-4-desktop push-4-desktop">
-        <form class="form" id="login-form" method="post" action="/authenticate">
+        <form class="form" method="post" action="/register">
           <input type="hidden" name="strategy" value="local">
           <fieldset>
-            <input style="cursor:pointer;" class="block" type="email" name="email" placeholder="email" autocomplete="email">
-            <input class="block form-control" type="password" name="password" placeholder="password">
+            <input style="cursor:pointer;" class="block" type="email" name="email" placeholder="valid email" autocomplete="email">
+            <input class="block form-control" type="password" name="password" placeholder="desired password">
             <input style="cursor:pointer;" class="block" type="username" name="username" placeholder="instagram username" autocomplete="username">
             <input class="block form-control" type="password" name="sessionid" placeholder="instagram sessionid">
           </fieldset>
-          <button style="cursor:pointer;" type="submit" id="login" class="button button-primary block signup">
-            Use this Instagram account
+          <button style="cursor:pointer;" type="submit" id="register" class="button button-primary block signup">
+            Register to Socialytics
           </button>
-          <a href="/registration" style="cursor:pointer;" id="registration" class="button button-primary block signup">
-           Or go to registeration
-          </a>
         </form>
       </div>
     </div>
   </main>
-</div>
-<div class="sidepanel" id="sidepanel-login">
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav('sidepanel-login')">&times;</a>
-  <%- include iglogin.ejs %>
 </div>
 <%- include ../layouts/layout-footer.ejs %>
 </body>

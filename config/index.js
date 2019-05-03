@@ -1,10 +1,11 @@
 module.exports = {
   ENVIRONMENT: process.env.NODE_ENV || "development",
-  PORT: process.env.PORT || "3010",
+  PORT: process.env.PORT || "8196",
   HOST: process.env.HOST || "localhost",
   PROTOCOL: "http",
-  UIPORT:"8080",
-  userid: "houmanproject",
+  UIPORT:"8195",
+  //"houmanproject": {email:"your@email.com",sessionid:undefined,csrftoken:undefined}
+  users: {},
   sessionid: undefined,
   csrftoken:undefined,
   profiles: [],

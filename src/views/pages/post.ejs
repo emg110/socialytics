@@ -71,7 +71,7 @@
               <p><%= comment.text %></p>
               <small style="cursor:pointer;background-color: #81ec81;padding:3px" onClick=getEndpointData("/instagram/profile?","profile","<%= comment.owner.username %>","profile")><span class="glyphicon glyphicon-user"> <%= comment.owner.username %></small>
 
-              <% if(locals.isAuthenticated && (comment.owner.id == userid)) { %>
+              <% if(locals.isAuthenticated && (comment.owner.id == username)) { %>
                 <form method="POST" action="/etlDatas/<%= etlData.id %>/comments/<%= comment.id %>">
                   <input type="hidden" name="_method" value="DELETE">
                   <button class="btn btn-danger">Delete this comment</button>

@@ -6,19 +6,8 @@ module.exports = function(app) {
 
   app.on('connection', connection => {
     // On a new real-time connection, add it to the anonymous channel
-/*    app.channel('insta-comments').join(connection);
-    app.channel('insta-feed').join(connection);
-    app.channel('insta-followers').join(connection);
-    app.channel('insta-following').join(connection);
-    app.channel('insta-likes').join(connection);
-    app.channel('insta-locations').join(connection);
-    app.channel('insta-tags').join(connection);
-    app.channel('insta-profiles').join(connection);
-    app.channel('insta-posts').join(connection);*/
-      app.channel('instagram').join(connection);
-      app.channel('events').join(connection);
-      app.channel('data').join(connection);
-      app.channel('instagram-news').join(connection);
+    app.channel('anonymous').join(connection);
+
   });
 
   app.on('login', (authResult, { connection }) => {
@@ -33,7 +22,7 @@ module.exports = function(app) {
 
       // Add it to the authenticated user channel
       app.channel('authenticated').join(connection);
-
+      //app.channel('instagram').join(connection);
       // Channels can be named anything and joined on any condition 
       
       // E.g. to send real-time events only to admins use
@@ -47,17 +36,17 @@ module.exports = function(app) {
       // app.channel(`userIds/$(user.id}`).join(channel);
     }
   });
-  app.publish(() => app.channel('instagram'));
+  //app.publish(() => app.channel('instagram'));
   // eslint-disable-next-line no-unused-vars
-  /*app.publish((data, hook) => {
+  app.publish((data, hook) => {
     // Here you can add event publishers to channels set up in `channels.js`
     // To publish only for a specific event use `app.publish(eventname, () => {})`
 
-    //console.log('Publishing all events to all authenticated users.'); // eslint-disable-line
+    console.log('Publishing all events to all authenticated users.'); // eslint-disable-line
 
     // e.g. to publish all service events to all authenticated users use
     return app.channel('authenticated');
-  });*/
+  });
 
   // Here you can also add service specific event publishers
   // e.g. the publish the `users` service `created` event to the `admins` channel

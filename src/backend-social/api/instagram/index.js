@@ -1,13 +1,11 @@
 var config = require('../../../../config');
-
-
 const Router = require("koa-router");
 const router = new Router({ prefix: "/api" });
 const api = require('./api');
 console.log("Socialytics Instagram backend API and Router initialized...");
 router.get("/etl-health-check", async (ctx) => {
-  ctx.status = 200;
-  ctx.body = { result: "ok" };
+  ctx.status = 200
+  ctx.body = { result: "ok" }
 });
 // Instagram client router endpoints mapped to async functions to implement 100% async Rest json endpoints.
 router.get("/instagram/profile", api.profileJson);

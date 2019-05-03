@@ -2,10 +2,10 @@
 const log = require('./hooks/log');
 const hookInstaCheckBeforeCreate = require('./hooks/hook-insta-check-before-create');
 const hookInstaVersionBeforeCreate = require('./hooks/hook-insta-version-before-create');
-
+const { authenticate } = require('@feathersjs/authentication').hooks;
 module.exports = {
   before: {
-    all: [ log() ],
+    all: [ authenticate('jwt'),log()  ],
     find: [],
     get: [],
     create: [hookInstaCheckBeforeCreate(),hookInstaVersionBeforeCreate()],

@@ -5,11 +5,11 @@ const port = app.get('port');
 const apiServer = app.listen(port);
 
 process.on('unhandledRejection', (reason, p) =>
-  logger.error('Unhandled Rejection at: Promise ', p, reason)
+ console.log('Unhandled Rejection : ', p, reason)
 );
 
 apiServer.on('listening', () =>
-  logger.info('API Server started on http://%s:%d', app.get('host'), port)
+  console.log('info: API Server started on http://%s:%d', app.get('host'), port)
 );
 
 
@@ -19,6 +19,6 @@ const application = require("./backend-social/app");
 console.log('**************************************');
 const etlServer = application.listen(PORT, () => {
   //console.log(`ETL Server Listening on ${host}:${port}`)
-  logger.info('ETL Server Listening on http://%s:%d', HOST, PORT)
+  console.log('info: ETL Server Listening on http://%s:%d', HOST, PORT)
 });
 etlServer.timeout=60*60*1000;
