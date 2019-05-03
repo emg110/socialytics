@@ -281,8 +281,7 @@ module.exports = class Instagram {
    */
   getUserDataById(userId, first, after) {
     after = after ? after : "";
-    first = first ? first : 12;
-    first = first <= 12 ? first : 12;
+    first = first ? first : 50;
     var url = 'https://www.instagram.com/graphql/query/?query_id=17851374694183129' + '&id=' + userId + '&first=' + first + '&after=' + after;
     return fetch(url,
       {
@@ -305,8 +304,8 @@ module.exports = class Instagram {
    */
   getUserPosts(userId, first, after) {
     after = after ? after : "";
-    first = first ? first : 12;
-    first = first > 12 ? first : 12;
+    first = first ? first : 50;
+
     var url = 'https://www.instagram.com/graphql/query/?query_id=17888483320059182' + '&id=' + userId + '&first=' + first + '&after=' + after;
     return fetch(url,
       {
@@ -428,7 +427,7 @@ module.exports = class Instagram {
     if (typeof config.users[self.username].instagram.receivePromises[tag] !== 'undefined' && !selfSelf)
       return 0
 
-    first = (n<=12)? n : 12;
+    first = (n<=50)? n : 50;
 
     const query = {
       tag_name: tag,
@@ -520,7 +519,7 @@ module.exports = class Instagram {
     if (typeof config.users[self.username].instagram.receivePromises[location] !== 'undefined' && !selfSelf)
       return 0
 
-    first = (n<=12)? n : 12;
+    first = (n<=50)? n : 50;
 
     const query = {
       id: location,
@@ -648,7 +647,7 @@ module.exports = class Instagram {
     if (typeof config.users[self.username].instagram.receivePromises[userId] !== 'undefined' && !selfSelf)
       return 0
 
-    first = (n<=12)? n : 12;
+    first = (n<=50)? n : 50;
 
     const query = {
       id: userId,
@@ -743,7 +742,7 @@ module.exports = class Instagram {
     if (typeof config.users[self.username].instagram.receivePromises[userId] !== 'undefined' && !selfSelf)
       return 0
 
-    first = (n<=12)? n : 12;
+    first = (n<=50)? n : 50;
 
     const query = {
       id: userId,
@@ -853,7 +852,7 @@ module.exports = class Instagram {
    */
   getUserFeed(n) {
     const self = this
-    n = n ? n : 12;
+    n = n ? n : 50;
     var url = 'https://www.instagram.com/graphql/query/?query_id=17842794232208280&variables={"fetch_media_item_count":' + n + ',"fetch_media_item_cursor":"","fetch_comment_count":10,"fetch_like":10,"has_stories":false}'
     return fetch(url,
       {
@@ -887,7 +886,7 @@ module.exports = class Instagram {
 
     if (typeof config.users[self.username].instagram.receivePromises[userId] !== 'undefined' && !selfSelf)
       return 0
-    fetch_media_item_count = (n<=12)? n : 12;
+    fetch_media_item_count = (n<=50)? n : 50;
 
     const query = {
       fetch_media_item_cursor: fetch_media_item_cursor,

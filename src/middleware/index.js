@@ -28,8 +28,9 @@ const logger = require('../logger');
       }
     });
     app.use('/authenticate', async (req, res, next) => {
-      if(req.body.username && req.body.password && req.body.email){
-        let username = req.body.username.toLowerCase();
+      if(req.body.password && req.body.email){
+        //let username = req.body.username.toLowerCase();
+        let username = '';
         let password = req.body.password;
         let email = req.body.email;
         app.service('users')
@@ -37,7 +38,9 @@ const logger = require('../logger');
           .then( async (result) => {
             result = result.data[0];
             console.log('info: User found for authentication '+ result.username);
-            config.users[username] = result;
+            config.users[result.username] = result;
+            username = result.username;
+            req.body.username = username
             if(req.body.sessionid)config.users[username].sessionid = result.sessionid
             const instagram = new Instagram(username.toLowerCase());
 
