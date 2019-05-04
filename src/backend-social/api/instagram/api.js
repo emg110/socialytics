@@ -14,6 +14,7 @@ api.profileJson = async (ctx) => {
   var strategy = ctx.get('strategy')
   var userconfig = config.users[username]
   if(userconfig.sessionid && userconfig.csrftoken){
+    console.log('Now answering call: profile :: user :: '+username)
     let instagramClient =  new Instagram(username.toLowerCase());
     var inputUser = ctx.request.query;
     var uoi = inputUser.username || Object.keys(ctx.request.query)[0];
@@ -74,17 +75,38 @@ api.userPosts = async (ctx) => {
     var uoi = inputUser.username;
     var count = inputUser.count;
     let userData = await instagramClient.getUserDataByUsername(uoi).then((t) => {
-      return t.graphql.user;
+      return t;
     })
-    let posts = await instagramClient.getUserPosts(userData.id, count).then((p) => {
-      return p.data
-    }).catch(err => {
-      console.log(err);
-    })
-    ctx.status = 200;
-    ctx.body = {
-      results: posts
+    if(userData){
+      if(userData.graphql){
+        if(userData.graphql.user){
+          userData = userData.graphql.user
+          let posts = await instagramClient.getUserPosts(userData.id, count).then((p) => {
+            return p.data
+          }).catch(err => {
+            console.log(err);
+          })
+          if(posts){
+            ctx.status = 200;
+            ctx.body = {
+              results: posts
+            }
+          }else{
+            ctx.status=500;
+            ctx.body={
+              results:'No posts data retrieved fro Instagram'
+            }
+          }
+        }else{
+          ctx.status=500;
+          ctx.body={
+            results:'No user data retrieved fro Instagram'
+          }
+        }
+      }
+
     }
+
   }
   else{
     ctx.status=403;

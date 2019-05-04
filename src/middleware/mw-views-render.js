@@ -10,7 +10,7 @@ module.exports = function (options = {}) {
     let explore = '/dashboards/explore'+userfilter;
     switch (expr) {
       case '/':
-        res.render('pages/login');
+        res.redirect('/login');
         console.log('info: Rendering login page to authenticate');
 
         break;

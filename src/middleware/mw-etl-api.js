@@ -25,7 +25,7 @@ async function getEndpointDataEtl(etlApiEndpoint, username, accessToken, strateg
     }).then(t => t.json().catch((e) => {
     console.log('Instagram API returned an error:' + e)
   }).then(r => r));
-  console.log('Rendering results from backend-social API to browser client');
+  console.log('Rendering retrieved results from backend-social API to browser client');
   //res.render('pages/profile',{finalData});
   if(etlData){
     if(etlData.results){
@@ -50,10 +50,10 @@ module.exports = function (options = {}) {
       let etlApiEndpoint = serverUrl+expr;
       let service = 'instagram/profiles';
       let page = 'pages/profile';
+      console.log('info: Now requesting profile from ETL backend for: '+ username);
       const etlData = await getEndpointDataEtl(etlApiEndpoint, username, accessToken, strategy);
-
-      console.log('info: Writing data from ETL API to database')
-      if(etlData !== 'No ETL data'){
+      if(etlData && etlData !== 'No ETL data'){
+        console.log('info: Writing data from ETL API to database')
         writeDatabase(req.app, etlData, service, username)
           .then(result => {
             console.log('info: Rendering data from ETL API to client')
@@ -63,6 +63,10 @@ module.exports = function (options = {}) {
             console.log(err);
             res.sendStatus(500)
           });
+      }
+      else{
+        console.log('No ETL data has returned from Instagram');
+        res.sendStatus(500)
       }
 
     }
@@ -88,10 +92,11 @@ module.exports = function (options = {}) {
     }
     else if(expr.indexOf('/instagram/posts')>=0){
       let etlApiEndpoint = serverUrl+expr;
+      console.log('info: Now requesting posts from ETL backend for: '+ username);
       let etlData = await getEndpointDataEtl(etlApiEndpoint, username, accessToken, strategy);
-      let service = 'instagram/posts';
-      let page = 'pages/posts';
-      if(etlData !== 'No ETL data'){
+      if(etlData && etlData !== 'No ETL data'){
+        let service = 'instagram/posts';
+        let page = 'pages/posts';
         writeDatabase(req.app, etlData, service, username)
           .then(result => {
             console.log('info: Rendering data from ETL API to client')
@@ -102,7 +107,10 @@ module.exports = function (options = {}) {
             res.sendStatus(500)
           });
       }
-
+      else{
+        console.log('No ETL data has returned from Instagram');
+        res.sendStatus(500)
+      }
     }
     else if(expr.indexOf('/instagram/allposts')>=0){
       req.setTimeout(50000000000)
@@ -408,6 +416,23 @@ module.exports = function (options = {}) {
         res.send('<h1>NO SUCH POST</h1>>')
       }
 
+    }
+    else{
+      let username = req.headers.username;
+      let accessToken =  req.headers.accesstoken;
+      if(username && config.users[username] && accessToken){
+        if(config.users[username].sessionid && config.users[username].csrftoken){
+          res.render('pages/index', { layout: 'layouts/layout-home',username:username, accesstoken:accesstoken });
+          console.log('info: Rendering home page');
+        }else {
+          res.redirect('/login');
+          console.log('info: Redirecting to login page');
+        }
+      }
+      else {
+        res.redirect('/login');
+        console.log('info: Redirecting to login page');
+      }
     }
 
 

@@ -149,19 +149,26 @@ const logger = require('../logger');
         res.redirect('/login')
       }
     });
-
     app.use('/logout', (req, res) => {
       console.log('info: Logging out...! Redirecting to login page')
       res.redirect('/login');
     });
     app.use('/login', (req, res) => {
       let username = req.query.username;
-      if(config.users[username].sessionid && config.users[username].csrftoken){
+      if(username && config.users[username]){
+        if(config.users[username].sessionid && config.users[username].csrftoken){
+          res.render('pages/index', { layout: 'layouts/layout-home',username:username, accesstoken:accesstoken });
+          console.log('info: Rendering home page');
+        }else {
+          res.render('pages/login');
+          console.log('info: Rendering login page');
+        }
+      }
+      else {
         res.render('pages/login');
         console.log('info: Rendering login page');
-      }else {
-        res.redirect('/');
       }
+
     });
     app.use('/registration', (req, res) => {
       console.log('info: Now rendering registration page')
