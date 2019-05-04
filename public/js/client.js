@@ -65,8 +65,9 @@ $("#github").click(function () {
 
 $("#secret").ready(function() {
 
-  var username = $("#secret").attr('username').trim();
+  var username = $("#secret").attr('username');
   if(username){
+    username = username.trim();
     var accesstoken = $("#secret").attr('token');
     if(accesstoken){
       ls.setItem(username, accesstoken);

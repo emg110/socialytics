@@ -37,7 +37,7 @@ a:focus {
   background: #31D8A0;
   color: #ffffff;
   border: none;
-  border-radius: 5px;
+  border-radius: 50px;
   transition: background 0.2s;
 }
 
@@ -98,13 +98,19 @@ main.login fieldset {
 
 main.login fieldset input {
   width: 100%;
-  padding: 1.4em 0.7em;
+  border-radius: 50px;
+  margin: 5px;
+  margin-bottom: 15px;
+  padding: 20px;
+  /* padding: 1.4em 0.7em; */
 }
 
 main.login .button-primary {
   padding-top: 1.2em;
   padding-bottom: 1.2em;
-  margin-top: 40px;
+  /* margin-top: 40px; */
+  margin: 5px;
+  margin-top: 10px;
   width: 100%;
 }
 

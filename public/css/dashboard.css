@@ -522,6 +522,13 @@ button {
 }
 
 @media (min-width: 768px) {
+  img.logo {
+    display: block;
+    margin: 0 auto;
+    width: 400px;
+    /* text-align: center; */
+    /* margin-bottom: 30px; */
+  }
   .grid {
     grid-gap: var(--grid-gap);
   }
@@ -591,6 +598,7 @@ button {
   }
 
   .grid-hero-sidebar .hero {
+    margin-top:5%;
     grid-column: 2 / -1;
     grid-row: 1 / span 1;
   }
@@ -624,9 +632,20 @@ button {
     grid-column: 2 / -1;
   }
 }
-
 @media (min-width: 992px) {
-
+  img.logo {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    /*  margin-bottom: 30px;*/
+    /* -webkit-filter: grayscale(100%);
+     filter: grayscale(100%);*/
+  }
+  .grid-hero-sidebar .hero {
+    margin-top:3%;
+    grid-column: 2 / -1;
+    grid-row: 1 / span 1;
+  }
   .grid-hero-thirds,
   .grid-hero-thirds .grid-hero {
     grid-template-columns: repeat(3, 1fr);
@@ -648,8 +667,22 @@ button {
     grid-template-columns: repeat(4, 1fr);
   }
 }
+@media (min-width:1024px){
+  img.logo {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    /*  margin-bottom: 30px;*/
+    /* -webkit-filter: grayscale(100%);
+     filter: grayscale(100%);*/
+  }
+  .grid-hero-sidebar .hero {
+    margin-top:3%;
+    grid-column: 2 / -1;
+    grid-row: 1 / span 1;
+  }
+}
 
-/* KEEN */
 
 .socialytics-dashboard {
   padding-top: 80px;

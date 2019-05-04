@@ -24,14 +24,14 @@ main {
   margin-left: 200px;
 }
 
-img.logo {
+/*img.logo {
   display: block;
   margin: 0 auto;
   max-width: 100%;
-  margin-bottom: 30px;
-  /* -webkit-filter: grayscale(100%);
-   filter: grayscale(100%);*/
-}
+!*  margin-bottom: 30px;*!
+  !* -webkit-filter: grayscale(100%);
+   filter: grayscale(100%);*!
+}*/
 
 img.UAlglogo {
   display: inline-block;
@@ -672,3 +672,13 @@ img {
 .btn-primary.disabled, .btn-primary:disabled {
   cursor: inherit;
 }
+
+*:focus {
+  outline: 0;
+  outline: none;
+}
+/*@media only screen and (min-width: 1024px) {
+  .hero{
+    margin-top:5%
+  }
+}*/

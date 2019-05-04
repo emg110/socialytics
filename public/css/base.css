@@ -6,7 +6,7 @@
 
 ========================================================================== */
 *, *:before, *:after {
-  box-sizing: border-box; }
+  /*box-sizing: border-box;*/ }
 
 html {
   font-size: 100%;
@@ -506,7 +506,8 @@ input::-moz-focus-inner {
 
 @media only screen and (min-width: 1140px) {
   .container, .container-full {
-    width: 1120px; }
+    width: 1120px;
+  }
   .container-hd {
     width: 1120px;
     padding-left: 15px;
