@@ -27,9 +27,10 @@ var socket = io(window.location.protocol+window.location.host);
   }
 });*/
 function getEndpointData(endpoint, type, code, container, caller) {
-  var user = $("#secret").attr('username').trim();
-  var accesstoken = ls.getItem(user);
-  console.log('now starting getting endpoint data...')
+  var user = ls.getItem('username');
+  var accesstoken = ls.getItem('accesstoken');
+  if(accesstoken)console.log('info: accessToken is available')
+  console.log('info: Now getting endpoint data... '+'for user: '+ user)
   $("#carosel").hide();
   $("#logo").show();
   var xhr = new XMLHttpRequest();
@@ -239,6 +240,9 @@ function getEndpointData(endpoint, type, code, container, caller) {
     xhr = new XMLHttpRequest();
     xhr.timeout = 0;
     xhr.open("GET", endpoint, true);
+    xhr.setRequestHeader('username', user)
+    xhr.setRequestHeader('accesstoken', accesstoken)
+    xhr.setRequestHeader('strategy', 'jwt')
     xhr.onload = function (e) {
       var txt = xhr.responseText;
       renderFormData(txt);

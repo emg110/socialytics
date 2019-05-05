@@ -26,10 +26,8 @@
         <form class="form" id="login-form" method="post" action="/authenticate">
           <input type="hidden" name="strategy" value="local">
           <fieldset>
-            <input style="cursor:pointer;" class="block" type="email" name="email" placeholder="email" autocomplete="email">
-            <input class="block form-control" type="password" name="password" placeholder="password">
-<!--            <input style="cursor:pointer;" class="block" type="username" name="username" placeholder="instagram username" autocomplete="username">
-            <input class="block form-control" type="password" name="sessionid" placeholder="instagram sessionid">-->
+            <input style="cursor:pointer;" class="block" type="email" id="email" name="email" placeholder="email" autocomplete="email">
+            <input class="block form-control" type="password" id="password" name="password" placeholder="password">
           </fieldset>
           <button style="cursor:pointer;" type="submit" id="login" class="button button-primary block signup">
             Use this Instagram account
@@ -44,7 +42,7 @@
 </div>
 <div class="sidepanel" id="sidepanel-login">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav('sidepanel-login')">&times;</a>
-  <%- include iglogin.ejs %>
+
 </div>
 <%- include ../layouts/layout-footer.ejs %>
 </body>

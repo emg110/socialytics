@@ -672,6 +672,7 @@ button {
     display: block;
     margin: 0 auto;
     max-width: 100%;
+    min-width:600px;
     /*  margin-bottom: 30px;*/
     /* -webkit-filter: grayscale(100%);
      filter: grayscale(100%);*/

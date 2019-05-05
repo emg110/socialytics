@@ -18,8 +18,8 @@
       "header": {
         "typ": "access"
       },
-      "audience": "https://yourdomain.com",
-      "subject": "anonymous",
+      "audience": "http://localhost:8195",
+      "subject": "socialytics",
       "issuer": "feathers",
       "algorithm": "HS256",
       "expiresIn": "1d"

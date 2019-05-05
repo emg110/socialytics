@@ -11,20 +11,20 @@ module.exports = function (options = {}) {
     switch (expr) {
       case '/':
         res.redirect('/login');
-        console.log('info: Rendering login page to authenticate');
+        console.log('info: redirecting to login page to authenticate');
 
         break;
 
       case engagement:
-        res.render('pages/dashboards-engagement',{username:username, accesstoken:''});
+        res.render('pages/dashboards-engagement',{username:username});
         console.log('info: Rendering instagram engagement dashboard page');
         break;
       case stats:
-        res.render('pages/dashboards-stats',{username:username, accesstoken:''});
+        res.render('pages/dashboards-stats',{username:username});
         console.log('info: Rendering instagram stats dashboard page for: '+ username);
         break;
       case explore:
-        res.render('pages/dashboards-explore',{username:username, accesstoken:''});
+        res.render('pages/dashboards-explore',{username:username});
         console.log('info: Rendering instagram explore dashboard page');
         break;
       case '/instagram/form/data?':
@@ -41,7 +41,7 @@ module.exports = function (options = {}) {
         break;
       default:
         next();
-        console.log('info: Resource routing or unknown path'  + ': '+ expr);
+        console.log('info: Request is not for view redirecting to ETL middleware'  + ': '+ expr);
     }
   };
 };

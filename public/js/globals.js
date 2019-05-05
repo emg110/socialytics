@@ -83,9 +83,7 @@ OverlayScrollbars(document.querySelectorAll('body'), {
 });
 var ls = ls || window.localStorage;
 window.bulkevent = false;
-var socketUri = window.location.protocol+'//'+window.location.host
-console.log(socketUri);
-var socket = socket || io(socketUri);
+var socket = {};
 /*window.alert(window.location.href)
 window.alert(window.location.host)
 window.alert(window.location.hostname)

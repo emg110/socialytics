@@ -4,7 +4,7 @@ const mwEtlApi = require('./mw-etl-api');
 const mwFindCrossfilter = require('./mw-find-crossfilter');
 const Instagram = require('../backend-social/api/instagram/instagram');
 const logger = require('../logger');
-
+const { authenticate } = require('@feathersjs/authentication').express;
 // eslint-disable-next-line no-unused-vars
   module.exports = function (app) {
     var path = require('path');
@@ -15,33 +15,39 @@ const logger = require('../logger');
     app.use('/home',async (req, res)=> {
       let username = req.query.username;
       let accesstoken = req.query.accesstoken;
-      if(username){
+      if(username && config.users[username]){
         if(config.users[username].sessionid && config.users[username].csrftoken){
-          res.render('pages/index', { layout: 'layouts/layout-home',username:username, accesstoken:accesstoken });
+          res.render('pages/index',{ layout: 'layouts/layout-home',username:username},function(err, html) {
+            if(err){
+              console.log('ejs has returned this error: '+ err);
+              res.sendStatus(500)
+            }else{
+              res.send(html);
+            }
+
+          })
+          /*res.render('pages/index', { layout: 'layouts/layout-home',username:username, accesstoken:response.accessToken });*/
           console.log('info: Rendering home page');
         }
         else {
           res.redirect('/login');
         }
       }else{
-        res.send(404)
+        res.sendStatus(404)
       }
     });
-    app.use('/authenticate', async (req, res, next) => {
-      if(req.body.password && req.body.email){
-        //let username = req.body.username.toLowerCase();
-        let username = '';
-        let password = req.body.password;
-        let email = req.body.email;
-        app.service('users')
-          .find({email: email, $limit:1})
-          .then( async (result) => {
-            result = result.data[0];
-            console.log('info: User found for authentication '+ result.username);
-            config.users[result.username] = result;
-            username = result.username;
-            req.body.username = username
-            if(req.body.sessionid)config.users[username].sessionid = result.sessionid
+    app.post('/authenticate',authenticate('local'), async (req, res) => {
+      var username = req.user.username;
+      var email = req.user.email;
+      if(req.user){
+
+        const data = {payload: req.user};
+
+        app.service('authentication').create(data)
+          .then(async function(response) {
+            var accessToken = response.accessToken
+            console.log('info: User found for authentication '+ username);
+            config.users[username] = req.user;
             const instagram = new Instagram(username.toLowerCase());
 
             let csrftoken = await instagram.getCsrfToken().then((csrf) =>
@@ -55,39 +61,27 @@ const logger = require('../logger');
               return t;
             }).catch(e =>
             {
-              config.users[username].sessionid = result.sessionid
               console.log(e);
             })
             let userId = instagram.getUserIdByUserName(userData);
             if(userId){
-              req.body.csrftoken = csrftoken;
-              req.body.status = 'verified';
-              if(req.body.sessionid){
-                config.users[username].sessionid =  req.body.sessionid;
-              }else{
-                config.users[username].sessionid = result.sessionid
-              }
               config.users[username].csrftoken = csrftoken;
-              config.users[username].userid = userId;
+              if(!config.users[username].userid)config.users[username].userid = userId;
               config.users[username].status = 'verified';
               console.log('info: Got csrf-token and checked along username and session-id with Instagram and added to request');
-              app.service('authentication')
-                .create({
-                  strategy: 'local',
-                  email: email,
-                  password: password
-                })
-                .then(response => {
-                res.redirect('/home?username='+username+ '&accesstoken= '+ response.accessToken.toString())
-              });
-
             }
+            console.log('now responsing to ETL call from client via REST for username: '+ username +' by email: '+ email)
+            res.header("Access-Control-Allow-Origin", "*");
+            res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+            res.status(200).send({
+              accesstoken:accessToken,
+              username: username,
+              email: email
+            })
 
-          })
-          .catch(err => {
-            console.log(err);
-            res.redirect('/registration')
           });
+
+
       }
       else {
         logger.error('Not all info required is provided! Redirecting to login page')
