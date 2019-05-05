@@ -1,7 +1,7 @@
 // Socket.io is exposed as the `io` global.
 /*var socket = io(window.location.protocol+window.location.host);*/
 // @feathersjs/client is exposed as the `feathers` global.
-var feathersClient = {}
+
 function startListening(feathersClient){
   var posts = feathersClient.service('/instagram/posts');
   posts.on('created', (post) => {

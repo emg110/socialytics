@@ -40,8 +40,8 @@ module.exports = function (options = {}) {
 
         break;
       default:
+        console.log('info: Not a view request! Redirecting to ETL middleware'  + ': '+ expr);
         next();
-        console.log('info: Request is not for view redirecting to ETL middleware'  + ': '+ expr);
     }
   };
 };

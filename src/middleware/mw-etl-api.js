@@ -418,21 +418,8 @@ module.exports = function (options = {}) {
 
     }
     else{
-      let username = req.headers.username;
-      let accessToken =  req.headers.accesstoken;
-      if(username && config.users[username] && accessToken){
-        if(config.users[username].sessionid && config.users[username].csrftoken){
-          res.render('pages/index', { layout: 'layouts/layout-home',username:username, accesstoken:accesstoken });
-          console.log('info: Rendering home page');
-        }else {
-          res.redirect('/login');
-          console.log('info: Redirecting to login page');
-        }
-      }
-      else {
-        res.redirect('/login');
-        console.log('info: Redirecting to login page');
-      }
+      console.log('info: Not an ETL request! End of the line for: '  + ': '+ expr+ ' Sending 404');
+      res.sendStatus(404);
     }
 
 

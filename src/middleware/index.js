@@ -14,7 +14,7 @@ const { authenticate } = require('@feathersjs/authentication').express;
     app.use('/home',expressLayouts);
     app.use('/home',async (req, res)=> {
       let username = req.query.username;
-      let accesstoken = req.query.accesstoken;
+      console.log('Incoming: Request for /home')
       if(username && config.users[username]){
         if(config.users[username].sessionid && config.users[username].csrftoken){
           res.render('pages/index',{ layout: 'layouts/layout-home',username:username},function(err, html) {
@@ -22,12 +22,13 @@ const { authenticate } = require('@feathersjs/authentication').express;
               console.log('ejs has returned this error: '+ err);
               res.sendStatus(500)
             }else{
+              console.log('render: home page');
               res.send(html);
             }
 
           })
           /*res.render('pages/index', { layout: 'layouts/layout-home',username:username, accesstoken:response.accessToken });*/
-          console.log('info: Rendering home page');
+
         }
         else {
           res.redirect('/login');
@@ -37,6 +38,7 @@ const { authenticate } = require('@feathersjs/authentication').express;
       }
     });
     app.post('/authenticate',authenticate('local'), async (req, res) => {
+      console.log('Incoming: Request for /authenticate')
       var username = req.user.username;
       var email = req.user.email;
       if(req.user){
@@ -70,10 +72,10 @@ const { authenticate } = require('@feathersjs/authentication').express;
               config.users[username].status = 'verified';
               console.log('info: Got csrf-token and checked along username and session-id with Instagram and added to request');
             }
-            console.log('now responsing to ETL call from client via REST for username: '+ username +' by email: '+ email)
-            res.header("Access-Control-Allow-Origin", "*");
+            console.log('now responsing to authenticate call from client via REST for username: '+ username +' by email: '+ email)
+           /* res.header("Access-Control-Allow-Origin", "*");
             res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-            res.status(200).send({
+          */  res.status(200).send({
               accesstoken:accessToken,
               username: username,
               email: email
@@ -89,6 +91,7 @@ const { authenticate } = require('@feathersjs/authentication').express;
       }
     });
     app.use('/register', async (req, res) => {
+      console.log('Incoming: Request for /register')
       if(req.body.sessionid && req.body.username && req.body.password && req.body.email){
         let username = req.body.username.toLowerCase();
         config.users[username] = {};
@@ -144,28 +147,31 @@ const { authenticate } = require('@feathersjs/authentication').express;
       }
     });
     app.use('/logout', (req, res) => {
+      console.log('Incoming: Request for /logout')
       console.log('info: Logging out...! Redirecting to login page')
       res.redirect('/login');
     });
     app.use('/login', (req, res) => {
+      console.log('Incoming: Request for /login')
       let username = req.query.username;
       if(username && config.users[username]){
         if(config.users[username].sessionid && config.users[username].csrftoken){
           res.render('pages/index', { layout: 'layouts/layout-home',username:username, accesstoken:accesstoken });
-          console.log('info: Rendering home page');
+          console.log('render: home page');
         }else {
           res.render('pages/login');
-          console.log('info: Rendering login page');
+          console.log('render: login page');
         }
       }
       else {
         res.render('pages/login');
-        console.log('info: Rendering login page');
+        console.log('render: login page');
       }
 
     });
     app.use('/registration', (req, res) => {
-      console.log('info: Now rendering registration page')
+      console.log('Incoming: Request for /registration')
+      console.log('render: Registration page')
       res.render('pages/register')
     });
     app.use(mwViewsRender());
