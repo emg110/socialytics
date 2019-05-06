@@ -2,16 +2,26 @@
 const logger = require('./logger');
 const app = require('./app');
 const port = app.get('port');
-const apiServer = app.listen(port);
+var fs = require('fs');
+const https  = require('https');
+//const apiHttpServer = app.listen(port);
+const apiHttpsServer = https.createServer({
+  key: fs.readFileSync('./security/privatekey.pem'),
+  cert: fs.readFileSync('./security/certificate.pem')
+}, app).listen(port);
 
+// Call app.setup to initialize all services and SocketIO
+app.setup(apiHttpsServer);
 process.on('unhandledRejection', (reason, p) =>
  console.log('Unhandled Rejection : ', p, reason)
 );
 
-apiServer.on('listening', () =>
+/*apiServer.on('listening', () =>
   console.log('info: API Server started on http://%s:%d', app.get('host'), port)
+);*/
+apiHttpsServer.on('listening', () =>
+  console.log('info: API Server started on https://%s:%d', app.get('host'), app.get('port'))
 );
-
 
 const { HOST, PORT } = require("../config");
 const application = require("./backend-social/app");

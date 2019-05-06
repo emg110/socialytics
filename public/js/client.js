@@ -49,8 +49,9 @@ $("#login-form").submit(function (e) {
   //prevent Default functionality
   e.preventDefault();
   var actionurl = e.currentTarget.action;
-  $.post(actionurl, $("#login-form").serialize(), function (data, status) {
-    if (status == 'success') {
+  var logindata = $("#login-form").serialize()
+  $.post(actionurl,logindata )
+    .done(function (data) {
       if (data) {
         console.log('info: Authentication data received from Socialytics server')
         var username = data.username;
@@ -62,50 +63,24 @@ $("#login-form").submit(function (e) {
         var homeUrl = window.location.protocol + '//' + window.location.host + '/home?' + 'username=' + username;
         console.log('info: Authentication to Socialytics has completed! Now requesting home page: ' + homeUrl)
         window.location.href = homeUrl;
-      /*  var client = new XMLHttpRequest();
-        client.open('GET', homeUrl);
-        client.setRequestHeader('Authorization', accesstoken);
-        client.onload = function (e) {
-        var html = client.responseText;
-        var path = window.location.pathname
-        var url = window.location.protocol+'//'+ window.location.host+ '/home' +'?username='+username
-        window.history.pushState({urlPath:url},"Socialytics",url);
-        window.document.write(html)
-       }
-        client.send();*/
+        /*  var client = new XMLHttpRequest();
+          client.open('GET', homeUrl);
+          client.setRequestHeader('Authorization', accesstoken);
+          client.onload = function (e) {
+          var html = client.responseText;
+          var path = window.location.pathname
+          var url = window.location.protocol+'//'+ window.location.host+ '/home' +'?username='+username
+          window.history.pushState({urlPath:url},"Socialytics",url);
+          window.document.write(html)
+         }
+          client.send();*/
 
       }
-    }
   })
 });
 $("#github").click(function () {
   window.open('https://github.com/emg110/socialytics/', '_blank');
 });
-if($("#secret")){
-  $("#secret").ready(function () {
-    var email = ls.getItem('email');
-    var username = ls.getItem('username');
-    var accesstoken = ls.getItem('accesstoken');
-    if (accesstoken) {
-      var socketUri = window.location.protocol + '//' + window.location.host;
-      socket = io(socketUri);
-      console.log('info: Socket IO connection is started for Socialytics client App on URL: ' + socketUri);
-      console.log('info: Trying to authenticate socket for account: ' + email);
-      socket.emit('authenticate', {
-        strategy: 'jwt',
-        accessToken: accesstoken
-      }, function (err, data) {
-        if (err) console.log('info: Authentication on socket IO has failed with error: ' + err); // message will be null
-        else if (data) {
-          var feathersClient = feathers().configure(feathers.socketio(socket));
-          startListening(feathersClient);
-          console.log('info: Socket IO connection authenticated and listening to Socialytics on URL: ' + socketUri + ' by account: ' + email); // message will be null
-        }
-      });
-    }
-
-  });
-}
 
 $("#getDataBtn").on('click',function(e){
   e.preventDefault();

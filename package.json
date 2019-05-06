@@ -82,7 +82,6 @@
     "object-path": "latest",
     "objection": "^1.6.8",
     "operative": "^0.4.6",
-    "pace-js": "latest",
     "passport": "latest",
     "passport-local": "latest",
     "pg": "^7.10.0",
