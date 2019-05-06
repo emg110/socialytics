@@ -22,6 +22,7 @@ module.exports = function(app) {
 
       // Add it to the authenticated user channel
       app.channel('authenticated').join(connection);
+    /*  app.channel('instagram').join(connection);*/
       //app.channel('instagram').join(connection);
       // Channels can be named anything and joined on any condition 
       

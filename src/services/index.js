@@ -11,6 +11,7 @@ const instaFeed = require('./insta-feed/insta-feed.service.js');
 const instaSearch = require('./insta-search/insta-search.service.js');
 const instaMedia = require('./insta-media/insta-media.service.js');
 const users = require('./users/users.service.js');
+
 // eslint-disable-next-line no-unused-vars
 module.exports = function (app) {
   app.configure(instaPosts);
@@ -25,4 +26,5 @@ module.exports = function (app) {
   app.configure(instaSearch);
   app.configure(instaMedia);
   app.configure(users);
+
 };

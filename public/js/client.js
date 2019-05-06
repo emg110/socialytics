@@ -97,7 +97,6 @@ if($("#secret")){
       }, function (err, data) {
         if (err) console.log('info: Authentication on socket IO has failed with error: ' + err); // message will be null
         else if (data) {
-          console.log(data)
           var feathersClient = feathers().configure(feathers.socketio(socket));
           startListening(feathersClient);
           console.log('info: Socket IO connection authenticated and listening to Socialytics on URL: ' + socketUri + ' by account: ' + email); // message will be null
@@ -108,7 +107,10 @@ if($("#secret")){
   });
 }
 
-
+$("#getDataBtn").on('click',function(e){
+  e.preventDefault();
+  getStatsData();
+})
 
 
 

@@ -7,6 +7,6 @@ module.exports = function (app) {
     filename: path.join(dbPath, 'insta-profiles.db'),
     autoload: true
   });
-
+  Model.ensureIndex({ fieldName: 'username', unique: true });
   return Model;
 };

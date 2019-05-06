@@ -24,7 +24,7 @@ app.use(helmet());
 app.use(cors());
 app.use(compress());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({extended: true}));
 app.use(favicon(path.join(app.get('public'), 'favicon.ico')));
 // Host the public folder
 app.use('/', express.static(app.get('public')));
@@ -45,11 +45,23 @@ app.configure(channels);
 
 
 //app.configure(socketio());
-app.configure(socketio(function(io) {
-  io.on('connection', function(socket) {
-    socket.emit('instagram', { text: 'A client connected!' });
-    socket.on('cube', function (data) {
-      console.log(data)
+app.configure(socketio(function (io) {
+  io.on('connection', function (socket) {
+    //socket.emit('instagram', { text: 'A client connected!' });
+    socket.on('authenticated', function (socReq) {
+      switch (socReq.data.method) {
+        case 'find':
+          app.service(socReq.data.service).find(socReq.options).then(items => {
+            console.log(items.data.length)
+            socket.emit('authenticated', {data: items, socRes: socReq.data});
+          })
+          break
+        default:
+          console.log('info: Method does not exist! ');
+
+
+      }
+
     });
   });
 
@@ -62,6 +74,6 @@ app.configure(socketio(function(io) {
 }));
 // Configure a middleware for 404s and the error handler
 app.use(express.notFound());
-app.use(express.errorHandler({ logger }));
+app.use(express.errorHandler({logger}));
 app.hooks(appHooks);
 module.exports = app;
