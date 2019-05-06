@@ -2,8 +2,8 @@
 /*var socket = io(window.location.protocol+window.location.host);*/
 // @feathersjs/client is exposed as the `feathers` global.
 
-function startListening(feathersClient){
-  var posts = feathersClient.service('/instagram/posts');
+function startListening(app){
+  var posts = app.service('/instagram/posts');
   posts.on('created', (post) => {
     if(!window.bulkevent){
       var caption = 'POST WITH NO CAPTION';
@@ -36,7 +36,7 @@ function startListening(feathersClient){
     }
   });
 
-  var feeds = feathersClient.service('/instagram/feed');
+  var feeds = app.service('/instagram/feed');
   feeds.on('created', (feed) => {
     var caption = 'FEED PROFILE WITH NO CAPTION';
     var pic = picit(feed);
@@ -70,7 +70,7 @@ function startListening(feathersClient){
     //console.log('message created', message);
   });
 
-  var profiles = feathersClient.service('/instagram/profiles');
+  var profiles = app.service('/instagram/profiles');
   profiles.on('created', (profile) => {
     var caption = 'PROFILE WITH NO NAME';
     var title = 'Profile: ';
@@ -94,7 +94,7 @@ function startListening(feathersClient){
     //console.log('message created', message);
   });
 
-  var searches = feathersClient.service('/instagram/search');
+  var searches = app.service('/instagram/search');
   searches.on('created', (search) => {
     var result = 'Search results with: ';
     if (search.places) {
@@ -119,7 +119,7 @@ function startListening(feathersClient){
     //console.log('message created', message);
   });
 
-  var medias = feathersClient.service('/instagram/media');
+  var medias = app.service('/instagram/media');
   medias.on('created', (media) => {
     var caption = 'MEDIA WITH NO CAPTION';
     var pic = picit(media);
@@ -151,7 +151,7 @@ function startListening(feathersClient){
     //console.log('message created', message);
   });
 
-  var locations = feathersClient.service('/instagram/location');
+  var locations = app.service('/instagram/location');
   locations.on('created', (post) => {
     var caption = 'LOCATION POST WITH NO CAPTION';
     var pic = picit(post);
@@ -183,7 +183,7 @@ function startListening(feathersClient){
     //console.log('message created', message);
   });
 
-  var likes = feathersClient.service('/instagram/likes');
+  var likes = app.service('/instagram/likes');
   likes.on('created', (like) => {
     var caption = 'POST WITH NO CAPTION';
     var pic = picit(like);
@@ -215,7 +215,7 @@ function startListening(feathersClient){
     //console.log('message created', message);
   });
 
-  var followers = feathersClient.service('/instagram/followers');
+  var followers = app.service('/instagram/followers');
   followers.on('created', (follower) => {
     var caption = 'FOLLOWER WITH NO NAME';
     var pic = picit(follower);
@@ -248,7 +248,7 @@ function startListening(feathersClient){
     //console.log('message created', message);
   });
 
-  var followings = feathersClient.service('/instagram/following');
+  var followings = app.service('/instagram/following');
   followings.on('created', (following) => {
     var caption = 'POST WITH NO CAPTION';
     var pic = picit(following);
@@ -279,7 +279,7 @@ function startListening(feathersClient){
   });
 
 
-  var comments = feathersClient.service('/instagram/comment');
+  var comments = app.service('/instagram/comment');
   comments.on('created', (comment) => {
     var caption = 'COMMENT WITH NO CAPTION';
     var pic = picit(comment);
@@ -311,7 +311,7 @@ function startListening(feathersClient){
     //console.log('message created', message);
   });
 
-  var tags = feathersClient.service('/instagram/tag');
+  var tags = app.service('/instagram/tag');
   tags.on('created', (post) => {
     var caption = 'TAG POST WITH NO CAPTION';
     var pic = picit(post);
@@ -342,4 +342,10 @@ function startListening(feathersClient){
     });
     //console.log('message created', message);
   });
+  socket.on('authenticated', function (response) {
+    if(!response.socRes){
+      console.log(response)
+    }
+
+  })
 }

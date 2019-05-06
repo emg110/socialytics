@@ -14,7 +14,7 @@ const services = require('./services');
 const appHooks = require('./app.hooks');
 const channels = require('./channels');
 const authentication = require('./authentication');
-
+//const { authenticate } = require('@feathersjs/authentication').express;
 const app = express(feathers());
 // Load app configuration
 app.configure(configuration());

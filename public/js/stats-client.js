@@ -1,4 +1,4 @@
-function getStatsData(useridArrA = [],useridArrB = [], seta=[], setb=[], aDone = false, bDone = false) {
+function getStatsData(useridArrA = [],useridArrB = [], seta=[], setb=[], aDone=false, bDone=false) {
   seta = document.getElementById('seta').value.split(',');
   setb = document.getElementById('setb').value.split(',');
   if (seta.length && setb.length) {
@@ -92,9 +92,93 @@ function getStatsData(useridArrA = [],useridArrB = [], seta=[], setb=[], aDone =
         }},
       'setb-profile-userid'
     )
+    /*getServiceData('find',
+      'instagram/profiles',
+      {query:{
+          "username": {$in: seta},
+          $limit:seta.length,
+          $sort:{createdAt: -1}
+        }},
+      'seta-profile-userid'
+    ).then(response=>{
+      if (response.data) {
+        var profilesA = response.data;
+        for (i in profilesA){
+          if (profilesA[i].id) {
+            useridArrA.push(profilesA[i].id);
+          }
+        }
+        getServiceData('find',
+          'instagram/posts',
+          {
+            query: {
+              "owner.id": {$in: useridArrA},
+              $sort: {createdAt: -1},
+              $limit: 0
+            }
+          },'seta-posts'
+        ).then(response=>{
+          if (response.total) {
+            var postsA = response.total
+            if (postsA) {
+              console.log(postsA);
+              $("#counter").append(postsA + '<div> records retrieved for set A</div>');
+              chartit('stats-hbar-a', postsA)
+            }
+          }
+        }).catch(err=>{
+          console.log('Getting posts returned error: '+ err)
+        })
+      }
+    }).catch(err=>{
+      console.log('Getting profiles returned error: '+ err)
+    })
+    getServiceData('find',
+      'instagram/profiles',
+      {query:{
+          "username": {$in: setb},
+          $limit:setb.length,
+          $sort:{createdAt: -1}
+        }},
+      'setb-profile-userid'
+    ).then(response=>{
+      if (response.data) {
+        var profilesB = response.data;
+        for (i in profilesB){
+          if (profilesB[i].id) {
+            useridArrB.push(profilesB[i].id);
+          }
+        }
+        getServiceData('find',
+          'instagram/posts',
+          {
+            query: {
+              "owner.id": {$in: useridArrB},
+              $sort: {createdAt: -1},
+              $limit: 0
+            }
+          },'setb-posts'
+        ).then(response=>{
+          if (response.total) {
+            var postsB = response.total
+            if (postsB) {
+              console.log(postsB);
+              $("#counter").append(postsB + '<div> records retrieved for set B</div>');
+              chartit('stats-hbar-b', postsB)
 
+
+            }
+          }
+        }).catch(err=>{
+          console.log('Getting profiles returned error: '+ err)
+        })
+      }
+    }).catch(err=>{
+      console.log('Getting profiles returned error: '+ err)
+    })*/
   }
 
 }
 
 //getSocketData('cube','this data is needed').then(data=>console.log(data))
+//{$search: seta[i], $fields: ['username'], $deep: false}

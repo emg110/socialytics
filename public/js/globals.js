@@ -84,6 +84,7 @@ OverlayScrollbars(document.querySelectorAll('body'), {
 var ls = ls || window.localStorage;
 window.bulkevent = false;
 var socket = {};
+var app = {}
 /*window.alert(window.location.href)
 window.alert(window.location.host)
 window.alert(window.location.hostname)

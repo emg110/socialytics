@@ -238,6 +238,19 @@ function getServiceData(method, service, filters, desc) {
   socket.emit('authenticated', {data: data, options: filters});
 
 }
+/*function getServiceData(method, service, filters, desc) {
+  return new Promise((resolve, reject) => {
+    socket.emit(method, service, filters, (error, data) => {
+      if(error)reject(error)
+      if(data)resolve(data)
+    })
+    /!*app.services[service].find(filters).then(results=> resolve(results)).catch(err=>{
+      reject(err)
+    })*!/
+  })
+  //socket.emit('authenticated', {data: data, options: filters});
+
+}*/
 
 function getSocketData(type, data, options) {
   options = options || {};
