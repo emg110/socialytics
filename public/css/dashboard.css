@@ -775,6 +775,73 @@ button {
 .navbar-nav{
   flex-direction: inherit;
 }
+.stats-totals{
+  background-color: #606870;
+  min-width: 100%;
+  font-size: 1em;
+  color:white;
+  /* margin-left: -16px; */
+
+}
+.counter-metric{
+  text-align: left;
+  vertical-align: middle;
+  background-color: #333;
+  min-width:100%;
+  min-height:45px;
+  display: inline-block;
+}
+.profile-mini-img{
+  background-color: #222;
+  width:32px;
+  height:32px;
+  border-radius:50px;
+  display: inline-block;
+/*  padding:1px;
+  margin:1px;*/
+  border:1px solid #000000;
+}
+.counter-metric-span{
+  background-color: #222;
+  text-align: center;
+  vertical-align: middle;
+  padding:5px;
+  padding-left:10px;
+  padding-right:10px;
+  width: 10ch;
+  margin:1px;
+  display:inline-block;
+}
+.widget-title, .widget-notes{
+  color:#999
+}
+.counters-stage{
+  width:auto;
+  height:auto;
+}
+.counters-stage:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.posts{
+  background-color: #45d3fc;
+}
+.followers{
+  background-color: #fc8211;
+}
+.following{
+  background-color: #fcc15f;
+}
+.likes{
+  background-color: #c1fc48;
+}
+.comments{
+  background-color: #bb8176;
+}
+.dashboard-body{
+  background-color: #222;
+}
 @media (min-width: 768px) {
   .socialytics-dashboard .chart-wrapper {
     margin-bottom: 0;

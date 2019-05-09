@@ -244,6 +244,9 @@ function chartit(container, data){
     xAxis: {name: 'amount'},
     yAxis: {type: 'category'},
     visualMap: {
+      textStyle:{
+        color:'#999'
+      },
       orient: 'horizontal',
       left: 'center',
       min: 10,
@@ -265,7 +268,10 @@ function chartit(container, data){
           y: 'product'
         }
       }
-    ]
+    ],
+    textStyle:{
+      color:'#999'
+    }
   };
   // use configuration item and data specified to show chart
   myChart.setOption(option);

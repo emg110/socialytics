@@ -226,9 +226,12 @@ function getEndpointData(endpoint, type, code, container, caller) {
 function getServiceData(method, service, filters, desc) {
 
   var accesstoken = ls.getItem('accesstoken')
+  var username = ls.getItem('username')
 
   var data = {}
   data['accessToken'] = accesstoken;
+  if(filters.un)data['un'] = filters.un;
+
   data['method'] = method
   data['service'] = service
   data['desc'] = desc

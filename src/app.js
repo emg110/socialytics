@@ -52,8 +52,12 @@ app.configure(socketio(function (io) {
       switch (socReq.data.method) {
         case 'find':
           app.service(socReq.data.service).find(socReq.options).then(items => {
-            console.log(items.data.length)
+            if(items.data){
+              console.log(items.data.length)
+            }
             socket.emit('authenticated', {data: items, socRes: socReq.data});
+          }).catch(err=>{
+            console.log(err)
           })
           break
         default:

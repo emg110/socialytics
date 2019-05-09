@@ -1,4 +1,44 @@
 var htmlNoData = htmlNoData || '<div class="loader loader--style1" title="0">  NO DATA HERE...</div>';
+var htmlChartLoading = '<div class="loader loader--style7" title="6">\n' +
+  '  <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"\n' +
+  '     width="24px" height="30px" viewBox="0 0 24 30" style="enable-background:new 0 0 50 50;" xml:space="preserve">\n' +
+  '    <rect x="0" y="0" width="4" height="20" fill="#333">\n' +
+  '      <animate attributeName="opacity" attributeType="XML"\n' +
+  '        values="1; .2; 1" \n' +
+  '        begin="0s" dur="0.6s" repeatCount="indefinite" />\n' +
+  '    </rect>\n' +
+  '    <rect x="7" y="0" width="4" height="20" fill="#333">\n' +
+  '      <animate attributeName="opacity" attributeType="XML"\n' +
+  '        values="1; .2; 1" \n' +
+  '        begin="0.2s" dur="0.6s" repeatCount="indefinite" />\n' +
+  '    </rect>\n' +
+  '    <rect x="14" y="0" width="4" height="20" fill="#333">\n' +
+  '      <animate attributeName="opacity" attributeType="XML"\n' +
+  '        values="1; .2; 1" \n' +
+  '        begin="0.4s" dur="0.6s" repeatCount="indefinite" />\n' +
+  '    </rect>\n' +
+  '  </svg>\n' +
+  '</div>\n';
+var htmlChartLoadingMini = '<div class="mini-loader loader--style7" title="6">\n' +
+  '  <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"\n' +
+  '     width="12px" height="15px" viewBox="0 0 24 30" style="enable-background:new 0 0 50 50;" xml:space="preserve">\n' +
+  '    <rect x="0" y="0" width="4" height="20" fill="#333">\n' +
+  '      <animate attributeName="opacity" attributeType="XML"\n' +
+  '        values="1; .2; 1" \n' +
+  '        begin="0s" dur="0.6s" repeatCount="indefinite" />\n' +
+  '    </rect>\n' +
+  '    <rect x="7" y="0" width="4" height="20" fill="#333">\n' +
+  '      <animate attributeName="opacity" attributeType="XML"\n' +
+  '        values="1; .2; 1" \n' +
+  '        begin="0.2s" dur="0.6s" repeatCount="indefinite" />\n' +
+  '    </rect>\n' +
+  '    <rect x="14" y="0" width="4" height="20" fill="#333">\n' +
+  '      <animate attributeName="opacity" attributeType="XML"\n' +
+  '        values="1; .2; 1" \n' +
+  '        begin="0.4s" dur="0.6s" repeatCount="indefinite" />\n' +
+  '    </rect>\n' +
+  '  </svg>\n' +
+  '</div>\n';
 var htmlLoading = htmlLoading || '<div class="loader loader--style1" title="0">\n' +
   '        <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"\n' +
   '             x="0px" y="0px"\n' +
