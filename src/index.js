@@ -12,8 +12,10 @@ const apiHttpsServer = https.createServer({
 
 // Call app.setup to initialize all services and SocketIO
 app.setup(apiHttpsServer);
-process.on('unhandledRejection', (reason, p) =>
- console.log('Unhandled Rejection : ', p, reason)
+process.on('unhandledRejection', (reason, p) =>{
+    console.log('Unhandled Rejection : ', p, reason)
+    process.kill()
+}
 );
 
 /*apiServer.on('listening', () =>

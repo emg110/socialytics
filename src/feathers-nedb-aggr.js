@@ -49,7 +49,6 @@ function aggregate(array, type, field){
       },0)
       break
   }
-  console.log(field);
   return aggr
 }
 module.exports = function () {
