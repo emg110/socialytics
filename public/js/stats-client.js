@@ -28,74 +28,17 @@ function getStatsData(/*usersObjA = {},usersObjB = {},*/totalPostsA = 0, totalPo
           },
           orient: 'horizontal',
           left: 'center',
-          min: 100,
-          max: 1000,
-          text: ['High Score', 'Low Score'],
+          min: 1000,
+          max: 1000000,
+          text: ['Most followers', 'least followers'],
           // Map the score column to color
           dimension: 0,
 
           inRange: {
-            color: ['#D7DA8B', '#E15457']
+            color: ['#daa326', '#E15457']
           }
         },
-        series: [
-       /*   /!* {
-             stack:data.profile,
-             type: 'bar',
-             name:'posts',
-             barGap:'20%',
-             encode: {
-               // Map the "username" column to X axis.
-               x: 'posts',
-               // Map the "" column to Y axis
-               y: 'profile'
-             }
-           },*!/
-          {
-            type: 'bar',
-            name:'followers',
-                    barGap:'100%',
-
-            encode: {
-              // Map the "username" column to X axis.
-              x: 'followers'
-            }
-          },
-          /!*{
-            stack:data.profile,
-            type: 'bar',
-            name:'following',
-            barGap:'20%',
-            encode: {
-              // Map the "username" column to X axis.
-              x: 'following',
-              // Map the "" column to Y axis
-              y: 'profile'
-            }
-          },*!/
-          {
-            name:'likes',
-            type: 'bar',
-                    barGap:'100%',
-            encode: {
-              // Map the "username" column to X axis.
-              x: 'likes'
-
-            }
-          }/!*,
-      {
-        stack:data.profile,
-        name:'comments',
-        type: 'bar',
-        barGap:'20%',
-        encode: {
-          // Map the "username" column to X axis.
-          x: 'comments',
-          // Map the "" column to Y axis
-          y: 'profile'
-        }
-      }*!/*/
-        ],
+        series: [ ],
         textStyle:{
           color:'#999'
         }
@@ -114,74 +57,17 @@ function getStatsData(/*usersObjA = {},usersObjB = {},*/totalPostsA = 0, totalPo
           },
           orient: 'horizontal',
           left: 'center',
-          min: 100,
-          max: 1000,
-          text: ['High Score', 'Low Score'],
+          min: 1000,
+          max: 1000000,
+          text: ['Most followers', 'least followers'],
           // Map the score column to color
           dimension: 0,
 
           inRange: {
-            color: ['#D7DA8B', '#E15457']
+            color: ['#daa326', '#E15457']
           }
         },
-        series: [
-       /*   /!* {
-             stack:data.profile,
-             type: 'bar',
-             name:'posts',
-             barGap:'20%',
-             encode: {
-               // Map the "username" column to X axis.
-               x: 'posts',
-               // Map the "" column to Y axis
-               y: 'profile'
-             }
-           },*!/
-          {
-            type: 'bar',
-            name:'followers',
-                    barGap:'100%',
-
-            encode: {
-              // Map the "username" column to X axis.
-              x: 'followers'
-            }
-          },
-          /!*{
-            stack:data.profile,
-            type: 'bar',
-            name:'following',
-            barGap:'20%',
-            encode: {
-              // Map the "username" column to X axis.
-              x: 'following',
-              // Map the "" column to Y axis
-              y: 'profile'
-            }
-          },*!/
-          {
-            name:'likes',
-            type: 'bar',
-                    barGap:'100%',
-            encode: {
-              // Map the "username" column to X axis.
-              x: 'likes'
-
-            }
-          }/!*,
-      {
-        stack:data.profile,
-        name:'comments',
-        type: 'bar',
-        barGap:'20%',
-        encode: {
-          // Map the "username" column to X axis.
-          x: 'comments',
-          // Map the "" column to Y axis
-          y: 'profile'
-        }
-      }*!/*/
-        ],
+        series: [],
         textStyle:{
           color:'#999'
         }
@@ -242,31 +128,27 @@ function getStatsData(/*usersObjA = {},usersObjB = {},*/totalPostsA = 0, totalPo
 
           /*var chartData = []*/
           var profiles = []
-          var posts = []
-          var likes = []
-          var followers = []
-          var following = []
           //chartData.push(chartCategories);
-          optionsBar.series.push({
+         /* optionsBar.series.push({
             type: 'bar',
             name:'posts',
             barGap:'20%',
             data:[]
-          })
+          })*/
           optionsBar.series.push({
             type: 'bar',
             name:'followers',
-            barGap:'20%',
+            barGap:'150%',
             data:[]
 
           })
-          optionsBar.series.push({
+        /*  optionsBar.series.push({
             type: 'bar',
             name:'following',
             barGap:'20%',
             data:[]
 
-          })
+          })*/
           for (var chartSeriesItem of window.profilesA){
            /* chartData.push([
               chartSeriesItem.username,
@@ -278,9 +160,9 @@ function getStatsData(/*usersObjA = {},usersObjB = {},*/totalPostsA = 0, totalPo
               chartSeriesItem.comments
             ])*/
             profiles.push( chartSeriesItem.username)
-            optionsBar.series[0].data.push(chartSeriesItem.posts)
-            optionsBar.series[1].data.push(chartSeriesItem.followers)
-            optionsBar.series[2].data.push(chartSeriesItem.following)
+/*            optionsBar.series[0].data.push(chartSeriesItem.posts)*/
+            optionsBar.series[0].data.push(chartSeriesItem.followers)
+    /*        optionsBar.series[2].data.push(chartSeriesItem.following)*/
             /*posts.push( chartSeriesItem.username)
             followers.push( chartSeriesItem.username)
             following.push( chartSeriesItem.username)*/
@@ -350,16 +232,16 @@ function getStatsData(/*usersObjA = {},usersObjB = {},*/totalPostsA = 0, totalPo
         /*  var chartDataB = []*/
           var profilesB = [];
         /*  chartDataB.push(chartCategories);*/
-          optionsBarB.series.push({
+         /* optionsBarB.series.push({
             type: 'bar',
             name:'posts',
             barGap:'100%',
             data:[]
-          })
+          })*/
           optionsBarB.series.push({
             type: 'bar',
             name:'followers',
-            barGap:'100%',
+            barGap:'150%',
             data:[]
 
           })
@@ -381,8 +263,8 @@ function getStatsData(/*usersObjA = {},usersObjB = {},*/totalPostsA = 0, totalPo
               chartSeriesItem.comments
             ])*/
             profilesB.push( chartSeriesItemB.username)
-            optionsBarB.series[0].data.push(chartSeriesItemB.posts)
-            optionsBarB.series[1].data.push(chartSeriesItemB.followers)
+      /*      optionsBarB.series[0].data.push(chartSeriesItemB.posts)*/
+            optionsBarB.series[0].data.push(chartSeriesItemB.followers)
             //optionsBarB.series[2].data.push(chartSeriesItemB.following)
 
           }
@@ -466,7 +348,7 @@ function getStatsData(/*usersObjA = {},usersObjB = {},*/totalPostsA = 0, totalPo
         query: {
           "username": {$in: seta},
           $limit: seta.length,
-          $sort: {createdAt: -1}
+          $sort: {'edge_followed_by.count': -1}
         }
       },
       'seta-profile-userid'
@@ -477,7 +359,7 @@ function getStatsData(/*usersObjA = {},usersObjB = {},*/totalPostsA = 0, totalPo
         query: {
           "username": {$in: setb},
           $limit: setb.length,
-          $sort: {createdAt: -1}
+          $sort: {'edge_followed_by.count': -1}
         }
       },
       'setb-profile-userid'
