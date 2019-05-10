@@ -202,7 +202,14 @@ function picit(item) {
 }
 
 function chartit(container, options){
-  var myChart = echarts.init(document.getElementById(container));
-  // use configuration item and data specified to show chart
-  myChart.setOption(options);
+  var dom = document.getElementById(container)
+  if(echarts.getInstanceByDom(dom)){
+    echarts.getInstanceByDom(dom).dispose()
+    var chart = echarts.init(dom);
+    chart.setOption(options)
+  }else{
+    var chart = echarts.init(dom);
+    chart.setOption(options)
+  }
+
 }
