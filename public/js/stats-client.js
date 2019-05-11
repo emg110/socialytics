@@ -1,12 +1,10 @@
 function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aDone = false, bDone = false) {
   seta = document.getElementById('seta').value.split(',');
   setb = document.getElementById('setb').value.split(',');
-  window.profilesA = [];
-  window.profilesB = [];
-  var icounterA = 0;
-  var icounterB = 0;
   if (seta.length >= 1) {
     $("#countera").html(htmlChartLoadingMini);
+    window.profilesA = [];
+    var icounterA = 0;
     socket.on('authenticated', function (response) {
       var descA = response.socRes.desc;
       var serviceA = response.socRes.service
@@ -198,6 +196,7 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
           $limit: seta.length,
           $sort: {'edge_followed_by.count': -1}
         }
+
       },
       'seta-profile-userid'
     )
@@ -205,6 +204,8 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
   }
   if (setb.length >= 1) {
     $("#counterb").html(htmlChartLoadingMini);
+    window.profilesB = [];
+    var icounterB = 0;
     socket.on('authenticated', function (response) {
       var descB = response.socRes.desc;
       var serviceB = response.socRes.service
@@ -375,7 +376,6 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
     })
     //{$search: seta[i], $fields: ['username'], $deep: false}
     $(".widget-stage.classb").html(htmlChartLoading);
-
     getServiceData('find',
       'instagram/profiles',
       {
