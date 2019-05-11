@@ -51,6 +51,7 @@ function aggregate(array, type, field){
   }
   return aggr
 }
+
 module.exports = function () {
   return async function (context) {
     if (context.method === 'find'  && context.params.aggregate) {
