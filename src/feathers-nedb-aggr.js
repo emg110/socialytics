@@ -68,6 +68,9 @@ module.exports = function () {
             }
           }
         }
+        //let trendArray = context.result.data.slice(context.result.data.length-101,context.result.data.length+1)
+        let trendArray = context.result.data.slice(0,101)
+        resArr.push({trendsdata:trendArray})
         context.result = resArr;
 
       }

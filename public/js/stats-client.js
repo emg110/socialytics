@@ -3,8 +3,108 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
   setb = document.getElementById('setb').value.split(',');
   var icounterA = 0;
   var icounterB = 0;
+  var optionsLineA = {
+    grid: {containLabel: true,top:90},
+    yAxis: {
+      name: 'metrics',
+    },
+    dataZoom: [{
+      start: 0,
+      end:7
+    },{
+      start: 0,
+      end:7,
+      type: 'inside'
+    }],
+    legend: {
+      top:5,
+      textStyle:{
+        color:'#999'
+      },
+      data:[]
+    },
+    xAxis: {
+     /* type: 'category',*/
+      data: [],
+      inverse:true,
+      axisLabel:{
+        show:true
+      },
+  /*    boundaryGap: ['0%', '0%']*/
+    },
+    /*visualMap: {
+      textStyle:{
+        color:'#999'
+      },
+      orient: 'horizontal',
+      left: 'center',
+      min: 1000,
+      max: 1000000,
+      text: ['Most followers', 'least followers'],
+      // Map the score column to color
+      dimension: 0,
+
+      inRange: {
+        color: ['#daa326', '#E15457']
+      }
+    },*/
+    series: [ ],
+    textStyle:{
+      color:'#999'
+    }
+  };
+  var optionsLineB = {
+    grid: {containLabel: true,top:90},
+    yAxis: {
+      name: 'metrics',
+    },
+    dataZoom: [{
+      start: 0,
+      end:7
+    },{
+      start: 0,
+      end:7,
+      type: 'inside'
+    }],
+    legend: {
+      top:5,
+      textStyle:{
+        color:'#999'
+      },
+      data:[]
+    },
+    xAxis: {
+      /* type: 'category',*/
+      data: [],
+      inverse:true,
+      axisLabel:{
+        show:true
+      },
+      /*    boundaryGap: ['0%', '0%']*/
+    },
+    /*visualMap: {
+      textStyle:{
+        color:'#999'
+      },
+      orient: 'horizontal',
+      left: 'center',
+      min: 1000,
+      max: 1000000,
+      text: ['Most followers', 'least followers'],
+      // Map the score column to color
+      dimension: 0,
+
+      inRange: {
+        color: ['#daa326', '#E15457']
+      }
+    },*/
+    series: [ ],
+    textStyle:{
+      color:'#999'
+    }
+  };
   socket.on('authenticated', function (response) {
-    var descA = response.socRes.desc;
+    var desc = response.socRes.desc;
     var serviceA = response.socRes.service
     var methodA = response.socRes.method
     var likesCountA =  0;
@@ -42,7 +142,46 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
         color:'#999'
       }
     };
-    if (descA === 'seta-profile-userid') {
+    var serviceB = response.socRes.service;
+    var methodB = response.socRes.method;
+    var likesCountB =  0;
+    var commentsCountB =  0;
+    var chartCategoriesB = ['profile','profile-id','posts','followers','following','likes','comments']
+    var optionsBarB = {
+      grid: {containLabel: true,top:10},
+      xAxis: {name: 'metrics'},
+      yAxis: {
+        inverse:true,
+        type: 'category',
+        data: '',
+        axisLabel:{
+          show:false
+        }
+      },
+      visualMap: {
+        textStyle:{
+          color:'#999'
+        },
+        orient: 'horizontal',
+        left: 'center',
+        min: 1000,
+        max: 1000000,
+        text: ['Most followers', 'least followers'],
+        // Map the score column to color
+        dimension: 0,
+
+        inRange: {
+          color: ['#daa326', '#E15457']
+        }
+      },
+      series: [],
+      textStyle:{
+        color:'#999'
+      }
+    };
+    var domLinesA = document.getElementById('lines-seta');
+    var domLinesB = document.getElementById('lines-setb');
+    if (desc === 'seta-profile-userid') {
       if (response.data) {
         window.profilesA = response.data.data;
         totalPostsA = 0;
@@ -78,7 +217,7 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
             {
               query: {
                 "owner.id": useridA,
-                $sort: {edge_followed_by: -1},
+                $sort: {taken_at_timestamp: -1},
                 $limit: 20000
               },
               paginate: {
@@ -98,15 +237,8 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
         $("#stats-hbar-a").height(heightA)
         $("#stats-hbar-a").width(widthA)
 
-        /*var chartData = []*/
         var profilesA = []
-        //chartData.push(chartCategories);
-        /* optionsBar.series.push({
-           type: 'bar',
-           name:'posts',
-           barGap:'20%',
-           data:[]
-         })*/
+
         optionsBarA.series.push({
           type: 'bar',
           name:'followers',
@@ -114,112 +246,17 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
           data:[]
 
         })
-        /*  optionsBar.series.push({
-            type: 'bar',
-            name:'following',
-            barGap:'20%',
-            data:[]
 
-          })*/
         for (var chartSeriesItemA of window.profilesA){
-          /* chartData.push([
-             chartSeriesItem.username,
-             chartSeriesItem.id,
-             chartSeriesItem.posts,
-             chartSeriesItem.followers,
-             chartSeriesItem.following,
-             chartSeriesItem.likes,
-             chartSeriesItem.comments
-           ])*/
           profilesA.push( chartSeriesItemA.username)
-          /*            optionsBar.series[0].data.push(chartSeriesItem.posts)*/
           optionsBarA.series[0].data.push(chartSeriesItemA.followers)
-          /*        optionsBar.series[2].data.push(chartSeriesItem.following)*/
-          /*posts.push( chartSeriesItem.username)
-          followers.push( chartSeriesItem.username)
-          following.push( chartSeriesItem.username)*/
-
         }
-        //optionsBar.dataset.source = chartData
         optionsBarA.yAxis.data = profilesA
         chartit('stats-hbar-a', optionsBarA)
-
         $("#countera").html(totalPostsA + '<div> Posts retrieved for set A</div>');
       }
     }
-    else if (descA.indexOf('seta-posts-likes-comments:' > -1)) {
-      if (response.data) {
-        var likesCommentsA = response.data
-        var socResA = response.socRes
-        var usernameA = socResA.un
-        descA = descA.substring(descA.indexOf(':') + 1, descA.length)
-        if (response.data[0]) {
-          likesCountA = likesCommentsA[0]['comments'] || 0;
-          icounterA++
-          $("#" + descA).find('.likes').html(likesCountA)
-          //console.log(icounter + ' seta user id: ' + desc + ' username:' + usernameA + ' has total likes count: ' + likesCountA);
-          for(i of window.profilesA){
-            if(i.id===descA){
-              i.likes = likesCountA
-            }
-          }
-        } else {
-          icounterA++
-          //console.log(icounter + ' seta user id: ' + desc + ' username:' + usernameA + ' has total likes count: ' + 0);
-        }
-        if (response.data[1]) {
-          commentsCountA = likesCommentsA[1]['likes'] || 0;
-          icounterA++
-          $("#" + descA).find('.comments').html(commentsCountA)
-          //console.log(icounter + ' seta user id: ' + desc + ' username:' + usernameA + ' has total comments count:' + commentsCountA);
-          for(i of window.profilesA){
-            if(i.id===descA){
-              i.comments = commentsCountA
-            }
-          }
-        } else {
-          icounterA++
-          //console.log(icounter + ' seta user id: ' + desc + ' username:' + usernameA + ' has total comments count: ' + 0);
-        }
-      }
-    }
-    var descB = response.socRes.desc;
-    var serviceB = response.socRes.service
-    var methodB = response.socRes.method
-    var chartCategoriesB = ['profile','profile-id','posts','followers','following','likes','comments']
-    var optionsBarB = {
-      grid: {containLabel: true,top:10},
-      xAxis: {name: 'metrics'},
-      yAxis: {
-        inverse:true,
-        type: 'category',
-        data: '',
-        axisLabel:{
-          show:false
-        }
-      },
-      visualMap: {
-        textStyle:{
-          color:'#999'
-        },
-        orient: 'horizontal',
-        left: 'center',
-        min: 1000,
-        max: 1000000,
-        text: ['Most followers', 'least followers'],
-        // Map the score column to color
-        dimension: 0,
-
-        inRange: {
-          color: ['#daa326', '#E15457']
-        }
-      },
-      series: [],
-      textStyle:{
-        color:'#999'
-      }
-    };
-    if (descB === 'setb-profile-userid') {
+    else if (desc === 'setb-profile-userid') {
       if (response.data) {
         window.profilesB = response.data.data;
         totalPostsB = 0;
@@ -274,46 +311,19 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
         var widthB = $("#profiles-counters-b").width();
         $("#stats-hbar-b").height(heightB)
         $("#stats-hbar-b").width(widthB)
-        /*  var chartDataB = []*/
         var profilesB = [];
-        /*  chartDataB.push(chartCategories);*/
-        /* optionsBarB.series.push({
-           type: 'bar',
-           name:'posts',
-           barGap:'100%',
-           data:[]
-         })*/
         optionsBarB.series.push({
           type: 'bar',
           name:'followers',
           barGap:'150%',
           data:[]
-
         })
-        /* optionsBarB.series.push({
-           type: 'bar',
-           name:'following',
-           barGap:'20%',
-           data:[]
-
-         })*/
         for (var chartSeriesItemB of window.profilesB){
-          /* chartDataB.push([
-             chartSeriesItem.username,
-             chartSeriesItem.id,
-             chartSeriesItem.posts,
-             chartSeriesItem.followers,
-             chartSeriesItem.following,
-             chartSeriesItem.likes,
-             chartSeriesItem.comments
-           ])*/
-          profilesB.push( chartSeriesItemB.username)
-          /*      optionsBarB.series[0].data.push(chartSeriesItemB.posts)*/
-          optionsBarB.series[0].data.push(chartSeriesItemB.followers)
-          //optionsBarB.series[2].data.push(chartSeriesItemB.following)
 
+          profilesB.push( chartSeriesItemB.username)
+          optionsBarB.series[0].data.push(chartSeriesItemB.followers)
         }
-        /*  optionsBar.dataset.source = chartDataB*/
+
         optionsBarB.yAxis.data = profilesB
         chartit('stats-hbar-b',optionsBarB)
 
@@ -321,31 +331,101 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
 
       }
     }
-    else if (descB.indexOf('setb-posts-likes-comments:' > -1)) {
+    if (desc.indexOf('seta-posts-likes-comments:') > -1) {
       if (response.data) {
-        var likesCommentsB = response.data
-        var socResB = response.socRes
-        var usernameB = socResB.un
-        descB = descB.substring(descB.indexOf(':') + 1, descB.length)
+        var likesCommentsA = response.data
+        var socResA = response.socRes
+        var usernameA = socResA.un
+        desc = desc.substring(desc.indexOf(':') + 1, desc.length)
+        if (response.data[0]) {
+          likesCountA = likesCommentsA[0]['comments'] || 0;
+
+          $("#" + desc).find('.likes').html(likesCountA)
+          //console.log(icounter + ' seta user id: ' + desc + ' username:' + usernameA + ' has total likes count: ' + likesCountA);
+          for(i of window.profilesA){
+            if(i.id===desc){
+              i.likes = likesCountA
+            }
+          }
+        }
+        if (response.data[1]) {
+          commentsCountA = likesCommentsA[1]['likes'] || 0;
+          $("#" + desc).find('.comments').html(commentsCountA)
+          //console.log(icounter + ' seta user id: ' + desc + ' username:' + usernameA + ' has total comments count:' + commentsCountA);
+          for(i of window.profilesA){
+            if(i.id===desc){
+              i.comments = commentsCountA
+            }
+          }
+        }
+        if (response.data[2]) {
+          icounterA++
+          optionsLineA.series.push({
+            type: 'line',
+            name: usernameA,
+            data:[]
+          })
+
+          for (var trendPost of response.data[2].trendsdata){
+            optionsLineA.series[optionsLineA.series.length-1].data.push(trendPost.edge_media_preview_like.count)
+            var date = dayjs(parseInt(trendPost.taken_at_timestamp)*1000).format('YYYY-MM-DD')
+            optionsLineA.xAxis.data.push(date)
+          }
+          optionsLineA.legend.data.push(usernameA);
+
+          if(icounterA === 1){
+            $("#lines-seta").height(400)
+            $("#lines-seta").width('100%')
+            chartit('lines-seta', optionsLineA)
+          }else{
+            echarts.getInstanceByDom(domLinesA).setOption(optionsLineA)
+
+          }
+
+
+
+
+        }
+      }
+    }
+    else if (desc.indexOf('setb-posts-likes-comments:') > -1) {
+      if (response.data) {
+        var likesCommentsB = response.data;
+        var socResB = response.socRes;
+        var usernameB = socResB.un;
+        desc = desc.substring(desc.indexOf(':') + 1, desc.length);
         if (response.data[0]) {
           likesCountB = likesCommentsB[0]['comments'] || 0;
-          icounterB++
-          $("#" + descB).find('.likes').html(likesCountB)
-          //console.log(icounter + ' setb user id: ' + desc + ' username:' + usernameB + ' has total likes count: ' + likesCountB);
-
-        } else {
-          icounterB++
-          //console.log(icounter + ' setb user id: ' + desc + ' username:' + usernameB + ' has total likes count: ' + 0);
+          $("#" + desc).find('.likes').html(likesCountB);
         }
         if (response.data[1]) {
           commentsCountB = likesCommentsB[1]['likes'] || 0;
-          icounterB++
-
-          $("#" + descB).find('.comments').html(commentsCountB)
+          $("#" + desc).find('.comments').html(commentsCountB);
           //console.log(icounter + ' setb user id: ' + desc + ' username:' + usernameB + ' has total comments count:' + commentsCountB);
-        } else {
+        }
+        if (response.data[2]) {
           icounterB++
-          //console.log(icounter + ' setb user id: ' + desc + ' username:' + usernameB + ' has total comments count: ' + 0);
+          optionsLineB.series.push({
+            type: 'line',
+            name: usernameB,
+            data:[]
+          })
+
+          for (var trendPostB of response.data[2].trendsdata){
+            optionsLineB.series[optionsLineB.series.length-1].data.push(trendPostB.edge_media_preview_like.count)
+            var dateB = dayjs(parseInt(trendPostB.taken_at_timestamp)*1000).format('YYYY-MM-DD')
+            optionsLineB.xAxis.data.push(dateB)
+          }
+          optionsLineB.legend.data.push(usernameB)
+          if(icounterB === 1){
+            $("#lines-setb").height(400)
+            $("#lines-setb").width('100%')
+            chartit('lines-setb', optionsLineB)
+          }else{
+            echarts.getInstanceByDom(domLinesB).setOption(optionsLineB)
+
+          }
+
         }
       }
     }
