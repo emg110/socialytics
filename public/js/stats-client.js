@@ -8,11 +8,12 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
 
   var optionsBarA = {
     grid: {containLabel: true,top:10},
-    xAxis: {name: 'metrics'},
+    xAxis: {name: 'followers'},
     yAxis: {
+      name: 'profiles',
       inverse:true,
       type: 'category',
-      data: '',
+      data: [],
       axisLabel:{
         show:false
       }
@@ -247,20 +248,30 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
     }*!/]
   };*/
   var optionsLineA = {
-    grid: {containLabel: true,top:90},
+    grid: {containLabel: true,top:90,left:130},
     yAxis: {
       name: 'metrics',
+      position:'right'
     },
     dataZoom: [{
       start: 0,
-      end:7
+      end:7,
+      dataBackground:{
+        areaStyle:{
+          opacity:0.9,
+          shadowColor:'rgba(48,153,153,0.8)'
+        }
+      }
     },{
       start: 0,
       end:7,
       type: 'inside'
     }],
     legend: {
-      top:5,
+      orient:'vertical',
+      top:50,
+      left:10,
+      align:'left',
       textStyle:{
         color:'#999'
       },
@@ -423,20 +434,30 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
     }*/]
   };
   var optionsLineB = {
-    grid: {containLabel: true,top:90},
+    grid: {containLabel: true,top:90,left:130},
     yAxis: {
       name: 'metrics',
+      position:'right'
     },
     dataZoom: [{
       start: 0,
-      end:7
+      end:7,
+      dataBackground:{
+        areaStyle:{
+          opacity:0.9,
+          shadowColor:'rgba(48,153,153,0.8)'
+        }
+      }
     },{
       start: 0,
       end:7,
       type: 'inside'
     }],
     legend: {
-      top:5,
+      orient:'vertical',
+      top:50,
+      left:10,
+      align:'left',
       textStyle:{
         color:'#999'
       },
@@ -667,7 +688,12 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
           type: 'bar',
           name:'followers',
           barGap:'150%',
-          data:[]
+          data:[],
+          label:{
+            show:true,
+            color:'#fff',
+            formatter: '{b}'
+          }
 
         })
 
@@ -739,9 +765,15 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
         optionsBarB.series.push({
           type: 'bar',
           name:'followers',
-          barGap:'150%',
-          data:[]
+          barGap:'100%',
+          data:[],
+          label:{
+            show:true,
+            color:'#fff',
+            formatter: '{b}'
+          }
         })
+
         for (var chartSeriesItemB of window.profilesB){
           profilesB.push( chartSeriesItemB.username)
           optionsBarB.series[0].data.push(chartSeriesItemB.followers)
@@ -935,7 +967,39 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
 
           for(var j of window.profilesB){
             if(j.id===desc){
-              j.likes = likesCountB
+              j.likes = likesCountB;
+              /*optionsBarB.series.push({
+                type: 'custom',
+                name:'likes',
+                data:[],
+                renderItem: function (params, api) {
+                  var categoryIndex = api.value(0);
+                  var start = api.coord([api.value(1), categoryIndex]);
+                  var end = api.coord([api.value(2), categoryIndex]);
+                  var height = api.size([0, 1])[1] * 0.6;
+
+                  var rectShape = echarts.graphic.clipRectByRect({
+                    x: start[0],
+                    y: start[1] - height / 2,
+                    width: end[0] - start[0],
+                    height: height
+                  }, {
+                    x: params.coordSys.x,
+                    y: params.coordSys.y,
+                    width: params.coordSys.width,
+                    height: params.coordSys.height
+                  });
+
+                  return rectShape && {
+                    type: 'rect',
+                    shape: rectShape,
+                    style: api.style()
+                  };
+                }
+              })
+              optionsBarB.series[1].data.push(j.likes)
+              var domBarB = document.getElementById('stats-hbar-b');
+              echarts.getInstanceByDom(domBarB).setOption(optionsBarB);*/
             }
           }
         }
