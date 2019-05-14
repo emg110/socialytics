@@ -891,15 +891,18 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
 
           if(icounterA === 1){
             $("#lines-seta").height(400)
-
+            var width = $("#lines-seta").width()
             chartit('lines-seta', optionsLineA)
             $("#DoMA").height(250)
+            $("#DoMA").width(width)
 
             chartit('DoMA', optionsPieDomA)
             $("#DoWA").height(250)
+            $("#DoWA").width(width)
 
             chartit('DoWA', optionsPieDowA)
             $("#HoDA").height(250)
+            $("#HoDA").width(width)
 
             chartit('HoDA', optionsPieHodA)
           }
@@ -1054,16 +1057,20 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
 
           if(icounterB === 1){
             $("#lines-setb").height(400)
+            var width = $("#lines-setb").width()
 
             chartit('lines-setb', optionsLineB)
             $("#DoMB").height(250)
+            $("#DoMB").width(width)
 
             chartit('DoMB', optionsPieDomB)
             $("#DoWB").height(250)
+            $("#DoWB").width(width)
 
             chartit('DoWB', optionsPieDowB)
             $("#HoDB").height(250)
-        
+            $("#HoDB").width(width)
+
             chartit('HoDB', optionsPieHodB)
           }
           else{
