@@ -118,6 +118,25 @@ var powerpoint = '<div id="powerpoint" class="carousel slide" data-ride="carouse
   '              </a>\n' +
   '\n' +
   '            </div>';
+var htmlNavTabsStatPies = '<!-- Nav tabs -->\n' +
+  '<ul class="nav nav-tabs">\n' +
+  '  <li class="nav-item">\n' +
+  '    <a class="nav-link active" data-toggle="tab" href="#DoMA">DoM</a>\n' +
+  '  </li>\n' +
+  '  <li class="nav-item">\n' +
+  '    <a class="nav-link" data-toggle="tab" href="#DoWA">DoW</a>\n' +
+  '  </li>\n' +
+  '  <li class="nav-item">\n' +
+  '    <a class="nav-link" data-toggle="tab" href="#HoDA">HoD</a>\n' +
+  '  </li>\n' +
+  '</ul>\n' +
+  '\n' +
+  '<!-- Tab panes -->\n' +
+  '<div class="tab-content">\n' +
+  '  <div class="tab-pane active container" id="DoMA">'+htmlChartLoadingMini+'</div>\n' +
+  '  <div class="tab-pane container" id="DoWA">'+htmlChartLoadingMini+'</div>\n' +
+  '  <div class="tab-pane container" id="HoDA">'+htmlChartLoadingMini+'</div>\n' +
+  '</div>';
 OverlayScrollbars(document.querySelectorAll('body'), {
   className : "os-theme-dark",
 });

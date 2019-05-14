@@ -200,7 +200,25 @@ function picit(item) {
   }
   return pic
 }
-
+function renderItem(params, api) {
+  var values = [api.value(0), api.value(1)];
+  var coord = api.coord(values);
+  var size = api.size([1, 1], values);
+  return {
+    type: 'sector',
+    shape: {
+      cx: params.coordSys.cx,
+      cy: params.coordSys.cy,
+      r0: coord[2] - size[0] / 2,
+      r: coord[2] + size[0] / 2,
+      startAngle: -(coord[3] + size[1] / 2),
+      endAngle: -(coord[3] - size[1] / 2)
+    },
+    style: api.style({
+      fill: api.visual('color')
+    })
+  };
+}
 function chartit(container, options){
   var dom = document.getElementById(container)
   if(echarts.getInstanceByDom(dom)){
