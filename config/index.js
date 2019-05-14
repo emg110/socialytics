@@ -20,7 +20,6 @@ module.exports = {
     'prozisportugal',
     'algarvetourism',
     'tapairportugal',
-    'mcdonaldsportugal',
     'visitportugal',
     'visitmadeira'
 

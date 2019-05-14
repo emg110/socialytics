@@ -1,7 +1,6 @@
 function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aDone = false, bDone = false) {
   seta = document.getElementById('seta').value.split(',');
   setb = document.getElementById('setb').value.split(',');
-  var centerA = [5,5]
 
   var icounterB = 0;
   var optionsLineB = {
@@ -54,7 +53,71 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
       color:'#999'
     }
   };
-  var icounter = 0;
+  var icounterA = 0;
+  var optionsBarA = {
+    grid: {containLabel: true,top:10},
+    xAxis: {name: 'metrics'},
+    yAxis: {
+      inverse:true,
+      type: 'category',
+      data: '',
+      axisLabel:{
+        show:false
+      }
+    },
+    visualMap: {
+      textStyle:{
+        color:'#999'
+      },
+      orient: 'horizontal',
+      left: 'center',
+      min: 1000,
+      max: 1000000,
+      text: ['Most followers', 'least followers'],
+      // Map the score column to color
+      dimension: 0,
+
+      inRange: {
+        color: ['#daa326', '#E15457']
+      }
+    },
+    series: [ ],
+    textStyle:{
+      color:'#999'
+    }
+  };
+  var optionsBarB = {
+    grid: {containLabel: true,top:10},
+    xAxis: {name: 'metrics'},
+    yAxis: {
+      inverse:true,
+      type: 'category',
+      data: '',
+      axisLabel:{
+        show:false
+      }
+    },
+    visualMap: {
+      textStyle:{
+        color:'#999'
+      },
+      orient: 'horizontal',
+      left: 'center',
+      min: 1000,
+      max: 1000000,
+      text: ['Most followers', 'least followers'],
+      // Map the score column to color
+      dimension: 0,
+
+      inRange: {
+        color: ['#daa326', '#E15457']
+      }
+    },
+    series: [],
+    textStyle:{
+      color:'#999'
+    }
+  };
   var optionsLine = {
     grid: {containLabel: true,top:90},
     yAxis: {
@@ -76,13 +139,13 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
       data:[]
     },
     xAxis: {
-     /* type: 'category',*/
+      /* type: 'category',*/
       data: [],
       inverse:true,
       axisLabel:{
         show:true
       },
-  /*    boundaryGap: ['0%', '0%']*/
+      /*    boundaryGap: ['0%', '0%']*/
     },
     /*visualMap: {
       textStyle:{
@@ -123,15 +186,15 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
     }],
     roseType:'radius',
     tooltip: {},
-   /* dataset: {
-      source: [
-        ['pie'],
-        ['DoM'],
-        ['DoW'],
-        ['MoY'],
-        ['HoD']
-      ]
-    },*/
+    /* dataset: {
+       source: [
+         ['pie'],
+         ['DoM'],
+         ['DoW'],
+         ['MoY'],
+         ['HoD']
+       ]
+     },*/
     series: [/*{
       type: 'pie',
       radius: 60,
@@ -165,15 +228,15 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
     }],
     roseType:'radius',
     tooltip: {},
-   /* dataset: {
-      source: [
-        ['pie'],
-        ['DoM'],
-        ['DoW'],
-        ['MoY'],
-        ['HoD']
-      ]
-    },*/
+    /* dataset: {
+       source: [
+         ['pie'],
+         ['DoM'],
+         ['DoW'],
+         ['MoY'],
+         ['HoD']
+       ]
+     },*/
     series: [/*{
       type: 'pie',
       radius: 60,
@@ -207,15 +270,15 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
     }],
     roseType:'radius',
     tooltip: {},
-   /* dataset: {
-      source: [
-        ['pie'],
-        ['DoM'],
-        ['DoW'],
-        ['MoY'],
-        ['HoD']
-      ]
-    },*/
+    /* dataset: {
+       source: [
+         ['pie'],
+         ['DoM'],
+         ['DoW'],
+         ['MoY'],
+         ['HoD']
+       ]
+     },*/
     series: [/*{
       type: 'pie',
       radius: 60,
@@ -231,87 +294,190 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
       }
     }*/]
   };
+  var optionsLineA = {
+    grid: {containLabel: true,top:90},
+    yAxis: {
+      name: 'metrics',
+    },
+    dataZoom: [{
+      start: 0,
+      end:7
+    },{
+      start: 0,
+      end:7,
+      type: 'inside'
+    }],
+    legend: {
+      top:5,
+      textStyle:{
+        color:'#999'
+      },
+      data:[]
+    },
+    xAxis: {
+      /* type: 'category',*/
+      data: [],
+      inverse:true,
+      axisLabel:{
+        show:true
+      },
+      /*    boundaryGap: ['0%', '0%']*/
+    },
+    /*visualMap: {
+      textStyle:{
+        color:'#999'
+      },
+      orient: 'horizontal',
+      left: 'center',
+      min: 1000,
+      max: 1000000,
+      text: ['Most followers', 'least followers'],
+      // Map the score column to color
+      dimension: 0,
+
+      inRange: {
+        color: ['#daa326', '#E15457']
+      }
+    },*/
+    series: [ ],
+    textStyle:{
+      color:'#999'
+    }
+  };
+  var optionsPieDomA = {
+    legend: [{
+      top:5,
+      data:[],
+      textStyle:{
+        color:'#999'
+      }
+    },{
+      bottom:40,
+      left:5,
+      orient:'horizontal',
+      data:[],
+      textStyle:{
+        color:'#999'
+      }
+    }],
+    roseType:'radius',
+    tooltip: {},
+    /* dataset: {
+       source: [
+         ['pie'],
+         ['DoM'],
+         ['DoW'],
+         ['MoY'],
+         ['HoD']
+       ]
+     },*/
+    series: [/*{
+      type: 'pie',
+      radius: 60,
+      center: ['25%', '30%']
+      // No encode specified, by default, it is first.
+    }*//*, {
+      type: 'pie',
+      radius: 60,
+      center: ['75%', '30%'],
+      encode: {
+        itemName: 'profile',
+        value: ''
+      }
+    }*/]
+  };
+  var optionsPieDowA = {
+    legend: [{
+      top:5,
+      data:[],
+      textStyle:{
+        color:'#999'
+      }
+    },{
+      bottom:40,
+      left:5,
+      orient:'horizontal',
+      data:[],
+      textStyle:{
+        color:'#999'
+      }
+    }],
+    roseType:'radius',
+    tooltip: {},
+    /* dataset: {
+       source: [
+         ['pie'],
+         ['DoM'],
+         ['DoW'],
+         ['MoY'],
+         ['HoD']
+       ]
+     },*/
+    series: [/*{
+      type: 'pie',
+      radius: 60,
+      center: ['25%', '30%']
+      // No encode specified, by default, it is first.
+    }*//*, {
+      type: 'pie',
+      radius: 60,
+      center: ['75%', '30%'],
+      encode: {
+        itemName: 'profile',
+        value: ''
+      }
+    }*/]
+  };
+  var optionsPieHodA = {
+    legend: [{
+      top:5,
+      data:[],
+      textStyle:{
+        color:'#999'
+      }
+    },{
+      bottom:40,
+      left:5,
+      orient:'horizontal',
+      data:[],
+      textStyle:{
+        color:'#999'
+      }
+    }],
+    roseType:'radius',
+    tooltip: {},
+    /* dataset: {
+       source: [
+         ['pie'],
+         ['DoM'],
+         ['DoW'],
+         ['MoY'],
+         ['HoD']
+       ]
+     },*/
+    series: [/*{
+      type: 'pie',
+      radius: 60,
+      center: ['25%', '30%']
+      // No encode specified, by default, it is first.
+    }*//*, {
+      type: 'pie',
+      radius: 60,
+      center: ['75%', '30%'],
+      encode: {
+        itemName: 'profile',
+        value: ''
+      }
+    }*/]
+  };
+
+
+
+  socket.removeListener('authenticated');
   socket.on('authenticated', function (response) {
     var desc = response.socRes.desc;
-    var serviceA = response.socRes.service
-    var methodA = response.socRes.method
-    var likesCountA =  0;
-    var commentsCountA =  0;
-    var chartCategoriesA = ['profile','profile-id','posts','followers','following','likes','comments'];
-    var optionsBarA = {
-      grid: {containLabel: true,top:10},
-      xAxis: {name: 'metrics'},
-      yAxis: {
-        inverse:true,
-        type: 'category',
-        data: '',
-        axisLabel:{
-          show:false
-        }
-      },
-      visualMap: {
-        textStyle:{
-          color:'#999'
-        },
-        orient: 'horizontal',
-        left: 'center',
-        min: 1000,
-        max: 1000000,
-        text: ['Most followers', 'least followers'],
-        // Map the score column to color
-        dimension: 0,
 
-        inRange: {
-          color: ['#daa326', '#E15457']
-        }
-      },
-      series: [ ],
-      textStyle:{
-        color:'#999'
-      }
-    };
-    var serviceB = response.socRes.service;
-    var methodB = response.socRes.method;
-    var likesCountB =  0;
-    var commentsCountB =  0;
-    var chartCategoriesB = ['profile','profile-id','posts','followers','following','likes','comments'];
-    var optionsBarB = {
-      grid: {containLabel: true,top:10},
-      xAxis: {name: 'metrics'},
-      yAxis: {
-        inverse:true,
-        type: 'category',
-        data: '',
-        axisLabel:{
-          show:false
-        }
-      },
-      visualMap: {
-        textStyle:{
-          color:'#999'
-        },
-        orient: 'horizontal',
-        left: 'center',
-        min: 1000,
-        max: 1000000,
-        text: ['Most followers', 'least followers'],
-        // Map the score column to color
-        dimension: 0,
 
-        inRange: {
-          color: ['#daa326', '#E15457']
-        }
-      },
-      series: [],
-      textStyle:{
-        color:'#999'
-      }
-    };
-    var domLines = document.getElementById('lines-seta');
-    var domLinesB = document.getElementById('lines-setb');
-    var domPie = document.getElementById('DoMA');
-    var dowPie = document.getElementById('DoWA');
-    var hodPie = document.getElementById('HoDA');
     if (desc === 'seta-profile-userid') {
       if (response.data) {
         window.profilesA = response.data.data;
@@ -462,148 +628,163 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
     }
     if (desc.indexOf('seta-posts-likes-comments:') > -1) {
       if (response.data) {
-        var likesComments = response.data;
-        var socRes = response.socRes;
-        var username = socRes.un
-        var likesCount = 0;
-        var commentsCount = 0;
+        var likesCommentsA = response.data;
+        var socResA = response.socRes;
+        var usernameA = socResA.un
+        var likesCountA = 0;
+        var commentsCountA = 0;
+
         desc = desc.substring(desc.indexOf(':') + 1, desc.length);
         if (response.data[0]) {
-          likesCount = likesComments[0]['comments'] || 0;
+          likesCountA = likesCommentsA[0]['comments'] || 0;
 
-          $("#" + desc).find('.likes').html(likesCount)
+          $("#" + desc).find('.likes').html(likesCountA)
 
           for(i of window.profilesA){
             if(i.id===desc){
-              i.likes = likesCount
+              i.likes = likesCountA
             }
           }
         }
         if (response.data[1]) {
-          commentsCount = likesComments[1]['likes'] || 0;
-          $("#" + desc).find('.comments').html(commentsCount)
+          commentsCountA = likesCommentsA[1]['likes'] || 0;
+          $("#" + desc).find('.comments').html(commentsCountA)
           //console.log(icounter + ' seta user id: ' + desc + ' username:' + usernameA + ' has total comments count:' + commentsCountA);
           for(i of window.profilesA){
             if(i.id===desc){
-              i.comments = commentsCount
+              i.comments = commentsCountA
             }
           }
         }
         if (response.data[2]) {
-          icounter++
-          optionsLine.series.push({
+          icounterA++
+          if(icounterA===1){
+            optionsLineA = optionsLine;
+            optionsPieDomA = optionsPieDom;
+            optionsPieDowA = optionsPieDow;
+            optionsPieHodA = optionsPieHod;
+          }
+
+          optionsLineA.series.push({
             type: 'line',
-            name: username,
+            name: usernameA,
             data:[]
           })
-          var doms = {};
-          var dows = {};
-          var hods = {};
-          var profilesPieDomData = []
-          var profilesPieDowData = []
-          var profilesPieHodData = []
+          var domsA = {};
+          var dowsA = {};
+          var hodsA = {};
+          var profilesPieDomDataA = []
+          var profilesPieDowDataA = []
+          var profilesPieHodDataA = []
 
           for (var trendPost of response.data[2].trendsdata){
-            optionsLine.series[optionsLine.series.length-1].data.push(trendPost.edge_media_preview_like.count)
-            var date = dayjs.unix(trendPost.taken_at_timestamp);
-            var dateFormat = date.format('YYYY-MM-DD');
-            var dom = dayjs(date).date();
-            var dow = dayjs(date).day();
-            var hod = dayjs(date).hour();
+            optionsLineA.series[optionsLineA.series.length-1].data.push(trendPost.edge_media_preview_like.count)
+            var dateA = dayjs.unix(trendPost.taken_at_timestamp);
+            var dateFormatA = dateA.format('YYYY-MM-DD');
+            var domA = dayjs(dateA).date();
+            var dowA = dayjs(dateA).day();
+            var hodA = dayjs(dateA).hour();
             /*  var moy = dayjs().month(date);
               */
-            doms[dom] = doms[dom] || 0;
-            doms[dom]++
-            dows[dow] = dows[dow] || 0;
-            dows[dow]++
-            hods[hod] = hods[hod] || 0;
-            hods[hod]++
-            optionsLine.xAxis.data.push(dateFormat)
+            domsA[domA] = domsA[domA] || 0;
+            domsA[domA]++
+            dowsA[dowA] = dowsA[dowA] || 0;
+            dowsA[dowA]++
+            hodsA[hodA] = hodsA[hodA] || 0;
+            hodsA[hodA]++
+            optionsLineA.xAxis.data.push(dateFormatA)
           }
-          optionsPieDom.legend[1].data.push({name:username,icon:'image:///img/user.png'})
-          optionsPieDom.legend[1].data.sort()
-          optionsPieDow.legend[1].data.push({name:username,icon:'image:///img/user.png'})
-          optionsPieDow.legend[1].data.sort()
-          optionsPieHod.legend[1].data.push({name:username,icon:'image:///img/user.png'})
-          optionsPieHod.legend[1].data.sort()
-          for(var domi in doms){
+          optionsPieDomA.legend[1].data.push({name:usernameA,icon:'image:///img/user.png'})
+          optionsPieDomA.legend[1].data.sort()
+          optionsPieDowA.legend[1].data.push({name:usernameA,icon:'image:///img/user.png'})
+          optionsPieDowA.legend[1].data.sort()
+          optionsPieHodA.legend[1].data.push({name:usernameA,icon:'image:///img/user.png'})
+          optionsPieHodA.legend[1].data.sort()
+          for(var domi in domsA){
             domi = domi>9 ? String(domi) : '0'+domi
-            profilesPieDomData.push({name:domi,value:doms[domi]})
-            optionsPieDom.legend[0].data.push(domi)
-            optionsPieDom.legend[0].data.sort()
+            profilesPieDomDataA.push({name:domi,value:domsA[domi]})
+            optionsPieDomA.legend[0].data.push(domi)
+            optionsPieDomA.legend[0].data.sort()
           }
-          for(var dowi in dows){
-            profilesPieDowData.push({name:dowi,value:dows[dowi]})
-            optionsPieDow.legend[0].data.push(dowi)
-            optionsPieDow.legend[0].data.sort()
+          for(var dowi in dowsA){
+            profilesPieDowDataA.push({name:dowi,value:dowsA[dowi]})
+            optionsPieDowA.legend[0].data.push(dowi)
+            optionsPieDowA.legend[0].data.sort()
           }
-          for(var hodi in hods){
+          for(var hodi in hodsA){
             hodi = hodi>9 ? String(hodi) : '0'+hodi
-            profilesPieHodData.push({name:hodi,value:hods[hodi]})
-            optionsPieHod.legend[0].data.push(hodi)
-            optionsPieHod.legend[0].data.sort()
+            profilesPieHodDataA.push({name:hodi,value:hodsA[hodi]})
+            optionsPieHodA.legend[0].data.push(hodi)
+            optionsPieHodA.legend[0].data.sort()
           }
-          var center = []
-          if(icounter<=10){
-            center = [String((icounter*10)-5)+'%','30%'];
-          }else if(icounter>10 && icounter<=20){
-            center = [String(((icounter-10)*10)-5)+'%','60%'];
-          }else if(icounter>20 && icounter<=30){
-            center = [String(((icounter-20)*10)-5)+'%','90%'];
+          var centerA = []
+          if(icounterA<=10){
+            centerA = [String((icounterA*10)-5)+'%','30%'];
+          }else if(icounterA>10 && icounterA<=20){
+            centerA = [String(((icounterA-10)*10)-5)+'%','60%'];
+          }else if(icounterA>20 && icounterA<=30){
+            centerA = [String(((icounterA-20)*10)-5)+'%','90%'];
           }
-          optionsPieDom.series.push({
-            name:username,
-            center:center,
+          optionsPieDomA.series.push({
+            name:usernameA,
+            center:centerA,
             type: 'pie',
             radius: 50,
-            data:profilesPieDomData,
+            data:profilesPieDomDataA,
             label:{
               show:false
             }
           })
-          optionsPieDow.series.push({
-            name:username,
-            center:center,
+          optionsPieDowA.series.push({
+            name:usernameA,
+            center:centerA,
             type: 'pie',
             radius: 50,
-            data:profilesPieDowData,
+            data:profilesPieDowDataA,
             label:{
               show:false
             }
           })
-          optionsPieHod.series.push({
-            name:username,
-            center:center,
+          optionsPieHodA.series.push({
+            name:usernameA,
+            center:centerA,
             type: 'pie',
             radius: 50,
-            data:profilesPieHodData,
+            data:profilesPieHodDataA,
             label:{
               show:false
             }
           })
-          optionsLine.legend.data.push(username)
+          optionsLineA.legend.data.push(username)
           //optionsPieDomA.legend.data.push(usernameA)
 
-          if(icounter === 1){
-            $("#pie-seta").html(htmlNavTabsStatPies)
+          if(icounterA === 1){
             $("#lines-seta").height(400)
             $("#lines-seta").width('100%')
-            chartit('lines-seta', optionsLine)
+            chartit('lines-seta', optionsLineA)
             $("#DoMA").height(400)
             $("#DoMA").width('100%')
-            chartit('DoMA', optionsPieDom)
+            chartit('DoMA', optionsPieDomA)
             $("#DoWA").height(400)
             $("#DoWA").width('100%')
-            chartit('DoWA', optionsPieDow)
+            chartit('DoWA', optionsPieDowA)
             $("#HoDA").height(400)
             $("#HoDA").width('100%')
-            chartit('HoDA', optionsPieHod)
+            chartit('HoDA', optionsPieHodA)
 
           }else{
-            echarts.getInstanceByDom(domLines).setOption(optionsLine)
-            echarts.getInstanceByDom(domPie).setOption(optionsPieDom)
-            echarts.getInstanceByDom(dowPie).setOption(optionsPieDow)
-            echarts.getInstanceByDom(hodPie).setOption(optionsPieHod)
+
+
+
+            var domLinesA = document.getElementById('lines-seta');
+            console.log()
+            echarts.getInstanceByDom(domLinesA).setOption(optionsLineA);
+            var domPieA = document.getElementById('DoMA');
+            echarts.getInstanceByDom(domPieA).setOption(optionsPieDomA);
+            var dowPieA = document.getElementById('DoWA');
+            echarts.getInstanceByDom(dowPieA).setOption(optionsPieDowA);
+            var hodPieA = document.getElementById('HoDA');
+            echarts.getInstanceByDom(hodPieA).setOption(optionsPieHodA);
 
           }
 
@@ -616,6 +797,8 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
     else if (desc.indexOf('setb-posts-likes-comments:') > -1) {
       if (response.data) {
         var likesCommentsB = response.data;
+        var likesCountB =  0;
+        var commentsCountB =  0;
         var socResB = response.socRes;
         var usernameB = socResB.un;
         desc = desc.substring(desc.indexOf(':') + 1, desc.length);
@@ -647,6 +830,7 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
             $("#lines-setb").width('100%')
             chartit('lines-setb', optionsLineB)
           }else{
+            var domLinesB = document.getElementById('lines-setb');
             echarts.getInstanceByDom(domLinesB).setOption(optionsLineB)
 
           }
