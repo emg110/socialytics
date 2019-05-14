@@ -3,57 +3,9 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
   setb = document.getElementById('setb').value.split(',');
 
   var icounterB = 0;
-  var optionsLineB = {
-    grid: {containLabel: true,top:90},
-    yAxis: {
-      name: 'metrics',
-    },
-    dataZoom: [{
-      start: 0,
-      end:7
-    },{
-      start: 0,
-      end:7,
-      type: 'inside'
-    }],
-    legend: {
-      top:5,
-      textStyle:{
-        color:'#999'
-      },
-      data:[]
-    },
-    xAxis: {
-      /* type: 'category',*/
-      data: [],
-      inverse:true,
-      axisLabel:{
-        show:true
-      },
-      /*    boundaryGap: ['0%', '0%']*/
-    },
-    /*visualMap: {
-      textStyle:{
-        color:'#999'
-      },
-      orient: 'horizontal',
-      left: 'center',
-      min: 1000,
-      max: 1000000,
-      text: ['Most followers', 'least followers'],
-      // Map the score column to color
-      dimension: 0,
-
-      inRange: {
-        color: ['#daa326', '#E15457']
-      }
-    },*/
-    series: [ ],
-    textStyle:{
-      color:'#999'
-    }
-  };
   var icounterA = 0;
+
+
   var optionsBarA = {
     grid: {containLabel: true,top:10},
     xAxis: {name: 'metrics'},
@@ -118,7 +70,7 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
       color:'#999'
     }
   };
-  var optionsLine = {
+ /* var optionsLine = {
     grid: {containLabel: true,top:90},
     yAxis: {
       name: 'metrics',
@@ -139,15 +91,15 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
       data:[]
     },
     xAxis: {
-      /* type: 'category',*/
+      /!* type: 'category',*!/
       data: [],
       inverse:true,
       axisLabel:{
         show:true
       },
-      /*    boundaryGap: ['0%', '0%']*/
+      /!*    boundaryGap: ['0%', '0%']*!/
     },
-    /*visualMap: {
+    /!*visualMap: {
       textStyle:{
         color:'#999'
       },
@@ -162,7 +114,7 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
       inRange: {
         color: ['#daa326', '#E15457']
       }
-    },*/
+    },*!/
     series: [ ],
     textStyle:{
       color:'#999'
@@ -186,7 +138,7 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
     }],
     roseType:'radius',
     tooltip: {},
-    /* dataset: {
+    /!* dataset: {
        source: [
          ['pie'],
          ['DoM'],
@@ -194,13 +146,13 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
          ['MoY'],
          ['HoD']
        ]
-     },*/
-    series: [/*{
+     },*!/
+    series: [/!*{
       type: 'pie',
       radius: 60,
       center: ['25%', '30%']
       // No encode specified, by default, it is first.
-    }*//*, {
+    }*!//!*, {
       type: 'pie',
       radius: 60,
       center: ['75%', '30%'],
@@ -208,7 +160,7 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
         itemName: 'profile',
         value: ''
       }
-    }*/]
+    }*!/]
   };
   var optionsPieDow = {
     legend: [{
@@ -228,7 +180,7 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
     }],
     roseType:'radius',
     tooltip: {},
-    /* dataset: {
+    /!* dataset: {
        source: [
          ['pie'],
          ['DoM'],
@@ -236,13 +188,13 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
          ['MoY'],
          ['HoD']
        ]
-     },*/
-    series: [/*{
+     },*!/
+    series: [/!*{
       type: 'pie',
       radius: 60,
       center: ['25%', '30%']
       // No encode specified, by default, it is first.
-    }*//*, {
+    }*!//!*, {
       type: 'pie',
       radius: 60,
       center: ['75%', '30%'],
@@ -250,7 +202,7 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
         itemName: 'profile',
         value: ''
       }
-    }*/]
+    }*!/]
   };
   var optionsPieHod = {
     legend: [{
@@ -270,7 +222,7 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
     }],
     roseType:'radius',
     tooltip: {},
-    /* dataset: {
+    /!* dataset: {
        source: [
          ['pie'],
          ['DoM'],
@@ -278,13 +230,13 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
          ['MoY'],
          ['HoD']
        ]
-     },*/
-    series: [/*{
+     },*!/
+    series: [/!*{
       type: 'pie',
       radius: 60,
       center: ['25%', '30%']
       // No encode specified, by default, it is first.
-    }*//*, {
+    }*!//!*, {
       type: 'pie',
       radius: 60,
       center: ['75%', '30%'],
@@ -292,8 +244,8 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
         itemName: 'profile',
         value: ''
       }
-    }*/]
-  };
+    }*!/]
+  };*/
   var optionsLineA = {
     grid: {containLabel: true,top:90},
     yAxis: {
@@ -470,7 +422,182 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
       }
     }*/]
   };
+  var optionsLineB = {
+    grid: {containLabel: true,top:90},
+    yAxis: {
+      name: 'metrics',
+    },
+    dataZoom: [{
+      start: 0,
+      end:7
+    },{
+      start: 0,
+      end:7,
+      type: 'inside'
+    }],
+    legend: {
+      top:5,
+      textStyle:{
+        color:'#999'
+      },
+      data:[]
+    },
+    xAxis: {
+      /* type: 'category',*/
+      data: [],
+      inverse:true,
+      axisLabel:{
+        show:true
+      },
+      /*    boundaryGap: ['0%', '0%']*/
+    },
+    /*visualMap: {
+      textStyle:{
+        color:'#999'
+      },
+      orient: 'horizontal',
+      left: 'center',
+      min: 1000,
+      max: 1000000,
+      text: ['Most followers', 'least followers'],
+      // Map the score column to color
+      dimension: 0,
 
+      inRange: {
+        color: ['#daa326', '#E15457']
+      }
+    },*/
+    series: [ ],
+    textStyle:{
+      color:'#999'
+    }
+  };
+  var optionsPieDomB = {
+    legend: [{
+      top:5,
+      data:[],
+      textStyle:{
+        color:'#999'
+      }
+    },{
+      bottom:40,
+      left:5,
+      orient:'horizontal',
+      data:[],
+      textStyle:{
+        color:'#999'
+      }
+    }],
+    roseType:'radius',
+    tooltip: {},
+    /* dataset: {
+       source: [
+         ['pie'],
+         ['DoM'],
+         ['DoW'],
+         ['MoY'],
+         ['HoD']
+       ]
+     },*/
+    series: [/*{
+      type: 'pie',
+      radius: 60,
+      center: ['25%', '30%']
+      // No encode specified, by default, it is first.
+    }*//*, {
+      type: 'pie',
+      radius: 60,
+      center: ['75%', '30%'],
+      encode: {
+        itemName: 'profile',
+        value: ''
+      }
+    }*/]
+  };
+  var optionsPieDowB = {
+    legend: [{
+      top:5,
+      data:[],
+      textStyle:{
+        color:'#999'
+      }
+    },{
+      bottom:40,
+      left:5,
+      orient:'horizontal',
+      data:[],
+      textStyle:{
+        color:'#999'
+      }
+    }],
+    roseType:'radius',
+    tooltip: {},
+    /* dataset: {
+       source: [
+         ['pie'],
+         ['DoM'],
+         ['DoW'],
+         ['MoY'],
+         ['HoD']
+       ]
+     },*/
+    series: [/*{
+      type: 'pie',
+      radius: 60,
+      center: ['25%', '30%']
+      // No encode specified, by default, it is first.
+    }*//*, {
+      type: 'pie',
+      radius: 60,
+      center: ['75%', '30%'],
+      encode: {
+        itemName: 'profile',
+        value: ''
+      }
+    }*/]
+  };
+  var optionsPieHodB = {
+    legend: [{
+      top:5,
+      data:[],
+      textStyle:{
+        color:'#999'
+      }
+    },{
+      bottom:40,
+      left:5,
+      orient:'horizontal',
+      data:[],
+      textStyle:{
+        color:'#999'
+      }
+    }],
+    roseType:'radius',
+    tooltip: {},
+    /* dataset: {
+       source: [
+         ['pie'],
+         ['DoM'],
+         ['DoW'],
+         ['MoY'],
+         ['HoD']
+       ]
+     },*/
+    series: [/*{
+      type: 'pie',
+      radius: 60,
+      center: ['25%', '30%']
+      // No encode specified, by default, it is first.
+    }*//*, {
+      type: 'pie',
+      radius: 60,
+      center: ['75%', '30%'],
+      encode: {
+        itemName: 'profile',
+        value: ''
+      }
+    }*/]
+  };
 
 
   socket.removeListener('authenticated');
@@ -630,14 +757,13 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
       if (response.data) {
         var likesCommentsA = response.data;
         var socResA = response.socRes;
-        var usernameA = socResA.un
+        var usernameA = socResA.un;
         var likesCountA = 0;
         var commentsCountA = 0;
 
         desc = desc.substring(desc.indexOf(':') + 1, desc.length);
         if (response.data[0]) {
           likesCountA = likesCommentsA[0]['comments'] || 0;
-
           $("#" + desc).find('.likes').html(likesCountA)
 
           for(i of window.profilesA){
@@ -659,10 +785,14 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
         if (response.data[2]) {
           icounterA++
           if(icounterA===1){
-            optionsLineA = optionsLine;
-            optionsPieDomA = optionsPieDom;
-            optionsPieDowA = optionsPieDow;
-            optionsPieHodA = optionsPieHod;
+            optionsLineA.series = [];
+            optionsLineA.legend.data = [];
+            optionsPieDomA.series = [];
+            optionsPieDomA.legend.data = [];
+            optionsPieDowA.series = [];
+            optionsPieDowA.legend.data = [];
+            optionsPieHodA.series = [];
+            optionsPieHodA.legend.data = [];
           }
 
           optionsLineA.series.push({
@@ -694,6 +824,7 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
             hodsA[hodA]++
             optionsLineA.xAxis.data.push(dateFormatA)
           }
+          optionsLineA.legend.data.push(usernameA)
           optionsPieDomA.legend[1].data.push({name:usernameA,icon:'image:///img/user.png'})
           optionsPieDomA.legend[1].data.sort()
           optionsPieDowA.legend[1].data.push({name:usernameA,icon:'image:///img/user.png'})
@@ -719,17 +850,17 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
           }
           var centerA = []
           if(icounterA<=10){
-            centerA = [String((icounterA*10)-5)+'%','30%'];
+            centerA = [String((icounterA*10)-5)+'%','40%'];
           }else if(icounterA>10 && icounterA<=20){
-            centerA = [String(((icounterA-10)*10)-5)+'%','60%'];
+            centerA = [String(((icounterA-10)*10)-5)+'%','70%'];
           }else if(icounterA>20 && icounterA<=30){
-            centerA = [String(((icounterA-20)*10)-5)+'%','90%'];
+            centerA = [String(((icounterA-20)*10)-5)+'%','100%'];
           }
           optionsPieDomA.series.push({
             name:usernameA,
             center:centerA,
             type: 'pie',
-            radius: 50,
+            radius: 35,
             data:profilesPieDomDataA,
             label:{
               show:false
@@ -739,7 +870,7 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
             name:usernameA,
             center:centerA,
             type: 'pie',
-            radius: 50,
+            radius: 35,
             data:profilesPieDowDataA,
             label:{
               show:false
@@ -749,7 +880,7 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
             name:usernameA,
             center:centerA,
             type: 'pie',
-            radius: 50,
+            radius: 35,
             data:profilesPieHodDataA,
             label:{
               show:false
@@ -760,22 +891,19 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
 
           if(icounterA === 1){
             $("#lines-seta").height(400)
-            $("#lines-seta").width('100%')
+
             chartit('lines-seta', optionsLineA)
-            $("#DoMA").height(400)
-            $("#DoMA").width('100%')
+            $("#DoMA").height(250)
+
             chartit('DoMA', optionsPieDomA)
-            $("#DoWA").height(400)
-            $("#DoWA").width('100%')
+            $("#DoWA").height(250)
+
             chartit('DoWA', optionsPieDowA)
-            $("#HoDA").height(400)
-            $("#HoDA").width('100%')
+            $("#HoDA").height(250)
+
             chartit('HoDA', optionsPieHodA)
-
-          }else{
-
-
-
+          }
+          else{
             var domLinesA = document.getElementById('lines-seta');
             console.log()
             echarts.getInstanceByDom(domLinesA).setOption(optionsLineA);
@@ -785,54 +913,168 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
             echarts.getInstanceByDom(dowPieA).setOption(optionsPieDowA);
             var hodPieA = document.getElementById('HoDA');
             echarts.getInstanceByDom(hodPieA).setOption(optionsPieHodA);
-
           }
-
-
-
-
         }
       }
     }
     else if (desc.indexOf('setb-posts-likes-comments:') > -1) {
       if (response.data) {
         var likesCommentsB = response.data;
-        var likesCountB =  0;
-        var commentsCountB =  0;
         var socResB = response.socRes;
         var usernameB = socResB.un;
+        var likesCountB =  0;
+        var commentsCountB =  0;
+
         desc = desc.substring(desc.indexOf(':') + 1, desc.length);
         if (response.data[0]) {
           likesCountB = likesCommentsB[0]['comments'] || 0;
           $("#" + desc).find('.likes').html(likesCountB);
+
+          for(var j of window.profilesB){
+            if(j.id===desc){
+              j.likes = likesCountB
+            }
+          }
         }
         if (response.data[1]) {
           commentsCountB = likesCommentsB[1]['likes'] || 0;
           $("#" + desc).find('.comments').html(commentsCountB);
           //console.log(icounter + ' setb user id: ' + desc + ' username:' + usernameB + ' has total comments count:' + commentsCountB);
+          for(var j of window.profilesB){
+            if(j.id===desc){
+              j.comments = commentsCountB
+            }
+          }
         }
         if (response.data[2]) {
           icounterB++
+          if(icounterB===1){
+            optionsLineB.series = [];
+            optionsLineB.legend.data = [];
+            optionsPieDomB.series = [];
+            optionsPieDomB.legend.data = [];
+            optionsPieDowB.series = [];
+            optionsPieDowB.legend.data = [];
+            optionsPieHodB.series = [];
+            optionsPieHodB.legend.data = [];
+          }
           optionsLineB.series.push({
             type: 'line',
             name: usernameB,
             data:[]
           })
+          var domsB = {};
+          var dowsB = {};
+          var hodsB = {};
+          var profilesPieDomDataB = []
+          var profilesPieDowDataB = []
+          var profilesPieHodDataB = []
 
           for (var trendPostB of response.data[2].trendsdata){
             optionsLineB.series[optionsLineB.series.length-1].data.push(trendPostB.edge_media_preview_like.count)
-            var dateB = dayjs(parseInt(trendPostB.taken_at_timestamp)*1000).format('YYYY-MM-DD')
-            optionsLineB.xAxis.data.push(dateB)
+            var dateB = dayjs.unix(trendPostB.taken_at_timestamp);
+            var dateFormatB = dateB.format('YYYY-MM-DD');
+            var domB = dayjs(dateB).date();
+            var dowB = dayjs(dateB).day();
+            var hodB = dayjs(dateB).hour();
+            /*  var moy = dayjs().month(date);
+              */
+            domsB[domB] = domsB[domB] || 0;
+            domsB[domB]++
+            dowsB[dowB] = dowsB[dowB] || 0;
+            dowsB[dowB]++
+            hodsB[hodB] = hodsB[hodB] || 0;
+            hodsB[hodB]++
+            optionsLineB.xAxis.data.push(dateFormatB)
           }
           optionsLineB.legend.data.push(usernameB)
+          optionsPieDomB.legend[1].data.push({name:usernameB,icon:'image:///img/user.png'})
+          optionsPieDomB.legend[1].data.sort()
+          optionsPieDowB.legend[1].data.push({name:usernameB,icon:'image:///img/user.png'})
+          optionsPieDowB.legend[1].data.sort()
+          optionsPieHodB.legend[1].data.push({name:usernameB,icon:'image:///img/user.png'})
+          optionsPieHodB.legend[1].data.sort()
+          for(var domib in domsB){
+            domib = domib>9 ? String(domib) : '0'+domib
+            profilesPieDomDataB.push({name:domib,value:domsB[domib]})
+            optionsPieDomB.legend[0].data.push(domib)
+            optionsPieDomB.legend[0].data.sort()
+          }
+          for(var dowib in dowsB){
+            profilesPieDowDataB.push({name:dowib,value:dowsB[dowib]})
+            optionsPieDowB.legend[0].data.push(dowib)
+            optionsPieDowB.legend[0].data.sort()
+          }
+          for(var hodib in hodsB){
+            hodib = hodib>9 ? String(hodib) : '0'+hodib
+            profilesPieHodDataB.push({name:hodib,value:hodsB[hodib]})
+            optionsPieHodB.legend[0].data.push(hodib)
+            optionsPieHodB.legend[0].data.sort()
+          }
+          var centerB = []
+          if(icounterB<=10){
+            centerB = [String((icounterB*10)-5)+'%','40%'];
+          }else if(icounterB>10 && icounterB<=20){
+            centerB = [String(((icounterB-10)*10)-5)+'%','70%'];
+          }else if(icounterB>20 && icounterB<=30){
+            centerB = [String(((icounterB-20)*10)-5)+'%','100%'];
+          }
+          optionsPieDomB.series.push({
+            name:usernameB,
+            center:centerB,
+            type: 'pie',
+            radius: 35,
+            data:profilesPieDomDataB,
+            label:{
+              show:false
+            }
+          })
+          optionsPieDowB.series.push({
+            name:usernameB,
+            center:centerB,
+            type: 'pie',
+            radius: 35,
+            data:profilesPieDowDataB,
+            label:{
+              show:false
+            }
+          })
+          optionsPieHodB.series.push({
+            name:usernameB,
+            center:centerB,
+            type: 'pie',
+            radius: 35,
+            data:profilesPieHodDataB,
+            label:{
+              show:false
+            }
+          })
+
+          //optionsPieDomA.legend.data.push(usernameA)
+
           if(icounterB === 1){
             $("#lines-setb").height(400)
-            $("#lines-setb").width('100%')
-            chartit('lines-setb', optionsLineB)
-          }else{
-            var domLinesB = document.getElementById('lines-setb');
-            echarts.getInstanceByDom(domLinesB).setOption(optionsLineB)
 
+            chartit('lines-setb', optionsLineB)
+            $("#DoMB").height(250)
+
+            chartit('DoMB', optionsPieDomB)
+            $("#DoWB").height(250)
+
+            chartit('DoWB', optionsPieDowB)
+            $("#HoDB").height(250)
+        
+            chartit('HoDB', optionsPieHodB)
+          }
+          else{
+            var domLinesB = document.getElementById('lines-setb');
+            echarts.getInstanceByDom(domLinesB).setOption(optionsLineB);
+            var domPieB = document.getElementById('DoMB');
+            echarts.getInstanceByDom(domPieB).setOption(optionsPieDomB);
+            var dowPieB = document.getElementById('DoWB');
+            echarts.getInstanceByDom(dowPieB).setOption(optionsPieDowB);
+            var hodPieB = document.getElementById('HoDB');
+            echarts.getInstanceByDom(hodPieB).setOption(optionsPieHodB);
           }
 
         }
