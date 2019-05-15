@@ -71,183 +71,9 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
       color:'#999'
     }
   };
- /* var optionsLine = {
-    grid: {containLabel: true,top:90},
-    yAxis: {
-      name: 'metrics',
-    },
-    dataZoom: [{
-      start: 0,
-      end:7
-    },{
-      start: 0,
-      end:7,
-      type: 'inside'
-    }],
-    legend: {
-      top:5,
-      textStyle:{
-        color:'#999'
-      },
-      data:[]
-    },
-    xAxis: {
-      /!* type: 'category',*!/
-      data: [],
-      inverse:true,
-      axisLabel:{
-        show:true
-      },
-      /!*    boundaryGap: ['0%', '0%']*!/
-    },
-    /!*visualMap: {
-      textStyle:{
-        color:'#999'
-      },
-      orient: 'horizontal',
-      left: 'center',
-      min: 1000,
-      max: 1000000,
-      text: ['Most followers', 'least followers'],
-      // Map the score column to color
-      dimension: 0,
 
-      inRange: {
-        color: ['#daa326', '#E15457']
-      }
-    },*!/
-    series: [ ],
-    textStyle:{
-      color:'#999'
-    }
-  };
-  var optionsPieDom = {
-    legend: [{
-      top:5,
-      data:[],
-      textStyle:{
-        color:'#999'
-      }
-    },{
-      bottom:40,
-      left:5,
-      orient:'horizontal',
-      data:[],
-      textStyle:{
-        color:'#999'
-      }
-    }],
-    roseType:'radius',
-    tooltip: {},
-    /!* dataset: {
-       source: [
-         ['pie'],
-         ['DoM'],
-         ['DoW'],
-         ['MoY'],
-         ['HoD']
-       ]
-     },*!/
-    series: [/!*{
-      type: 'pie',
-      radius: 60,
-      center: ['25%', '30%']
-      // No encode specified, by default, it is first.
-    }*!//!*, {
-      type: 'pie',
-      radius: 60,
-      center: ['75%', '30%'],
-      encode: {
-        itemName: 'profile',
-        value: ''
-      }
-    }*!/]
-  };
-  var optionsPieDow = {
-    legend: [{
-      top:5,
-      data:[],
-      textStyle:{
-        color:'#999'
-      }
-    },{
-      bottom:40,
-      left:5,
-      orient:'horizontal',
-      data:[],
-      textStyle:{
-        color:'#999'
-      }
-    }],
-    roseType:'radius',
-    tooltip: {},
-    /!* dataset: {
-       source: [
-         ['pie'],
-         ['DoM'],
-         ['DoW'],
-         ['MoY'],
-         ['HoD']
-       ]
-     },*!/
-    series: [/!*{
-      type: 'pie',
-      radius: 60,
-      center: ['25%', '30%']
-      // No encode specified, by default, it is first.
-    }*!//!*, {
-      type: 'pie',
-      radius: 60,
-      center: ['75%', '30%'],
-      encode: {
-        itemName: 'profile',
-        value: ''
-      }
-    }*!/]
-  };
-  var optionsPieHod = {
-    legend: [{
-      top:5,
-      data:[],
-      textStyle:{
-        color:'#999'
-      }
-    },{
-      bottom:40,
-      left:5,
-      orient:'horizontal',
-      data:[],
-      textStyle:{
-        color:'#999'
-      }
-    }],
-    roseType:'radius',
-    tooltip: {},
-    /!* dataset: {
-       source: [
-         ['pie'],
-         ['DoM'],
-         ['DoW'],
-         ['MoY'],
-         ['HoD']
-       ]
-     },*!/
-    series: [/!*{
-      type: 'pie',
-      radius: 60,
-      center: ['25%', '30%']
-      // No encode specified, by default, it is first.
-    }*!//!*, {
-      type: 'pie',
-      radius: 60,
-      center: ['75%', '30%'],
-      encode: {
-        itemName: 'profile',
-        value: ''
-      }
-    }*!/]
-  };*/
   var optionsLineA = {
+    tooltip:{},
     grid: {containLabel: true,top:90,left:130},
     yAxis: {
       name: 'metrics',
@@ -434,6 +260,7 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
     }*/]
   };
   var optionsLineB = {
+    tooltip:{},
     grid: {containLabel: true,top:90,left:130},
     yAxis: {
       name: 'metrics',
@@ -621,11 +448,10 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
   };
 
 
-  socket.removeListener('authenticated');
-  socket.on('authenticated', function (response) {
+  socket.removeListener('authenticated:seta');
+  socketB.removeListener('authenticated:setb');
+  socket.on('authenticated:seta', function (response) {
     var desc = response.socRes.desc;
-
-
     if (desc === 'seta-profile-userid') {
       if (response.data) {
         window.profilesA = response.data.data;
@@ -674,7 +500,9 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
                 {type: 'sum', field: 'edge_media_to_comment', resField: 'comments'},
                 {type: 'sum', field: 'edge_media_preview_like', resField: 'likes'}
               ],
-            }, 'seta-posts-likes-comments:' + useridA
+            },
+            'seta-posts-likes-comments:' + useridA,
+            'authenticated:seta'
           )
         }
         var heightA = $("#profiles-counters-a").height();
@@ -706,90 +534,12 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
         $("#countera").html(totalPostsA + '<div> Posts retrieved for set A</div>');
       }
     }
-    else if (desc === 'setb-profile-userid') {
-      if (response.data) {
-        window.profilesB = response.data.data;
-        totalPostsB = 0;
-        $("#profiles-counters-b").html('');
-        for (let itemB of window.profilesB) {
-          var accountB = itemB.username;
-          var useridB = itemB.id;
-          var postCountB = itemB.edge_owner_to_timeline_media.count || 0;
-          var followersCountB = itemB.edge_followed_by.count || 0;
-          var followingCountB = itemB.edge_follow.count || 0;
-          itemB.posts = postCountB
-          itemB.followers = followersCountB
-          itemB.following = followingCountB
-
-          totalPostsB += postCountB;
-          $("#profiles-counters-b").append(
-            '<div  id="' + useridB + '" class="counter-metric">' +
-            '<figure>'+
-            '<img alt="missing" class="profile-mini-img" src="' +
-            picit(itemB) +
-            '">' +
-            '<figcaption style="color:white">'+accountB+'</figcaption>'+
-            '</figure>'+
-            '<div class="counter-metric-span posts">' + postCountB + '</div>' +
-            '<div class="counter-metric-span followers">' + followersCountB + '</div>' +
-            '<div class="counter-metric-span following">' + followingCountB + '</div>' +
-            '<div class="counter-metric-span likes">' + htmlChartLoadingMini + '</div>' +
-            '<div class="counter-metric-span comments">' + htmlChartLoadingMini + '</div>' +
-            '</div>'
-          )
-          getServiceData('find',
-            'instagram/posts',
-            {
-              query: {
-                "owner.id": useridB,
-                $sort: {taken_at_timestamp: -1},
-                $limit: 20000
-              },
-              paginate: {
-                default: 100000,
-                max: 20000
-              },
-              un: accountB,
-              aggregate: [
-                {type: 'sum', field: 'edge_media_to_comment', resField: 'comments'},
-                {type: 'sum', field: 'edge_media_preview_like', resField: 'likes'}
-              ],
-            }, 'setb-posts-likes-comments:' + useridB
-          )
-        }
-        var heightB = $("#profiles-counters-b").height();
-        var widthB = $("#profiles-counters-b").width();
-        $("#stats-hbar-b").height(heightB)
-        $("#stats-hbar-b").width(widthB)
-        var profilesB = [];
-        optionsBarB.series.push({
-          type: 'bar',
-          name:'followers',
-          barGap:'100%',
-          data:[],
-          label:{
-            show:true,
-            color:'#fff',
-            formatter: '{b}'
-          }
-        })
-
-        for (var chartSeriesItemB of window.profilesB){
-          profilesB.push( chartSeriesItemB.username)
-          optionsBarB.series[0].data.push(chartSeriesItemB.followers)
-        }
-        optionsBarB.yAxis.data = profilesB
-        chartit('stats-hbar-b',optionsBarB)
-
-        $("#counterb").html(totalPostsB + '<div> Posts retrieved for set B</div>');
-
-      }
-    }
     if (desc.indexOf('seta-posts-likes-comments:') > -1) {
       if (response.data) {
         var likesCommentsA = response.data;
         var socResA = response.socRes;
         var usernameA = socResA.un;
+        var totalA = parseInt(response.data[3].total);
         var likesCountA = 0;
         var commentsCountA = 0;
 
@@ -840,7 +590,12 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
           var profilesPieHodDataA = []
 
           for (var trendPost of response.data[2].trendsdata){
-            optionsLineA.series[optionsLineA.series.length-1].data.push(trendPost.edge_media_preview_like.count)
+            //totalA
+            var likesTotal = trendPost.edge_media_preview_like.count
+            var commentsTotal = trendPost.edge_media_to_comment.count
+            var engagement = parseInt(likesTotal)+parseInt(commentsTotal)
+            engagement = engagement /totalA
+            optionsLineA.series[optionsLineA.series.length-1].data.push(engagement)
             var dateA = dayjs.unix(trendPost.taken_at_timestamp);
             var dateFormatA = dateA.format('YYYY-MM-DD');
             var domA = dayjs(dateA).date();
@@ -952,11 +707,97 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
         }
       }
     }
+
+  })
+  socketB.on('authenticated:setb', function (response) {
+    var desc = response.socRes.desc;
+    if (desc === 'setb-profile-userid') {
+      if (response.data) {
+        window.profilesB = response.data.data;
+        totalPostsB = 0;
+        $("#profiles-counters-b").html('');
+        for (let itemB of window.profilesB) {
+          var accountB = itemB.username;
+          var useridB = itemB.id;
+          var postCountB = itemB.edge_owner_to_timeline_media.count || 0;
+          var followersCountB = itemB.edge_followed_by.count || 0;
+          var followingCountB = itemB.edge_follow.count || 0;
+          itemB.posts = postCountB
+          itemB.followers = followersCountB
+          itemB.following = followingCountB
+
+          totalPostsB += postCountB;
+          $("#profiles-counters-b").append(
+            '<div  id="' + useridB + '" class="counter-metric">' +
+            '<figure>'+
+            '<img alt="missing" class="profile-mini-img" src="' +
+            picit(itemB) +
+            '">' +
+            '<figcaption style="color:white">'+accountB+'</figcaption>'+
+            '</figure>'+
+            '<div class="counter-metric-span posts">' + postCountB + '</div>' +
+            '<div class="counter-metric-span followers">' + followersCountB + '</div>' +
+            '<div class="counter-metric-span following">' + followingCountB + '</div>' +
+            '<div class="counter-metric-span likes">' + htmlChartLoadingMini + '</div>' +
+            '<div class="counter-metric-span comments">' + htmlChartLoadingMini + '</div>' +
+            '</div>'
+          )
+          getServiceData('find',
+            'instagram/posts',
+            {
+              query: {
+                "owner.id": useridB,
+                $sort: {taken_at_timestamp: -1},
+                $limit: 20000
+              },
+              paginate: {
+                default: 100000,
+                max: 20000
+              },
+              un: accountB,
+              aggregate: [
+                {type: 'sum', field: 'edge_media_to_comment', resField: 'comments'},
+                {type: 'sum', field: 'edge_media_preview_like', resField: 'likes'}
+              ],
+            },
+            'setb-posts-likes-comments:' + useridB,
+            'authenticated:setb'
+          )
+        }
+        var heightB = $("#profiles-counters-b").height();
+        var widthB = $("#profiles-counters-b").width();
+        $("#stats-hbar-b").height(heightB)
+        $("#stats-hbar-b").width(widthB)
+        var profilesB = [];
+        optionsBarB.series.push({
+          type: 'bar',
+          name:'followers',
+          barGap:'100%',
+          data:[],
+          label:{
+            show:true,
+            color:'#fff',
+            formatter: '{b}'
+          }
+        })
+
+        for (var chartSeriesItemB of window.profilesB){
+          profilesB.push( chartSeriesItemB.username)
+          optionsBarB.series[0].data.push(chartSeriesItemB.followers)
+        }
+        optionsBarB.yAxis.data = profilesB
+        chartit('stats-hbar-b',optionsBarB)
+
+        $("#counterb").html(totalPostsB + '<div> Posts retrieved for set B</div>');
+
+      }
+    }
     else if (desc.indexOf('setb-posts-likes-comments:') > -1) {
       if (response.data) {
         var likesCommentsB = response.data;
         var socResB = response.socRes;
         var usernameB = socResB.un;
+        var totalB = parseInt(response.data[3].total);
         var likesCountB =  0;
         var commentsCountB =  0;
 
@@ -968,38 +809,6 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
           for(var j of window.profilesB){
             if(j.id===desc){
               j.likes = likesCountB;
-              /*optionsBarB.series.push({
-                type: 'custom',
-                name:'likes',
-                data:[],
-                renderItem: function (params, api) {
-                  var categoryIndex = api.value(0);
-                  var start = api.coord([api.value(1), categoryIndex]);
-                  var end = api.coord([api.value(2), categoryIndex]);
-                  var height = api.size([0, 1])[1] * 0.6;
-
-                  var rectShape = echarts.graphic.clipRectByRect({
-                    x: start[0],
-                    y: start[1] - height / 2,
-                    width: end[0] - start[0],
-                    height: height
-                  }, {
-                    x: params.coordSys.x,
-                    y: params.coordSys.y,
-                    width: params.coordSys.width,
-                    height: params.coordSys.height
-                  });
-
-                  return rectShape && {
-                    type: 'rect',
-                    shape: rectShape,
-                    style: api.style()
-                  };
-                }
-              })
-              optionsBarB.series[1].data.push(j.likes)
-              var domBarB = document.getElementById('stats-hbar-b');
-              echarts.getInstanceByDom(domBarB).setOption(optionsBarB);*/
             }
           }
         }
@@ -1038,7 +847,11 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
           var profilesPieHodDataB = []
 
           for (var trendPostB of response.data[2].trendsdata){
-            optionsLineB.series[optionsLineB.series.length-1].data.push(trendPostB.edge_media_preview_like.count)
+            var likesTotalB = trendPostB.edge_media_preview_like.count
+            var commentsTotalB = trendPostB.edge_media_to_comment.count
+            var engagementB = parseInt(likesTotalB)+parseInt(commentsTotalB)
+            engagementB = engagementB /totalB
+            optionsLineB.series[optionsLineB.series.length-1].data.push(engagementB)
             var dateB = dayjs.unix(trendPostB.taken_at_timestamp);
             var dateFormatB = dateB.format('YYYY-MM-DD');
             var domB = dayjs(dateB).date();
@@ -1152,6 +965,7 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
       }
     }
   })
+
   if (seta.length >= 1) {
     $("#countera").html(htmlChartLoadingMini);
     window.profilesA = [];
@@ -1167,7 +981,8 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
         }
 
       },
-      'seta-profile-userid'
+      'seta-profile-userid',
+      'authenticated:seta'
     )
 
   }
@@ -1185,7 +1000,8 @@ function getStatsData(totalPostsA = 0, totalPostsB = 0, seta = [], setb = [], aD
           $sort: {'edge_followed_by.count': -1}
         }
       },
-      'setb-profile-userid'
+      'setb-profile-userid',
+      'authenticated:setb'
     )
 
   }

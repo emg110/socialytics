@@ -48,14 +48,33 @@ app.configure(channels);
 app.configure(socketio(function (io) {
   io.on('connection', function (socket) {
     //socket.emit('instagram', { text: 'A client connected!' });
-    socket.on('authenticated', function (socReq) {
+    socket.on('authenticated:seta', function (socReq) {
       switch (socReq.data.method) {
         case 'find':
           app.service(socReq.data.service).find(socReq.options).then(items => {
             /*if(items.data){
               console.log(items.data.length)
             }*/
-            socket.emit('authenticated', {data: items, socRes: socReq.data});
+            socket.emit('authenticated:seta', {data: items, socRes: socReq.data});
+          }).catch(err=>{
+            console.log(err)
+          })
+          break
+        default:
+          console.log('info: Method does not exist! ');
+
+
+      }
+
+    });
+    socket.on('authenticated:setb', function (socReq) {
+      switch (socReq.data.method) {
+        case 'find':
+          app.service(socReq.data.service).find(socReq.options).then(items => {
+            /*if(items.data){
+              console.log(items.data.length)
+            }*/
+            socket.emit('authenticated:setb', {data: items, socRes: socReq.data});
           }).catch(err=>{
             console.log(err)
           })

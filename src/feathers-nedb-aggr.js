@@ -71,6 +71,7 @@ module.exports = function () {
         //let trendArray = context.result.data.slice(context.result.data.length-101,context.result.data.length+1)
         let trendArray = context.result.data.slice(0,101)
         resArr.push({trendsdata:trendArray})
+        resArr.push({total:context.result.total})
         context.result = resArr;
 
       }
@@ -79,9 +80,14 @@ module.exports = function () {
         let field = context.params.aggregate['field'];
         let resField = context.params.aggregate['resField'];
         if(type && field){
-          let result = await aggregate(context.result, type, field).then(res=>res)
+          let result = await aggregate(context.result, type, field)
           if(result){
-            context.result = {[resField]:result}
+            let resArr = [];
+            resArr.push({[resField]:result})
+            let trendArray = context.result.data.slice(0,101)
+            resArr.push({trendsdata:trendArray})
+            resArr.push({total:context.result.total})
+            context.result = resArr;
           }
         }
       }

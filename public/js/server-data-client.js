@@ -223,22 +223,19 @@ function getEndpointData(endpoint, type, code, container, caller) {
 
 }
 
-function getServiceData(method, service, filters, desc) {
-
+function getServiceData(method, service, filters, desc, channel) {
   var accesstoken = ls.getItem('accesstoken')
-  var username = ls.getItem('username')
-
   var data = {}
   data['accessToken'] = accesstoken;
   if(filters.un)data['un'] = filters.un;
-
   data['method'] = method
   data['service'] = service
   data['desc'] = desc
-  /*  return new Promise((resolve, reject) => {
-
-    })*/
-  socket.emit('authenticated', {data: data, options: filters});
+  if(channel.indexOf('setb')>-1){
+    socketB.emit(channel, {data: data, options: filters});
+  }else{
+    socket.emit(channel, {data: data, options: filters});
+  }
 
 }
 /*function getServiceData(method, service, filters, desc) {

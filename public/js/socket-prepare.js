@@ -4,6 +4,7 @@ var accesstoken = ls.getItem('accesstoken');
 if (accesstoken) {
   var socketUri = window.location.protocol + '//' + window.location.host;
   socket = io(socketUri);
+  socketB = io(socketUri);
   console.log('info: Socket IO connection is started for Socialytics client App on URL: ' + socketUri);
   console.log('info: Trying to authenticate socket for account: ' + email);
   socket.emit('authenticate', {

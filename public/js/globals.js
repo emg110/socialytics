@@ -125,6 +125,7 @@ OverlayScrollbars(document.querySelectorAll('body'), {
 var ls = ls || window.localStorage;
 window.bulkevent = false;
 var socket = {};
+var socketB = {};
 var app = {}
 /*window.alert(window.location.href)
 window.alert(window.location.host)

@@ -11,6 +11,7 @@ module.exports = {
   profiles: [],
   locations: [],
   tags: [],
+  cube:{},
   seta:[
     'continente',
     'meoinstagram',
