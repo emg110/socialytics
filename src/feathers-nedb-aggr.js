@@ -84,6 +84,11 @@ module.exports = function () {
           if(result){
             let resArr = [];
             resArr.push({[resField]:result})
+            for (let item in context.result.data){
+              if(item.location){
+                console.log(item.location.toString())
+              }
+            }
             let trendArray = context.result.data.slice(0,101)
             resArr.push({trendsdata:trendArray})
             resArr.push({total:context.result.total})
