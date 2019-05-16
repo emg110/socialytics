@@ -818,6 +818,7 @@ button {
 .counters-stage{
   width:auto;
   height:auto;
+  margin-bottom: 5px;
 }
 .counters-stage:after {
   content: "";
@@ -851,4 +852,31 @@ button {
   .socialytics-dashboard .chart-wrapper {
     margin-bottom: 0;
   }
+}
+.metrics-legend{
+  padding: 3px;
+  margin-right: 2px;
+  border-radius: 50px;
+  color: #fff;
+  text-align: center;
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+}
+.posts-legend{
+  background-color: #2f4554;
+  width:26px;
+  height:26px;
+}
+.followers-legend{
+  background-color: #bda29a;
+}
+.following-legend{
+  background-color: #ca8622;
+}
+.likes-legend{
+  background-color: #c23531;
+}
+.comments-legend{
+  background-color:#749f83;
 }
