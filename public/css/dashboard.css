@@ -825,19 +825,24 @@ button {
   clear: both;
 }
 .posts{
-  background-color: #45d3fc;
+  background-color: #2f4554;
+  color:#fff;
 }
 .followers{
-  background-color: #fc8211;
+  background-color: #bda29a;
+  color:#fff;
 }
 .following{
-  background-color: #fcc15f;
+  background-color: #ca8622;
+  color:#fff;
 }
 .likes{
-  background-color: #c1fc48;
+  background-color: #c23531;
+  color:#fff;
 }
 .comments{
-  background-color: #bb8176;
+  background-color: #749f83;
+  color:#fff;
 }
 .dashboard-body{
   background-color: #222;

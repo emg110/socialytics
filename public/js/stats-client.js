@@ -733,6 +733,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
           optionsLineA.series.push({
             type: 'line',
             name: usernameA,
+            areaStyle: {},
             data:[]
           })
           var domsA = {};
@@ -1042,6 +1043,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
           optionsLineB.series.push({
             type: 'line',
             name: usernameB,
+            areaStyle: {},
             data:[]
           })
           var domsB = {};
