@@ -124,6 +124,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
       orient: 'horizontal',
       left: 'center',
       bottom: '15%',
+      text:['Max engagement','Min engagement'],
       textStyle:{
         color:'#999'
       }
@@ -192,6 +193,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
       orient: 'horizontal',
       left: 'center',
       bottom: '15%',
+      text:['Max engagement','Min engagement'],
       textStyle:{
         color:'#999'
       }
