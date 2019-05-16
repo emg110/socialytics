@@ -625,13 +625,13 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
           var postCountA = itemA.edge_owner_to_timeline_media.count || 0;
           var followersCountA = itemA.edge_followed_by.count || 0;
           var followingCountA = itemA.edge_follow.count || 0;
-          itemA.posts = postCountA
-          itemA.followers = followersCountA
-          itemA.following = followingCountA
+          itemA.posts = postCountA;
+          itemA.followers = followersCountA;
+          itemA.following = followingCountA;
 
-          totalsA.totalPosts += postCountA
-          totalsA.totalFollowers += followersCountA
-          totalsA.totalFollowing += followingCountA
+          totalsA.totalPosts += postCountA;
+          totalsA.totalFollowers += followersCountA;
+          totalsA.totalFollowing += followingCountA;
           getServiceData('find',
             'instagram/posts',
             {
@@ -654,13 +654,13 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
             },
             'seta-posts-likes-comments:' + useridA,
             'authenticated:seta'
-          )
-
+          );
+          var pictureA = picit(itemA);
           $("#profiles-counters-a").append(
             '<div  id="' + useridA + '" class="counter-metric">' +
             '<figure>'+
             '<img alt="missing" class="profile-mini-img" src="' +
-            picit(itemA) +
+            pictureA +
             '">' +
             '<figcaption style="color:white">'+accountA+'</figcaption>'+
             '</figure>'+
@@ -670,17 +670,30 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
             '<div class="counter-metric-span likes">' + htmlChartLoadingMini + '</div>' +
             '<div class="counter-metric-span comments">' + htmlChartLoadingMini + '</div>' +
             '</div>'
-          )
-          optionsBarA.series[0].data.push(itemA.followers)
-          optionsBarA.yAxis.data.push(itemA.username)
+          );
+          optionsBarA.series[0].data.push(itemA.followers);
+          optionsBarA.series[0].label[itemA.followers] = {
+            height: 40,
+              align: 'center',
+              backgroundColor: {
+              image: pictureA
+            }
+          }
+          optionsBarA.yAxis.data.push(itemA.username);
         }
         var heightA = $("#profiles-counters-a").height();
         var widthA = $("#profiles-counters-a").width();
         $("#stats-hbar-a").height(heightA)
         $("#stats-hbar-a").width(widthA)
 
-        chartit('stats-hbar-a', optionsBarA)
-        $("#countera").html(totalsA.totalPosts + '<div> Posts retrieved for set A</div>');
+        chartit('stats-hbar-a', optionsBarA);
+        var htmlA = '<div class="counter-metric-span posts">' + totalsA.totalPosts + '</div>' +
+          '<div class="counter-metric-span followers">' + totalsA.totalFollowers + '</div>' +
+          '<div class="counter-metric-span following">' + totalsA.totalFollowing + '</div>' +
+          '<div class="counter-metric-span likes">' + totalsA.totalLikes + '</div>' +
+          '<div class="counter-metric-span comments">' + totalsA.totalComments + '</div>';
+        $("#countera").html(htmlA);
+        $("#total-metrics-a").html(htmlA);
       }
     }
     if (desc.indexOf('seta-posts-likes-comments:') > -1) {
@@ -745,18 +758,20 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
 
           for (var trendPost of response.data[2].trendsdata){
             //dbPostsCountA
-            if(trendPost.location)console.log(trendPost.location.toString())
-            var likesTotal = trendPost.edge_media_preview_like.count
-            var commentsTotal = trendPost.edge_media_to_comment.count
-            var engagement = parseInt(likesTotal)+parseInt(commentsTotal)
-            engagement = (engagement /dbPostsCountA).toFixed(2)
-            optionsLineA.series[optionsLineA.series.length-1].data.push(engagement)
+            if(trendPost.location)console.log(trendPost.location.toString());
+            var likesTotal = trendPost.edge_media_preview_like.count;
+            var commentsTotal = trendPost.edge_media_to_comment.count;
+            totalsA.totalLikes += likesTotal;
+            totalsA.totalComments += commentsTotal;
+            var engagement = parseInt(likesTotal)+parseInt(commentsTotal);
+            engagement = (engagement /dbPostsCountA).toFixed(2);
+            optionsLineA.series[optionsLineA.series.length-1].data.push(engagement);
             var dateA = dayjs.unix(trendPost.taken_at_timestamp);
             var dateFormatA = dateA.format('YYYY-MM-DD');
             var domA = dayjs(dateA).date();
             domA = domA>9 ? String(domA) : '0'+domA
             var dowA = dayjs(dateA).day();
-            dowA = String(dowA)
+            dowA = String(dowA);
             switch (dowA) {
               case '0':
                 dowA = 'Sunday'
@@ -781,8 +796,8 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
                 break
             }
             var hodA = dayjs(dateA).hour();
-            hodA = hodA>9 ? String(hodA) : '0'+hodA
-            hodA = hodA>12 ? hodA+'pm' : hodA+'am'
+            hodA = hodA>9 ? String(hodA) : '0'+hodA;
+            hodA = hodA>12 ? hodA+'pm' : hodA+'am';
             /*  var moy = dayjs().month(date);
               */
             domsA[domA] = domsA[domA] || 0;
@@ -791,41 +806,47 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
             dowsA[dowA]++
             hodsA[hodA] = hodsA[hodA] || 0;
             hodsA[hodA]++
-            if(optionsHeatA.xAxis.data.indexOf(hodA)===-1)optionsHeatA.xAxis.data.push(hodA)
-            optionsHeatA.xAxis.data.sort()
-            optionsLineA.xAxis.data.push(dateFormatA)
-            optionsHeatA.series[0].data.push([hodA,dowA,engagement])
+            if(optionsHeatA.xAxis.data.indexOf(hodA)===-1)optionsHeatA.xAxis.data.push(hodA);
+            optionsHeatA.xAxis.data.sort();
+            optionsLineA.xAxis.data.push(dateFormatA);
+            optionsHeatA.series[0].data.push([hodA,dowA,engagement]);
           }
-
-          optionsLineA.legend.data.push(usernameA)
-          optionsPieDomA.legend[1].data.push({name:usernameA,icon:'image:///img/user.png'})
-          optionsPieDomA.legend[1].data.sort()
-          optionsPieDowA.legend[1].data.push({name:usernameA,icon:'image:///img/user.png'})
-          optionsPieDowA.legend[1].data.sort()
-          optionsPieHodA.legend[1].data.push({name:usernameA,icon:'image:///img/user.png'})
-          optionsPieHodA.legend[1].data.sort()
+          var htmlAA = '<div class="counter-metric-span posts">' + totalsA.totalPosts + '</div>' +
+            '<div class="counter-metric-span followers">' + totalsA.totalFollowers + '</div>' +
+            '<div class="counter-metric-span following">' + totalsA.totalFollowing + '</div>' +
+            '<div class="counter-metric-span likes">' + totalsA.totalLikes + '</div>' +
+            '<div class="counter-metric-span comments">' + totalsA.totalComments + '</div>';
+          $("#countera").html(htmlAA);
+          $("#total-metrics-a").html(htmlAA);
+          optionsLineA.legend.data.push(usernameA);
+          optionsPieDomA.legend[1].data.push({name:usernameA,icon:'image:///img/user.png'});
+          optionsPieDomA.legend[1].data.sort();
+          optionsPieDowA.legend[1].data.push({name:usernameA,icon:'image:///img/user.png'});
+          optionsPieDowA.legend[1].data.sort();
+          optionsPieHodA.legend[1].data.push({name:usernameA,icon:'image:///img/user.png'});
+          optionsPieHodA.legend[1].data.sort();
 
 
 
           for(var domi in domsA){
 
-            profilesPieDomDataA.push({name:domi,value:domsA[domi]})
-            optionsPieDomA.legend[0].data.push(domi)
-            optionsPieDomA.legend[0].data.sort()
+            profilesPieDomDataA.push({name:domi,value:domsA[domi]});
+            optionsPieDomA.legend[0].data.push(domi);
+            optionsPieDomA.legend[0].data.sort();
           }
 
           for(var dowi in dowsA){
-            profilesPieDowDataA.push({name:dowi,value:dowsA[dowi]})
+            profilesPieDowDataA.push({name:dowi,value:dowsA[dowi]});
 
-            if(optionsHeatA.yAxis.data.indexOf(dowi)===-1)optionsHeatA.yAxis.data.push(dowi)
-            optionsPieDowA.legend[0].data.push(dowi)
-            optionsPieDowA.legend[0].data.sort()
+            if(optionsHeatA.yAxis.data.indexOf(dowi)===-1)optionsHeatA.yAxis.data.push(dowi);
+            optionsPieDowA.legend[0].data.push(dowi);
+            optionsPieDowA.legend[0].data.sort();
           }
 
           for(var hodi in hodsA){
-            profilesPieHodDataA.push({name:hodi,value:hodsA[hodi]})
-            optionsPieHodA.legend[0].data.push(hodi)
-            optionsPieHodA.legend[0].data.sort()
+            profilesPieHodDataA.push({name:hodi,value:hodsA[hodi]});
+            optionsPieHodA.legend[0].data.push(hodi);
+            optionsPieHodA.legend[0].data.sort();
           }
           var centerA = []
           if(icounterA<=10){
@@ -844,7 +865,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
             label:{
               show:false
             }
-          })
+          });
           optionsPieDowA.series.push({
             name:usernameA,
             center:centerA,
@@ -854,7 +875,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
             label:{
               show:false
             }
-          })
+          });
           optionsPieHodA.series.push({
             name:usernameA,
             center:centerA,
@@ -864,34 +885,32 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
             label:{
               show:false
             }
-          })
-          optionsLineA.legend.data.push(username)
-          //optionsPieDomA.legend.data.push(usernameA)
+          });
+          optionsLineA.legend.data.push(username);
 
           if(icounterA === 1){
-            $("#lines-seta").height(400)
-            var width = $("#lines-seta").width()
-            chartit('lines-seta', optionsLineA)
+            $("#lines-seta").height(400);
+            var width = $("#lines-seta").width();
+            chartit('lines-seta', optionsLineA);
 
-            $("#DoMA").height(250)
-            $("#DoMA").width(width)
-            chartit('DoMA', optionsPieDomA)
+            $("#DoMA").height(250);
+            $("#DoMA").width(width);
+            chartit('DoMA', optionsPieDomA);
 
-            $("#DoWA").height(250)
-            $("#DoWA").width(width)
-            chartit('DoWA', optionsPieDowA)
+            $("#DoWA").height(250);
+            $("#DoWA").width(width);
+            chartit('DoWA', optionsPieDowA);
 
-            $("#HoDA").height(250)
-            $("#HoDA").width(width)
-            chartit('HoDA', optionsPieHodA)
+            $("#HoDA").height(250);
+            $("#HoDA").width(width);
+            chartit('HoDA', optionsPieHodA);
 
-            $("#heatA").height(400)
-            $("#heatA").width(width)
-            chartit('heatA', optionsHeatA)
+            $("#heatA").height(400);
+            $("#heatA").width(width);
+            chartit('heatA', optionsHeatA);
           }
           else{
             var domLinesA = document.getElementById('lines-seta');
-            console.log()
             echarts.getInstanceByDom(domLinesA).setOption(optionsLineA);
             var domPieA = document.getElementById('DoMA');
             echarts.getInstanceByDom(domPieA).setOption(optionsPieDomA);
@@ -991,7 +1010,13 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
         $("#stats-hbar-b").width(widthB)
 
         chartit('stats-hbar-b',optionsBarB)
-        $("#counterb").html(totalsB.totalPosts + '<div> Posts retrieved for set B</div>');
+        var htmlB = '<div class="counter-metric-span posts">' + totalsB.totalPosts + '</div>' +
+          '<div class="counter-metric-span followers">' + totalsB.totalFollowers + '</div>' +
+          '<div class="counter-metric-span following">' + totalsB.totalFollowing + '</div>' +
+          '<div class="counter-metric-span likes">' + totalsB.totalLikes + '</div>' +
+          '<div class="counter-metric-span comments">' + totalsB.totalComments + '</div>';
+        $("#counterb").html(htmlB);
+        $("#total-metrics-b").html(htmlB);
 
       }
     }
@@ -1055,81 +1080,89 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
 
           for (var trendPostB of response.data[2].trendsdata){
 
-              var likesTotalB = trendPostB.edge_media_preview_like.count
-              var commentsTotalB = trendPostB.edge_media_to_comment.count
-              var engagementB = parseInt(likesTotalB)+parseInt(commentsTotalB)
-              engagementB = (engagementB /dbPostsCountB).toFixed(2)
-              optionsLineB.series[optionsLineB.series.length-1].data.push(engagementB)
-              var dateB = dayjs.unix(trendPostB.taken_at_timestamp);
-              var dateFormatB = dateB.format('YYYY-MM-DD');
-              var domB = dayjs(dateB).date();
-              domB = domB>9 ? String(domB) : '0'+domB
-              var dowB = dayjs(dateB).day();
-              dowB = String(dowB)
-              switch (dowB) {
-                case '0':
-                  dowB = 'Sunday'
-                  break
-                case '1':
-                  dowB = 'Monday'
-                  break
-                case '2':
-                  dowB = 'Tuesday'
-                  break
-                case '3':
-                  dowB = 'Wednesday'
-                  break
-                case '4':
-                  dowB = 'Thursday'
-                  break
-                case '5':
-                  dowB = 'Friday'
-                  break
-                case '6':
-                  dowB = 'Saturday'
-                  break
-              }
-              var hodB = dayjs(dateB).hour();
-              hodB = hodB>9 ? String(hodB) : '0'+hodB
-              hodB = hodB>12 ? hodB+'pm' : hodB+'am'
-              /*  var moy = dayjs().month(date);
-                */
-              domsB[domB] = domsB[domB] || 0;
-              domsB[domB]++
-              dowsB[dowB] = dowsB[dowB] || 0;
-              dowsB[dowB]++
-              hodsB[hodB] = hodsB[hodB] || 0;
-              hodsB[hodB]++
-              if(optionsHeatB.xAxis.data.indexOf(hodB)===-1)optionsHeatB.xAxis.data.push(hodB)
-              optionsHeatB.xAxis.data.sort()
-              optionsLineB.xAxis.data.push(dateFormatB)
-              optionsHeatB.series[0].data.push([hodB,dowB,engagementB])
+            var likesTotalB = trendPostB.edge_media_preview_like.count;
+            var commentsTotalB = trendPostB.edge_media_to_comment.count;
+            totalsB.totalLikes += likesTotalB;
+            totalsB.totalComments += commentsTotalB;
+            var engagementB = parseInt(likesTotalB)+parseInt(commentsTotalB);
+            engagementB = (engagementB /dbPostsCountB).toFixed(2);
+            optionsLineB.series[optionsLineB.series.length-1].data.push(engagementB);
+            var dateB = dayjs.unix(trendPostB.taken_at_timestamp);
+            var dateFormatB = dateB.format('YYYY-MM-DD');
+            var domB = dayjs(dateB).date();
+            domB = domB>9 ? String(domB) : '0'+domB;
+            var dowB = dayjs(dateB).day();
+            dowB = String(dowB);
+            switch (dowB) {
+              case '0':
+                dowB = 'Sunday';
+                break
+              case '1':
+                dowB = 'Monday';
+                break
+              case '2':
+                dowB = 'Tuesday';
+                break
+              case '3':
+                dowB = 'Wednesday';
+                break
+              case '4':
+                dowB = 'Thursday';
+                break
+              case '5':
+                dowB = 'Friday';
+                break
+              case '6':
+                dowB = 'Saturday'
+                break
+            }
+            var hodB = dayjs(dateB).hour();
+            hodB = hodB>9 ? String(hodB) : '0'+hodB;
+            hodB = hodB>12 ? hodB+'pm' : hodB+'am';
+
+            domsB[domB] = domsB[domB] || 0;
+            domsB[domB]++
+            dowsB[dowB] = dowsB[dowB] || 0;
+            dowsB[dowB]++
+            hodsB[hodB] = hodsB[hodB] || 0;
+            hodsB[hodB]++
+            if(optionsHeatB.xAxis.data.indexOf(hodB)===-1)optionsHeatB.xAxis.data.push(hodB);
+            optionsHeatB.xAxis.data.sort();
+            optionsLineB.xAxis.data.push(dateFormatB);
+            optionsHeatB.series[0].data.push([hodB,dowB,engagementB]);
 
           }
+          var htmlBB = '<div class="counter-metric-span posts">' + totalsB.totalPosts + '</div>' +
+            '<div class="counter-metric-span followers">' + totalsB.totalFollowers + '</div>' +
+            '<div class="counter-metric-span following">' + totalsB.totalFollowing + '</div>' +
+            '<div class="counter-metric-span likes">' + totalsB.totalLikes + '</div>' +
+            '<div class="counter-metric-span comments">' + totalsB.totalComments + '</div>';
+          $("#counterb").html(htmlBB);
+          $("#total-metrics-b").html(htmlBB);
           optionsLineB.legend.data.push(usernameB)
-          optionsPieDomB.legend[1].data.push({name:usernameB,icon:'image:///img/user.png'})
-          optionsPieDomB.legend[1].data.sort()
-          optionsPieDowB.legend[1].data.push({name:usernameB,icon:'image:///img/user.png'})
-          optionsPieDowB.legend[1].data.sort()
-          optionsPieHodB.legend[1].data.push({name:usernameB,icon:'image:///img/user.png'})
-          optionsPieHodB.legend[1].data.sort()
+          optionsPieDomB.legend[1].data.push({name:usernameB,icon:'image:///img/user.png'});
+          optionsPieDomB.legend[1].data.sort();
+          optionsPieDowB.legend[1].data.push({name:usernameB,icon:'image:///img/user.png'});
+          optionsPieDowB.legend[1].data.sort();
+          optionsPieHodB.legend[1].data.push({name:usernameB,icon:'image:///img/user.png'});
+          optionsPieHodB.legend[1].data.sort();
           for(var domib in domsB){
 
             profilesPieDomDataB.push({name:domib,value:domsB[domib]})
-            optionsPieDomB.legend[0].data.push(domib)
-            optionsPieDomB.legend[0].data.sort()
+            optionsPieDomB.legend[0].data.push(domib);
+            optionsPieDomB.legend[0].data.sort();
           }
           for(var dowib in dowsB){
             profilesPieDowDataB.push({name:dowib,value:dowsB[dowib]})
-            if(optionsHeatB.yAxis.data.indexOf(dowib)===-1)optionsHeatB.yAxis.data.push(dowib)
-            optionsPieDowB.legend[0].data.push(dowib)
-            optionsPieDowB.legend[0].data.sort()
+            if(optionsHeatB.yAxis.data.indexOf(dowib)===-1)optionsHeatB.yAxis.data.push(dowib);
+            optionsPieDowB.legend[0].data.push(dowib);
+            optionsPieDowB.legend[0].data.sort();
           }
           for(var hodib in hodsB){
-            if(optionsHeatB.xAxis.data.indexOf(hodib)===-1)optionsHeatB.xAxis.data.push(hodib)
-            profilesPieHodDataB.push({name:hodib,value:hodsB[hodib]})
-            optionsPieHodB.legend[0].data.push(hodib)
-            optionsPieHodB.legend[0].data.sort()
+            if(optionsHeatB.xAxis.data.indexOf(hodib)===-1)optionsHeatB.xAxis.data.push(hodib);
+            profilesPieHodDataB.push({name:hodib,value:hodsB[hodib]});
+            optionsPieHodB.legend[0].data.push(hodib);
+            optionsPieHodB.legend[0].data.sort();
           }
           var centerB = []
           if(icounterB<=10){
