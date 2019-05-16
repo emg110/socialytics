@@ -48,7 +48,7 @@ in order to analyse brand engagement on social networks like Instagram via analy
 
 **`Contributors:`**
  
- M.Ghiasi (emg110@gmail.com), H.Hadian (a58976@ualg.pt)
+ M.Ghiasi (emg110@gmail.com), H.Hadian (a58976@ualg.pt), Sheghzo(shm1358@gmail.com)
 
 Special thanks to these great open source projects which paved the client's starting point but since changes required to make the tool complete , comprehensive and calibrated for analytics hence they have undergone great changes which left no place for branching and backward contribution via pull requests thus here we announce our gratitudes and in turn give back the whole effort to community, free and open source:
 
