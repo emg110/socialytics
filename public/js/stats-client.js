@@ -112,11 +112,16 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
         show: true
       },
       name: 'Hour of day',
+      nameLocation: 'center',
+      nameGap: 25,
       position:'right',
       /*right:20*/
     },
     yAxis: {
       name: 'Day of week',
+      nameLocation: 'center',
+      nameGap: 60,
+      nameRotate:90,
       type: 'category',
       data: [],
       splitArea: {
@@ -181,11 +186,16 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
         show: true
       },
       name: 'Hour of day',
+      nameLocation: 'center',
+      nameGap: 25,
       position:'right',
       /*right:20*/
     },
     yAxis: {
       name: 'Day of week',
+      nameLocation: 'center',
+      nameGap: 60,
+      nameRotate:90,
       type: 'category',
       data: [],
       splitArea: {
@@ -231,7 +241,10 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
     tooltip:{},
     grid: {containLabel: true,top:90,left:130},
     yAxis: {
-      name: 'metrics',
+      name: 'Metrics',
+      nameLocation: 'center',
+      nameGap: 25,
+      nameRotate:90,
       position:'right'
     },
     dataZoom: [{
@@ -418,7 +431,10 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
     tooltip:{},
     grid: {containLabel: true,top:90,left:130},
     yAxis: {
-      name: 'metrics',
+      name: 'Metrics',
+      nameLocation: 'center',
+      nameGap: 25,
+      nameRotate:90,
       position:'right'
     },
     dataZoom: [{
