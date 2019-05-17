@@ -86,9 +86,11 @@ $("#getDataBtn").on('click',function(e){
   e.preventDefault();
   getStatsData();
 })
-$("#getData2Btn").on('click',function(e){
+$("#resetSets").on('click',function(e){
   e.preventDefault();
-  //getStats2Data();
+  $("#seta").importTags('')
+
+  $("#setb").importTags('')
 })
 
 

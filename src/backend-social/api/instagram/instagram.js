@@ -182,12 +182,12 @@ module.exports = class Instagram {
    */
   getHeaders() {
     return {
-      'referer': 'https://www.instagram.com',
       // the /username part of referer has been removed to maximize privacy and openness
+      'referer': 'https://www.instagram.com',
       'origin': 'https://www.instagram.com',
-      'user-agent': this.userAgent,
       'x-instagram-ajax': '1',
       'x-requested-with': 'XMLHttpRequest',
+      'user-agent': this.userAgent,
       'x-csrftoken': this.csrftoken,
       cookie:  this.generateCookie(false)
     }
