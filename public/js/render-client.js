@@ -206,6 +206,9 @@ function renderFormData(txt){
           }
         });
       }
+      else{
+        $("#autocomplete-results").html('')
+      }
     }
   });
   $("#searchProfileBtn").click(()=>{
