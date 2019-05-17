@@ -869,11 +869,11 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
             optionsLineA.xAxis.data.push(dateFormatA);
             optionsHeatA.series[0].data.push([hodA,dowA,engagement]);
           }
-          var htmlAA = '<div class="counter-metric-span posts">' + totalsA.totalPosts + '</div>' +
-            '<div class="counter-metric-span followers">' + totalsA.totalFollowers + '</div>' +
-            '<div class="counter-metric-span following">' + totalsA.totalFollowing + '</div>' +
-            '<div class="counter-metric-span likes">' + totalsA.totalLikes + '</div>' +
-            '<div class="counter-metric-span comments">' + totalsA.totalComments + '</div>';
+          var htmlAA = '<div class="counter-metric-span posts">' + totalsA.totalPosts + '<br ><span class="fa fa-instagram"></span></div>' +
+            '<div class="counter-metric-span followers">' + totalsA.totalFollowers + '<br ><span class="fa fa-users"></span></div>' +
+            '<div class="counter-metric-span following">' + totalsA.totalFollowing + '<br ><span class="fa fa-user-o"></span></div>' +
+            '<div class="counter-metric-span likes">' + totalsA.totalLikes + '<br ><span class="fa fa-heart-o"></span></div>' +
+            '<div class="counter-metric-span comments">' + totalsA.totalComments + '<br ><span class="fa fa-comments-o"></span></div>';
           $("#countera").html(htmlAA);
           $("#total-metrics-a").html(htmlAA);
           optionsLineA.legend.data.push(usernameA);
@@ -1220,11 +1220,11 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
             optionsHeatB.series[0].data.push([hodB,dowB,engagementB]);
 
           }
-          var htmlBB = '<div class="counter-metric-span posts">' + totalsB.totalPosts + '</div>' +
-            '<div class="counter-metric-span followers">' + totalsB.totalFollowers + '</div>' +
-            '<div class="counter-metric-span following">' + totalsB.totalFollowing + '</div>' +
-            '<div class="counter-metric-span likes">' + totalsB.totalLikes + '</div>' +
-            '<div class="counter-metric-span comments">' + totalsB.totalComments + '</div>';
+          var htmlBB = '<div class="counter-metric-span posts">' + totalsB.totalPosts + '<br ><span class="fa fa-instagram"></span></div>' +
+            '<div class="counter-metric-span followers">' + totalsB.totalFollowers + '<br ><span class="fa fa-users"></span></div>' +
+            '<div class="counter-metric-span following">' + totalsB.totalFollowing + '<br ><span class="fa fa-user-o"></span></div>' +
+            '<div class="counter-metric-span likes">' + totalsB.totalLikes + '<br ><span class="fa fa-heart-o"></span></div>' +
+            '<div class="counter-metric-span comments">' + totalsB.totalComments + '<br ><span class="fa fa-comments-o"></span></div>';
           $("#counterb").html(htmlBB);
           $("#total-metrics-b").html(htmlBB);
           optionsLineB.legend.data.push(usernameB)
