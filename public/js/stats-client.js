@@ -15,7 +15,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
 
 
   var optionsBarA = {
-    grid: {containLabel: true,top:10},
+    grid: {containLabel: true,top:0},
     xAxis: {name: 'followers'},
     yAxis: {
       name: 'profiles',
@@ -619,6 +619,38 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
             formatter: '{b}'
           }
         })
+        var legendHtmlA =
+          '<div class="counter-metric-span ">' +
+          '<div class="metrics-legend posts-legend classa">\n' +
+          '          <span class="fa fa-instagram"></span>\n' +
+          '        </div>\n' +
+          '</div>' +
+          '<div class="counter-metric-span ">' +
+          '        <div class="metrics-legend followers-legend classa">\n' +
+          '          <span class="fa fa-users"></span>\n' +
+          '        </div>\n' +
+          '</div>' +
+          '<div class="counter-metric-span ">' +
+          '        <div class="metrics-legend following-legend classa">\n' +
+          '          <span class="fa fa-user-o"></span>\n' +
+          '        </div>\n' +
+          '</div>' +
+          '<div class="counter-metric-span ">' +
+          '        <div class="metrics-legend likes-legend classa">\n' +
+          '          <span class="fa fa-heart-o"></span>\n' +
+          '        </div>\n' +
+          '</div>' +
+          '<div class="counter-metric-span ">' +
+          '        <div class="metrics-legend comments-legend classa">\n' +
+          '          <span class="fa fa-comments-o"></span>\n' +
+          '        </div>'+
+          '</div>';
+
+
+
+
+        //$("#profiles-counters-a").append(legendHtmlA)
+        $("#profile-metrics-legend").html(legendHtmlA)
         for (let itemA of window.profilesA) {
           var accountA = itemA.username;
           var useridA = itemA.id;
@@ -656,14 +688,13 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
             'authenticated:seta'
           );
           var pictureA = picit(itemA);
+
           $("#profiles-counters-a").append(
             '<div  id="' + useridA + '" class="counter-metric">' +
-            '<figure>'+
+
             '<img alt="missing" class="profile-mini-img" src="' +
             pictureA +
             '">' +
-            '<figcaption style="color:white">'+accountA+'</figcaption>'+
-            '</figure>'+
             '<div class="counter-metric-span posts">' + postCountA + '</div>' +
             '<div class="counter-metric-span followers">' + followersCountA + '</div>' +
             '<div class="counter-metric-span following">' + followingCountA + '</div>' +
