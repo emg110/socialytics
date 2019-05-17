@@ -88,7 +88,7 @@ $("#getDataBtn").on('click',function(e){
 })
 $("#getData2Btn").on('click',function(e){
   e.preventDefault();
-  getStats2Data();
+  //getStats2Data();
 })
 
 

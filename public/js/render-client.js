@@ -177,13 +177,18 @@ function renderFormData(txt){
   if(json.username)document.getElementById('search-input').value = json.query;
   if(json.username)document.getElementById('count-input').value = json.count;
   if(json.username)document.getElementById('shortcode-input').value = json.shortcode;
+
+
+
   if(json.seta){
     console.log('set A found');
-    document.getElementById('seta').value = json.seta.toString();
+    $('#seta').tagsInput({'defaultText':'add a profile',width:'95%',height:'10%'}).importTags(json.seta.toString());
+    //document.getElementById('seta').value = json.seta.toString();
   }
   if(json.setb){
     console.log('set B found');
-    document.getElementById('setb').value = json.setb.toString();
+    //document.getElementById('setb').value = json.setb.toString();
+    $('#setb').tagsInput({'defaultText':'add a profile',width:'95%',height:'10%'}).importTags(json.setb.toString());
   }
   console.log(json);
 }
