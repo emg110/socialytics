@@ -1,6 +1,7 @@
 function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = false, bDone = false) {
   seta = document.getElementById('seta').value.split(',').slice(0,3);
   setb = document.getElementById('setb').value.split(',').slice(0,3);
+
   totalsA = totalsB = {
     totalPosts:0,
     totalFollowers:0,

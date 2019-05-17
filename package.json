@@ -116,7 +116,8 @@
     "string": "latest",
     "text-miner": "latest",
     "universe": "latest",
-    "winston": "latest"
+    "winston": "latest",
+    "jquery-tags-input":"latest"
   },
   "devDependencies": {
     "chai": "latest",
