@@ -239,13 +239,14 @@ function renderFormData(txt){
 
   var tagsOptions = {
     'defaultText':'Drag or add a profile...',
-    width:'95%',
-    height:'10%',
+    width:'400px',
+    height:'10%'
   };
   if(json.seta){
     console.log('set A found');
 
     $('#seta').tagsInput(tagsOptions).importTags(json.seta.toString());
+
     //document.getElementById('seta').value = json.seta.toString();
   }
   if(json.setb){
@@ -253,6 +254,7 @@ function renderFormData(txt){
     //document.getElementById('setb').value = json.setb.toString();
 
     $('#setb').tagsInput(tagsOptions).importTags(json.setb.toString());
+
   }
 
 }
