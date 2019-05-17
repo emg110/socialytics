@@ -906,10 +906,15 @@ div.tagsinput span.tag{
   float: left;
   padding: 5px;
   text-decoration: none;
-  background: rgba(246, 242, 171, 0.8);
+  background: rgba(246, 242, 171);
   color: #000000;
   margin-right: 5px;
   margin-bottom: 5px;
   font-family: helvetica;
   font-size: 13px;
+}
+.search-result{
+  padding: 5px;
+  margin: 5px;
+  color: white;
 }
