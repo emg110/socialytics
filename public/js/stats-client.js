@@ -15,10 +15,16 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
 
 
   var optionsBarA = {
-    grid: {containLabel: true,top:0},
-    xAxis: {name: 'followers'},
+    grid: {containLabel: true,top:0,},
+    xAxis: {
+      name: 'Followers',
+      nameLocation: 'center',
+      nameGap: 25
+    },
     yAxis: {
-      name: 'profiles',
+      name: 'Profiles',
+      nameRotate:90,
+      nameLocation: 'center',
       inverse:true,
       type: 'category',
       data: [],
@@ -49,7 +55,11 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
   };
   var optionsBarB = {
     grid: {containLabel: true,top:10},
-    xAxis: {name: 'metrics'},
+    xAxis: {
+      name: 'Metrics',
+      nameLocation: 'center',
+      nameGap: 25
+    },
     yAxis: {
       inverse:true,
       type: 'category',
@@ -650,7 +660,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
 
 
         //$("#profiles-counters-a").append(legendHtmlA)
-        $("#profile-metrics-legend").html(legendHtmlA)
+        $("#profileA-metrics-legend").html(legendHtmlA);
         for (let itemA of window.profilesA) {
           var accountA = itemA.username;
           var useridA = itemA.id;
@@ -980,7 +990,39 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
             color:'#fff',
             formatter: '{b}'
           }
-        })
+        });
+
+        var legendHtmlB =
+          '<div class="counter-metric-span ">' +
+          '<div class="metrics-legend posts-legend classb">\n' +
+          '          <span class="fa fa-instagram"></span>\n' +
+          '        </div>\n' +
+          '</div>' +
+          '<div class="counter-metric-span ">' +
+          '        <div class="metrics-legend followers-legend classb">\n' +
+          '          <span class="fa fa-users"></span>\n' +
+          '        </div>\n' +
+          '</div>' +
+          '<div class="counter-metric-span ">' +
+          '        <div class="metrics-legend following-legend classb">\n' +
+          '          <span class="fa fa-user-o"></span>\n' +
+          '        </div>\n' +
+          '</div>' +
+          '<div class="counter-metric-span ">' +
+          '        <div class="metrics-legend likes-legend classb">\n' +
+          '          <span class="fa fa-heart-o"></span>\n' +
+          '        </div>\n' +
+          '</div>' +
+          '<div class="counter-metric-span ">' +
+          '        <div class="metrics-legend comments-legend classb">\n' +
+          '          <span class="fa fa-comments-o"></span>\n' +
+          '        </div>'+
+          '</div>';
+
+
+
+        $("#profileB-metrics-legend").html(legendHtmlB)
+
         for (let itemB of window.profilesB) {
           var accountB = itemB.username;
           var useridB = itemB.id;
@@ -1019,19 +1061,17 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
 
           $("#profiles-counters-b").append(
             '<div  id="' + useridB + '" class="counter-metric">' +
-            '<figure>'+
+            
             '<img alt="missing" class="profile-mini-img" src="' +
             picit(itemB) +
             '">' +
-            '<figcaption style="color:white">'+accountB+'</figcaption>'+
-            '</figure>'+
             '<div class="counter-metric-span posts">' + postCountB + '</div>' +
             '<div class="counter-metric-span followers">' + followersCountB + '</div>' +
             '<div class="counter-metric-span following">' + followingCountB + '</div>' +
             '<div class="counter-metric-span likes">' + htmlChartLoadingMini + '</div>' +
             '<div class="counter-metric-span comments">' + htmlChartLoadingMini + '</div>' +
             '</div>'
-          )
+          );
           optionsBarB.series[0].data.push(itemB.followers)
           optionsBarB.yAxis.data.push(itemB.username)
         }
