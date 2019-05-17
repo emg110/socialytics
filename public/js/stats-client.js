@@ -683,8 +683,8 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
         }
         var heightA = $("#profiles-counters-a").height();
         var widthA = $("#profiles-counters-a").width();
-        $("#stats-hbar-a").height(heightA)
-        $("#stats-hbar-a").width(widthA)
+        $("#stats-hbar-a").height(heightA);
+        $("#stats-hbar-a").width(widthA);
 
         chartit('stats-hbar-a', optionsBarA);
         var htmlA = '<div class="counter-metric-span posts">' + totalsA.totalPosts + '</div>' +
