@@ -188,7 +188,7 @@ function renderFormData(txt){
           if(json){
             json = json.users;
             $("#autocomplete-results").html('')
-            $("#autocomplete-results").append('<div style="width:100%;color:black;padding:5px;font-family: monospace; background: #ffe8a1;text-align: center">Drag profiles to desired sets</div>')
+            $("#autocomplete-results").append('<div style="width:100%;color:#f8f9fa;padding:5px;font-family: monospace; background: rgba(0,123,255,.5);text-align: center">Drag profiles to desired sets</div>')
             for(var i of json){
               i = i.user;
               var verified = i.is_verified? 'Verified':''
