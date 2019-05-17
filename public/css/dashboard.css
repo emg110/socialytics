@@ -776,11 +776,10 @@ button {
   flex-direction: inherit;
 }
 .stats-totals{
-  background-color: #606870;
   min-width: 100%;
   font-size: 1em;
-  color:white;
-  /* margin-left: -16px; */
+  color: white;
+  margin-left: 18px;
 
 }
 .counter-metric{
@@ -872,6 +871,7 @@ button {
   background-color: #bda29a;
 }
 .following-legend{
+
   background-color: #ca8622;
 }
 .likes-legend{
