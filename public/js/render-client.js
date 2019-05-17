@@ -188,7 +188,7 @@ function renderFormData(txt){
           if(json){
             json = json.users;
             $("#autocomplete-results").html('')
-            $("#autocomplete-results").append('<div style="width:100%;color:black;padding:5px;font-family: monospace; background: #ffe8a1;text-align: center">Drag profiles to desired sets</div>')
+            $("#autocomplete-results").append('<div style="width:100%;color:#f8f9fa;padding:5px;font-family: monospace; background: rgba(0,123,255,.5);text-align: center">Drag profiles to desired sets</div>')
             for(var i of json){
               i = i.user;
               var verified = i.is_verified? 'Verified':''
@@ -239,13 +239,14 @@ function renderFormData(txt){
 
   var tagsOptions = {
     'defaultText':'Drag or add a profile...',
-    width:'95%',
-    height:'10%',
+    width:'400px',
+    height:'10%'
   };
   if(json.seta){
     console.log('set A found');
 
     $('#seta').tagsInput(tagsOptions).importTags(json.seta.toString());
+
     //document.getElementById('seta').value = json.seta.toString();
   }
   if(json.setb){
@@ -253,6 +254,7 @@ function renderFormData(txt){
     //document.getElementById('setb').value = json.setb.toString();
 
     $('#setb').tagsInput(tagsOptions).importTags(json.setb.toString());
+
   }
 
 }

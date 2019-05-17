@@ -5,9 +5,9 @@
     <div id="noDataMsg" class="loader loader--style1" title="0">  NO FILTERS HERE...</div>
     <input type="text" style="width:60%;display:inline;margin:20px;" class="form-control" id="search-input" search-query="search-query">
     <input id="searchProfileBtn" style="text-align:center;display:inline; padding:5px; margin:20px; min-width:5%" value="Go" type="button" class="btn btn-secondary">
-    <div style="overflow-y: scroll;max-height:30vh;margin-bottom:25px" id="autocomplete-results"></div>
-    <textarea style="display:block; padding:5px; margin:10px; min-height:200px" id="seta" class="seta" ondrop="drop(event)" ondragover="allowDrop(event)"></textarea>
-    <textarea style="display:block; padding:5px; margin:10px; min-height:200px" id="setb" class="setb" ondrop="drop(event)" ondragover="allowDrop(event)"></textarea>
+    <div style="overflow-y: scroll;max-height:20vh;margin-bottom:25px" id="autocomplete-results"></div>
+    <textarea style="display:block; padding:5px; margin:10px; min-height:200px;width:25em" id="seta" class="seta" ondrop="drop(event)" ondragover="allowDrop(event)"></textarea>
+    <textarea style="display:block; padding:5px; margin:10px; min-height:200px;width:25em;" id="setb" class="setb" ondrop="drop(event)" ondragover="allowDrop(event)"></textarea>
     <input style="text-align:center;display:block; padding:5px; margin:20px; min-width:25%" value="Get default sets" type="button" class="btn btn-primary" click-target="/instagram/sets/data?" call-type="form-data">
     <input id="resetSets" style="text-align:center;display:block; padding:5px; margin:20px; min-width:25%" value="Reset sets" type="button" class="btn btn-secondary">
     <input id="getDataBtn" style="text-align:center;display:block; padding:5px; margin:20px; min-width:25%" value="Start..." type="button" class="btn btn-primary" call-type="form-data">
