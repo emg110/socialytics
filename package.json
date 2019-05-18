@@ -117,10 +117,11 @@
     "text-miner": "latest",
     "universe": "latest",
     "winston": "latest",
-    "jquery-tags-input":"latest",
+    "jquery-tags-input": "latest",
     "random-points-generator": "latest",
     "geolib": "latest",
-    "flatbush": "latest"
+    "flatbush": "latest",
+    "rtree": "latest"
   },
   "devDependencies": {
     "chai": "latest",
