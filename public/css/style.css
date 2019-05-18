@@ -144,9 +144,8 @@ a:focus {
 
 .sidepanel .backbtn {
   position: absolute;
-  top: 0;
-  left: 25px;
-  font-size: 5.5em;
+  top: 8px;
+  left: 0px;
   margin-right: 50px;
 }
 
