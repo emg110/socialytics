@@ -183,7 +183,7 @@ function getEndpointData(endpoint, type, code, container, caller) {
         $(caller).addClass('disabled');
         $(caller).removeClass('fired');
         //$(caller).removeClass('fired');
-        $(caller).css('background-color', '#e08e0b');
+        $(caller).css('background-color', '#e0560d');
         $(caller).append('<span id="loading" class="spinner-grow spinner-grow-sm"></span>');
 
       }
