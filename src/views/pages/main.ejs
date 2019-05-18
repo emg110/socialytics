@@ -36,30 +36,19 @@
     </div>
   </div>
   <div class="container grid grid-hero-sidebar">
-    <div class="sidebar">
-      <div class="widget-wrapper">
-        <div class="widget-stage">
-          <form class="data-form">
-            <div class="form-group">
-              Profile name: <input type="text" class="form-control" id="username-input" username="username"><br>
-              Tag: <input type="text" class="form-control" id="tag-input" tag="tag"><br>
-              Location: <input type="text" class="form-control" id="location-input" location="location"><br>
-              Search query: <input type="text" class="form-control" id="search-input" search-query="search-query"><br>
-              Short code: <input type="text" class="form-control" id="shortcode-input" short-code="short-code"><br>
-              Count: <input type="number" class="form-control" id="count-input" count=0><br>
-            </div>
-            <input style="margin-bottom:25px;" value="Get sample data" type="button" class="btn btn-primary" click-target="/instagram/form/data?" call-type="form-data">
-          </form>
-          <div style=" text-align:center" class="footer">
-            <p class="small text-muted">Built with &#9829; for <a target="_blank" href="https://houmanhadian.github.io/">Houman Hadian's doctoral project @ UAlg</a></p>
-          </div>
+    <div id="home-sidebar" class="sidebar widget-wrapper">
+      <div  style="" class="widget-stage">
+        <form style="padding:20px;" class="data-form">
+          <input style="margin-bottom:5px;" value="Get sample filters" type="button" class="btn btn-primary" click-target="/instagram/form/data?" call-type="form-data">
+          <input style="margin-bottom:5px;" value="Get sets configurations" type="button" class="btn btn-secondary" click-target="/instagram/config/data?" call-type="config-data">
+          <input style="margin-bottom:5px;" value="Get sets data" type="button" class="btn btn-secondary" click-target="/instagram/sets/data?" call-type="sets-data">
+        </form>
+        <div style=" text-align:center" class="footer">
+          <p class="small text-muted">Built with &#9829; for <a target="_blank" href="https://houmanhadian.github.io/">Houman Hadian's doctoral project @ UAlg</a></p>
         </div>
-        <!--<div class="widget-notes">
-          Notes about this chart
-        </div>-->
       </div>
     </div>
-    <div style="" class="hero">
+    <div class="hero">
       <div class="widget-wrapper">
       <!--  <div class="widget-title">
           Widget Title
@@ -71,85 +60,65 @@
       <!--  <div class="widget-notes">
           Notes about this chart
         </div>-->
-      </div>
-    </div>
-    <div class="widget-wrapper">
-      <!-- <div class="widget-title">
-         Widget Title
-       </div>-->
-      <div class="widget-stage">
-        <button class="btn btn-primary etl-btn" type="button"  value="Get user profile" click-target="/instagram/profile?" call-type="profile">Get user profile</button>
-        <button class="btn btn-primary etl-btn" type="button"  value="Get recent posts" click-target="/instagram/posts?" call-type="recent-posts">Get recent posts</button>
-      </div>
-      <!-- <div class="widget-notes">
-         Notes about this chart
-       </div>-->
-    </div>
-    <div class="widget-wrapper">
-      <!-- <div class="widget-title">
-         Widget Title
-       </div>-->
-      <div class="widget-stage">
-        <button class="btn btn-primary etl-btn" type="button"  value="Get user all posts" click-target="/instagram/allposts?" call-type="all-posts">Get all posts</button>
-        <button class="btn btn-primary etl-btn" type="button"  value="Get all feed" click-target="/instagram/allfeed?" call-type="all-feed-posts">Get all feed</button>
-      </div>
-      <!-- <div class="widget-notes">
-         Notes about this chart
-       </div>-->
-    </div>
-    <div class="widget-wrapper">
-      <!-- <div class="widget-title">
-         Widget Title
-       </div>-->
-      <div class="widget-stage">
-        <button class="btn btn-primary etl-btn" type="button"  value="Get posts by tag" click-target="/instagram/tag?" call-type="tag-posts">Get tag posts</button>
-        <button class="btn btn-primary etl-btn" type="button"  value="Get posts by location" click-target="/instagram/location?" call-type="location-posts">Get location posts</button>
-      </div>
-      <!-- <div class="widget-notes">
-         Notes about this chart
-       </div>-->
-    </div>
-    <div class="widget-wrapper">
-      <!-- <div class="widget-title">
-         Widget Title
-       </div>-->
-      <div class="widget-stage">
-        <button class="btn btn-primary etl-btn" type="button"  value="Get user followings" click-target="/instagram/following?" call-type="user-following">Get followings</button>
-        <button class="btn btn-primary etl-btn" type="button"  value="Get user followers" click-target="/instagram/followers?" call-type="user-followers">Get followers</button>
-        <button class="btn btn-primary etl-btn" type="button"  value="Get feed" click-target="/instagram/feed?" call-type="feed-posts">Get feed</button>
-      </div>
-      <!-- <div class="widget-notes">
-         Notes about this chart
-       </div>-->
-    </div>
-    <div class="widget-wrapper">
-      <!-- <div class="widget-title">
-         Widget Title
-       </div>-->
-      <div class="widget-stage">
-        <button class="btn btn-primary etl-btn" type="button"  value="Get search items" click-target="/instagram/search?" call-type="search-posts">Get search posts</button>
-        <button class="btn btn-primary etl-btn" type="button"  value="Get suggested posts" click-target="/instagram/suggested/posts?" call-type="sugg-posts">Get sugg posts</button>
-        <button class="btn btn-primary etl-btn" type="button"  value="Get suggested people" click-target="/instagram/suggested/people?"  call-type="sugg-people">Get sugg people</button>
+      </div><br><br>
+      <div style="" class="form-group tabs">
+        <ul style="max-width:45vw" class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#self-tab">Self</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#profile-tab">Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#post-tab">Post</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#loctag-tab">Location|Tag</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#search-tab">Search</a>
+          </li>
+          <li class="nav-item">
+            <input  style="max-width:95%; display:inline" placeholder="Count limit"  type="number" class="form-control" id="count-input" count=0>
+          </li>
 
+        </ul>
+        <div style="max-width:45vw" class="tab-content">
+          <div style="max-width:45vw" class="tab-pane active container widget-stage" id="self-tab">
+            <br><input type="text" class="form-control" placeholder="Logged in user profile" disabled="true"><br>
+            <button class="btn btn-primary etl-btn" type="button"  value="Get suggested posts" click-target="/instagram/suggested/posts?" call-type="sugg-posts">Sugg posts</button>
+            <button class="btn btn-primary etl-btn" type="button"  value="Get suggested people" click-target="/instagram/suggested/people?"  call-type="sugg-people">Sugg people</button>
+            <button class="btn btn-primary etl-btn" type="button"  value="Get feed" click-target="/instagram/feed?" call-type="feed-posts">Recent feed</button>
+            <button class="btn btn-primary etl-btn" type="button"  value="Get all feed" click-target="/instagram/allfeed?" call-type="all-feed-posts">All feed</button>
+          </div>
+          <div style="max-width:45vw" class="tab-pane container widget-stage" id="profile-tab">
+            <br><input type="text" placeholder="Profile name" class="form-control" id="username-input" username="username"><br>
+            <button class="btn btn-primary etl-btn" type="button"  value="Get user profile" click-target="/instagram/profile?" call-type="profile">User profile</button>
+            <button class="btn btn-primary etl-btn" type="button"  value="Get user posts" click-target="/instagram/posts?" call-type="recent-posts">Recent posts</button>
+            <button class="btn btn-primary etl-btn" type="button"  value="Get all posts" click-target="/instagram/allposts?" call-type="all-posts">All posts</button>
+            <button class="btn btn-primary etl-btn" type="button"  value="Get user followings" click-target="/instagram/following?" call-type="user-following">Followings</button>
+            <button class="btn btn-primary etl-btn" type="button"  value="Get user followers" click-target="/instagram/followers?" call-type="user-followers">Followers</button><br>
+          </div>
+          <div style="max-width:45vw" class="tab-pane container widget-stage" id="post-tab">
+            <br><input type="text" placeholder="Short code" class="form-control" id="shortcode-input" short-code="short-code"><br>
+            <button class="btn btn-primary etl-btn" type="button"  value="Get post media" click-target="/instagram/post?" call-type="post-json">Media</button>
+            <button class="btn btn-primary etl-btn" type="button"  value="Get post likes" click-target="/instagram/likes?" call-type="post-likes">Likes</button>
+            <button class="btn btn-primary etl-btn" type="button"  value="Get post comments" click-target="/instagram/comments?" call-type="post-comments">Comments</button><br>
+          </div>
+          <div style="max-width:45vw" class="tab-pane container widget-stage" id="loctag-tab">
+            <br><input style="display:inline" placeholder="Tag..." type="text" class="form-control" id="tag-input" tag="tag">
+            <button style="display:inline" class="btn btn-primary etl-btn" type="button"  value="Get posts by tag" click-target="/instagram/tag?" call-type="tag-posts">Tag posts</button><br><br>
+            <input type="text" placeholder="Location..." style="display:inline" class="form-control" id="location-input" location="location">
+            <button style="display:inline" class="btn btn-primary etl-btn" type="button"  value="Get posts by location" click-target="/instagram/location?" call-type="location-posts">Location posts</button><br>
+          </div>
+          <div style="max-width:45vw" class="tab-pane container widget-stage" id="search-tab">
+            <br><input type="text" placeholder="Search query.." class="form-control" id="search-input" search-query="search-query"><br>
+            <button class="btn btn-primary etl-btn" type="button"  value="Get search items" click-target="/instagram/search?" call-type="search-posts">Search instagram</button><br>
+          </div>
 
+        </div>
+      </div><br>
 
-      </div>
-      <!-- <div class="widget-notes">
-         Notes about this chart
-       </div>-->
-    </div>
-    <div class="widget-wrapper">
-      <!-- <div class="widget-title">
-         Widget Title
-       </div>-->
-      <div class="widget-stage">
-        <button class="btn btn-primary etl-btn" type="button"  value="Get post media" click-target="/instagram/post?" call-type="post-json">Get post media</button>
-        <button class="btn btn-primary etl-btn" type="button"  value="Get post likes" click-target="/instagram/likes?" call-type="post-likes">Get likes</button>
-        <button class="btn btn-primary etl-btn" type="button"  value="Get post comments" click-target="/instagram/comments?" call-type="post-comments">Get comments</button>
-      </div>
-      <!-- <div class="widget-notes">
-         Notes about this chart
-       </div>-->
     </div>
 
   </div>

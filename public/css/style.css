@@ -630,7 +630,7 @@ img {
   margin: 3px;
 }
 .etl-btn{
-  min-width:200px;
+  min-width:150px;
   text-align: left;
 }
 /*@media (max-width: 768px) {

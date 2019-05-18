@@ -93,10 +93,14 @@ $("#resetSets").on('click',function(e){
   $("#setb").importTags('')
 })
 
+//$(".scrollable").overlayScrollbars({ className : "os-theme-dark"});
 
-
-
-
+OverlayScrollbars(document.querySelectorAll('body'), {
+  className : "os-theme-dark",
+});
+/*OverlayScrollbars(document.getElementById('home-sidebar'), {
+  className : "os-theme-dark",
+});*/
 
 
 

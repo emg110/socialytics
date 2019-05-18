@@ -119,9 +119,9 @@ var powerpoint = '<div id="powerpoint" class="carousel slide" data-ride="carouse
   '\n' +
   '            </div>';
 
-OverlayScrollbars(document.querySelectorAll('body'), {
+/*OverlayScrollbars(document.querySelectorAll('body'), {
   className : "os-theme-dark",
-});
+});*/
 var ls = ls || window.localStorage;
 window.bulkevent = false;
 var socket = {};
