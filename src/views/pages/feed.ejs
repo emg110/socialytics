@@ -13,21 +13,21 @@
 
             <!--<p class="likes-comments">
             <% if(edge.edge_media_preview_like){ %>
-              <% if(edge.edge_media_preview_like.count) { %><%= edge.edge_media_preview_like.count+' ' %> &hearts; <% } %>
-            <% }else if(edge.edge_liked_by){ %><%= edge.edge_liked_by? edge.edge_liked_by.count : '-&#45;&#45;' + ' ' %> &hearts; <% } %>
+              <% if(edge.edge_media_preview_like.count) { %><%= edge.edge_media_preview_like.count+' ' %>  <% } %>
+            <% }else if(edge.edge_liked_by){ %><%= edge.edge_liked_by? edge.edge_liked_by.count : '-&#45;&#45;' + ' ' %> <% } %>
           </p>-->
             <div class="likes-comments">
-              <span style="cursor:pointer; color: rgb(249,5,5);" onClick=getEndpointData("/instagram/likes?","post-likes","<%= edge.shortcode %>","post-likes")>
+              <span style="cursor:pointer; color: rgb(249,5,5);" class="fa fa-heart" onClick=getEndpointData("/instagram/likes?","post-likes","<%= edge.shortcode %>","post-likes")>
                 <% if(edge.edge_media_preview_like){ %>
                   <% if(edge.edge_media_preview_like.count) { %><%= edge.edge_media_preview_like.count+' ' %>
-                  &hearts; <% } %>
+                  <% } %>
                 <% }else if(edge.edge_liked_by){ %>
-                  <%= edge.edge_liked_by.count+' ' %> &hearts;
+                  <%= edge.edge_liked_by.count+' ' %>
                 <% } %>
               </span>
-              <span style="cursor:pointer; color: transparent;  text-shadow: 0 0 0 rgb(42, 170, 82);" onClick=getEndpointData("/instagram/comments?","post-comments","<%= edge.shortcode %>","post-comments")>
+              <span style="cursor:pointer; color: transparent;  text-shadow: 0 0 0 rgb(42, 170, 82);" class="fa fa-comment" onClick=getEndpointData("/instagram/comments?","post-comments","<%= edge.shortcode %>","post-comments")>
                 <% if(edge.edge_media_to_comment){ %>
-                  <%= edge.edge_media_to_comment.count+' ' %> &#x1F5E8;
+                  <%= edge.edge_media_to_comment.count+' ' %>
                 <% } %>
               </span>
 
