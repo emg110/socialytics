@@ -240,7 +240,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
   };
   var optionsLineA = {
     tooltip:{},
-    grid: {containLabel: true,top:90,left:130},
+    grid: {containLabel: true,top:50,left:130},
     yAxis: {
       name: 'Metrics',
       nameLocation: 'center',
@@ -264,7 +264,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
     }],
     legend: {
       orient:'vertical',
-      top:50,
+      top:30,
       left:10,
       align:'left',
       textStyle:{
@@ -430,7 +430,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
   };
   var optionsLineB = {
     tooltip:{},
-    grid: {containLabel: true,top:90,left:130},
+    grid: {containLabel: true,top:50,left:130},
     yAxis: {
       name: 'Metrics',
       nameLocation: 'center',
@@ -454,7 +454,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
     }],
     legend: {
       orient:'vertical',
-      top:50,
+      top:30,
       left:10,
       align:'left',
       textStyle:{
