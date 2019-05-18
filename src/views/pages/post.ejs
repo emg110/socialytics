@@ -30,14 +30,14 @@
           <img id="media-preview" class="img-fluid" src="<%=mediaSrc %>" alt="<%= etlData.edge_media_to_caption.edges[0] ? etlData.edge_media_to_caption.edges[0].node.text : etlData.id %>">
         </a>
         <div class="likes-comments">
-                <span style="cursor:pointer; color: rgb(249,5,5);" onClick=getEndpointData("/instagram/likes?","post-likes","<%= etlData.shortcode %>","post-likes")>
+                <span style="cursor:pointer; color: rgb(249,5,5);" class="fa fa-heart" onClick=getEndpointData("/instagram/likes?","post-likes","<%= etlData.shortcode %>","post-likes")>
                 <%if(etlData.edge_media_preview_like){%>
-                  <% if(etlData.edge_media_preview_like.count) { %><%=etlData.edge_media_preview_like.count+' '%> &hearts; <% } %>
-                <%}else if(etlData.edge_liked_by){ %><%=etlData.edge_liked_by.count+' '%> &hearts; <%}%>
+                  <% if(etlData.edge_media_preview_like.count) { %><%=etlData.edge_media_preview_like.count+' '%> <% } %>
+                <%}else if(etlData.edge_liked_by){ %><%=etlData.edge_liked_by.count+' '%>  <%}%>
               </span>
-          <span style="color: transparent;  text-shadow: 0 0 0 rgb(42, 170, 82);">
+          <span style="color: transparent;  text-shadow: 0 0 0 rgb(42, 170, 82);" class="fa fa-comment">
             <%if(etlData.edge_media_to_comment){%>
-            <%=etlData.edge_media_to_comment.count+' '%> &#x1F5E8;
+            <%=etlData.edge_media_to_comment.count+' '%>
             <%} %>
           </span>
 
