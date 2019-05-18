@@ -69,5 +69,6 @@ Special thanks to these great open source projects which paved the client's star
 **`Screens:`**
 ![houmanhadian.github.io](./public/img/home_screen.png?raw=true "Houman Hadian's Doctoral Project")
 ![houmanhadian.github.io](./public/img/stats_screen.png?raw=true "Houman Hadian's Doctoral Project")
+![houmanhadian.github.io](./public/img/stats_search.jpg?raw=true "Houman Hadian's Doctoral Project")
 
 **`demo:--soon`**
