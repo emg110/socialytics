@@ -62,37 +62,37 @@ function render(html, container, caller){
   $(caller).removeClass('disabled');
   var optionsEngagement = {
     width:'150px',
-    height:'40px',
+    height:'30px',
     type: 'line',
-    lineColor: '#e0c526',
-    fillColor: '#e08e0b',
+    lineColor: '#cc4400',
+    fillColor: '#ffaa80',
     lineWidth: 3,
     highlightLineColor: '#ffffff'
   };
   var optionsLikes = {
     width:'150px',
-    height:'40px',
+    height:'30px',
     type: 'line',
-    lineColor: '#44ff6e',
-    fillColor: '#21c936',
+    lineColor: '#8f2724',
+    fillColor: '#c23531',
     lineWidth: 3,
     highlightLineColor: '#ffffff'
   };
   var optionsComments = {
     width:'150px',
-    height:'40px',
+    height:'30px',
     type: 'line',
-    lineColor: '#003f7f',
-    fillColor: '#5690c9',
+    lineColor: '#496954',
+    fillColor: '#749f83',
     lineWidth: 3,
     highlightLineColor: '#ffffff'
   };
   var optionsSentiments = {
     width:'150px',
-    height:'40px',
+    height:'30px',
     type: 'line',
-    lineColor: '#7f2e29',
-    fillColor: '#c9424a',
+    lineColor: '#365e63',
+    fillColor: '#61a0a8',
     lineWidth: 3,
     highlightLineColor: '#ffffff'
   };

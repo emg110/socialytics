@@ -18,7 +18,7 @@
                   <%= edge.edge_liked_by.count+' ' %>
                 <% } %>
               </span>
-              <span style="cursor:pointer; color: transparent;  text-shadow: 0 0 0 rgb(42, 170, 82);" class="fa fa-comment" onClick=getEndpointData("/instagram/comments?","post-comments","<%= edge.shortcode %>","post-comments")>
+              <span style="cursor:pointer; color:#749f83;" class="fa fa-comment" onClick=getEndpointData("/instagram/comments?","post-comments","<%= edge.shortcode %>","post-comments")>
                 <% if(edge.edge_media_to_comment){ %>
                   <%= edge.edge_media_to_comment.count+' ' %>
                 <% } %>

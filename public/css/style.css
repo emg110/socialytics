@@ -579,7 +579,7 @@ img {
 .byline{
   cursor: pointer;
   display: inline-block;
-  color: black;
+  color: #fff;
   font-size: 1.1em;
 }
 .profile-trends{
@@ -589,9 +589,10 @@ img {
   display: inline-block;
   width: 63%;
   margin-right: -28px;
-  text-align: left;
+  text-align: center;
   float: right;
   margin-bottom: 10px;
+  background-color: #fff;
 }
 .profile-boolean{
   position: absolute;
@@ -618,16 +619,21 @@ img {
   max-width: 100px;
 }
 .profile-counters{
-  background-color: #495057;
+  /*background-color: #495057;*/
   min-width: 103%;
   font-size: 0.7em;
   /* margin-left: -16px; */
 
 }
 .byline-counter{
+  text-align: center;
+  vertical-align: middle;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 10ch;
+  margin: 1px;
   display: inline-block;
-  padding: 3px;
-  margin: 3px;
 }
 .etl-btn{
   min-width:200px;
