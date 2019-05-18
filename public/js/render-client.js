@@ -10,7 +10,72 @@ function ig_media_preview(base64data) {
   c[160] = String.fromCharCode(o[2]);
   return base64data ? "data:image/jpeg;base64," + btoa(c.concat(p).join("")) : null
 }
-
+function sparkChartit(){
+  var optionsEngagement = {
+    width:'150px',
+    height:'30px',
+    type: 'line',
+    lineColor: '#cc4400',
+    fillColor: '#ffaa80',
+    lineWidth: 3,
+    highlightLineColor: '#ffffff'
+  };
+  var optionsLikes = {
+    width:'150px',
+    height:'30px',
+    type: 'line',
+    lineColor: '#8f2724',
+    fillColor: '#c23531',
+    lineWidth: 3,
+    highlightLineColor: '#ffffff'
+  };
+  var optionsComments = {
+    width:'150px',
+    height:'30px',
+    type: 'line',
+    lineColor: '#496954',
+    fillColor: '#749f83',
+    lineWidth: 3,
+    highlightLineColor: '#ffffff'
+  };
+  var optionsSentiments = {
+    width:'150px',
+    height:'30px',
+    type: 'line',
+    lineColor: '#365e63',
+    fillColor: '#61a0a8',
+    lineWidth: 3,
+    highlightLineColor: '#ffffff'
+  };
+  var engagementData =  $('#sparkline-data').attr('sparkline-data');
+  var likesData =  $('#sparkline-likes-data').attr('sparkline-data');
+  var commentsData =  $('#sparkline-comments-data').attr('sparkline-data');
+  var sentimentData =  $('#sparkline-likes-data').attr('sparkline-data');
+  if(engagementData){
+    engagementData = engagementData.split(',') || [];
+    if(engagementData.length>=1){
+      $('#sparkline').sparkline(engagementData, optionsEngagement)
+    }
+  }
+  if(likesData){
+    likesData = likesData.split(',') || [];
+    if(likesData.length>=1){
+      $('#sparkline-likes').sparkline(likesData, optionsLikes)
+    }
+  }
+  if(commentsData){
+    commentsData = commentsData.split(',') || [];
+    if(commentsData.length>=1){
+      $('#sparkline-comments').sparkline(commentsData, optionsComments)
+    }
+  }
+  if(sentimentData){
+    sentimentData = sentimentData.split(',') || [];
+    if(sentimentData.length>=1){
+      $('#sparkline-sentiments').sparkline(sentimentData, optionsSentiments)
+    }
+  }
+}
 function render(html, container, caller){
   document.getElementById('social-sidepanel').style.backgroundColor = "#fff";
   OverlayScrollbars(document.getElementById('social-sidepanel'), {
@@ -60,70 +125,7 @@ function render(html, container, caller){
   var elem = $(caller).find('span');
   $(elem).popover();
   $(caller).removeClass('disabled');
-  var optionsEngagement = {
-    width:'150px',
-    height:'30px',
-    type: 'line',
-    lineColor: '#cc4400',
-    fillColor: '#ffaa80',
-    lineWidth: 3,
-    highlightLineColor: '#ffffff'
-  };
-  var optionsLikes = {
-    width:'150px',
-    height:'30px',
-    type: 'line',
-    lineColor: '#8f2724',
-    fillColor: '#c23531',
-    lineWidth: 3,
-    highlightLineColor: '#ffffff'
-  };
-  var optionsComments = {
-    width:'150px',
-    height:'30px',
-    type: 'line',
-    lineColor: '#496954',
-    fillColor: '#749f83',
-    lineWidth: 3,
-    highlightLineColor: '#ffffff'
-  };
-  var optionsSentiments = {
-    width:'150px',
-    height:'30px',
-    type: 'line',
-    lineColor: '#365e63',
-    fillColor: '#61a0a8',
-    lineWidth: 3,
-    highlightLineColor: '#ffffff'
-  };
-  engagementData =  $('#sparkline-data').attr('sparkline-data');
-  likesData =  $('#sparkline-likes-data').attr('sparkline-data');
-  commentsData =  $('#sparkline-comments-data').attr('sparkline-data');
-  sentimentData =  $('#sparkline-likes-data').attr('sparkline-data');
-  if(engagementData){
-    engagementData = engagementData.split(',') || [];
-    if(engagementData.length>=1){
-      $('#sparkline').sparkline(engagementData, optionsEngagement)
-    }
-  }
-  if(likesData){
-    likesData = likesData.split(',') || [];
-    if(likesData.length>=1){
-      $('#sparkline-likes').sparkline(likesData, optionsLikes)
-    }
-  }
-  if(commentsData){
-    commentsData = commentsData.split(',') || [];
-    if(commentsData.length>=1){
-      $('#sparkline-comments').sparkline(commentsData, optionsComments)
-    }
-  }
-  if(sentimentData){
-    sentimentData = sentimentData.split(',') || [];
-    if(sentimentData.length>=1){
-      $('#sparkline-sentiments').sparkline(sentimentData, optionsSentiments)
-    }
-  }
+  sparkChartit();
   ls.setItem('results',JSON.stringify(results));
   ls.setItem('currentFreeIndex',index.toString());
   ls.setItem('counters',JSON.stringify(counters));

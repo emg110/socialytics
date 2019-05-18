@@ -1,6 +1,6 @@
 function openNav(id, width) {
   //document.getElementById(id).style.backgroundColor = "#111";
-  document.getElementById(id).style.width = width || "30%";
+  document.getElementById(id).style.width = width || "35%";
 }
 
 /* Set the width of the sidebar to 0 (hide it) */
@@ -23,7 +23,10 @@ function backNav() {
     ls.setItem('currentFreeIndex', currentFreeIndex.toString())
     if (currentFreeIndex < 2) $("#backbtn").hide();
   }
-  if (html !== undefined) document.getElementById('instagram-container').innerHTML = html;
+  if (html !== undefined){
+    document.getElementById('instagram-container').innerHTML = html;
+    sparkChartit();
+  }
 
 }
 $('.btn-primary').on('click', function () {
