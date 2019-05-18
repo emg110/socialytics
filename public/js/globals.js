@@ -181,4 +181,5 @@ function drop(ev) {
   var data = ev.dataTransfer.getData("text");
   //ev.target.appendChild(document.getElementById(data));
   $("#"+ev.target.id).addTag(data)
+  $("#"+ev.target.id).val(data)
 }

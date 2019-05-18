@@ -101,10 +101,87 @@ $("#resetSets").on('click',function(e){
 OverlayScrollbars(document.querySelectorAll('body'), {
   className : "os-theme-dark",
 });
+
 /*OverlayScrollbars(document.getElementById('home-sidebar'), {
   className : "os-theme-dark",
 });*/
 
+$("#search-input").on('keypress',(e)=>{
+  console.log(e.which)
+  if(e.which===13){
+    var value = $("#search-input").val();
+    var instance = $("#autocomplete-results").overlayScrollbars()
+    if(instance)instance.destroy()
+    $("#autocomplete-results").html('<div>  </div>')
+    if(value.length>3){
+      window.fetch('https://www.instagram.com/web/search/topsearch/?query='+value).then(res=>{
+        return res.json()
+      }).then(function (json) {
+        if(json){
+          json = json.users;
 
+          $("#autocomplete-results").append('<div style="width:100%;color:#f8f9fa;padding:5px;font-family: monospace; background: rgba(0,123,255,.5);text-align: center">Drag profiles to desired input</div>')
+          for(var i of json){
+            i = i.user;
+            var verified = i.is_verified? 'Verified':'';
+            $("#autocomplete-results").append(
+              '<div id="'+i.username+'" class="search-result" draggable="true" ondragstart="drag(event)">'+
+              '<span>'+
+              '<img title="'+i.full_name+':'+'" class="profile-mini-img" src="'+i.profile_pic_url+'">'+
+              '</span>'+
+              '<span style="margin-left:1vw">'+
+              i.username+
+              '</span>'+
+              '<span style="margin: 5px;background-color: rgba(0, 170, 255, .8);" class="badge badge-secondary">'+verified+'</span>'+
+              '</div>')
+          }
+        }
+        $("#autocomplete-results").overlayScrollbars({
+          className : "os-theme-dark"
+        })
+        /*OverlayScrollbars(document.getElementById('autocomplete-results'), {
+            className : "os-theme-dark",
+          });*/
+      });
+    }
+  }
+});
+$("#searchProfileBtn").click(()=>{
+  var value = $("#search-input").val();
+  var instance = $("#autocomplete-results").overlayScrollbars()
+  if(instance)instance.destroy()
+  $("#autocomplete-results").html('<div>  </div>')
+  if(value.length>3){
+    window.fetch('https://www.instagram.com/web/search/topsearch/?query='+value).then(res=>{
+      return res.json()
+    }).then(function (json) {
+      if(json){
+        json = json.users;
+
+        $("#autocomplete-results").append('<div style="width:100%;color:#f8f9fa;padding:5px;font-family: monospace; background: rgba(0,123,255,.5);text-align: center">Drag profiles to desired input</div>')
+        for(var i of json){
+          i = i.user;
+          var verified = i.is_verified? 'Verified':'';
+          $("#autocomplete-results").append(
+            '<div id="'+i.username+'" class="search-result" draggable="true" ondragstart="drag(event)">'+
+            '<span>'+
+            '<img title="'+i.full_name+':'+'" class="profile-mini-img" src="'+i.profile_pic_url+'">'+
+            '</span>'+
+            '<span style="margin-left:1vw">'+
+            i.username+
+            '</span>'+
+            '<span style="margin: 5px;background-color: rgba(0, 170, 255, .8);" class="badge badge-secondary">'+verified+'</span>'+
+            '</div>')
+        }
+      }
+      $("#autocomplete-results").overlayScrollbars({
+        className : "os-theme-dark"
+      })
+      /*OverlayScrollbars(document.getElementById('autocomplete-results'), {
+          className : "os-theme-dark",
+        });*/
+    });
+  }
+});
 
 
