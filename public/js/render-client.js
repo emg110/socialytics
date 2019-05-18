@@ -81,6 +81,7 @@ function render(html, container, caller){
   OverlayScrollbars(document.getElementById('social-sidepanel'), {
     className : "os-theme-dark",
   });
+
   var index = parseInt(ls.getItem('currentFreeIndex'));
   var results = JSON.parse(ls.getItem('results'));
   var counters = JSON.parse(ls.getItem('counters'));
@@ -179,68 +180,6 @@ function renderFormData(txt){
   if(json.username)document.getElementById('search-input').value = json.query;
   if(json.username)document.getElementById('count-input').value = json.count;
   if(json.username)document.getElementById('shortcode-input').value = json.shortcode;
-  $("#search-input").on('keypress',(e)=>{
-    console.log(e.which)
-    if(e.which===13){
-      var value = $("#search-input").val();
-      if(value.length>3){
-        window.fetch('https://www.instagram.com/web/search/topsearch/?query='+value).then(res=>{
-          return res.json()
-        }).then(function (json) {
-          if(json){
-            json = json.users;
-            $("#autocomplete-results").html('');
-            $("#autocomplete-results").append('<div style="width:100%;color:#f8f9fa;padding:5px;font-family: monospace; background: rgba(0,123,255,.5);text-align: center">Drag profiles to desired sets</div>')
-            for(var i of json){
-              i = i.user;
-              var verified = i.is_verified? 'Verified':'';
-              $("#autocomplete-results").append(
-                '<div id="'+i.username+'" class="search-result" draggable="true" ondragstart="drag(event)">'+
-                '<span>'+
-                '<img title="'+i.full_name+':'+'" class="profile-mini-img" src="'+i.profile_pic_url+'">'+
-                '</span>'+
-                '<span style="margin-left:1vw">'+
-                i.username+
-                '</span>'+
-                '<span style="margin: 5px;background-color: rgba(0, 170, 255, .8);" class="badge badge-secondary">'+verified+'</span>'+
-                '</div>')
-            }
-          }
-        });
-      }
-      else{
-        $("#autocomplete-results").html('')
-      }
-    }
-  });
-  $("#searchProfileBtn").click(()=>{
-    var value = $("#search-input").val();
-    if(value.length>3){
-      window.fetch('https://www.instagram.com/web/search/topsearch/?query='+value).then(res=>{
-        return res.json()
-      }).then(function (json) {
-        if(json){
-          json = json.users;
-          $("#autocomplete-results").html('')
-
-          for(var i of json){
-            i = i.user;
-            var verified = i.is_verified? 'Verified':'Not verified'
-            $("#autocomplete-results").append(
-              '<div class="search-result">'+
-              '<span>'+
-              '<img title="'+i.full_name+':'+'" class="profile-mini-img" src="'+i.profile_pic_url+'">'+
-              '</span>'+
-              '<span style="margin-left:1vw">'+
-              i.username+
-              '</span>'+
-              '<span style="margin: 5px;background-color: rgba(0, 170, 255, .8);" class="badge badge-secondary">'+verified+'</span>'+
-              '</div>')
-          }
-        }
-      });
-    }
-  });
 
   var tagsOptions = {
     'defaultText':'Drag or add a profile...',

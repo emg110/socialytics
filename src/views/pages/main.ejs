@@ -38,11 +38,14 @@
   <div class="container grid grid-hero-sidebar">
     <div id="home-sidebar" class="sidebar widget-wrapper">
       <div  style="" class="widget-stage">
-        <form style="padding:20px;" class="data-form">
+        <div style="padding:10px;">
+          <input type="text" style="width:70%;display:inline;margin:5px;" class="form-control" id="search-input" search-query="search-query">
+          <input id="searchProfileBtn" style="text-align:center;display:inline; padding:5px; margin:5px; min-width:5%" value="Go" type="button" class="btn btn-secondary">
+          <div style="overflow-y:scroll;max-height:20vh;margin-bottom:25px;color:black;background-color: #7f7d7d;" id="autocomplete-results"></div>
           <input style="margin-bottom:5px;" value="Get sample filters" type="button" class="btn btn-primary" click-target="/instagram/form/data?" call-type="form-data">
           <input style="margin-bottom:5px;" value="Get sets configurations" type="button" class="btn btn-secondary" click-target="/instagram/config/data?" call-type="config-data">
           <input style="margin-bottom:5px;" value="Get sets data" type="button" class="btn btn-secondary" click-target="/instagram/sets/data?" call-type="sets-data">
-        </form>
+        </div>
         <div style=" text-align:center" class="footer">
           <p class="small text-muted">Built with &#9829; for <a target="_blank" href="https://houmanhadian.github.io/">Houman Hadian's doctoral project @ UAlg</a></p>
         </div>
@@ -92,7 +95,7 @@
             <button class="btn btn-primary etl-btn" type="button"  value="Get all feed" click-target="/instagram/allfeed?" call-type="all-feed-posts">All feed</button>
           </div>
           <div style="max-width:45vw" class="tab-pane container widget-stage" id="profile-tab">
-            <br><input type="text" placeholder="Profile name" class="form-control" id="username-input" username="username"><br>
+            <br><input type="text" ondrop="drop(event)" ondragover="allowDrop(event)" placeholder="Profile name" class="form-control" id="username-input" username="username"><br>
             <button class="btn btn-primary etl-btn" type="button"  value="Get user profile" click-target="/instagram/profile?" call-type="profile">User profile</button>
             <button class="btn btn-primary etl-btn" type="button"  value="Get user posts" click-target="/instagram/posts?" call-type="recent-posts">Recent posts</button>
             <button class="btn btn-primary etl-btn" type="button"  value="Get all posts" click-target="/instagram/allposts?" call-type="all-posts">All posts</button>
@@ -122,10 +125,4 @@
     </div>
 
   </div>
-
-
-
-
-
-
 </div>
