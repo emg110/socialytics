@@ -22,14 +22,14 @@
   </div>
 
   <div class="col-sm-6 profile-trends" style="">
-    <div id="sparkline-likes" style="width:51%;float:right;"></div>
-    <span class="badge badge-secondary trend-badge" style="">Likes:</span>
-    <div id="sparkline-comments" style="width:51%;float:right;"></div>
-    <span class="badge badge-secondary trend-badge" style="">Comments:</span>
-    <div id="sparkline" style="width:51%;float:right"></div>
-    <span class="badge badge-secondary trend-badge" style="">Engagement:</span>
     <div id="sparkline-sentiments" style="width:51%;float:right"></div>
-    <span class="badge badge-secondary trend-badge" style="">Sentiment:</span>
+    <span class="badge badge-secondary trend-badge" title="Sentiments"><span class="fa fa-smile-o" style="color:#61a0a8;font-size:14px;"></span></span>
+    <div id="sparkline" style="width:51%;float:right"></div>
+    <span class="badge badge-secondary trend-badge" title="Engagement"><span class="fa fa-handshake-o" style="color:#ffaa80"></span></span>
+    <div id="sparkline-likes" style="width:51%;float:right;"></div>
+    <span class="badge badge-secondary trend-badge" title="Likes"><span class="fa fa-heart-o" style="color:#c23531"></span></span>
+    <div id="sparkline-comments" style="width:51%;float:right;"></div>
+    <span class="badge badge-secondary trend-badge" title="Comments"><span class="fa fa-comments-o" style="color:#749f83;font-size:14px;"></span></span>
   </div>
   <div class="col-sm-6 profile-boolean">
     <div style="min-width: 100%; display: inline-block;font-size: 1em;" class="col-sm-6">
@@ -88,42 +88,42 @@
     </div>
   </div>
   <div style="display:inline-block" class="col-sm-6 text-center align-self-center profile-counters">
-    <div style="background-color:lightgreen" class="byline-counter">
-      <% if(etlData.edge_followed_by) { %>
-      <span class="byline" title="Followers count"
-            onClick=getEndpointData("/instagram/followers?","user-followers","<%= etlData.username %>","followers")><%= etlData.edge_followed_by.count %> followers</span>
-      <% } %>
-    </div>
-    <div style="background-color:darkseagreen" class="byline-counter">
-      <% if(etlData.edge_follow) { %>
-      <span class="byline" title="Followings count"
-            onClick=getEndpointData("/instagram/following?","user-following","<%= etlData.username %>","following")><%= etlData.edge_follow.count %> follows</span>
-      <% } %>
-    </div>
-    <div style="background-color:cadetblue" class="byline-counter">
+    <div style="background-color:#2f4554" class="byline-counter">
       <% if(etlData.edge_owner_to_timeline_media) { %>
-      <span class="byline" title="Posts count"
-            onClick=getEndpointData("/instagram/posts?","recent-posts","<%= etlData.username %>","posts")><%= etlData.edge_owner_to_timeline_media.count %> posts</span>
+        <span class="byline" title="Posts count"
+              onClick=getEndpointData("/instagram/posts?","recent-posts","<%= etlData.username %>","posts")><%= etlData.edge_owner_to_timeline_media.count %><br ><span class="fa fa-instagram"></span></span>
       <% } %>
     </div>
-    <div style="background-color:lightblue" class="byline-counter">
+    <div style="background-color:#bda29a" class="byline-counter">
+      <% if(etlData.edge_followed_by) { %>
+        <span class="byline" title="Followers count"
+            onClick=getEndpointData("/instagram/followers?","user-followers","<%= etlData.username %>","followers")><%= etlData.edge_followed_by.count %><br ><span class="fa fa-users"></span></span>
+      <% } %>
+    </div>
+    <div style="background-color:#ca8622" class="byline-counter">
+      <% if(etlData.edge_follow) { %>
+        <span class="byline" title="Followings count"
+            onClick=getEndpointData("/instagram/following?","user-following","<%= etlData.username %>","following")><%= etlData.edge_follow.count %><br ><span class="fa fa-user"></span></span>
+      <% } %>
+    </div>
+    <div style="background-color:#61a0a8" class="byline-counter">
       <% if(etlData.edge_felix_video_timeline) { %>
-      <span class="byline" title="Felix video count"><%= etlData.edge_felix_video_timeline.count %> felixs</span>
+        <span class="byline" title="Felix video count"><%= etlData.edge_felix_video_timeline.count %><br ><span class="fa fa-video-camera"></span></span>
       <% } %>
     </div>
-    <div style="background-color:orange" class="byline-counter">
+    <div style="background-color:#91c7ae" class="byline-counter">
       <% if(etlData.edge_saved_media) { %>
-      <span class="byline" title="Saved count"><%= etlData.edge_saved_media.count %> saves</span>
+      <span class="byline" title="Saved count"><%= etlData.edge_saved_media.count %><br ><span class="fa fa-bookmark-o"></span></span>
       <% } %>
     </div>
-    <div style="background-color:darkorange" class="byline-counter">
+    <div style="background-color:#d48265" class="byline-counter">
       <% if(etlData.edge_mutual_followed_by) { %>
-      <span class="byline" title="Mutuals count"><%= etlData.edge_mutual_followed_by.count %> mutuals</span>
+      <span class="byline" title="Mutuals count"><%= etlData.edge_mutual_followed_by.count %><br ><span class="fa fa-group"></span>
       <% } %>
     </div>
-    <div style="background-color:#ffbdf2" class="byline-counter">
+    <div style="background-color:#c78f8f" class="byline-counter">
       <% if(etlData.edge_media_collections) { %>
-      <span class="byline" title="Collections count"><%= etlData.edge_media_collections.count %> collections</span>
+      <span class="byline" title="Collections count"><%= etlData.edge_media_collections.count %><br ><span class="fa fa-photo"></span>
       <% } %>
     </div>
   </div>
@@ -165,7 +165,7 @@
                 <%= edge.edge_liked_by.count+' ' %>
                 <% } %>
               </span>
-            <span style="cursor:pointer; color: transparent;  text-shadow: 0 0 0 rgb(42, 170, 82);" class="fa fa-comment"
+            <span style="cursor:pointer; color:#749f83;" class="fa fa-comment"
                   onClick=getEndpointData("/instagram/comments?","post-comments","<%= edge.shortcode %>","post-comments")>
               <% if(edge.edge_media_to_comment){ %>
               <%= edge.edge_media_to_comment.count+' ' %>
