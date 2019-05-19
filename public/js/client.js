@@ -43,10 +43,13 @@ $('.btn-primary').on('click', function () {
       var caller = this;
       console.log(caller);
       getEndpointData(endpoint, type, '', 'main', caller);
+      getEndpointData('/instagram/sets/data?', 'form-data', '', 'main', undefined);
     }
   }
 });
-
+$('#getSetDataBtn').on('click', function () {
+  getSetsData()
+});
 $("#login-form").submit(function (e) {
   console.log('info: Login started');
   //prevent Default functionality

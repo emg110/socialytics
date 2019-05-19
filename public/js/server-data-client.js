@@ -205,7 +205,8 @@ function getEndpointData(endpoint, type, code, container, caller) {
     } else {
       norender(caller);
     }
-  } else {
+  }
+  else {
     console.log('form data...')
     xhr = new XMLHttpRequest();
     xhr.timeout = 0;

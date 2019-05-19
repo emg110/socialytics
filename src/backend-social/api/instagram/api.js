@@ -7,7 +7,6 @@ console.log("Socialytics Instagram client has been initialized...");
 console.log("Socialytics Instagram API has started...");
 //Async functions using Instagram client
 var api = {};
-
 api.profileJson = async (ctx) => {
   var username = ctx.get('username')
   var accesstoken = ctx.get('accesstoken')
@@ -128,6 +127,33 @@ api.userAllPosts = async (ctx) => {
       return t;
     })
     var userId = instagramClient.getUserIdByUserName(userData);
+    var posts = await instagramClient.getAllUserPosts(userId).then((p) => {
+      return p
+    }).catch(err => {
+      console.log(err);
+    });
+    /*let writeToDatabase = await writeDatabase(socket, accesstoken,  posts, '/instagram/posts')*/
+    ctx.status = 200;
+    ctx.body = {
+      results: posts
+    }
+  }
+  else{
+    ctx.status=403;
+    ctx.body={
+      results:'You are not authenticated yet, hence not authorized to do this!'
+    }
+  }
+
+}
+api.userAllPostsById = async (ctx) => {
+  var username = ctx.get('username')
+  var accesstoken = ctx.get('accesstoken')
+  var strategy = ctx.get('strategy')
+  var userconfig = config.users[username]
+  if(userconfig.sessionid && userconfig.csrftoken){
+    let instagramClient =  new Instagram(username.toLowerCase());
+    let userId =  ctx.request.query.userid;
     var posts = await instagramClient.getAllUserPosts(userId).then((p) => {
       return p
     }).catch(err => {

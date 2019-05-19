@@ -1,6 +1,14 @@
-function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = false, bDone = false) {
-  seta = document.getElementById('seta').value.split(',').slice(0,3);
-  setb = document.getElementById('setb').value.split(',').slice(0,3);
+function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
+  var setLimit = document.getElementById('set-limit-input').value
+  if(setLimit){
+    seta = document.getElementById('seta').value.split(',').slice(0,setLimit);
+    setb = document.getElementById('setb').value.split(',').slice(0,setLimit);
+  }else{
+    seta = document.getElementById('seta').value.split(',');
+    setb = document.getElementById('setb').value.split(',');
+  }
+
+
 
   totalsA = totalsB = {
     totalPosts:0,

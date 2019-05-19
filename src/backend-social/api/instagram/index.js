@@ -7,11 +7,14 @@ router.get("/etl-health-check", async (ctx) => {
   ctx.status = 200
   ctx.body = { result: "ok" }
 });
+const getSetsDataInstagram =
 // Instagram client router endpoints mapped to async functions to implement 100% async Rest json endpoints.
+/*router.get("/instagram/set/data", api.getStatsData);*/
 router.get("/instagram/profile", api.profileJson);
 router.get("/instagram/whoami", api.profileSelfJson);
 router.get("/instagram/posts", api.userPosts);
 router.get("/instagram/allposts", api.userAllPosts);
+router.get("/instagram/allpostsById", api.userAllPostsById);
 router.get("/instagram/tag", api.exploreTag);
 router.get("/instagram/location", api.exploreLocation);
 router.get("/instagram/following", api.userFollowing);
