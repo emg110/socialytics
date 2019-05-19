@@ -44,8 +44,10 @@
         </div>
       </div>
       <div class="card-header">
+        <!--<div style="cursor:pointer;padding:3px" onClick=getEndpointData("/instagram/profile?","profile","<%= etlData.owner.username %>","profile")></br><span class="glyphicon glyphicon-user"> <%= etlData.owner.username %></div>-->
+        <div style="cursor:pointer;padding:3px" onClick=getEndpointData("/instagram/profile?","profile","<%= etlData.owner.username %>","profile")></br>
+          <img class="usr-img-thumbnail" src="<%= !(typeof etlData == 'undefined') ? etlData.profile_pic_url : "" %>" alt="<%= etlData ? etlData.username : "" %>"></div>
         <%= etlData.edge_media_to_caption.edges[0] ? etlData.edge_media_to_caption.edges[0].node.text : etlData.id %>
-        <small style="cursor:pointer;background-color: #81ec81;padding:3px" onClick=getEndpointData("/instagram/profile?","profile","<%= etlData.owner.username %>","profile")></br><span class="glyphicon glyphicon-user"> <%= etlData.owner.username %></small>
       </div>
 
 
@@ -60,16 +62,16 @@
 
       <div class="card">
         <div>
-          <h3 style="">Comments:</h3> <h6 style="text-decoration:underline;cursor: pointer;color:blue" class="card-header" onClick=getEndpointData("/instagram/comments?","post-comments",'<%= etlData.shortcode%>',"post-comments")> All comments </h6>
+          <h3 style="">Comments:</h3> <h6 style="text-decoration:underline;cursor: pointer;color:blue" class="card-header" onClick=getEndpointData("/instagram/comments?","post-comments",'<%= etlData.shortcode%>',"post-comments")> View all comments </h6>
         </div>
 
 
         <ul id="comments" class="list-group">
           <% etlData.edge_media_preview_comment.edges.forEach((comment) => { %>
             <% comment = comment.node %>
-            <li class="list-group-item">
+            <li class="list-group-item" style="text-align:left;">
+              <small style="cursor:pointer;padding:3px;font-size:13px;font-weight:600;" onClick=getEndpointData("/instagram/profile?","profile","<%= comment.owner.username %>","profile")><%= comment.owner.username %></small>
               <p><%= comment.text %></p>
-              <small style="cursor:pointer;background-color: #81ec81;padding:3px" onClick=getEndpointData("/instagram/profile?","profile","<%= comment.owner.username %>","profile")><span class="glyphicon glyphicon-user"> <%= comment.owner.username %></small>
 
               <% if(locals.isAuthenticated && (comment.owner.id == username)) { %>
                 <form method="POST" action="/etlDatas/<%= etlData.id %>/comments/<%= comment.id %>">
