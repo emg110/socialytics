@@ -10,7 +10,7 @@
                   <img class="usr-img-thumbnail" src="<%= !(typeof edge == 'undefined') ? edge.owner.profile_pic_url:"" %>" alt="<%= edge ? edge.owner.username :"" %>">
               <% }%>
           <%}%>
-            <div style="min-width: 100px; display: inline-block;" class="col-sm-6 text-center align-self-center">
+            <div style="min-width: 100px; display: inline-block;" class="col-sm-6 text-left align-self-center">
               <% if(!!edge.is_verified) { %>
                 <span class="verified glyphicon glyphicon-ok" title="Verified Account"></span><span class="verified glyphicon glyphicon-user" alt="Verified Account"></span>
               <% }else{ %>
@@ -25,13 +25,13 @@
             </div>
       </div>
 
-    <div class="col-sm-6 text-center align-self-center">
+    <div class="col-sm-6 text-left align-self-center">
 
-      <h3><%= !(typeof edge == 'undefined') ? edge.owner.username : "username" %></h3>
+      <h4><%= !(typeof edge == 'undefined') ? edge.owner.username : "username" %></h4>
       <h4><%= !(typeof edge == 'undefined') ? edge.owner.full_name :"-"%></h4>
-      <h4><%= !(typeof edge == 'undefined') ? edge.created_at : "0000/00/00" %></h4>
       </br>
       <h5><%= !(typeof edge == 'undefined') ? edge.text : ":..." %></h5>
+      <h6><%= !(typeof edge == 'undefined') ? edge.created_at : "0000/00/00" %></h6>
     </div>
 
   </div>
