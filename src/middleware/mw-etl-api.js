@@ -139,7 +139,9 @@ module.exports = function (options = {}) {
 
         etlData = finalData;
       }
-      writeDatabase(req.app, etlData, service, username)
+      console.log('info: Rendering data from ETL API to client')
+      renderData(etlData,page,username,res);
+      /*writeDatabase(req.app, etlData, service, username)
         .then(result => {
           console.log('info: Rendering data from ETL API to client')
           renderData(etlData,page,username,res);
@@ -147,7 +149,7 @@ module.exports = function (options = {}) {
         .catch(err => {
           console.log(err);
           res.sendStatus(500)
-        });
+        });*/
     }
     else if(expr.indexOf('/instagram/tag')>=0){
       let etlApiEndpoint = serverUrl+expr.replace('/explore','');
@@ -166,7 +168,9 @@ module.exports = function (options = {}) {
         finalData.user.edge_owner_to_timeline_media.edges = etlData;
         etlData = finalData;
       }
-      writeDatabase(req.app, etlData, service, username)
+      console.log('info: Rendering data from ETL API to client')
+      renderData(etlData,page,username,res);
+      /*writeDatabase(req.app, etlData, service, username)
         .then(result => {
           console.log('info: Rendering data from ETL API to client')
           renderData(etlData,page,username,res);
@@ -174,7 +178,7 @@ module.exports = function (options = {}) {
         .catch(err => {
           console.log(err);
           res.sendStatus(500)
-        });
+        });*/
 
     }
     else if(expr.indexOf('/instagram/location')>=0){
@@ -196,7 +200,9 @@ module.exports = function (options = {}) {
         finalData.user.edge_owner_to_timeline_media.edges = etlData;
         etlData = finalData;
       }
-      writeDatabase(req.app, etlData, service, username)
+      console.log('info: Rendering data from ETL API to client')
+      renderData(etlData,page,username,res);
+      /*writeDatabase(req.app, etlData, service, username)
         .then(result => {
           console.log('info: Rendering data from ETL API to client')
           renderData(etlData,page,username,res);
@@ -204,7 +210,7 @@ module.exports = function (options = {}) {
         .catch(err => {
           console.log(err);
           res.sendStatus(500)
-        });
+        });*/
 
     }
     else if(expr.indexOf('/instagram/following')>=0){
@@ -223,7 +229,9 @@ module.exports = function (options = {}) {
         finalData.edges = etlData;
         etlData = finalData;
       }
-      writeDatabase(req.app, etlData, service, username)
+      console.log('info: Rendering data from ETL API to client')
+      renderData(etlData,page,username,res);
+     /* writeDatabase(req.app, etlData, service, username)
         .then(result => {
           console.log('info: Rendering data from ETL API to client')
           renderData(etlData,page,username,res);
@@ -231,7 +239,7 @@ module.exports = function (options = {}) {
         .catch(err => {
           console.log(err);
           res.sendStatus(500)
-        });
+        });*/
     }
     else if(expr.indexOf('/instagram/followers')>=0){
       let etlApiEndpoint = serverUrl+expr;
@@ -255,7 +263,9 @@ module.exports = function (options = {}) {
         console.log('All '+ etlData.length + ' follower profiles have been collected from instagram')
         etlData = finalData;
       }
-      writeDatabase(req.app, etlData, service, username)
+      console.log('info: Rendering data from ETL API to client')
+      renderData(etlData,page,username,res);
+      /*writeDatabase(req.app, etlData, service, username)
         .then(result => {
           console.log('info: Rendering data from ETL API to client')
           renderData(etlData,page,username,res);
@@ -263,14 +273,16 @@ module.exports = function (options = {}) {
         .catch(err => {
           console.log(err);
           res.sendStatus(500)
-        });
+        });*/
     }
     else if(expr.indexOf('/instagram/search')>=0){
       let etlApiEndpoint = serverUrl+expr;
       let service = 'instagram/search';
       let page = 'pages/search';
       let etlData = await getEndpointDataEtl(etlApiEndpoint, username, accessToken, strategy);
-      writeDatabase(req.app, etlData, service, username)
+      console.log('info: Rendering data from ETL API to client')
+      renderData(etlData,page,username,res);
+      /*writeDatabase(req.app, etlData, service, username)
         .then(result => {
           console.log('info: Rendering data from ETL API to client')
           renderData(etlData,page,username,res);
@@ -278,7 +290,7 @@ module.exports = function (options = {}) {
         .catch(err => {
           console.log(err);
           res.sendStatus(500)
-        });
+        });*/
     }
     else if(expr.indexOf('/instagram/feed')>=0){
       let etlApiEndpoint = serverUrl+expr;
@@ -288,7 +300,9 @@ module.exports = function (options = {}) {
       if(etlData.user)etlData = etlData.user;
       if(etlData.edge_web_feed_timeline)etlData = etlData.edge_web_feed_timeline;
       if(etlData.edges)etlData = etlData.edges;
-      writeDatabase(req.app, etlData, service, username)
+      console.log('info: Rendering data from ETL API to client')
+      renderData(etlData,page,username,res);
+      /*writeDatabase(req.app, etlData, service, username)
         .then(result => {
           console.log('info: Rendering data from ETL API to client')
           renderData(etlData,page,username,res);
@@ -296,14 +310,16 @@ module.exports = function (options = {}) {
         .catch(err => {
           console.log(err);
           res.sendStatus(500)
-        });
+        });*/
     }
     else if(expr.indexOf('/instagram/allfeed')>=0){
       let etlApiEndpoint = serverUrl+expr;
       let service = 'instagram/feed';
       let page = 'pages/feed';
       let etlData = await getEndpointDataEtl(etlApiEndpoint, username, accessToken, strategy);
-      writeDatabase(req.app, etlData, service, username)
+      console.log('info: Rendering data from ETL API to client')
+      renderData(etlData,page,username,res);
+      /*writeDatabase(req.app, etlData, service, username)
         .then(result => {
           console.log('info: Rendering data from ETL API to client')
           renderData(etlData,page,username,res);
@@ -311,7 +327,7 @@ module.exports = function (options = {}) {
         .catch(err => {
           console.log(err);
           res.sendStatus(500)
-        });
+        });*/
     }
     else if(expr.indexOf('/instagram/suggested/posts')>=0){
       let etlApiEndpoint = serverUrl+expr;
@@ -323,7 +339,9 @@ module.exports = function (options = {}) {
       finalData.user.edge_owner_to_timeline_media = {};
       finalData.user.edge_owner_to_timeline_media.edges = etlData;
       etlData = finalData;
-      writeDatabase(req.app, etlData, service, username)
+      console.log('info: Rendering data from ETL API to client')
+      renderData(etlData,page,username,res);
+      /*writeDatabase(req.app, etlData, service, username)
         .then(result => {
           console.log('info: Rendering data from ETL API to client')
           renderData(etlData,page,username,res);
@@ -331,7 +349,7 @@ module.exports = function (options = {}) {
         .catch(err => {
           console.log(err);
           res.sendStatus(500)
-        });
+        });*/
     }
     else if(expr.indexOf('/instagram/suggested/people')>=0){
       let etlApiEndpoint = serverUrl+expr;
@@ -341,7 +359,9 @@ module.exports = function (options = {}) {
       let finalData = {};
       finalData.edges = etlData;
       etlData = finalData;
-      writeDatabase(req.app, etlData, service, username)
+      console.log('info: Rendering data from ETL API to client')
+      renderData(etlData,page,username,res);
+     /* writeDatabase(req.app, etlData, service, username)
         .then(result => {
           console.log('info: Rendering data from ETL API to client')
           renderData(etlData,page,username,res);
@@ -349,7 +369,7 @@ module.exports = function (options = {}) {
         .catch(err => {
           console.log(err);
           res.sendStatus(500)
-        });
+        });*/
     }
     else if(expr.indexOf('/instagram/likes')>=0){
       let etlApiEndpoint = serverUrl+expr;
@@ -360,7 +380,9 @@ module.exports = function (options = {}) {
         let finalData = {};
         finalData.edges = etlData;
         etlData = finalData;
-        writeDatabase(req.app, etlData, service, username)
+        console.log('info: Rendering data from ETL API to client')
+        renderData(etlData,page,username,res);
+        /*writeDatabase(req.app, etlData, service, username)
           .then(result => {
             console.log('info: Rendering data from ETL API to client')
             renderData(etlData,page,username,res);
@@ -368,7 +390,7 @@ module.exports = function (options = {}) {
           .catch(err => {
             console.log(err);
             res.sendStatus(500)
-          });
+          });*/
       }else{
         res.send('<h1>NO LIKES FOR SELECTED POST</h1>>')
       }
@@ -383,7 +405,9 @@ module.exports = function (options = {}) {
         let finalData = {};
         finalData.edges = etlData;
         etlData = finalData;
-        writeDatabase(req.app, etlData, service, username)
+        console.log('info: Rendering data from ETL API to client')
+        renderData(etlData,page,username,res);
+        /*writeDatabase(req.app, etlData, service, username)
           .then(result => {
             console.log('info: Rendering data from ETL API to client')
             renderData(etlData,page,username,res);
@@ -391,7 +415,7 @@ module.exports = function (options = {}) {
           .catch(err => {
             console.log(err);
             res.sendStatus(500)
-          });
+          });*/
       }else{
         res.send('<h1 style="background-color:grey;margin-left:10px;margin-right:10px;min-height: 45px; border-radius:22px;padding:10px;">  NO COMMENTS FOR SELECTED POST<span style="color:darkred;vertical-align: middle;" class="glyphicon glyphicon-info-sign"></span></h1>>')
       }
@@ -403,7 +427,9 @@ module.exports = function (options = {}) {
       let page = 'pages/post';
       let etlData = await getEndpointDataEtl(etlApiEndpoint, username, accessToken, strategy);
       if(etlData){
-        writeDatabase(req.app, etlData, service, username)
+        console.log('info: Rendering data from ETL API to client')
+        renderData(etlData,page,username,res);
+        /*writeDatabase(req.app, etlData, service, username)
           .then(result => {
             console.log('info: Rendering data from ETL API to client')
             renderData(etlData,page,username,res);
@@ -411,7 +437,7 @@ module.exports = function (options = {}) {
           .catch(err => {
             console.log(err);
             res.sendStatus(500)
-          });
+          });*/
       }else{
         res.send('<h1>NO SUCH POST</h1>>')
       }

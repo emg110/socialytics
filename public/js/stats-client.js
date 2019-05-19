@@ -759,13 +759,14 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
         var likesCommentsA = response.data;
         var socResA = response.socRes;
         var usernameA = socResA.un;
-        var dbPostsCountA = parseInt(response.data[3].total);
+        var dbPostsCountA = 0;
+        if(likesCommentsA.total)dbPostsCountA = parseInt(likesCommentsA.total);
         var likesCountA = 0;
         var commentsCountA = 0;
 
         desc = desc.substring(desc.indexOf(':') + 1, desc.length);
-        if (response.data[0]) {
-          likesCountA = likesCommentsA[0]['comments'] || 0;
+        if (likesCommentsA.likes) {
+          likesCountA = likesCommentsA.likes || 0;
           $("#" + desc).find('.likes').html(likesCountA)
           totalsA.totalLikes += likesCountA
           for(i of window.profilesA){
@@ -774,8 +775,8 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
             }
           }
         }
-        if (response.data[1]) {
-          commentsCountA = likesCommentsA[1]['likes'] || 0;
+        if (likesCommentsA.comments) {
+          commentsCountA = likesCommentsA.comments || 0;
           $("#" + desc).find('.comments').html(commentsCountA)
           //console.log(icounter + ' seta user id: ' + desc + ' username:' + usernameA + ' has total comments count:' + commentsCountA);
           totalsA.totalLikes += likesCountA
@@ -785,7 +786,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
             }
           }
         }
-        if (response.data[2]) {
+        if (likesCommentsA.trendsdata) {
           icounterA++
           if(icounterA===1){
             optionsLineA.series = [];
@@ -814,7 +815,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
           var profilesPieDowDataA = []
           var profilesPieHodDataA = []
 
-          for (var trendPost of response.data[2].trendsdata){
+          for (var trendPost of likesCommentsA.trendsdata){
             //dbPostsCountA
             if(trendPost.location)console.log(trendPost.location.toString());
             var likesTotal = trendPost.edge_media_preview_like.count;
@@ -1119,7 +1120,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
 
         desc = desc.substring(desc.indexOf(':') + 1, desc.length);
         if (response.data[0]) {
-          likesCountB = likesCommentsB[0]['comments'] || 0;
+          likesCountB = likesCommentsB[0]['likes'] || 0;
           $("#" + desc).find('.likes').html(likesCountB);
 
           for(var j of window.profilesB){
@@ -1129,7 +1130,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = [], aDone = 
           }
         }
         if (response.data[1]) {
-          commentsCountB = likesCommentsB[1]['likes'] || 0;
+          commentsCountB = likesCommentsB[1]['comments'] || 0;
           $("#" + desc).find('.comments').html(commentsCountB);
           //console.log(icounter + ' setb user id: ' + desc + ' username:' + usernameB + ' has total comments count:' + commentsCountB);
           for(var j of window.profilesB){

@@ -107,7 +107,7 @@ OverlayScrollbars(document.querySelectorAll('body'), {
 });*/
 
 $("#search-input").on('keypress',(e)=>{
-  console.log(e.which)
+  //console.log(e.which)
   if(e.which===13){
     var value = $("#search-input").val();
     var instance = $("#autocomplete-results").overlayScrollbars()

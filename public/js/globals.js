@@ -180,6 +180,15 @@ function drop(ev) {
   ev.preventDefault();
   var data = ev.dataTransfer.getData("text");
   //ev.target.appendChild(document.getElementById(data));
-  $("#"+ev.target.id).addTag(data)
-  $("#"+ev.target.id).val(data)
+  if($("#"+ev.target.id).hasClass('tagsinput')){
+    $("#"+ev.target.id).addTag(data)
+
+  }else{
+    $("#"+ev.target.id).val()
+    $("#"+ev.target.id).val(data)
+    var instance = $("#autocomplete-results").overlayScrollbars()
+    if(instance)instance.destroy()
+    $("#autocomplete-results").html('<div>  </div>')
+  }
+
 }
