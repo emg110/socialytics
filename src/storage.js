@@ -60,14 +60,25 @@ module.exports = async function writeDatabase(fapi, data, service, account) {
         console.log(err);
       });
   }else if(data.id){
-    let removeData = await fapi.service(service)
-      .remove(data.id)
+    let findData = await fapi.service(service)
+      .find({query:{id:data.id},$limit:1})
       .then(result => {
         return result;
       })
       .catch(err => {
         console.log(err);
       });
+    if(findData.data[0]){
+      let removeData = await fapi.service(service)
+        .remove(findData.data[0].id)
+        .then(result => {
+          return result;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+
     let createDataMulti = await fapi.service(service)
       .create(data)
       .then(result => {
