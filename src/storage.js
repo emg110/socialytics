@@ -29,12 +29,7 @@ module.exports = async function writeDatabase(fapi, data, service, account) {
       }
       if (item.graphql) {
         if (item.graphql.shortcode_media) {
-          for (i in item.graphql.shortcode_media) {
-            item[i] = item.graphql.shortcode_media[i]
-          }
-          delete item.graphql.shortcode_media
-          delete item.graphql
-
+          item = item.graphql.shortcode_media
         }
       }
       item.account = account;

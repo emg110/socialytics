@@ -18,6 +18,20 @@ function getHeaders(username, accessToken, strategy) {
     'x-requested-with': 'XMLHttpRequest'
   }
 }
+function cleans(post){
+  if (post.node) {
+    post = post.node;
+  }
+  if (post.user) {
+    post = post.user
+  }
+  if (post.graphql) {
+    if (post.graphql.shortcode_media) {
+      post = post.graphql.shortcode_media
+    }
+  }
+  return post
+}
 async function getEndpointDataEtl(etlApiEndpoint, username, accessToken, strategy){
   let etlData = await fetch(etlApiEndpoint,
     {
@@ -93,24 +107,10 @@ module.exports = function (options = {}) {
           if(etlDataPA && etlDataPA !== 'No ETL data'){
             resultData.totalDbPostsA+=etlDataPA.length;
             for(let postA of etlDataPA){
-              if (postA.node) {
-                postA = postA.node;
-              }
-              if (postA.user) {
-                postA = postA.user
-              }
-              if (postA.graphql) {
-                if (postA.graphql.shortcode_media) {
-                  for (let ia in postA.graphql.shortcode_media) {
-                    postA[ia] = postA.graphql.shortcode_media[ia]
-                  }
-                  delete postA.graphql.shortcode_media
-                  delete postA.graphql
-
-                }
-              }
+              postA = cleans(postA)
               let timePMA = await setTimeout(function(){return 1000},1000);
-              const etlDataPMA = await getEndpointDataEtl(etlApiEndpointMedia+postA.shortcode, username, accessToken, strategy);
+              let etlDataPMA = await getEndpointDataEtl(etlApiEndpointMedia+postA.shortcode, username, accessToken, strategy);
+              etlDataPMA = cleans(etlDataPMA)
               postA.media = etlDataPMA
             }
             resultData.setA.push({profile:setAProfile.username,totalDb:etlDataPA.length,profileData:setAProfile,posts:etlDataPA})
@@ -164,24 +164,10 @@ module.exports = function (options = {}) {
             resultData.totalDbPostsB+=etlDataPB.length;
 
             for(let postB of etlDataPB){
-              if (postB.node) {
-                postB = postB.node;
-              }
-              if (postB.user) {
-                postB = postB.user
-              }
-              if (postB.graphql) {
-                if (postB.graphql.shortcode_media) {
-                  for (let ib in postB.graphql.shortcode_media) {
-                    postB[ib] = postB.graphql.shortcode_media[ib]
-                  }
-                  delete postB.graphql.shortcode_media
-                  delete postB.graphql
-
-                }
-              }
+              postB = cleans(postB)
               let timePMB = await setTimeout(function(){return 1000},1000);
-              const etlDataPMB = await getEndpointDataEtl(etlApiEndpointMedia+postB.shortcode, username, accessToken, strategy);
+              let etlDataPMB = await getEndpointDataEtl(etlApiEndpointMedia+postB.shortcode, username, accessToken, strategy);
+              etlDataPMB = cleans(etlDataPMB)
               postB.media = etlDataPMB
             }
             resultData.setB.push({profile:setBProfile.username,totalDb:etlDataPB.length,profileData:setBProfile,posts:etlDataPB})
