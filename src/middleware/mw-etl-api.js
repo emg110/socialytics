@@ -70,6 +70,7 @@ module.exports = function (options = {}) {
           console.log('info: Writing SetA profile '+ etlDataA.username +'from ETL API to database')
           const recordProfileA = await writeDatabase(req.app, etlDataA, serviceProfile, username)
             .then(result => {
+              return result
               console.log('info: Writing SetA, profile: '+ etlDataA.username +' ,from ETL API to database')
             })
             .catch(err => {
@@ -89,9 +90,10 @@ module.exports = function (options = {}) {
           resultData.profilesB.push(etlDataB)
           console.log('info: Writing SetB profile '+ etlDataB.username +'from ETL API to database')
           let serviceProfile = 'instagram/profiles';
-          const recordProfileB = writeDatabase(req.app, etlDataB, serviceProfile, username)
+          const recordProfileB = await writeDatabase(req.app, etlDataB, serviceProfile, username)
             .then(result => {
               console.log('info: Writing SetB, profile: '+ etlDataB.username +' ,from ETL API to database')
+              return result
             })
             .catch(err => {
               console.log(err);
@@ -113,8 +115,9 @@ module.exports = function (options = {}) {
           resultData.setA.push({profile:setAProfile.username,totalDb:etlDataPA.length,profileData:setAProfile,posts:etlDataPA})
           console.log('info: Writing SetA,  '+ etlDataPA.length +'posts from ETL API to database')
           let servicePosts = 'instagram/posts';
-          const recordDataA = writeDatabase(req.app, etlDataPA, servicePosts, username)
+          const recordDataA = await writeDatabase(req.app, etlDataPA, servicePosts, username)
             .then(result => {
+              return result
               console.log('info: Patched setA in database with '+etlDataPA.length+' records ')
             })
             .catch(err => {
@@ -136,9 +139,10 @@ module.exports = function (options = {}) {
           resultData.setB.push({profile:setBProfile.username,totalDb:etlDataPB.length,profileData:setBProfile,posts:etlDataPB})
           console.log('info: Writing SetB,  '+ etlDataPB.length +'posts from ETL API to database')
           let servicePosts = 'instagram/posts';
-          const recordDataB = writeDatabase(req.app, etlDataPB, servicePosts, username)
+          const recordDataB = await writeDatabase(req.app, etlDataPB, servicePosts, username)
             .then(result => {
-              console.log('info: Patched setB in database with '+etlDataPB.length+' records ')
+              console.log('info: Patched setB in database with '+etlDataPB.length+' records ');
+              return result
             })
             .catch(err => {
               console.log(err);
