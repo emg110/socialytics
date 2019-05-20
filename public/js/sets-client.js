@@ -47,11 +47,11 @@ function getSetsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
     var html = xhr.responseText;
     //console.log(html)
     var json = JSON.parse(html);
-    var htmlA = '<div class="counter-metric-span posts">A-Insta: ' + json.totalInstaPostsA + '</div>'+
-      '<div class="counter-metric-span posts">A-DB: ' + json.totalDbPostsA + '</div>';
+    var htmlA = '<div class="counter-metric-home-span posts">A-Instagaram: ' + json.totalInstaPostsA + '</div>'+
+      '<div class="counter-metric-home-span posts">A-Databse: ' + json.totalDbPostsA + '</div>';
     $("#countera").html(htmlA);
-    var htmlB = '<div class="counter-metric-span posts">B-Insta: ' + json.totalInstaPostsB + '</div>'+
-      '<div class="counter-metric-span posts">B-DB: ' + json.totalDbPostsB + '</div>';
+    var htmlB = '<div class="counter-metric-home-span posts">B-Instagram: ' + json.totalInstaPostsB + '</div>'+
+      '<div class="counter-metric-home-span posts">B-Database: ' + json.totalDbPostsB + '</div>';
       $("#counterb").html(htmlB);
   }
   xhr.send();
