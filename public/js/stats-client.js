@@ -626,10 +626,64 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
       }
     }*/]
   };
+  var legendHtmlA =
+    '<div class="counter-metric-span ">' +
+    '<div class="metrics-legend posts-legend classa">\n' +
+    '          <span class="fa fa-instagram"></span>\n' +
+    '        </div>\n' +
+    '</div>' +
+    '<div class="counter-metric-span ">' +
+    '        <div class="metrics-legend followers-legend classa">\n' +
+    '          <span class="fa fa-users"></span>\n' +
+    '        </div>\n' +
+    '</div>' +
+    '<div class="counter-metric-span ">' +
+    '        <div class="metrics-legend following-legend classa">\n' +
+    '          <span class="fa fa-user-o"></span>\n' +
+    '        </div>\n' +
+    '</div>' +
+    '<div class="counter-metric-span ">' +
+    '        <div class="metrics-legend likes-legend classa">\n' +
+    '          <span class="fa fa-heart-o"></span>\n' +
+    '        </div>\n' +
+    '</div>' +
+    '<div class="counter-metric-span ">' +
+    '        <div class="metrics-legend comments-legend classa">\n' +
+    '          <span class="fa fa-comments-o"></span>\n' +
+    '        </div>'+
+    '</div>';
+  var legendHtmlB =
+    '<div class="counter-metric-span ">' +
+    '<div class="metrics-legend posts-legend classb">\n' +
+    '          <span class="fa fa-instagram"></span>\n' +
+    '        </div>\n' +
+    '</div>' +
+    '<div class="counter-metric-span ">' +
+    '        <div class="metrics-legend followers-legend classb">\n' +
+    '          <span class="fa fa-users"></span>\n' +
+    '        </div>\n' +
+    '</div>' +
+    '<div class="counter-metric-span ">' +
+    '        <div class="metrics-legend following-legend classb">\n' +
+    '          <span class="fa fa-user-o"></span>\n' +
+    '        </div>\n' +
+    '</div>' +
+    '<div class="counter-metric-span ">' +
+    '        <div class="metrics-legend likes-legend classb">\n' +
+    '          <span class="fa fa-heart-o"></span>\n' +
+    '        </div>\n' +
+    '</div>' +
+    '<div class="counter-metric-span ">' +
+    '        <div class="metrics-legend comments-legend classb">\n' +
+    '          <span class="fa fa-comments-o"></span>\n' +
+    '        </div>'+
+    '</div>';
 
 
   socket.removeListener('authenticated:seta');
   socketB.removeListener('authenticated:setb');
+
+
   socket.on('authenticated:seta', function (response) {
     var desc = response.socRes.desc;
     if (desc === 'seta-profile-userid') {
@@ -654,32 +708,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
             formatter: '{b}'
           }
         })
-        var legendHtmlA =
-          '<div class="counter-metric-span ">' +
-          '<div class="metrics-legend posts-legend classa">\n' +
-          '          <span class="fa fa-instagram"></span>\n' +
-          '        </div>\n' +
-          '</div>' +
-          '<div class="counter-metric-span ">' +
-          '        <div class="metrics-legend followers-legend classa">\n' +
-          '          <span class="fa fa-users"></span>\n' +
-          '        </div>\n' +
-          '</div>' +
-          '<div class="counter-metric-span ">' +
-          '        <div class="metrics-legend following-legend classa">\n' +
-          '          <span class="fa fa-user-o"></span>\n' +
-          '        </div>\n' +
-          '</div>' +
-          '<div class="counter-metric-span ">' +
-          '        <div class="metrics-legend likes-legend classa">\n' +
-          '          <span class="fa fa-heart-o"></span>\n' +
-          '        </div>\n' +
-          '</div>' +
-          '<div class="counter-metric-span ">' +
-          '        <div class="metrics-legend comments-legend classa">\n' +
-          '          <span class="fa fa-comments-o"></span>\n' +
-          '        </div>'+
-          '</div>';
+
 
 
 
@@ -725,7 +754,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
           var pictureA = picit(itemA);
 
           $("#profiles-counters-a").append(
-            '<div  id="' + useridA + '" class="counter-metric">' +
+            '<div  id="' + useridA +'a'+ '" class="counter-metric">' +
 
             '<img alt="missing" class="profile-mini-img" src="' +
             pictureA +
@@ -775,7 +804,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
         desc = desc.substring(desc.indexOf(':') + 1, desc.length);
         if (likesCommentsA.likes) {
           likesCountA = likesCommentsA.likes || 0;
-          $("#" + desc).find('.likes').html(likesCountA)
+          $("#" + desc+'a').find('.likes').html(likesCountA)
           totalsA.totalLikes += likesCountA
           for(i of window.profilesA){
             if(i.id===desc){
@@ -785,7 +814,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
         }
         if (likesCommentsA.comments) {
           commentsCountA = likesCommentsA.comments || 0;
-          $("#" + desc).find('.comments').html(commentsCountA)
+          $("#" + desc+'a').find('.comments').html(commentsCountA)
           //console.log(icounter + ' seta user id: ' + desc + ' username:' + usernameA + ' has total comments count:' + commentsCountA);
           totalsA.totalLikes += likesCountA
           for(i of window.profilesA){
@@ -824,8 +853,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
           var profilesPieHodDataA = []
 
           for (var trendPost of likesCommentsA.trendsdata){
-            //dbPostsCountA
-            if(trendPost.location)console.log(trendPost.location.toString());
+
             var likesTotal = trendPost.edge_media_preview_like.count;
             var commentsTotal = trendPost.edge_media_to_comment.count;
             totalsA.totalLikes += likesTotal;
@@ -994,8 +1022,8 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
 
   })
   socketB.on('authenticated:setb', function (response) {
-    var desc = response.socRes.desc;
-    if (desc === 'setb-profile-userid') {
+    var descB = response.socRes.desc;
+    if (descB === 'setb-profile-userid') {
       if (response.data) {
         window.profilesB = response.data.data;
         totalsB = {
@@ -1017,35 +1045,6 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
             formatter: '{b}'
           }
         });
-
-        var legendHtmlB =
-          '<div class="counter-metric-span ">' +
-          '<div class="metrics-legend posts-legend classb">\n' +
-          '          <span class="fa fa-instagram"></span>\n' +
-          '        </div>\n' +
-          '</div>' +
-          '<div class="counter-metric-span ">' +
-          '        <div class="metrics-legend followers-legend classb">\n' +
-          '          <span class="fa fa-users"></span>\n' +
-          '        </div>\n' +
-          '</div>' +
-          '<div class="counter-metric-span ">' +
-          '        <div class="metrics-legend following-legend classb">\n' +
-          '          <span class="fa fa-user-o"></span>\n' +
-          '        </div>\n' +
-          '</div>' +
-          '<div class="counter-metric-span ">' +
-          '        <div class="metrics-legend likes-legend classb">\n' +
-          '          <span class="fa fa-heart-o"></span>\n' +
-          '        </div>\n' +
-          '</div>' +
-          '<div class="counter-metric-span ">' +
-          '        <div class="metrics-legend comments-legend classb">\n' +
-          '          <span class="fa fa-comments-o"></span>\n' +
-          '        </div>'+
-          '</div>';
-
-
 
         $("#profileB-metrics-legend").html(legendHtmlB)
 
@@ -1086,7 +1085,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
           )
 
           $("#profiles-counters-b").append(
-            '<div  id="' + useridB + '" class="counter-metric">' +
+            '<div  id="' + useridB+'b' + '" class="counter-metric">' +
             
             '<img alt="missing" class="profile-mini-img" src="' +
             picit(itemB) +
@@ -1117,37 +1116,38 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
 
       }
     }
-    else if (desc.indexOf('setb-posts-likes-comments:') > -1) {
+    else if (descB.indexOf('setb-posts-likes-comments:') > -1) {
       if (response.data) {
         var likesCommentsB = response.data;
         var socResB = response.socRes;
         var usernameB = socResB.un;
-        var dbPostsCountB = parseInt(response.data[3].total);
+        var dbPostsCountB = 0;
+        if(likesCommentsB.total)dbPostsCountB = parseInt(likesCommentsB.total);
         var likesCountB =  0;
         var commentsCountB =  0;
 
-        desc = desc.substring(desc.indexOf(':') + 1, desc.length);
-        if (response.data[0]) {
-          likesCountB = likesCommentsB[0]['likes'] || 0;
-          $("#" + desc).find('.likes').html(likesCountB);
-
+        descB = descB.substring(descB.indexOf(':') + 1, descB.length);
+        if (likesCommentsB.likes) {
+          likesCountB = likesCommentsB.likes || 0;
+          $("#" + descB+'b').find('.likes').html(likesCountB);
           for(var j of window.profilesB){
-            if(j.id===desc){
+            if(j.id===descB){
               j.likes = likesCountB;
             }
           }
         }
-        if (response.data[1]) {
-          commentsCountB = likesCommentsB[1]['comments'] || 0;
-          $("#" + desc).find('.comments').html(commentsCountB);
-          //console.log(icounter + ' setb user id: ' + desc + ' username:' + usernameB + ' has total comments count:' + commentsCountB);
+        if (likesCommentsB.comments) {
+          commentsCountB = likesCommentsB.comments || 0;
+          $("#" + descB+'b').find('.comments').html(commentsCountB);
+          //console.log(icounter + ' setb user id: ' + descB + ' username:' + usernameB + ' has total comments count:' + commentsCountB);
+          totalsB.totalLikes += likesCountB
           for(var j of window.profilesB){
-            if(j.id===desc){
+            if(j.id===descB){
               j.comments = commentsCountB
             }
           }
         }
-        if (response.data[2]) {
+        if (likesCommentsB.trendsdata) {
           icounterB++
           if(icounterB===1){
             optionsLineB.series = [];
@@ -1175,7 +1175,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
           var profilesPieDowDataB = []
           var profilesPieHodDataB = []
 
-          for (var trendPostB of response.data[2].trendsdata){
+          for (var trendPostB of likesCommentsB.trendsdata){
 
             var likesTotalB = trendPostB.edge_media_preview_like.count;
             var commentsTotalB = trendPostB.edge_media_to_comment.count;

@@ -7,6 +7,7 @@ module.exports = function (app) {
     filename: path.join(dbPath, 'insta-media.db'),
     autoload: true
   });
-
+  Model.ensureIndex({ fieldName: 'shortcode', unique: true });
+  Model.ensureIndex({ fieldName: 'id', unique: true });
   return Model;
 };

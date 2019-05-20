@@ -12,7 +12,6 @@ module.exports = function (app) {
 
   const options = {
     Model,
-    id:'id',
     whitelist: [ '$regex','$where' ],
     paginate,
     multi:true,
