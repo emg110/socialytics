@@ -60,103 +60,154 @@ module.exports = function (options = {}) {
       resultData.setB = [];
       let etlApiEndpoint = serverUrl+'/instagram/profile?username=';
       let etlApiEndpointPosts = serverUrl+'/instagram/allpostsById?userid=';
+      let etlApiEndpointMedia = serverUrl+'/instagram/post?shortcode=';
+      if(setAData[0] === '')setAData=[];
+      if(setBData[0] === '')setBData=[];
+      if(setAData.length>0){
+        for(var setAItem of setAData){
+          let timeA = await setTimeout(function(){return 5000},5000);
+          const etlDataA = await getEndpointDataEtl(etlApiEndpoint+setAItem, username, accessToken, strategy);
+          if(etlDataA && etlDataA !== 'No ETL data'){
+            resultData.profilesA.push(etlDataA)
+            let serviceProfile = 'instagram/profiles';
+            console.log('info: Writing SetA profile '+ etlDataA.username +'from ETL API to database')
+            const recordProfileA = await writeDatabase(req.app, etlDataA, serviceProfile, username)
+              .then(result => {
+                return result
+                console.log('info: Writing SetA, profile: '+ etlDataA.username +' ,from ETL API to database')
+              })
+              .catch(err => {
+                console.log(err);
+                res.sendStatus(500)
+              });
+          }
+          else{
+            console.log('No ETL data has returned from Instagram');
+            res.sendStatus(500)
+          }
+        }
+        for(var setAProfile of resultData.profilesA){
+          let timePA = await setTimeout(function(){return 5000},5000);
+          resultData.totalInstaPostsA+=setAProfile.edge_owner_to_timeline_media.count
+          const etlDataPA = await getEndpointDataEtl(etlApiEndpointPosts+setAProfile.id, username, accessToken, strategy);
+          if(etlDataPA && etlDataPA !== 'No ETL data'){
+            resultData.totalDbPostsA+=etlDataPA.length;
+            for(let postA of etlDataPA){
+              if (postA.node) {
+                postA = postA.node;
+              }
+              if (postA.user) {
+                postA = postA.user
+              }
+              if (postA.graphql) {
+                if (postA.graphql.shortcode_media) {
+                  for (let ia in postA.graphql.shortcode_media) {
+                    postA[ia] = postA.graphql.shortcode_media[ia]
+                  }
+                  delete postA.graphql.shortcode_media
+                  delete postA.graphql
 
-      for(var setAItem of setAData){
-        let timeA = await setTimeout(function(){return 5000},5000);
-        const etlDataA = await getEndpointDataEtl(etlApiEndpoint+setAItem, username, accessToken, strategy);
-        if(etlDataA && etlDataA !== 'No ETL data'){
-          resultData.profilesA.push(etlDataA)
-          let serviceProfile = 'instagram/profiles';
-          console.log('info: Writing SetA profile '+ etlDataA.username +'from ETL API to database')
-          const recordProfileA = await writeDatabase(req.app, etlDataA, serviceProfile, username)
-            .then(result => {
-              return result
-              console.log('info: Writing SetA, profile: '+ etlDataA.username +' ,from ETL API to database')
-            })
-            .catch(err => {
-              console.log(err);
-              res.sendStatus(500)
-            });
-        }
-        else{
-          console.log('No ETL data has returned from Instagram');
-          res.sendStatus(500)
-        }
-      }
-      for(var setBItem of setBData){
-        let timeB = await setTimeout(function(){return 5000},5000);
-        const etlDataB = await getEndpointDataEtl(etlApiEndpoint+setBItem, username, accessToken, strategy);
-        if(etlDataB && etlDataB !== 'No ETL data'){
-          resultData.profilesB.push(etlDataB)
-          console.log('info: Writing SetB profile '+ etlDataB.username +'from ETL API to database')
-          let serviceProfile = 'instagram/profiles';
-          const recordProfileB = await writeDatabase(req.app, etlDataB, serviceProfile, username)
-            .then(result => {
-              console.log('info: Writing SetB, profile: '+ etlDataB.username +' ,from ETL API to database')
-              return result
-            })
-            .catch(err => {
-              console.log(err);
-              res.sendStatus(500)
-            });
-        }
-        else{
-          console.log('No ETL data has returned from Instagram');
-          res.sendStatus(500)
-        }
-      }
+                }
+              }
+              let timePMA = await setTimeout(function(){return 1000},1000);
+              const etlDataPMA = await getEndpointDataEtl(etlApiEndpointMedia+postA.shortcode, username, accessToken, strategy);
+              postA.media = etlDataPMA
+            }
+            resultData.setA.push({profile:setAProfile.username,totalDb:etlDataPA.length,profileData:setAProfile,posts:etlDataPA})
+            console.log('info: Writing SetA,  '+ etlDataPA.length +'posts from ETL API to database')
+            let servicePosts = 'instagram/posts';
+            const recordDataA = await writeDatabase(req.app, etlDataPA, servicePosts, username)
+              .then(result => {
+                return result
+                console.log('info: Patched setA in database with '+etlDataPA.length+' records ')
+              })
+              .catch(err => {
+                console.log(err);
+                res.sendStatus(500)
+              });
 
-      for(var setAProfile of resultData.profilesA){
-        let timePA = await setTimeout(function(){return 5000},5000);
-        resultData.totalInstaPostsA+=setAProfile.edge_owner_to_timeline_media.count
-        const etlDataPA = await getEndpointDataEtl(etlApiEndpointPosts+setAProfile.id, username, accessToken, strategy);
-        if(etlDataPA && etlDataPA !== 'No ETL data'){
-          resultData.totalDbPostsA+=etlDataPA.length
-          resultData.setA.push({profile:setAProfile.username,totalDb:etlDataPA.length,profileData:setAProfile,posts:etlDataPA})
-          console.log('info: Writing SetA,  '+ etlDataPA.length +'posts from ETL API to database')
-          let servicePosts = 'instagram/posts';
-          const recordDataA = await writeDatabase(req.app, etlDataPA, servicePosts, username)
-            .then(result => {
-              return result
-              console.log('info: Patched setA in database with '+etlDataPA.length+' records ')
-            })
-            .catch(err => {
-              console.log(err);
-              res.sendStatus(500)
-            });
-        }
-        else{
-          console.log('No ETL data has returned from Instagram');
-          res.sendStatus(500)
+          }
+          else{
+            console.log('No ETL data has returned from Instagram');
+            res.sendStatus(500)
+          }
         }
       }
-      for(var setBProfile of resultData.profilesB){
-        let timePB = await setTimeout(function(){return 5000},5000);
-        resultData.totalInstaPostsB+=setBProfile.edge_owner_to_timeline_media.count
-        const etlDataPB = await getEndpointDataEtl(etlApiEndpointPosts+setBProfile.id, username, accessToken, strategy);
-        if(etlDataPB && etlDataPB !== 'No ETL data'){
-          resultData.totalDbPostsB+=etlDataPB.length;
-          resultData.setB.push({profile:setBProfile.username,totalDb:etlDataPB.length,profileData:setBProfile,posts:etlDataPB})
-          console.log('info: Writing SetB,  '+ etlDataPB.length +'posts from ETL API to database')
-          let servicePosts = 'instagram/posts';
-          const recordDataB = await writeDatabase(req.app, etlDataPB, servicePosts, username)
-            .then(result => {
-              console.log('info: Patched setB in database with '+etlDataPB.length+' records ');
-              return result
-            })
-            .catch(err => {
-              console.log(err);
-              res.sendStatus(500)
-            });
+      if(setBData.length>0){
+        for(var setBItem of setBData){
+          let timeB = await setTimeout(function(){return 5000},5000);
+          const etlDataB = await getEndpointDataEtl(etlApiEndpoint+setBItem, username, accessToken, strategy);
+          if(etlDataB && etlDataB !== 'No ETL data'){
+            resultData.profilesB.push(etlDataB)
+            console.log('info: Writing SetB profile '+ etlDataB.username +'from ETL API to database')
+            let serviceProfile = 'instagram/profiles';
+            const recordProfileB = await writeDatabase(req.app, etlDataB, serviceProfile, username)
+              .then(result => {
+                console.log('info: Writing SetB, profile: '+ etlDataB.username +' ,from ETL API to database')
+                return result
+              })
+              .catch(err => {
+                console.log(err);
+                res.sendStatus(500)
+              });
+          }
+          else{
+            console.log('No ETL data has returned from Instagram');
+            res.sendStatus(500)
+          }
         }
-        else{
-          console.log('No ETL data has returned from Instagram');
-          res.sendStatus(500)
+        for(var setBProfile of resultData.profilesB){
+          let timePB = await setTimeout(function(){return 5000},5000);
+          resultData.totalInstaPostsB+=setBProfile.edge_owner_to_timeline_media.count
+          const etlDataPB = await getEndpointDataEtl(etlApiEndpointPosts+setBProfile.id, username, accessToken, strategy);
+          if(etlDataPB && etlDataPB !== 'No ETL data'){
+            resultData.totalDbPostsB+=etlDataPB.length;
+
+            for(let postB of etlDataPB){
+              if (postB.node) {
+                postB = postB.node;
+              }
+              if (postB.user) {
+                postB = postB.user
+              }
+              if (postB.graphql) {
+                if (postB.graphql.shortcode_media) {
+                  for (let ib in postB.graphql.shortcode_media) {
+                    postB[ib] = postB.graphql.shortcode_media[ib]
+                  }
+                  delete postB.graphql.shortcode_media
+                  delete postB.graphql
+
+                }
+              }
+              let timePMB = await setTimeout(function(){return 1000},1000);
+              const etlDataPMB = await getEndpointDataEtl(etlApiEndpointMedia+postB.shortcode, username, accessToken, strategy);
+              postB.media = etlDataPMB
+            }
+            resultData.setB.push({profile:setBProfile.username,totalDb:etlDataPB.length,profileData:setBProfile,posts:etlDataPB})
+            console.log('info: Writing SetB,  '+ etlDataPB.length +'posts from ETL API to database')
+            let servicePosts = 'instagram/posts';
+            const recordDataB = await writeDatabase(req.app, etlDataPB, servicePosts, username)
+              .then(result => {
+                console.log('info: Patched setB in database with '+etlDataPB.length+' records ');
+                return result
+              })
+              .catch(err => {
+                console.log(err);
+                res.sendStatus(500)
+              });
+          }
+          else{
+            console.log('No ETL data has returned from Instagram');
+            res.sendStatus(500)
+          }
         }
       }
 
       console.log('info: Rendering sets A & B data');
       res.json(resultData);
+
+
     }
     else if(expr.indexOf('/instagram/profile')>=0){
       let etlApiEndpoint = serverUrl+expr;

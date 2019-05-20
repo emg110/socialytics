@@ -25,7 +25,7 @@ module.exports = async function writeDatabase(fapi, data, service, account) {
         item = item.node;
       }
       if (item.user) {
-        item = data.user
+        item = item.user
       }
       if (item.graphql) {
         if (item.graphql.shortcode_media) {
@@ -64,7 +64,7 @@ module.exports = async function writeDatabase(fapi, data, service, account) {
       .catch(err => {
         console.log(err);
       });
-  }else{
+  }else if(data.id){
     let removeData = await fapi.service(service)
       .remove(data.id)
       .then(result => {
