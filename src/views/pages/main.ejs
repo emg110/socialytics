@@ -32,14 +32,14 @@
         <div style="padding:10px;">
           <input type="text" style="width:70%;display:inline;margin:5px;" class="form-control" id="search-input" search-query="search-query">
           <input id="searchProfileBtn" style="text-align:center;display:inline; padding:5px; margin:5px; min-width:5%" value="Go" type="button" class="btn btn-secondary">
-          <a href="#" data-toggle="popover" data-trigger="focus" title="Search instagram for profiles" data-content="Search instagram for user profiles name wich searches instagram API directly and then you can drag & drop results in to user profiles inputs like set A,set B and user profile name." data-placement="bottom" class="fa fa-info-circle" style="color:#afafb0;"></a>
+          <a href="#" data-toggle="popover" data-trigger="focus" title="Search instagram for profiles" data-content="Search instagram for user profiles name which searches instagram API directly and then you can drag & drop results in to user profiles inputs like set A,set B and user profile name." data-placement="bottom" class="fa fa-info-circle" style="color:#afafb0;"></a>
           <div style="overflow-y:scroll;max-height:20vh;margin-bottom:25px;color:black;background-color: #7f7d7d;" id="autocomplete-results"></div><br>
           <div id="countera" class="stats-totals"></div><br>
           <div id="counterb" class="stats-totals"></div><br>
           <input style="margin-bottom:5px;" value="Get sample filters" type="button" class="btn btn-primary" click-target="/instagram/form/data?" call-type="form-data">
-          <a href="#" data-toggle="popover" data-trigger="focus" title="Sample filter" data-content="Get sample filter" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
+          <a href="#" data-toggle="popover" data-trigger="focus" title="Gets sample filters and sets" data-content="Gets sample filter items and configured set members which are popular Portugies and Iranian brands." data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
           <input style="margin-bottom:5px;" value="Get sets data" type="button" class="btn btn-secondary" id="getSetDataBtn">
-          <a href="#" data-toggle="popover" data-trigger="focus" title="Sets data" data-content="Get sets data" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
+          <a href="#" data-toggle="popover" data-trigger="focus" title="Gets set A and set B data in full" data-content="Gets set A and set B members data, by each posts and each media and stores them all in database." data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
         </div>
         <div style=" text-align:center" class="footer">
           <p class="small text-muted">Built with &#9829; for <a target="_blank" href="https://houmanhadian.github.io/">Houman Hadian's doctoral project @ UAlg</a></p>
@@ -65,43 +65,43 @@
           <li class="nav-item">
             <a class="nav-link active" data-toggle="tab" href="#self-tab" style="display:inline;">Self</a>
             <span style="display:inline;">
-            <a href="#" data-toggle="popover" data-trigger="focus" title="Self" data-content="Self profile" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
+            <a href="#" data-toggle="popover" data-trigger="focus" title="Current Instagram user ops" data-content="ETL and/or API browsing operations for current loged in user's registered Instagram account(via registered session id)." data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
             </span>
           </li>
           <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#profile-tab" style="display:inline;">Profile</a>
             <span style="display:inline;">
-            <a href="#" data-toggle="popover" data-trigger="focus" title="Profile" data-content="Get profile data" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
+            <a href="#" data-toggle="popover" data-trigger="focus" title="Instagram profile ops" data-content="ETL and/or API browsing operations for desired user profile." data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
             </span>
           </li>
           <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#post-tab" style="display:inline;">Post</a>
             <span style="display:inline;">
-            <a href="#" data-toggle="popover" data-trigger="focus" title="Posts" data-content="Get posts data" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
+            <a href="#" data-toggle="popover" data-trigger="focus" title="Instagram posts ops" data-content="ETL and/or API browsing operations for desired Instagram profile's posts." data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
             </span>
           </li>
           <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#loctag-tab" style="display:inline;">Location|Tag</a>
             <span style="display:inline;">
-              <a href="#" data-toggle="popover" data-trigger="focus" title="Location|Tag" data-content="Get data based on posts location or tag" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
+              <a href="#" data-toggle="popover" data-trigger="focus" title="Instagram location and hashtag ops" data-content="ETL and/or API browsing operations for desired Instagram hashtag or location. Returns posts related to either hashtag or location input by user." data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
             </span>
           </li>
           <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#seta-tab" style="display:inline;">Set A</a>
             <span style="display:inline;">
-              <a href="#" data-toggle="popover" data-trigger="focus" title="Set A" data-content="Set data for set A" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
+              <a href="#" data-toggle="popover" data-trigger="focus" title="Set A(first set) of comparetive analetics" data-content="Comparetive analetics are implemented for two sets of data, varying insize(set A and set B). This tab represents set A members input." data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
             </span>
           </li>
           <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#setb-tab" style="display:inline;">Set B</a>
             <span style="display:inline;">
-               <a href="#" data-toggle="popover" data-trigger="focus" title="Set B" data-content="Set data for set B" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
+               <a href="#" data-toggle="popover" data-trigger="focus" title="Set B(second set) of comparetive analetics" data-content="Comparetive analetics are implemented for two sets of data, varying insize(set A and set B). This tab represents set B members input." data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
             </span>
           </li>
           <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#search-tab" style="display:inline;">Search </a>
             <span style="display:inline;">
-                <a href="#" data-toggle="popover" data-trigger="focus" title="Search" data-content="Search profiles" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
+                <a href="#" data-toggle="popover" data-trigger="focus" title="Instagram general search ops" data-content="General search operations of Instagram gets a text query and returns data items under 3 diffrent set of results: users, locations and hashtags. Every of which includes an array of foun related records(returns an objects of tree arrays)." data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
             </span>
 
 
@@ -109,9 +109,9 @@
           <li class="nav-item">
             <br>
             <input  style="width:40%; display:inline;margin:5px;padding:10px;" placeholder="Count limit" type="number" class="form-control" id="count-input" count=0>
-            <span><a href="#" data-toggle="popover" data-trigger="focus" title="Count limit" data-content="Count limit" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a></span>
+            <span><a href="#" data-toggle="popover" data-trigger="focus" title="Returned records upper limit" data-content="For Instagram ETL and browsing operations which do not present -ALL- on their title, limit the count of returend records by setting this parameter.   " data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a></span>
             <input  style="width:40%; display:inline;margin:5px;padding:10px;" placeholder="Set limit"  type="number" class="form-control" id="set-limit-input" count=0>
-              <span><a href="#" data-toggle="popover" data-trigger="focus" title="Count limit" data-content="Set limit input" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a></span>
+              <span><a href="#" data-toggle="popover" data-trigger="focus" title="Set members upper limit" data-content="Maximum number of set members get in to account for full data extraction, as a dynamic parameter." data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a></span>
           </li>
 
         </ul>
@@ -119,9 +119,9 @@
           <div style="max-width:45vw" class="tab-pane active container widget-stage" id="self-tab">
             <br>
             <input id="profile-name-input" type="text" class="form-control" placeholder="Logged in user profile" disabled="true" style="display: inline;">
-            <a href="#" data-toggle="popover" data-trigger="focus" title="user profile" data-content="Logged in user profile" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a><br>
+            <a href="#" data-toggle="popover" data-trigger="focus" title="user profile" data-content="System will input and use current logged in user's registered Instagram account(via registered session id)." data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a><br>
             <button id="sugg-post-btn" class="btn btn-primary etl-btn" type="button"  value="Get suggested posts" click-target="/instagram/suggested/posts?" call-type="sugg-posts">Sugg posts</button>
-            <a href="#" data-toggle="popover" data-trigger="focus" title="Suggested posts" data-content="Suggested posts" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
+            <a href="#" data-toggle="popover" data-trigger="focus" title="Suggested posts" data-content="Retrives posts" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
             <button id="sugg-people-btn" class="btn btn-primary etl-btn" type="button"  value="Get suggested people" click-target="/instagram/suggested/people?"  call-type="sugg-people">Sugg people</button>
             <a href="#" data-toggle="popover" data-trigger="focus" title="Suggested people" data-content="Suggested people" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
             <button id="recent-feed-btn" class="btn btn-primary etl-btn" type="button"  value="Get feed" click-target="/instagram/feed?" call-type="feed-posts">Recent feed</button>
@@ -132,7 +132,7 @@
           <div style="max-width:45vw" class="tab-pane container widget-stage" id="profile-tab">
             <br>
             <input type="text" ondrop="drop(event)" ondragover="allowDrop(event)" placeholder="Profile name" class="form-control" id="username-input" username="username"style="display: inline;">
-            <a href="#" data-toggle="popover" data-trigger="focus" title="Profile name" data-content="Profile user name" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a><br>
+            <a href="#" data-toggle="popover" data-trigger="focus" title="Instagram profile name" data-content="Input desired Instagram profile name for ETL or browsing operations. You can search for Instagram profile names via search control on top left of home page." data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a><br>
             <button class="btn btn-primary etl-btn" type="button"  value="Get user profile" click-target="/instagram/profile?" call-type="profile">User profile</button>
             <a href="#" data-toggle="popover" data-trigger="focus" title="user profile" data-content="Get user profile" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
             <button class="btn btn-primary etl-btn" type="button"  value="Get user posts" click-target="/instagram/posts?" call-type="recent-posts">Recent posts</button>
