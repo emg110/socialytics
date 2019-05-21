@@ -119,7 +119,7 @@ module.exports = function (options = {}) {
             let recordDataA = await writeDatabase(req.app, etlDataPA, servicePosts, username)
               .then(result => {
                 return result
-                console.log('info: Patched setA member profile: '+setAProfile.username+' in database with '+etlDataPA.length+' records '+ 'for these profiles: '+resultData.profilesA.toString());)
+                console.log('info: Patched setA member profile: '+setAProfile.username+' in database with '+etlDataPA.length+' records '+ 'for these profiles: '+resultData.profilesA.toString());
               })
               .catch(err => {
                 console.log(err);
