@@ -187,4 +187,60 @@ $("#searchProfileBtn").click(()=>{
   }
 });
 
+var tour = new Tour({
+  steps: [
+    {
+      element: "#count-input",
+      title: "Count limit",
+      content: "Count limitt"
+    },
+    {
+      element: "#set-limit-input",
+      title: "Count limit",
+      content: "Count limit"
+    },
+    {
+      element: "#profile-name-input",
+      title: "Count limit",
+      content: "Count limit"
+    },
+    {
+      element: "#sugg-post-btn",
+      title: "Suggested posts",
+      content: "Count limit"
+    },
+    {
+      element: "#sugg-people-btn",
+      title: "Suggested people",
+      content: "Count limit"
+    },
+    {
+      element: "#recent-feed-btn",
+      title: "Recent feeds",
+      content: "Count limit"
+    },
+    {
+      element: "#all-feed-btn",
+      title: "All feeds",
+      content: "Count limit"
+    },
+    {
+      element: "#profile-tab",
+      title: "All feeds",
+      content: "Count limit"
+    },
+
+  ]});
+
+// Initialize the tour
+tour.init();
+tour.start();
+
+$("#help-btn").on('click',function() {
+  tour.restart();
+});
+
+
+$('[data-toggle="popover"]').popover();
+
 

@@ -12,17 +12,8 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="../">
-          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-               viewBox="76.39 132.243 15.35 22" width="20" height="20" fill="#777">
-            <defs>
-              <path id="a"
-                    d="M88.31 136.63c.29-.28.43-.63.43-1.05 0-.41-.14-.76-.43-1.04-.08-.09-.78-.78-.86-.87-.29-.28-.64-.43-1.05-.43-.41 0-.76.15-1.05.43-.75.75-6.78 6.77-7.53 7.53-.29.28-.43.63-.43 1.04 0 .42.14.76.43 1.05.75.75 6.78 6.77 7.53 7.53.29.28.64.42 1.05.42.41 0 .76-.14 1.05-.42.08-.09.78-.78.86-.87.29-.29.43-.63.43-1.04 0-.41-.14-.76-.43-1.05-.37-.38-2.24-2.25-5.61-5.61 3.37-3.37 5.24-5.24 5.61-5.62z" />
-            </defs>
-            <use xlink:href="#a" />
-            <use xlink:href="#a" />
-          </svg>
-        </a>
+        <a class="navbar-brand fa fa-chevron-left" href="../" style="color:#f25417;font-size:19px;"></a>
+        <span id="help-btn" class="navbar-brand fa fa-info-circle" style="font-size:19px;"></span>
         <a class="navbar-brand" href="./">Socialytics</a>
       </div>
       <div class="navbar-collapse">
@@ -89,47 +80,77 @@
             <a class="nav-link" data-toggle="tab" href="#search-tab">Search</a>
           </li>
           <li class="nav-item">
-            <input  style="width:40%; display:inline;margin:5px;padding:10px;" placeholder="Count limit"  type="number" class="form-control" id="count-input" count=0>
+            <span><a href="#" data-toggle="popover" data-trigger="focus" title="Count limit" data-content="Count limit" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a></span>
+            <input  style="width:40%; display:inline;margin:5px;padding:10px;" placeholder="Count limit" type="number" class="form-control" id="count-input" count=0>
+            <span><a href="#" data-toggle="popover" data-trigger="focus" title="Count limit" data-content="Set limit input" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a></span>
             <input  style="width:40%; display:inline;margin:5px;padding:10px;" placeholder="Set limit"  type="number" class="form-control" id="set-limit-input" count=0>
           </li>
 
         </ul>
         <div style="max-width:45vw" class="tab-content">
           <div style="max-width:45vw" class="tab-pane active container widget-stage" id="self-tab">
-            <br><input type="text" class="form-control" placeholder="Logged in user profile" disabled="true"><br>
-            <button class="btn btn-primary etl-btn" type="button"  value="Get suggested posts" click-target="/instagram/suggested/posts?" call-type="sugg-posts">Sugg posts</button>
-            <button class="btn btn-primary etl-btn" type="button"  value="Get suggested people" click-target="/instagram/suggested/people?"  call-type="sugg-people">Sugg people</button>
-            <button class="btn btn-primary etl-btn" type="button"  value="Get feed" click-target="/instagram/feed?" call-type="feed-posts">Recent feed</button>
-            <button class="btn btn-primary etl-btn" type="button"  value="Get all feed" click-target="/instagram/allfeed?" call-type="all-feed-posts">All feed</button>
+            <br>
+            <a href="#" data-toggle="popover" data-trigger="focus" title="user profile" data-content="Logged in user profile" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
+            <input id="profile-name-input" type="text" class="form-control" placeholder="Logged in user profile" disabled="true" style="display: inline;"><br>
+            <a href="#" data-toggle="popover" data-trigger="focus" title="Suggested posts" data-content="Suggested posts" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
+            <button id="sugg-post-btn" class="btn btn-primary etl-btn" type="button"  value="Get suggested posts" click-target="/instagram/suggested/posts?" call-type="sugg-posts">Sugg posts</button>
+            <a href="#" data-toggle="popover" data-trigger="focus" title="Suggested people" data-content="Suggested people" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
+            <button id="sugg-people-btn" class="btn btn-primary etl-btn" type="button"  value="Get suggested people" click-target="/instagram/suggested/people?"  call-type="sugg-people">Sugg people</button>
+            <a href="#" data-toggle="popover" data-trigger="focus" title="Recent feed" data-content="Recent feed" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
+            <button id="recent-feed-btn" class="btn btn-primary etl-btn" type="button"  value="Get feed" click-target="/instagram/feed?" call-type="feed-posts">Recent feed</button>
+            <a href="#" data-toggle="popover" data-trigger="focus" title="All feed" data-content="All feed" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
+            <button id="all-feed-btn" class="btn btn-primary etl-btn" type="button"  value="Get all feed" click-target="/instagram/allfeed?" call-type="all-feed-posts">All feed</button>
           </div>
           <div style="max-width:45vw" class="tab-pane container widget-stage" id="profile-tab">
-            <br><input type="text" ondrop="drop(event)" ondragover="allowDrop(event)" placeholder="Profile name" class="form-control" id="username-input" username="username"><br>
+            <br>
+            <a href="#" data-toggle="popover" data-trigger="focus" title="Profile name" data-content="Profile user name" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
+            <input type="text" ondrop="drop(event)" ondragover="allowDrop(event)" placeholder="Profile name" class="form-control" id="username-input" username="username"style="display: inline;"><br>
+            <a href="#" data-toggle="popover" data-trigger="focus" title="user profile" data-content="Get user profile" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
             <button class="btn btn-primary etl-btn" type="button"  value="Get user profile" click-target="/instagram/profile?" call-type="profile">User profile</button>
+            <a href="#" data-toggle="popover" data-trigger="focus" title="Recent posts" data-content="Get profile recent posts" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
             <button class="btn btn-primary etl-btn" type="button"  value="Get user posts" click-target="/instagram/posts?" call-type="recent-posts">Recent posts</button>
+            <a href="#" data-toggle="popover" data-trigger="focus" title="All posts" data-content="Get profile all posts" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
             <button class="btn btn-primary etl-btn" type="button"  value="Get all posts" click-target="/instagram/allposts?" call-type="all-posts">All posts</button>
+            <a href="#" data-toggle="popover" data-trigger="focus" title="Following" data-content="GetUser folling" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
             <button class="btn btn-primary etl-btn" type="button"  value="Get user followings" click-target="/instagram/following?" call-type="user-following">Followings</button>
+            <a href="#" data-toggle="popover" data-trigger="focus" title="Followers" data-content="Get user followers" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
             <button class="btn btn-primary etl-btn" type="button"  value="Get user followers" click-target="/instagram/followers?" call-type="user-followers">Followers</button><br>
           </div>
           <div style="max-width:45vw" class="tab-pane container widget-stage" id="post-tab">
-            <br><input type="text" placeholder="Short code" class="form-control" id="shortcode-input" short-code="short-code"><br>
+            <br>
+            <a href="#" data-toggle="popover" data-trigger="focus" title="Short code" data-content="Post short code" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
+            <input type="text" placeholder="Short code" class="form-control" id="shortcode-input" short-code="short-code"style="display: inline;"><br>
+            <a href="#" data-toggle="popover" data-trigger="focus" title="Get post media" data-content="Get post media" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
             <button class="btn btn-primary etl-btn" type="button"  value="Get post media" click-target="/instagram/post?" call-type="post-json">Media</button>
+            <a href="#" data-toggle="popover" data-trigger="focus" title="Get post likes" data-content="Get post likes" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
             <button class="btn btn-primary etl-btn" type="button"  value="Get post likes" click-target="/instagram/likes?" call-type="post-likes">Likes</button>
+            <a href="#" data-toggle="popover" data-trigger="focus" title="Get post comments" data-content="Get post comments" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
             <button class="btn btn-primary etl-btn" type="button"  value="Get post comments" click-target="/instagram/comments?" call-type="post-comments">Comments</button><br>
           </div>
           <div style="max-width:45vw" class="tab-pane container widget-stage" id="loctag-tab">
-            <br><input style="display:inline" placeholder="Tag..." type="text" class="form-control" id="tag-input" tag="tag">
+            <br>
+            <a href="#" data-toggle="popover" data-trigger="focus" title="Tag" data-content="Post tag" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
+            <input style="display:inline" placeholder="Tag..." type="text" class="form-control" id="tag-input" tag="tag" style="display: inline;">
+            <a href="#" data-toggle="popover" data-trigger="focus" title="Tag" data-content="Get posts by tag" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
             <button style="display:inline" class="btn btn-primary etl-btn" type="button"  value="Get posts by tag" click-target="/instagram/tag?" call-type="tag-posts">Tag posts</button><br><br>
-            <input type="text" placeholder="Location..." style="display:inline" class="form-control" id="location-input" location="location">
+            <a href="#" data-toggle="popover" data-trigger="focus" title="Location" data-content="Posts by location" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
+            <input type="text" placeholder="Location..." style="display:inline" class="form-control" id="location-input" location="location" style="display: inline;">
+            <a href="#" data-toggle="popover" data-trigger="focus" title="Location" data-content="Get posts by location" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
             <button style="display:inline" class="btn btn-primary etl-btn" type="button"  value="Get posts by location" click-target="/instagram/location?" call-type="location-posts">Location posts</button><br>
           </div>
           <div style="max-width:45vw" class="tab-pane container widget-stage" id="seta-tab">
-            <textarea style="display:block; padding:5px; margin:10px; min-height:200px;width:25em" id="seta" class="seta" ondrop="drop(event)" ondragover="allowDrop(event)"></textarea>
+            <a href="#" data-toggle="popover" data-trigger="focus" title="Set A" data-content="Data set A" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
+            <textarea style="display:block; padding:5px; margin:10px; min-height:200px;width:25em" id="seta" class="seta" ondrop="drop(event)" ondragover="allowDrop(event)" style="display: inline;"></textarea>
           </div>
           <div style="max-width:45vw" class="tab-pane container widget-stage" id="setb-tab">
-            <textarea style="display:block; padding:5px; margin:10px; min-height:200px;width:25em;" id="setb" class="setb" ondrop="drop(event)" ondragover="allowDrop(event)"></textarea>
+            <a href="#" data-toggle="popover" data-trigger="focus" title="Set B" data-content="Data set B" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
+            <textarea style="display:block; padding:5px; margin:10px; min-height:200px;width:25em;" id="setb" class="setb" ondrop="drop(event)" ondragover="allowDrop(event)" style="display: inline;"></textarea>
           </div>
           <div style="max-width:45vw" class="tab-pane container widget-stage" id="search-tab">
-            <br><input type="text" placeholder="Search query.." class="form-control" id="search-input" search-query="search-query"><br>
+            <br>
+            <a href="#" data-toggle="popover" data-trigger="focus" title="Search query" data-content="Search query" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
+            <input type="text" placeholder="Search query.." class="form-control" id="search-input" search-query="search-query" style="display: inline;"><br>
+            <a href="#" data-toggle="popover" data-trigger="focus" title="Get search items" data-content="Search query" data-placement="top" class="fa fa-info-circle" style="color:#afafb0;"></a>
             <button class="btn btn-primary etl-btn" type="button"  value="Get search items" click-target="/instagram/search?" call-type="search-posts">Search instagram</button><br>
           </div>
 
