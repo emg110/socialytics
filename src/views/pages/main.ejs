@@ -41,10 +41,11 @@
         <div style="padding:10px;">
           <input type="text" style="width:70%;display:inline;margin:5px;" class="form-control" id="search-input" search-query="search-query">
           <input id="searchProfileBtn" style="text-align:center;display:inline; padding:5px; margin:5px; min-width:5%" value="Go" type="button" class="btn btn-secondary">
-          <div style="overflow-y:scroll;max-height:20vh;margin-bottom:25px;color:black;background-color: #7f7d7d;" id="autocomplete-results"></div>
+          <div style="overflow-y:scroll;max-height:20vh;margin-bottom:25px;color:black;background-color: #7f7d7d;" id="autocomplete-results"></div><br>
+          <div id="countera" class="stats-totals"></div><br>
+          <div id="counterb" class="stats-totals"></div><br>
           <input style="margin-bottom:5px;" value="Get sample filters" type="button" class="btn btn-primary" click-target="/instagram/form/data?" call-type="form-data">
-          <input style="margin-bottom:5px;" value="Get sets configurations" type="button" class="btn btn-secondary" click-target="/instagram/config/data?" call-type="config-data">
-          <input style="margin-bottom:5px;" value="Get sets data" type="button" class="btn btn-secondary" click-target="/instagram/sets/data?" call-type="sets-data">
+          <input style="margin-bottom:5px;" value="Get sets data" type="button" class="btn btn-secondary" id="getSetDataBtn">
         </div>
         <div style=" text-align:center" class="footer">
           <p class="small text-muted">Built with &#9829; for <a target="_blank" href="https://houmanhadian.github.io/">Houman Hadian's doctoral project @ UAlg</a></p>
@@ -79,10 +80,17 @@
             <a class="nav-link" data-toggle="tab" href="#loctag-tab">Location|Tag</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#seta-tab">Set A</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#setb-tab">Set B</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#search-tab">Search</a>
           </li>
           <li class="nav-item">
-            <input  style="width:61%; display:inline" placeholder="Count limit"  type="number" class="form-control" id="count-input" count=0>
+            <input  style="width:40%; display:inline;margin:5px;padding:10px;" placeholder="Count limit"  type="number" class="form-control" id="count-input" count=0>
+            <input  style="width:40%; display:inline;margin:5px;padding:10px;" placeholder="Set limit"  type="number" class="form-control" id="set-limit-input" count=0>
           </li>
 
         </ul>
@@ -113,6 +121,12 @@
             <button style="display:inline" class="btn btn-primary etl-btn" type="button"  value="Get posts by tag" click-target="/instagram/tag?" call-type="tag-posts">Tag posts</button><br><br>
             <input type="text" placeholder="Location..." style="display:inline" class="form-control" id="location-input" location="location">
             <button style="display:inline" class="btn btn-primary etl-btn" type="button"  value="Get posts by location" click-target="/instagram/location?" call-type="location-posts">Location posts</button><br>
+          </div>
+          <div style="max-width:45vw" class="tab-pane container widget-stage" id="seta-tab">
+            <textarea style="display:block; padding:5px; margin:10px; min-height:200px;width:25em" id="seta" class="seta" ondrop="drop(event)" ondragover="allowDrop(event)"></textarea>
+          </div>
+          <div style="max-width:45vw" class="tab-pane container widget-stage" id="setb-tab">
+            <textarea style="display:block; padding:5px; margin:10px; min-height:200px;width:25em;" id="setb" class="setb" ondrop="drop(event)" ondragover="allowDrop(event)"></textarea>
           </div>
           <div style="max-width:45vw" class="tab-pane container widget-stage" id="search-tab">
             <br><input type="text" placeholder="Search query.." class="form-control" id="search-input" search-query="search-query"><br>

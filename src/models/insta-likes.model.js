@@ -7,6 +7,6 @@ module.exports = function (app) {
     filename: path.join(dbPath, 'insta-likes.db'),
     autoload: true
   });
-
+  Model.ensureIndex({ fieldName: 'id', unique: true });
   return Model;
 };

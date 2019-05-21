@@ -14,7 +14,7 @@ const apiHttpsServer = https.createServer({
 app.setup(apiHttpsServer);
 process.on('unhandledRejection', (reason, p) =>{
     console.log('Unhandled Rejection : ', p, reason)
-    process.kill()
+    //process.kill()
 }
 );
 

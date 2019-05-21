@@ -16,69 +16,78 @@ module.exports = async function writeDatabase(fapi, data, service, account) {
 
     }
   }
-  if (!data.length) {
-    data = [data]
-  }
-  let items = [];
-  let itemIds = [];
-  for (var i = 0; i < data.length; i++) {
-    let item = data[i];
-    if (item.node) {
-      item = item.node;
-    }
-    if (item.user) {
-      item = data.user
-    }
-    if (item.graphql) {
-      if (item.graphql.shortcode_media) {
-        for (i in item.graphql.shortcode_media) {
-          item[i] = item.graphql.shortcode_media[i]
-        }
-        delete item.graphql.shortcode_media
-        delete item.graphql
-
+  if (data.length) {
+    let items = [];
+    let itemIds = [];
+    for (var i = 0; i < data.length; i++) {
+      let item = data[i];
+      if (item.node) {
+        item = item.node;
       }
+      if (item.user) {
+        item = item.user
+      }
+      if (item.graphql) {
+        if (item.graphql.shortcode_media) {
+          item = item.graphql.shortcode_media
+        }
+      }
+      item.account = account;
+      items.push(item);
+      itemIds.push(item.id)
     }
-    item.account = account;
-    items.push(item);
-    itemIds.push(item.id)
-  }
-  /*let checkData = await fapi.service(service)
-    .find({
-      query: {
-        "id": {
-          $in:itemIds
-        },
-        $sort: {taken_at_timestamp: -1},
-        $limit: 20000
-      },
-      paginate: {
-        default: 100000,
-        max: 20000
-      },
-    })
-    .then(result => {
-      return result;
-    })
-    .catch(err => {
-      console.log(err);
-    });*/
-
-  let patchData = await fapi.service(service)
-    .patch(null,items,
-      {
-        query:{
-          "id": {
-            $in:itemIds
-          },
-          $limit: 100000
-        },
-        nedb: {upsert: true}
+    let removeDataMulti = await fapi.service(service)
+      .remove(null,
+        {
+          query:{
+            "id": {
+              $in:itemIds
+            }
+          }
+        })
+      .then(result => {
+        return result;
       })
-    .then(result => {
-      return result;
-    })
-    .catch(err => {
-      console.log(err);
-    });
+      .catch(err => {
+        console.log(err);
+      });
+    let createDataMulti = await fapi.service(service)
+      .create(items)
+      .then(result => {
+        return result;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }else if(data.id){
+    let findData = await fapi.service(service)
+      .find({query:{id:data.id},$limit:1})
+      .then(result => {
+        return result;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    if(findData.data[0]){
+      let removeData = await fapi.service(service)
+        .remove(findData.data[0].id)
+        .then(result => {
+          return result;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+
+    let createDataMulti = await fapi.service(service)
+      .create(data)
+      .then(result => {
+        return result;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+
 }
