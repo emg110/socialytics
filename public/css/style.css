@@ -703,3 +703,10 @@ img {
     margin-top:5%
   }
 }*/
+.holders {
+ /* height:100px;
+  width:100px;
+  background: url(../img/charts.png) no-repeat center fixed;
+  background-size: 100px 100px;*/
+  opacity:0.05;
+}
