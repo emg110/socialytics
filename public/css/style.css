@@ -571,7 +571,7 @@ img {
   z-index: 0;
 }
 .verified{
-  color:lightgreen;
+  color: rgba(0, 170, 255, .8);
 }
 .private-account{
   color:darkred;
