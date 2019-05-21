@@ -697,13 +697,12 @@ img {
 }
 .row {
   position: relative;
-  padding:15px;}
-/*@media only screen and (min-width: 1024px) {
-  .hero{
-    margin-top:5%
-  }
-}*/
+  padding:15px;
+}
 .etl-btn{
   margin-right: 0;
   margin-left: 0;
+}
+.holders{
+  opacity:0.05;
 }
