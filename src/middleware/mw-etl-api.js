@@ -116,7 +116,7 @@ module.exports = function (options = {}) {
             }
             resultData.setA.push({profile:setAProfile.username,totalDb:etlDataPA.length,profileData:setAProfile,posts:etlDataPA})
             console.log('info: Writing SetA,  '+ etlDataPA.length +'posts from ETL API to database')
-            let servicePosts = 'instagram/posts';
+            let servicePosts = 'instagram/postsa';
             let recordDataA = await writeDatabase(req.app, etlDataPA, servicePosts, username)
               .then(result => {
                 return result
@@ -178,7 +178,7 @@ module.exports = function (options = {}) {
             }
             resultData.setB.push({profile:setBProfile.username,totalDb:etlDataPB.length,profileData:setBProfile,posts:etlDataPB})
             console.log('info: Writing SetB,  '+ etlDataPB.length +'posts from ETL API to database')
-            let servicePosts = 'instagram/posts';
+            let servicePosts = 'instagram/postsb';
             let recordDataB = await writeDatabase(req.app, etlDataPB, servicePosts, username)
               .then(result => {
                 console.log('info: Patched setB in database with '+etlDataPB.length+' records '+ 'for these profiles: '+resultData.profilesB.toString());

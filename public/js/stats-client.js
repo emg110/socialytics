@@ -729,7 +729,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
           totalsA.totalFollowers += followersCountA;
           totalsA.totalFollowing += followingCountA;
           getServiceData('find',
-            'instagram/posts',
+            'instagram/postsa',
             {
               query: {
                 "owner.id": useridA,
@@ -1063,7 +1063,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
           totalsB.totalFollowing += followingCountB
 
           getServiceData('find',
-            'instagram/posts',
+            'instagram/postsb',
             {
               query: {
                 "owner.id": useridB,
