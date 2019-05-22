@@ -101,9 +101,9 @@ $("#resetSets").on('click',function(e){
 
 //$(".scrollable").overlayScrollbars({ className : "os-theme-dark"});
 
-OverlayScrollbars(document.querySelectorAll('body'), {
-  className : "os-theme-dark",
-});
+// OverlayScrollbars(document.querySelectorAll('body'), {
+//   className : "os-theme-dark",
+// });
 
 /*OverlayScrollbars(document.getElementById('home-sidebar'), {
   className : "os-theme-dark",
@@ -187,11 +187,6 @@ $("#searchProfileBtn").click(()=>{
   }
 });
 
-
-
-$("#help-btn").on('click',function() {
-  // tour.restart();
-});
 
 
 $('[data-toggle="popover"]').popover();

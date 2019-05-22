@@ -5,13 +5,22 @@
     <div id="noDataMsg" class="loader loader--style1" title="0">  NO FILTERS HERE...</div>
     <input type="text" style="width:60%;display:inline;margin:10px;" class="form-control" id="search-input" search-query="search-query">
     <input id="searchProfileBtn" style="text-align:center;display:inline; padding:5px; margin:20px; min-width:5%" value="Go" type="button" class="btn btn-secondary">
+    <a href="#" data-toggle="popover" data-trigger="focus" title="Search" data-content="Search for Instagram accounts" data-placement="right" class="fa fa-info-circle" style="font-size: 15px;display:inline;margin-left:-40px"></a>
     <div style="overflow-y: scroll;max-height:20vh;margin-bottom:25px" id="autocomplete-results"></div>
+    <span style="color:#999;font-size:15px;margin-left:14px;">Set A</span>
+    <a href="#" data-toggle="popover" data-trigger="focus" title="Set A" data-content="Drop accounts from search in set A" data-placement="right" class="fa fa-info-circle" style="font-size: 15px;display:inline;margin-left:-25px"></a>
     <textarea style="display:block; padding:5px; margin:10px; min-height:200px;width:25em" id="seta" class="seta" ondrop="drop(event)" ondragover="allowDrop(event)"></textarea>
+    <span style="color:#999;font-size:15px;margin-left:14px;">Set B</span>
+    <a href="#" data-toggle="popover" data-trigger="focus" title="Set B" data-content="Drop accounts from search in set B" data-placement="right" class="fa fa-info-circle" style="font-size: 15px;display:inline;margin-left:-25px"></a>
     <textarea style="display:block; padding:5px; margin:10px; min-height:200px;width:25em;" id="setb" class="setb" ondrop="drop(event)" ondragover="allowDrop(event)"></textarea>
     <input  style="width:40%; display:inline;margin:10px;padding:10px;" placeholder="Set limit"  type="number" class="form-control" id="set-limit-input" count=0>
-    <input style="text-align:center;display:block; padding:5px; margin:10px; min-width:25%" value="Get default sets" type="button" class="btn btn-primary" click-target="/instagram/sets/data?" call-type="form-data">
+    <a href="#" data-toggle="popover" data-trigger="focus" title="Set limit" data-content="Set limit" data-placement="right" class="fa fa-info-circle" style="font-size: 15px;display:inline;margin-left:-30px"></a><br>
+    <input style="text-align:center;display:inline; padding:5px; margin:10px; min-width:25%" value="Get default sets" type="button" class="btn btn-primary" click-target="/instagram/sets/data?" call-type="form-data">
+    <a href="#" data-toggle="popover" data-trigger="focus" title="Get default sets" data-content="Gets default 20 brands data for set A and Set B" data-placement="right" class="fa fa-info-circle" style="font-size: 15px;display:inline;margin-left:-30px"></a><br>
     <input id="resetSets" style="text-align:center;display:inline-block; padding:5px; margin:10px; min-width:25%" value="Reset sets" type="button" class="btn btn-secondary">
+    <a href="#" data-toggle="popover" data-trigger="focus" title="Reset sets" data-content="Empty set A and set B" data-placement="right" class="fa fa-info-circle" style="font-size: 15px;display:inline;margin-left:-30px"></a><br>
     <input id="getDataBtn" style="text-align:center;display:inline-block; padding:5px; margin:10px; min-width:25%" value="Start..." type="button" class="btn btn-primary" call-type="form-data">
+    <a href="#" data-toggle="popover" data-trigger="focus" title="Start" data-content="Starts getting data" data-placement="right" class="fa fa-info-circle" style="font-size: 15px;display:inline;margin-left:-30px"></a><br>
 
     <div id="countera" class="stats-totals"></div>
     <div id="counterb" class="stats-totals"></div>
