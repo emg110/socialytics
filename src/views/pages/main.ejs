@@ -121,28 +121,28 @@
             <input id="profile-name-input" type="text" class="form-control" placeholder="Logged in user profile" disabled="true" style="display: inline;">
             <a href="#" data-toggle="popover" data-trigger="focus" title="user profile" data-content="System will input and use current logged in user's registered Instagram account(via registered session id)." data-placement="top" class="info fa fa-info-circle"></a><br>
             <button id="sugg-post-btn" class="btn btn-primary etl-btn" type="button"  value="Get suggested posts" click-target="/instagram/suggested/posts?" call-type="sugg-posts">Sugg posts</button>
-            <a href="#" data-toggle="popover" data-trigger="focus" title="Suggested posts" data-content="Retrieves posts" data-placement="top" class="info fa fa-info-circle"></a>
+            <a href="#" data-toggle="popover" data-trigger="focus" data-content="Gets suggested posts related to current logged in user profile." data-placement="top" class="info fa fa-info-circle"></a>
             <button id="sugg-people-btn" class="btn btn-primary etl-btn" type="button"  value="Get suggested people" click-target="/instagram/suggested/people?"  call-type="sugg-people">Sugg people</button>
-            <a href="#" data-toggle="popover" data-trigger="focus" title="Suggested people" data-content="Suggested people" data-placement="top" class="info fa fa-info-circle"></a>
+            <a href="#" data-toggle="popover" data-trigger="focus" data-content="Gets suggested people related to current logged in user profile." data-placement="top" class="info fa fa-info-circle"></a>
             <button id="recent-feed-btn" class="btn btn-primary etl-btn" type="button"  value="Get feed" click-target="/instagram/feed?" call-type="feed-posts">Recent feed</button>
-            <a href="#" data-toggle="popover" data-trigger="focus" title="Recent feed" data-content="Recent feed" data-placement="top" class="info fa fa-info-circle"></a>
+            <a href="#" data-toggle="popover" data-trigger="focus" data-content="Gets feed related to current logged in user profile." data-placement="top" class="info fa fa-info-circle"></a>
             <button id="all-feed-btn" class="btn btn-primary etl-btn" type="button"  value="Get all feed" click-target="/instagram/allfeed?" call-type="all-feed-posts">All feed</button>
-            <a href="#" data-toggle="popover" data-trigger="focus" title="All feed" data-content="All feed" data-placement="top" class="info fa fa-info-circle"></a>
+            <a href="#" data-toggle="popover" data-trigger="focus" data-content="Gets all feeds related to current logged in user profile." data-placement="top" class="info fa fa-info-circle"></a>
           </div>
           <div style="max-width:45vw" class="tab-pane container widget-stage" id="profile-tab">
             <br>
             <input type="text" ondrop="drop(event)" ondragover="allowDrop(event)" placeholder="Profile name" class="form-control" id="username-input" username="username"style="display: inline;">
             <a href="#" data-toggle="popover" data-trigger="focus" title="Instagram profile name" data-content="Input desired Instagram profile name for ETL or browsing operations. You can search for Instagram profile names via search control on top left of home page." data-placement="top" class="info fa fa-info-circle"></a><br>
             <button class="btn btn-primary etl-btn" type="button"  value="Get user profile" click-target="/instagram/profile?" call-type="profile">User profile</button>
-            <a href="#" data-toggle="popover" data-trigger="focus" title="user profile" data-content="Get user profile" data-placement="top" class="info fa fa-info-circle"></a>
+            <a href="#" data-toggle="popover" data-trigger="focus" data-content="Gets user profile" data-placement="top" class="info fa fa-info-circle"></a>
             <button class="btn btn-primary etl-btn" type="button"  value="Get user posts" click-target="/instagram/posts?" call-type="recent-posts">Recent posts</button>
-            <a href="#" data-toggle="popover" data-trigger="focus" title="Recent posts" data-content="Get profile recent posts" data-placement="top" class="info fa fa-info-circle"></a>
+            <a href="#" data-toggle="popover" data-trigger="focus" data-content="Gets profile recent posts" data-placement="top" class="info fa fa-info-circle"></a>
             <button class="btn btn-primary etl-btn" type="button"  value="Get all posts" click-target="/instagram/allposts?" call-type="all-posts">All posts</button>
-            <a href="#" data-toggle="popover" data-trigger="focus" title="All posts" data-content="Get profile all posts" data-placement="top" class="info fa fa-info-circle"></a>
+            <a href="#" data-toggle="popover" data-trigger="focus" data-content="Gets profile all posts" data-placement="top" class="info fa fa-info-circle"></a>
             <button class="btn btn-primary etl-btn" type="button"  value="Get user followings" click-target="/instagram/following?" call-type="user-following">Followings</button>
-            <a href="#" data-toggle="popover" data-trigger="focus" title="Following" data-content="GetUser folling" data-placement="top" class="info fa fa-info-circle"></a>
+            <a href="#" data-toggle="popover" data-trigger="focus" data-content="Gets user follwings number" data-placement="top" class="info fa fa-info-circle"></a>
             <button class="btn btn-primary etl-btn" type="button"  value="Get user followers" click-target="/instagram/followers?" call-type="user-followers">Followers</button>
-            <a href="#" data-toggle="popover" data-trigger="focus" title="Followers" data-content="Get user followers" data-placement="top" class="info fa fa-info-circle"></a>
+            <a href="#" data-toggle="popover" data-trigger="focus" data-content="Gets user followers number" data-placement="top" class="info fa fa-info-circle"></a>
           </div>
           <div style="max-width:45vw" class="tab-pane container widget-stage" id="post-tab">
             <br>
