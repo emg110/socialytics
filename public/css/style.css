@@ -107,7 +107,7 @@ a:focus {
 /* The sidepanel menu */
 .sidepanel {
   height: 100%; /* Specify a height */
-  width: 450px; /* 0 width-change this with JavaScript */
+  width: 0px; /* 0 width-change this with JavaScript */
   position: fixed; /* Stay in place */
   z-index: 1; /* Stay on top */
   top: 66px;
