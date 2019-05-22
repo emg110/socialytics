@@ -38,6 +38,8 @@
           <span style="color:#749f83;" class="fa fa-comment">
             <%if(etlData.edge_media_to_comment){%>
             <%=etlData.edge_media_to_comment.count+' '%>
+            <%}else if(etlData.edge_media_preview_comment){ %>
+            <%=etlData.edge_media_preview_comment.edges.length+' '%>
             <%} %>
           </span>
 
