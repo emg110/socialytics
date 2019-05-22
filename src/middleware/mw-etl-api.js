@@ -19,19 +19,36 @@ function getHeaders(username, accessToken, strategy) {
     'x-requested-with': 'XMLHttpRequest'
   }
 }
-function cleans(post){
-  if (post.node) {
-    post = post.node;
-  }
-  if (post.user) {
-    post = post.user
-  }
-  if (post.graphql) {
-    if (post.graphql.shortcode_media) {
-      post = post.graphql.shortcode_media
+function cleans(post, isArray){
+  if(isArray){
+    for (let item in post){
+      if (post[item].node) {
+        post[item] = post[item].node;
+      }
+      if (post[item].user) {
+        post[item] = post[item].user
+      }
+      if (post[item].graphql) {
+        if (post[item].graphql.shortcode_media) {
+          post[item] = post[item].graphql.shortcode_media
+        }
+      }
     }
+    return post
+  }else{
+    if (post.node) {
+      post = post.node;
+    }
+    if (post.user) {
+      post = post.user
+    }
+    if (post.graphql) {
+      if (post.graphql.shortcode_media) {
+        post = post.graphql.shortcode_media
+      }
+    }
+    return post
   }
-  return post
 }
 async function getEndpointDataEtl(etlApiEndpoint, username, accessToken, strategy){
   let etlData = await fetch(etlApiEndpoint,
@@ -215,6 +232,7 @@ module.exports = function (options = {}) {
       if(etlData && etlData !== 'No ETL data'){
         console.log('info: Writing data from ETL API to database')
         console.log('info: Rendering data from ETL API to client')
+        etlData = cleans(etlData)
         renderData(etlData,page,username,res);
        /* writeDatabase(req.app, etlData, service, username)
           .then(result => {
@@ -240,7 +258,10 @@ module.exports = function (options = {}) {
       let etlData = await getEndpointDataEtl(etlApiEndpoint, username, accessToken, strategy);
       console.log('info: Writing data from ETL API to database')
       if(etlData !== 'No ETL data'){
-        writeDatabase(req.app, etlData, service, username)
+        etlData = cleans(etlData)
+        console.log('info: Rendering data from ETL API to client')
+        renderData(etlData,page,username,res);
+       /* writeDatabase(req.app, etlData, service, username)
           .then(result => {
             console.log('info: Rendering data from ETL API to client')
             renderData(etlData,page,username,res);
@@ -248,7 +269,7 @@ module.exports = function (options = {}) {
           .catch(err => {
             console.log(err);
             res.sendStatus(500)
-          });
+          });*/
       }
 
     }
@@ -260,6 +281,7 @@ module.exports = function (options = {}) {
         let service = 'instagram/posts';
         let page = 'pages/posts';
         console.log('info: Rendering data from ETL API to client')
+        //etlData = cleans(etlData, true)
         renderData(etlData,page,username,res);
        /* writeDatabase(req.app, etlData, service, username)
           .then(result => {
@@ -591,6 +613,7 @@ module.exports = function (options = {}) {
       let page = 'pages/post';
       let etlData = await getEndpointDataEtl(etlApiEndpoint, username, accessToken, strategy);
       if(etlData){
+        etlData = cleans(etlData)
         console.log('info: Rendering data from ETL API to client')
         renderData(etlData,page,username,res);
         /*writeDatabase(req.app, etlData, service, username)
