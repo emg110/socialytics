@@ -21,7 +21,7 @@
     "dev": "nodemon src/",
     "eslint": "eslint src/. test/. --config .eslintrc.json",
     "jest": "jest",
-    "start": "node --max-old-space-size=2048 src/index.js",
+    "start": "node  src/index.js",
     "start-all": "",
     "test": "npm run eslint && NODE_ENV= npm run jest"
   },
