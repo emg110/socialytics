@@ -709,3 +709,10 @@ img {
 .info{
   color:#d2d5d7;
 }
+#close-btn {
+  float: right;
+  margin-right: 12px;
+  margin-top: 6px;
+  color: #FFF;
+  z-index:999;
+}
