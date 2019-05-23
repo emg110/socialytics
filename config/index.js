@@ -22,7 +22,6 @@ module.exports = {
     'visitportugal',
     'ualg_universidadedoalgarve',
     'zoomarine_algarve_oficial'
-
   ],
   setb:[
     'mynetbarg',
