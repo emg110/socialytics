@@ -186,8 +186,8 @@ function drop(ev) {
   }else{
     $("#"+ev.target.id).val()
     $("#"+ev.target.id).val(data)
-    var instance = $("#autocomplete-results").overlayScrollbars()
-    if(instance)instance.destroy()
+   /* var instance = $("#autocomplete-results").overlayScrollbars()
+    if(instance)instance.destroy()*/
     $("#autocomplete-results").html('<div>  </div>')
   }
 

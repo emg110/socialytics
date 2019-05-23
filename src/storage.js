@@ -59,7 +59,8 @@ module.exports = async function writeDatabase(fapi, data, service, account) {
       .catch(err => {
         console.log(err);
       });
-  }else if(data.id){
+  }
+  else if(data.id){
     let findData = await fapi.service(service)
       .find({query:{id:data.id},$limit:1})
       .then(result => {

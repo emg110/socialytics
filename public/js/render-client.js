@@ -78,9 +78,9 @@ function sparkChartit(){
 }
 function render(html, container, caller){
   document.getElementById('social-sidepanel').style.backgroundColor = "#fff";
-  OverlayScrollbars(document.getElementById('social-sidepanel'), {
+/*  OverlayScrollbars(document.getElementById('social-sidepanel'), {
     className : "os-theme-dark",
-  });
+  });*/
 
   var index = parseInt(ls.getItem('currentFreeIndex'));
   var results = JSON.parse(ls.getItem('results'));

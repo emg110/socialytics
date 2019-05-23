@@ -17,28 +17,27 @@ module.exports = {
     'meoinstagram',
     'nos',
     'lidlportugal',
-    'sephoraportugal',
     'prozisportugal',
     'algarvetourism',
-    'tapairportugal',
     'visitportugal',
-    'visitmadeira'
+    'ualg_universidadedoalgarve',
+    'zoomarine_algarve_oficial'
 
   ],
-  setb:['mynetbarg',
+  setb:[
+    'mynetbarg',
     'kiagallery',
-    'zarinhome',
+    'iran_.attractions',
     'irancell',
     'digikalacom',
     'bamilocom',
-    'doucce.iran',
-    'dorsaofficial',
-    'tourism_iran',
-    'set.men'
+    'iran_tourism_official',
+    'irantourism.me',
+    'iran_tourism.info'
   ],
   default_form_data: {
-    username: "s.and.m.artifacts",
-    tag: "s_and_m_artifacts",
+    username: "emg110",
+    tag: "emg110",
     location: "faro",
     query: "faro",
     shortcode: "BwE-N5mFizR",

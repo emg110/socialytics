@@ -133,8 +133,8 @@ module.exports = function (options = {}) {
             }
             resultData.setA.push({profile:setAProfile.username,totalDb:etlDataPA.length,profileData:setAProfile,posts:etlDataPA})
             console.log('info: Writing SetA,  '+ etlDataPA.length +'posts from ETL API to database')
-            let servicePosts = 'instagram/postsa';
-            let recordDataA = await writeDatabase(req.app, etlDataPA, servicePosts, username)
+            let servicePostsA = 'instagram/postsa';
+            let recordDataA = await writeDatabase(req.app, etlDataPA, servicePostsA, username)
               .then(result => {
                 return result
                 console.log('info: Patched setA member profile: '+setAProfile.username+' in database with '+etlDataPA.length+' records '+ 'for these profiles: '+resultData.profilesA.toString());
@@ -195,8 +195,8 @@ module.exports = function (options = {}) {
             }
             resultData.setB.push({profile:setBProfile.username,totalDb:etlDataPB.length,profileData:setBProfile,posts:etlDataPB})
             console.log('info: Writing SetB,  '+ etlDataPB.length +'posts from ETL API to database')
-            let servicePosts = 'instagram/postsb';
-            let recordDataB = await writeDatabase(req.app, etlDataPB, servicePosts, username)
+            let servicePostsB = 'instagram/postsb';
+            let recordDataB = await writeDatabase(req.app, etlDataPB, servicePostsB, username)
               .then(result => {
                 console.log('info: Patched setB in database with '+etlDataPB.length+' records '+ 'for these profiles: '+resultData.profilesB.toString());
                 return result
@@ -230,9 +230,9 @@ module.exports = function (options = {}) {
       console.log('info: Now requesting profile from ETL backend for: '+ username);
       let etlData = await getEndpointDataEtl(etlApiEndpoint, username, accessToken, strategy);
       if(etlData && etlData !== 'No ETL data'){
-        console.log('info: Writing data from ETL API to database')
-        console.log('info: Rendering data from ETL API to client')
-        etlData = cleans(etlData)
+        console.log('info: Writing data from ETL API to database');
+        console.log('info: Rendering data from ETL API to client');
+        etlData = cleans(etlData);
         renderData(etlData,page,username,res);
        /* writeDatabase(req.app, etlData, service, username)
           .then(result => {
