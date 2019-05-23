@@ -37,8 +37,8 @@ module.exports = {
     'set.men'
   ],
   default_form_data: {
-    username: "s.and.m.artifacts",
-    tag: "s_and_m_artifacts",
+    username: "emg110",
+    tag: "emg110",
     location: "faro",
     query: "faro",
     shortcode: "BwE-N5mFizR",
