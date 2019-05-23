@@ -17,24 +17,23 @@ module.exports = {
     'meoinstagram',
     'nos',
     'lidlportugal',
-    'sephoraportugal',
     'prozisportugal',
     'algarvetourism',
-    'tapairportugal',
     'visitportugal',
-    'visitmadeira'
+    'ualg_universidadedoalgarve',
+    'zoomarine_algarve_oficial'
 
   ],
-  setb:['mynetbarg',
+  setb:[
+    'mynetbarg',
     'kiagallery',
-    'zarinhome',
+    'iran_.attractions',
     'irancell',
     'digikalacom',
     'bamilocom',
-    'doucce.iran',
-    'dorsaofficial',
-    'tourism_iran',
-    'set.men'
+    'iran_tourism_official',
+    'irantourism.me',
+    'iran_tourism.info'
   ],
   default_form_data: {
     username: "emg110",

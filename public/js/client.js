@@ -113,8 +113,8 @@ $("#search-input").on('keypress',(e)=>{
   //console.log(e.which)
   if(e.which===13){
     var value = $("#search-input").val();
-    var instance = $("#autocomplete-results").overlayScrollbars()
-    if(instance)instance.destroy()
+/*    var instance = $("#autocomplete-results").overlayScrollbars()
+    if(instance)instance.destroy()*/
     $("#autocomplete-results").html('<div>  </div>')
     if(value.length>3){
       window.fetch('https://www.instagram.com/web/search/topsearch/?query='+value).then(res=>{
@@ -139,9 +139,9 @@ $("#search-input").on('keypress',(e)=>{
               '</div>')
           }
         }
-        $("#autocomplete-results").overlayScrollbars({
+       /* $("#autocomplete-results").overlayScrollbars({
           className : "os-theme-dark"
-        })
+        })*/
         /*OverlayScrollbars(document.getElementById('autocomplete-results'), {
             className : "os-theme-dark",
           });*/
@@ -151,8 +151,8 @@ $("#search-input").on('keypress',(e)=>{
 });
 $("#searchProfileBtn").click(()=>{
   var value = $("#search-input").val();
-  var instance = $("#autocomplete-results").overlayScrollbars()
-  if(instance)instance.destroy()
+ /* var instance = $("#autocomplete-results").overlayScrollbars()
+  if(instance)instance.destroy()*/
   $("#autocomplete-results").html('<div>  </div>')
   if(value.length>3){
     window.fetch('https://www.instagram.com/web/search/topsearch/?query='+value).then(res=>{
@@ -177,9 +177,9 @@ $("#searchProfileBtn").click(()=>{
             '</div>')
         }
       }
-      $("#autocomplete-results").overlayScrollbars({
+     /* $("#autocomplete-results").overlayScrollbars({
         className : "os-theme-dark"
-      })
+      })*/
       /*OverlayScrollbars(document.getElementById('autocomplete-results'), {
           className : "os-theme-dark",
         });*/
