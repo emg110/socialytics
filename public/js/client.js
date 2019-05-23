@@ -54,6 +54,7 @@ $("#login-form").submit(function (e) {
   console.log('info: Login started');
   //prevent Default functionality
   e.preventDefault();
+  $('#registration').html(htmlLoading)
   var actionurl = e.currentTarget.action;
   var logindata = $("#login-form").serialize()
   $.post(actionurl,logindata )
@@ -83,6 +84,12 @@ $("#login-form").submit(function (e) {
 
       }
   })
+    .error(function(error){
+      $('#registration').html('Signup');
+      $('#login-form').append('Signup');
+
+      console.log('Login failed with error: '+ error)
+    })
 });
 $("#github").click(function () {
   window.open('https://github.com/emg110/socialytics/', '_blank');
