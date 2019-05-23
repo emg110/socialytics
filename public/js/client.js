@@ -123,7 +123,8 @@ $("#search-input").on('keypress',(e)=>{
         if(json){
           json = json.users;
 
-          $("#autocomplete-results").append('<div style="width:100%;color:#f8f9fa;padding:5px;font-family: monospace; background: rgba(0,123,255,.5);text-align: center">Drag profiles to desired input</div>')
+          $("#autocomplete-results").append('<a id="close-btn" class="fa fa-times"></a><div style="width:100%;color:#f8f9fa;padding:5px;font-family: monospace; background: rgba(0,123,255,.5);text-align: center">Drag profiles to desired input</div>')
+
           for(var i of json){
             i = i.user;
             var verified = i.is_verified? 'Verified':'';
@@ -187,8 +188,10 @@ $("#searchProfileBtn").click(()=>{
   }
 });
 
-
-
 $('[data-toggle="popover"]').popover();
+
+$("#close-btn").on('click',function(){
+  $("#autocomplete-results").html('<div>  </div>');
+});
 
 
