@@ -84,9 +84,9 @@ $("#login-form").submit(function (e) {
 
       }
   })
-    .error(function(error){
+    .fail(function(error){
       $('#registration').html('Signup');
-      $('#login-form').append('Signup');
+      $('#login-form').append('<div id="login-error"style="text-align:center; color:darkred; font-size: 1em;">Login failed , please try again with correct inputs</div>');
 
       console.log('Login failed with error: '+ error)
     })
