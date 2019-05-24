@@ -54,7 +54,9 @@ $("#login-form").submit(function (e) {
   console.log('info: Login started');
   //prevent Default functionality
   e.preventDefault();
-  $('#registration').html(htmlLoading)
+
+  $('#login').html(htmlLoading)
+  $('#registration').addClass('disabled');
   $('#login-error').html('')
   var actionurl = e.currentTarget.action;
   var logindata = $("#login-form").serialize()
@@ -86,8 +88,9 @@ $("#login-form").submit(function (e) {
       }
   })
     .fail(function(error){
-      $('#registration').html('Signup');
-      $('#login-form').append('<div id="login-error"style="text-align:center; color:darkred; font-size: 1em;">Login failed , please try again with correct inputs</div>');
+      $('#login').html('Login to socialytics');
+      $('#registration').removeClass('disabled');
+      $('#login-error').html('Login failed , please try again with correct inputs');
 
       console.log('Login failed with error: '+ error)
     })
