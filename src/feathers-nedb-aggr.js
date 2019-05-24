@@ -86,9 +86,22 @@ module.exports = function () {
                 result = await aggregate(context.result, type, field)
                 break*/
             }
+
             if(result){
-              //console.log(resField+' : '+result)
+              let resLocationArr = [];
+              if(context.params.location){
+                for (let item of context.result.data){
+                  if(item.media){
+                    if(item.media.location){
+                      let location = item.media.location
+                      resLocationArr.push({sc:item.shortcode,loc:location});
+                    }
+                  }
+
+                }
+              }
               resObj[resField] = result
+              resObj['locations'] = resLocationArr
             }
           }
         }
@@ -98,27 +111,6 @@ module.exports = function () {
         resObj['trendsdata']=trendArray;
         context.result = resObj;
 
-      }
-      else{
-        let type = context.params.aggregate['type'];
-        let field = context.params.aggregate['field'];
-        let resField = context.params.aggregate['resField'];
-        if(type && field){
-          let result = await aggregate(context.result, type, field)
-          if(result){
-            let resArr = [];
-            resArr.push({[resField]:result})
-            for (let item in context.result.data){
-              if(item.location){
-                console.log(item.location.toString())
-              }
-            }
-            let trendArray = context.result.data.slice(0,101)
-            resArr.push({trendsdata:trendArray})
-            resArr.push({total:context.result.total})
-            context.result = resArr;
-          }
-        }
       }
     }
     return context

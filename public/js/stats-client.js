@@ -855,6 +855,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
                 default: 100000,
                 max: 20000
               },
+              location:true,
               un: accountA,
               aggregate: [
                 {type: 'sum', field: 'edge_media_to_comment', resField: 'comments'},
@@ -1191,6 +1192,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
                 max: 20000
               },
               un: accountB,
+              location:true,
               aggregate: [
                 {type: 'sum', field: 'edge_media_to_comment', resField: 'comments'},
                 {type: 'sum', field: 'edge_media_preview_like', resField: 'likes'}
