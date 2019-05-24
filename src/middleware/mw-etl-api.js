@@ -4,7 +4,9 @@ const fetch = require('node-fetch');
 //const ejs = require('ejs')
 const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36';
 const uri = config.PROTOCOL+"://"+config.HOST+':'+config.UIPORT+'/'
-
+const cities = require("all-the-cities")
+const Nominatim = require('nominatim-geocoder')
+const geocoder = new Nominatim()
 //console.log(uri);
 const writeDatabase = require('../storage');
 const renderData = require('../render');
@@ -50,7 +52,7 @@ function cleans(post, isArray){
     return post
   }
 }
-async function getEndpointDataEtl(etlApiEndpoint, username, accessToken, strategy){
+const getEndpointDataEtl = async (etlApiEndpoint, username, accessToken, strategy)=>{
   let etlData = await fetch(etlApiEndpoint,
     {
       headers: getHeaders(username, accessToken, strategy),
@@ -70,7 +72,12 @@ async function getEndpointDataEtl(etlApiEndpoint, username, accessToken, strateg
 
 
 }
-
+const getCity= async (city)=>{
+  let res = await cities.filter(citi => {
+    return citi.name.match(city)
+  })
+  return res[0] || res
+}
 module.exports = function (options = {}) {
   return async function mwEtlApi(req, res, next) {
     let username = req.headers.username;
@@ -129,6 +136,66 @@ module.exports = function (options = {}) {
               let timePMA = await setTimeout(function(){return 1000},1000);
               let etlDataPMA = await getEndpointDataEtl(etlApiEndpointMedia+postA.shortcode, username, accessToken, strategy);
               etlDataPMA = cleans(etlDataPMA)
+              let loc  =etlDataPMA.location;
+              if(loc && loc !== null){
+                if(!loc['lng'] && !loc['lon']){
+                  /*let location = await geoSearch(loc.name)*/
+                  let address = JSON.parse(loc['address_json']);
+                  if(address){
+                    let q = '';
+                    if(address['zip_code']){
+                      if(address['zip_code'].length>1){
+                        loc.zip = address['zip_code'];
+                        q+= loc.zip+ ','
+                      }
+                    }
+                    if(address['street_address']){
+                      if(address['street_address'].length>1){
+                        loc.street = address['street_address'];
+                        q+=loc.street+ ',';
+                      }
+
+                    }
+                    if(address['region_name']){
+                      if(address['region_name'].length>1){
+                        loc.region = address['region_name'];
+                        q+=loc.region+ ',';
+                      }
+
+                    }
+                    if(address['city_name']){
+                      if(address['city_name'].length>1){
+                        if(address['city_name'].indexOf(',')>-1)address['city_name'] = address['city_name'].substring(0,address['city_name'].indexOf(','))
+                        loc.city = address['city_name'];
+                        q+=loc.city+ ',';
+                      }
+                    }
+                    if(address['country_code']){
+                      if(address['country_code'].length>1){
+                        loc.country = address['country_code'];
+                        q+=loc.country;
+                      }
+
+                    }
+                    if(!loc.zip && !loc.street && !loc.region &&  !loc.city){
+                      if(loc.name)q = loc.name
+                      else if(loc.country)q = loc.country
+                    }
+
+                    let locCity = await geocoder.search( { q: q }, {}, function(error, response) {
+                      return response
+                    });
+                    let finalLoc = locCity[0]
+                    if(finalLoc){
+                      if(finalLoc.lng)loc.lng= finalLoc.lng
+                      else if(finalLoc.lon)loc.lng= finalLoc.lon
+                      loc.lat = finalLoc.lat;
+                      etlDataPMA.location = loc
+                    }
+
+                  }
+                }
+              }
               postA.media = etlDataPMA
             }
             resultData.setA.push({profile:setAProfile.username,totalDb:etlDataPA.length,profileData:setAProfile,posts:etlDataPA})
@@ -191,6 +258,66 @@ module.exports = function (options = {}) {
               let timePMB = await setTimeout(function(){return 1000},1000);
               let etlDataPMB = await getEndpointDataEtl(etlApiEndpointMedia+postB.shortcode, username, accessToken, strategy);
               etlDataPMB = cleans(etlDataPMB)
+              let locB  =etlDataPMB.location;
+              if(locB && locB !== null){
+                if(!locB['lng'] && !locB['lon']){
+                  /*let location = await geoSearch(loc.name)*/
+                  let addressB = JSON.parse(locB['address_json']);
+                  if(addressB){
+                    let qB = '';
+                    if(addressB['zip_code']){
+                      if(addressB['zip_code'].length>1){
+                        locB.zip = addressB['zip_code'];
+                        qB+= locB.zip+ ','
+                      }
+                    }
+                    if(addressB['street_address']){
+                      if(addressB['street_address'].length>1){
+                        locB.street = addressB['street_address'];
+                        qB+=locB.street+ ',';
+                      }
+
+                    }
+                    if(addressB['region_name']){
+                      if(addressB['region_name'].length>1){
+                        locB.region = addressB['region_name'];
+                        qB+=locB.region+ ',';
+                      }
+
+                    }
+                    if(addressB['city_name']){
+                      if(addressB['city_name'].length>1){
+                        if(addressB['city_name'].indexOf(',')>-1)addressB['city_name'] = addressB['city_name'].substring(0,addressB['city_name'].indexOf(','))
+                        locB.city = addressB['city_name'];
+                        qB+=locB.city+ ',';
+                      }
+                    }
+                    if(addressB['country_code']){
+                      if(addressB['country_code'].length>1){
+                        locB.country = addressB['country_code'];
+                        qB+=locB.country;
+                      }
+
+                    }
+                    if(!locB.zip && !locB.street && !locB.region &&  !locB.city){
+                      if(locB.name)qB = locB.name
+                      else if(locB.country)qB = locB.country
+                    }
+
+                    let locCityB = await geocoder.search( { q: qB }, {}, function(error, response) {
+                      return response
+                    });
+                    let finalLocB = locCityB[0]
+                    if(finalLocB){
+                      if(finalLocB.lng)locB.lng= finalLocB.lng
+                      else if(finalLocB.lon)locB.lng= finalLocB.lon
+                      locB.lat = finalLocB.lat;
+                      etlDataPMB.location = locB
+                    }
+
+                  }
+                }
+              }
               postB.media = etlDataPMB
             }
             resultData.setB.push({profile:setBProfile.username,totalDb:etlDataPB.length,profileData:setBProfile,posts:etlDataPB})

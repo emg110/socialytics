@@ -121,6 +121,8 @@
     "random-points-generator": "latest",
     "@turf/turf": "latest",
     "flatbush": "latest",
+    "nominatim-geocoder": "latest",
+    "all-the-cities": "latest",
     "rtree": "latest"
   },
   "devDependencies": {

@@ -240,7 +240,6 @@ function drop(ev) {
     $("#"+ev.target.id).val(data)
    /* var instance = $("#autocomplete-results").overlayScrollbars()
     if(instance)instance.destroy()*/
-    $("#autocomplete-results").html('<div>  </div>')
   }
 
 }
