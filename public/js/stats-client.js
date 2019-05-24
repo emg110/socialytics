@@ -626,58 +626,173 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
       }
     }*/]
   };
-  var legendHtmlA =
-    '<div class="counter-metric-span ">' +
-    '<div class="metrics-legend posts-legend classa">\n' +
-    '          <span class="fa fa-instagram"></span>\n' +
-    '        </div>\n' +
-    '</div>' +
-    '<div class="counter-metric-span ">' +
-    '        <div class="metrics-legend followers-legend classa">\n' +
-    '          <span class="fa fa-users"></span>\n' +
-    '        </div>\n' +
-    '</div>' +
-    '<div class="counter-metric-span ">' +
-    '        <div class="metrics-legend following-legend classa">\n' +
-    '          <span class="fa fa-user-o"></span>\n' +
-    '        </div>\n' +
-    '</div>' +
-    '<div class="counter-metric-span ">' +
-    '        <div class="metrics-legend likes-legend classa">\n' +
-    '          <span class="fa fa-heart-o"></span>\n' +
-    '        </div>\n' +
-    '</div>' +
-    '<div class="counter-metric-span ">' +
-    '        <div class="metrics-legend comments-legend classa">\n' +
-    '          <span class="fa fa-comments-o"></span>\n' +
-    '        </div>'+
-    '</div>';
-  var legendHtmlB =
-    '<div class="counter-metric-span ">' +
-    '<div class="metrics-legend posts-legend classb">\n' +
-    '          <span class="fa fa-instagram"></span>\n' +
-    '        </div>\n' +
-    '</div>' +
-    '<div class="counter-metric-span ">' +
-    '        <div class="metrics-legend followers-legend classb">\n' +
-    '          <span class="fa fa-users"></span>\n' +
-    '        </div>\n' +
-    '</div>' +
-    '<div class="counter-metric-span ">' +
-    '        <div class="metrics-legend following-legend classb">\n' +
-    '          <span class="fa fa-user-o"></span>\n' +
-    '        </div>\n' +
-    '</div>' +
-    '<div class="counter-metric-span ">' +
-    '        <div class="metrics-legend likes-legend classb">\n' +
-    '          <span class="fa fa-heart-o"></span>\n' +
-    '        </div>\n' +
-    '</div>' +
-    '<div class="counter-metric-span ">' +
-    '        <div class="metrics-legend comments-legend classb">\n' +
-    '          <span class="fa fa-comments-o"></span>\n' +
-    '        </div>'+
-    '</div>';
+
+  var optionsGeoA = {
+    backgroundColor: '#404a59',
+    title: {
+      text: 'Location engagement',
+      subtext: 'Set A posts',
+      x:'center',
+      textStyle: {
+        color: '#fff'
+      }
+    },
+    tooltip: {
+      trigger: 'item',
+      formatter: function (params) {
+        return params.name + ' : ' + params.value[2];
+      }
+    },
+    legend: {
+      orient: 'vertical',
+      y: 'bottom',
+      x:'right',
+      data:[],
+      textStyle: {
+        color: '#fff'
+      }
+    },
+    visualMap: {
+      min: 0,
+      max: 200,
+      calculable: true,
+      inRange: {
+        color: ['#50a3ba', '#eac736', '#d94e5d']
+      },
+      textStyle: {
+        color: '#fff'
+      }
+    },
+    geo: {
+      map: 'portugal',
+      label: {
+        emphasis: {
+          show: false
+        }
+      },
+      itemStyle: {
+        normal: {
+          areaColor: '#323c48',
+          borderColor: '#111'
+        },
+        emphasis: {
+          areaColor: '#2a333d'
+        }
+      }
+    },
+    series: [
+      {
+        name: 'postsa-scatter',
+        type: 'scatter',
+        coordinateSystem: 'geo',
+        data: [],
+        symbolSize: 12,
+        label: {
+          normal: {
+            show: false
+          },
+          emphasis: {
+            show: false
+          }
+        },
+        itemStyle: {
+          emphasis: {
+            borderColor: '#fff',
+            borderWidth: 1
+          }
+        }
+      },
+      {
+        name: 'postsa-heat',
+        type: 'heatmap',
+        coordinateSystem: 'geo',
+        data: []
+      }
+    ]
+  }
+  var optionsGeoB = {
+    backgroundColor: '#404a59',
+    title: {
+      text: 'Location engagement',
+      subtext: 'Set B posts',
+      x:'center',
+      textStyle: {
+        color: '#fff'
+      }
+    },
+    tooltip: {
+      trigger: 'item',
+      formatter: function (params) {
+        return params.name + ' : ' + params.value[2];
+      }
+    },
+    legend: {
+      orient: 'vertical',
+      y: 'bottom',
+      x:'right',
+      data:[],
+      textStyle: {
+        color: '#fff'
+      }
+    },
+    visualMap: {
+      min: 0,
+      max: 200,
+      calculable: true,
+      inRange: {
+        color: ['#50a3ba', '#eac736', '#d94e5d']
+      },
+      textStyle: {
+        color: '#fff'
+      }
+    },
+    geo: {
+      map: 'iran',
+      label: {
+        emphasis: {
+          show: false
+        }
+      },
+      itemStyle: {
+        normal: {
+          areaColor: '#323c48',
+          borderColor: '#111'
+        },
+        emphasis: {
+          areaColor: '#2a333d'
+        }
+      }
+    },
+    series: [
+      {
+        name: 'postsb-scatter',
+        type: 'scatter',
+        coordinateSystem: 'geo',
+        data: [],
+        symbolSize: 12,
+        label: {
+          normal: {
+            show: false
+          },
+          emphasis: {
+            show: false
+          }
+        },
+        itemStyle: {
+          emphasis: {
+            borderColor: '#fff',
+            borderWidth: 1
+          }
+        }
+      },
+      {
+        name: 'postsb-heat',
+        type: 'heatmap',
+        coordinateSystem: 'geo',
+        data: []
+      }
+    ]
+  }
 
 
   socket.removeListener('authenticated:seta');
@@ -782,6 +897,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
         $("#stats-hbar-a").width(widthA);
 
         chartit('stats-hbar-a', optionsBarA);
+        chartit('geoA', optionsGeoA);
         var htmlA = '<div class="counter-metric-span posts">' + totalsA.totalPosts + '</div>' +
           '<div class="counter-metric-span followers">' + totalsA.totalFollowers + '</div>' +
           '<div class="counter-metric-span following">' + totalsA.totalFollowing + '</div>' +
@@ -1104,7 +1220,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
         var widthB = $("#profiles-counters-b").width();
         $("#stats-hbar-b").height(heightB)
         $("#stats-hbar-b").width(widthB)
-
+        chartit('geoB', optionsGeoB);
         chartit('stats-hbar-b',optionsBarB)
         var htmlB = '<div class="counter-metric-span posts">' + totalsB.totalPosts + '</div>' +
           '<div class="counter-metric-span followers">' + totalsB.totalFollowers + '</div>' +

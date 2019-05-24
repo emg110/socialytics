@@ -1,4 +1,56 @@
 var htmlNoData = htmlNoData || '<div class="loader loader--style1" title="0">  NO DATA HERE...</div>';
+var legendHtmlA =
+  '<div class="counter-metric-span ">' +
+  '<div class="metrics-legend posts-legend classa">\n' +
+  '          <span class="fa fa-instagram"></span>\n' +
+  '        </div>\n' +
+  '</div>' +
+  '<div class="counter-metric-span ">' +
+  '        <div class="metrics-legend followers-legend classa">\n' +
+  '          <span class="fa fa-users"></span>\n' +
+  '        </div>\n' +
+  '</div>' +
+  '<div class="counter-metric-span ">' +
+  '        <div class="metrics-legend following-legend classa">\n' +
+  '          <span class="fa fa-user-o"></span>\n' +
+  '        </div>\n' +
+  '</div>' +
+  '<div class="counter-metric-span ">' +
+  '        <div class="metrics-legend likes-legend classa">\n' +
+  '          <span class="fa fa-heart-o"></span>\n' +
+  '        </div>\n' +
+  '</div>' +
+  '<div class="counter-metric-span ">' +
+  '        <div class="metrics-legend comments-legend classa">\n' +
+  '          <span class="fa fa-comments-o"></span>\n' +
+  '        </div>'+
+  '</div>';
+var legendHtmlB =
+  '<div class="counter-metric-span ">' +
+  '<div class="metrics-legend posts-legend classb">\n' +
+  '          <span class="fa fa-instagram"></span>\n' +
+  '        </div>\n' +
+  '</div>' +
+  '<div class="counter-metric-span ">' +
+  '        <div class="metrics-legend followers-legend classb">\n' +
+  '          <span class="fa fa-users"></span>\n' +
+  '        </div>\n' +
+  '</div>' +
+  '<div class="counter-metric-span ">' +
+  '        <div class="metrics-legend following-legend classb">\n' +
+  '          <span class="fa fa-user-o"></span>\n' +
+  '        </div>\n' +
+  '</div>' +
+  '<div class="counter-metric-span ">' +
+  '        <div class="metrics-legend likes-legend classb">\n' +
+  '          <span class="fa fa-heart-o"></span>\n' +
+  '        </div>\n' +
+  '</div>' +
+  '<div class="counter-metric-span ">' +
+  '        <div class="metrics-legend comments-legend classb">\n' +
+  '          <span class="fa fa-comments-o"></span>\n' +
+  '        </div>'+
+  '</div>';
 var htmlChartLoading = '<div class="loader loader--style7" title="6">\n' +
   '  <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"\n' +
   '     width="24px" height="30px" viewBox="0 0 24 30" style="enable-background:new 0 0 50 50;" xml:space="preserve">\n' +

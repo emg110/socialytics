@@ -55,6 +55,7 @@ $("#login-form").submit(function (e) {
   //prevent Default functionality
   e.preventDefault();
   $('#registration').html(htmlLoading)
+  $('#login-error').html('')
   var actionurl = e.currentTarget.action;
   var logindata = $("#login-form").serialize()
   $.post(actionurl,logindata )
