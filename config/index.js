@@ -13,26 +13,30 @@ module.exports = {
   tags: [],
   cube:{},
   seta:[
-    'continente',
-    'meoinstagram',
-    'nos',
-    'lidlportugal',
-    'prozisportugal',
-    'algarvetourism',
-    'visitportugal',
-    'ualg_universidadedoalgarve',
-    'zoomarine_algarve_oficial'
-  ],
-  setb:[
-    'mynetbarg',
-    'kiagallery',
-    'iran_.attractions',
-    'irancell',
-    'digikalacom',
-    'bamilocom',
-    'iran_tourism_official',
     'irantourism.me',
     'iran_tourism.info'
+    // 'continente',
+    // 'meoinstagram',
+    // 'nos',
+    // 'lidlportugal',
+    // 'prozisportugal',
+    // 'algarvetourism',
+    // 'visitportugal',
+    // 'ualg_universidadedoalgarve',
+    // 'zoomarine_algarve_oficial'
+  ],
+  setb:[
+    'tourism_portugal_',
+    'ualg_universidadedoalgarve',
+    // 'mynetbarg',
+    // 'kiagallery',
+    // 'iran_.attractions',
+    // 'irancell',
+    // 'digikalacom',
+    // 'bamilocom',
+    // 'iran_tourism_official',
+    // 'irantourism.me',
+    // 'iran_tourism.info'
   ],
   default_form_data: {
     username: "emg110",
