@@ -1,53 +1,53 @@
 var htmlNoData = htmlNoData || '<div class="loader loader--style1" title="0">  NO DATA HERE...</div>';
 var legendHtmlA =
   '<div class="counter-metric-span ">' +
-  '<div class="metrics-legend posts-legend classa">\n' +
+  '<div class="metrics-legend posts-legend classa" title="Posts">\n' +
   '          <span class="fa fa-instagram"></span>\n' +
   '        </div>\n' +
   '</div>' +
   '<div class="counter-metric-span ">' +
-  '        <div class="metrics-legend followers-legend classa">\n' +
+  '        <div class="metrics-legend followers-legend classa" title="Followers">\n' +
   '          <span class="fa fa-users"></span>\n' +
   '        </div>\n' +
   '</div>' +
   '<div class="counter-metric-span ">' +
-  '        <div class="metrics-legend following-legend classa">\n' +
+  '        <div class="metrics-legend following-legend classa" title="Following">\n' +
   '          <span class="fa fa-user-o"></span>\n' +
   '        </div>\n' +
   '</div>' +
   '<div class="counter-metric-span ">' +
-  '        <div class="metrics-legend likes-legend classa">\n' +
+  '        <div class="metrics-legend likes-legend classa" title="Liks">\n' +
   '          <span class="fa fa-heart-o"></span>\n' +
   '        </div>\n' +
   '</div>' +
   '<div class="counter-metric-span ">' +
-  '        <div class="metrics-legend comments-legend classa">\n' +
+  '        <div class="metrics-legend comments-legend classa" title="Comments">\n' +
   '          <span class="fa fa-comments-o"></span>\n' +
   '        </div>'+
   '</div>';
 var legendHtmlB =
   '<div class="counter-metric-span ">' +
-  '<div class="metrics-legend posts-legend classb">\n' +
+  '<div class="metrics-legend posts-legend classb" title="Posts">\n' +
   '          <span class="fa fa-instagram"></span>\n' +
   '        </div>\n' +
   '</div>' +
   '<div class="counter-metric-span ">' +
-  '        <div class="metrics-legend followers-legend classb">\n' +
+  '        <div class="metrics-legend followers-legend classb" title="Followers">\n' +
   '          <span class="fa fa-users"></span>\n' +
   '        </div>\n' +
   '</div>' +
   '<div class="counter-metric-span ">' +
-  '        <div class="metrics-legend following-legend classb">\n' +
+  '        <div class="metrics-legend following-legend classb" title="Following">\n' +
   '          <span class="fa fa-user-o"></span>\n' +
   '        </div>\n' +
   '</div>' +
   '<div class="counter-metric-span ">' +
-  '        <div class="metrics-legend likes-legend classb">\n' +
+  '        <div class="metrics-legend likes-legend classb" title="Liks">\n' +
   '          <span class="fa fa-heart-o"></span>\n' +
   '        </div>\n' +
   '</div>' +
   '<div class="counter-metric-span ">' +
-  '        <div class="metrics-legend comments-legend classb">\n' +
+  '        <div class="metrics-legend comments-legend classb" title="Comments">\n' +
   '          <span class="fa fa-comments-o"></span>\n' +
   '        </div>'+
   '</div>';

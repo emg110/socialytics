@@ -874,7 +874,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
 
             '<img alt="missing" class="profile-mini-img" src="' +
             pictureA +
-            '">' +
+            '" title="'+ accountA +'">'+
             '<div class="counter-metric-span posts">' + postCountA + '</div>' +
             '<div class="counter-metric-span followers">' + followersCountA + '</div>' +
             '<div class="counter-metric-span following">' + followingCountA + '</div>' +
@@ -1027,7 +1027,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
             '<div class="counter-metric-span followers">' + totalsA.totalFollowers + '<br ><span class="fa fa-users"></span></div>' +
             '<div class="counter-metric-span following">' + totalsA.totalFollowing + '<br ><span class="fa fa-user-o"></span></div>' +
             '<div class="counter-metric-span likes">' + totalsA.totalLikes + '<br ><span class="fa fa-heart-o"></span></div>' +
-            '<div class="counter-metric-span comments">' + totalsA.totalComments + '<br ><span class="fa fa-comments-o"></span></div>';
+            '<div class="counter-metric-span comments">' + totalsA.totalComments + '<br ><span class="fa fa-comments-o" style="cursor:pointer;"></span></div>';
           $("#countera").html(htmlAA);
           $("#total-metrics-a").html(htmlAA);
           optionsLineA.legend.data.push(usernameA);
@@ -1207,7 +1207,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
             
             '<img alt="missing" class="profile-mini-img" src="' +
             picit(itemB) +
-            '">' +
+            '" title="'+ accountB +'">'+
             '<div class="counter-metric-span posts">' + postCountB + '</div>' +
             '<div class="counter-metric-span followers">' + followersCountB + '</div>' +
             '<div class="counter-metric-span following">' + followingCountB + '</div>' +
