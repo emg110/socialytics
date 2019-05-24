@@ -707,13 +707,13 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
             borderWidth: 1
           }
         }
-      },
+      }/*,
       {
         name: 'postsa-heat',
         type: 'heatmap',
         coordinateSystem: 'geo',
         data: []
-      }
+      }*/
     ]
   }
   var optionsGeoB = {
@@ -973,6 +973,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
           var domsA = {};
           var dowsA = {};
           var hodsA = {};
+          var locsA = [];
           var profilesPieDomDataA = []
           var profilesPieDowDataA = []
           var profilesPieHodDataA = []
@@ -985,6 +986,15 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
             totalsA.totalComments += commentsTotal;
             var engagement = parseInt(likesTotal)+parseInt(commentsTotal);
             engagement = (engagement /dbPostsCountA).toFixed(2);
+            locsA = trendPost.media.location;
+            if(locsA && locsA !==null){
+              if(locsA.lng && locsA.lat){
+                optionsGeoA.series[0].data.push( {
+                  name: locsA.name,
+                  value: [locsA.lng,locsA.lat].concat(engagement)
+                })
+              }
+            }
             optionsLineA.series[optionsLineA.series.length-1].data.push(engagement);
             var dateA = dayjs.unix(trendPost.taken_at_timestamp);
             var dateFormatA = dateA.format('YYYY-MM-DD');
@@ -1020,6 +1030,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
             hodA = hodA>12 ? hodA+'pm' : hodA+'am';
             /*  var moy = dayjs().month(date);
               */
+
             domsA[domA] = domsA[domA] || 0;
             domsA[domA]++
             dowsA[dowA] = dowsA[dowA] || 0;

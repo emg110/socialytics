@@ -183,7 +183,13 @@ module.exports = function (options = {}) {
                     }
 
                     let locCity = await geocoder.search( { q: q }, {}, function(error, response) {
-                      return response
+                      if(error){
+                        console.log('info: SetA on Nominatim ETL has returned error: '+error);
+                        return []
+                      }
+                      else{
+                        return response
+                      }
                     });
                     let finalLoc = locCity[0]
                     if(finalLoc){
@@ -305,7 +311,13 @@ module.exports = function (options = {}) {
                     }
 
                     let locCityB = await geocoder.search( { q: qB }, {}, function(error, response) {
-                      return response
+                      if(error){
+                        console.log('info: SetB on Nominatim ETL has returned error: '+error);
+                        return []
+                      }
+                      else{
+                        return response
+                      }
                     });
                     let finalLocB = locCityB[0]
                     if(finalLocB){
