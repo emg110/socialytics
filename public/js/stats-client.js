@@ -22,7 +22,6 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
   var icounterB = 0;
   var icounterA = 0;
 
-
   var optionsBarA = {
     grid: {containLabel: true,top:0,},
     xAxis: {
@@ -49,7 +48,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
       left: 'center',
       min: 1000,
       max: 1000000,
-      text: ['Most followers', 'least followers'],
+      text: ['Most followers', 'Least followers'],
       // Map the score column to color
       dimension: 0,
 
@@ -65,12 +64,15 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
   var optionsBarB = {
     grid: {containLabel: true,top:10},
     xAxis: {
-      name: 'Metrics',
+      name: 'Followers',
       nameLocation: 'center',
       nameGap: 25
     },
     yAxis: {
       inverse:true,
+      name: 'Profiles',
+      nameRotate:90,
+      nameLocation: 'center',
       type: 'category',
       data: [],
       axisLabel:{
@@ -85,7 +87,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
       left: 'center',
       min: 1000,
       max: 1000000,
-      text: ['Most followers', 'least followers'],
+      text: ['Most followers', 'Least followers'],
       // Map the score column to color
       dimension: 0,
 
@@ -132,7 +134,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
       nameGap: 60,
       nameRotate:90,
       type: 'category',
-      data: [],
+      data:['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
       splitArea: {
         show: true
       },
@@ -206,7 +208,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
       nameGap: 60,
       nameRotate:90,
       type: 'category',
-      data: [],
+      data:['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
       splitArea: {
         show: true
       },
@@ -637,6 +639,10 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
         color: '#fff'
       }
     },
+    roam:true,
+    zoom:80,
+    layoutCenter: ['30%', '100%'],
+    layoutSize:600,
     tooltip: {
       trigger: 'item',
       formatter: function (params) {
@@ -712,6 +718,8 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
   }
   var optionsGeoB = {
     backgroundColor: '#404a59',
+    zoom:3,
+    roam:true,
     title: {
       text: 'Location engagement',
       subtext: 'Set B posts',
@@ -945,7 +953,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
             optionsLineA.series = [];
             optionsHeatA.series[0].data=[];
             optionsHeatA.xAxis.data = [];
-            optionsHeatA.yAxis.data = [];
+            // optionsHeatA.yAxis.data = [];
             optionsLineA.legend.data = [];
             optionsPieDomA.series = [];
             optionsPieDomA.legend.data = [];
@@ -1049,7 +1057,8 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
           for(var dowi in dowsA){
             profilesPieDowDataA.push({name:dowi,value:dowsA[dowi]});
 
-            if(optionsHeatA.yAxis.data.indexOf(dowi)===-1)optionsHeatA.yAxis.data.push(dowi);
+            // if(optionsHeatA.yAxis.data.indexOf(dowi)===-1)optionsHeatA.yAxis.data.push(dowi);
+
             optionsPieDowA.legend[0].data.push(dowi);
             optionsPieDowA.legend[0].data.sort();
           }
@@ -1269,7 +1278,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
             optionsLineB.series = [];
             optionsHeatB.series[0].data=[];
             optionsHeatB.xAxis.data = [];
-            optionsHeatB.yAxis.data = [];
+            // optionsHeatB.yAxis.data = [];
             optionsLineB.legend.data = [];
             optionsPieDomB.series = [];
             optionsPieDomB.legend.data = [];
@@ -1308,25 +1317,25 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
             dowB = String(dowB);
             switch (dowB) {
               case '0':
-                dowB = 'Sunday';
-                break
-              case '1':
                 dowB = 'Monday';
                 break
-              case '2':
+              case '1':
                 dowB = 'Tuesday';
                 break
-              case '3':
+              case '2':
                 dowB = 'Wednesday';
                 break
-              case '4':
+              case '3':
                 dowB = 'Thursday';
                 break
-              case '5':
+              case '4':
                 dowB = 'Friday';
                 break
+              case '5':
+                dowB = 'Saturday';
+                break
               case '6':
-                dowB = 'Saturday'
+                dowB = 'Sunday'
                 break
             }
             var hodB = dayjs(dateB).hour();
@@ -1367,7 +1376,8 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
           }
           for(var dowib in dowsB){
             profilesPieDowDataB.push({name:dowib,value:dowsB[dowib]})
-            if(optionsHeatB.yAxis.data.indexOf(dowib)===-1)optionsHeatB.yAxis.data.push(dowib);
+            // if(optionsHeatB.yAxis.data.indexOf(dowib)===-1)optionsHeatB.yAxis.data.push(dowib);
+
             optionsPieDowB.legend[0].data.push(dowib);
             optionsPieDowB.legend[0].data.sort();
           }
