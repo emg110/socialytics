@@ -119,7 +119,7 @@
     "winston": "latest",
     "jquery-tags-input": "latest",
     "random-points-generator": "latest",
-    "geolib": "latest",
+    "@turf/turf": "latest",
     "flatbush": "latest",
     "rtree": "latest"
   },
