@@ -146,20 +146,17 @@ module.exports = function (options = {}) {
                     if(address['zip_code']){
                       if(address['zip_code'].length>1){
                         loc.zip = address['zip_code'];
-                        q+= loc.zip+ ','
                       }
                     }
                     if(address['street_address']){
                       if(address['street_address'].length>1){
                         loc.street = address['street_address'];
-                        q+=loc.street+ ',';
                       }
 
                     }
                     if(address['region_name']){
                       if(address['region_name'].length>1){
                         loc.region = address['region_name'];
-                        q+=loc.region+ ',';
                       }
 
                     }
@@ -167,22 +164,25 @@ module.exports = function (options = {}) {
                       if(address['city_name'].length>1){
                         if(address['city_name'].indexOf(',')>-1)address['city_name'] = address['city_name'].substring(0,address['city_name'].indexOf(','))
                         loc.city = address['city_name'];
-                        q+=loc.city+ ',';
                       }
                     }
                     if(address['country_code']){
                       if(address['country_code'].length>1){
                         loc.country = address['country_code'];
-                        q+=loc.country;
                       }
 
                     }
                     if(!loc.zip && !loc.street && !loc.region &&  !loc.city){
-                      if(loc.name)q = loc.name
+                      if(loc.name && loc.name.length>1)q = loc.name
                       else if(loc.country)q = loc.country
                     }
+                    else if(loc.city && loc.city.length>1 && loc.country && loc.country.length>1 ){
+                      q = loc.city + ',' + loc.country
+                    }else{
+                      q = loc.name
+                    }
 
-                    let locCity = await geocoder.search( { q: q }, {}, function(error, response) {
+                    let locReq = await geocoder.search( { q: q }, {}, function(error, response) {
                       if(error){
                         console.log('info: SetA on Nominatim ETL has returned error: '+error);
                         return []
@@ -191,12 +191,12 @@ module.exports = function (options = {}) {
                         return response
                       }
                     });
-                    let finalLoc = locCity[0]
+                    let finalLoc = locReq[0]
                     if(finalLoc){
-                      if(finalLoc.lng)loc.lng= finalLoc.lng
-                      else if(finalLoc.lon)loc.lng= finalLoc.lon
+                      if(finalLoc.lng)loc.lng= finalLoc.lng;
+                      else if(finalLoc.lon)loc.lng= finalLoc.lon;
                       loc.lat = finalLoc.lat;
-                      etlDataPMA.location = loc
+                      etlDataPMA.location = loc;
                     }
 
                   }
@@ -274,20 +274,17 @@ module.exports = function (options = {}) {
                     if(addressB['zip_code']){
                       if(addressB['zip_code'].length>1){
                         locB.zip = addressB['zip_code'];
-                        qB+= locB.zip+ ','
                       }
                     }
                     if(addressB['street_address']){
                       if(addressB['street_address'].length>1){
                         locB.street = addressB['street_address'];
-                        qB+=locB.street+ ',';
                       }
 
                     }
                     if(addressB['region_name']){
                       if(addressB['region_name'].length>1){
                         locB.region = addressB['region_name'];
-                        qB+=locB.region+ ',';
                       }
 
                     }
@@ -295,22 +292,25 @@ module.exports = function (options = {}) {
                       if(addressB['city_name'].length>1){
                         if(addressB['city_name'].indexOf(',')>-1)addressB['city_name'] = addressB['city_name'].substring(0,addressB['city_name'].indexOf(','))
                         locB.city = addressB['city_name'];
-                        qB+=locB.city+ ',';
                       }
                     }
                     if(addressB['country_code']){
                       if(addressB['country_code'].length>1){
                         locB.country = addressB['country_code'];
-                        qB+=locB.country;
                       }
 
                     }
                     if(!locB.zip && !locB.street && !locB.region &&  !locB.city){
-                      if(locB.name)qB = locB.name
+                      if(locB.name && locB.name.length>1)qB = locB.name
                       else if(locB.country)qB = locB.country
                     }
+                    else if(locB.city && locB.city.length>1 && locB.country && locB.country.length>1 ){
+                      qB = locB.city + ',' + locB.country
+                    }else{
+                      qB = locB.name
+                    }
 
-                    let locCityB = await geocoder.search( { q: qB }, {}, function(error, response) {
+                    let locReqB = await geocoder.search( { q: qB }, {}, function(error, response) {
                       if(error){
                         console.log('info: SetB on Nominatim ETL has returned error: '+error);
                         return []
@@ -319,7 +319,7 @@ module.exports = function (options = {}) {
                         return response
                       }
                     });
-                    let finalLocB = locCityB[0]
+                    let finalLocB = locReqB[0]
                     if(finalLocB){
                       if(finalLocB.lng)locB.lng= finalLocB.lng
                       else if(finalLocB.lon)locB.lng= finalLocB.lon

@@ -1144,6 +1144,8 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
             $("#heatA").height(400);
             $("#heatA").width(width);
             chartit('heatA', optionsHeatA);
+            var geoA = document.getElementById('geoA');
+            echarts.getInstanceByDom(geoA).setOption(optionsGeoA);
           }
           else{
             var domLinesA = document.getElementById('lines-seta');
@@ -1479,6 +1481,8 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
             $("#heatB").height(400)
             $("#heatB").width(width)
             chartit('heatB', optionsHeatB)
+            var geoB = document.getElementById('geoB');
+            echarts.getInstanceByDom(geoB).setOption(optionsGeoB);
           }
           else{
             var domLinesB = document.getElementById('lines-setb');
