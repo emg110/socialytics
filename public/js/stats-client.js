@@ -640,9 +640,9 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
       }
     },
     roam:true,
-    zoom:80,
+/*    zoom:80,
     layoutCenter: ['30%', '100%'],
-    layoutSize:600,
+    layoutSize:600,*/
     tooltip: {
       trigger: 'item',
       formatter: function (params) {
@@ -653,24 +653,24 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
       orient: 'vertical',
       y: 'bottom',
       x:'right',
-      data:[],
+      data:['postsa-scatter','postsa-heat'],
       textStyle: {
         color: '#fff'
       }
     },
     visualMap: {
       min: 0,
-      max: 200,
+      max: 5,
       calculable: true,
       inRange: {
-        color: ['#50a3ba', '#eac736', '#d94e5d']
+        color: ['#92bab3', '#eac736', '#d94e5d']
       },
       textStyle: {
         color: '#fff'
       }
     },
     geo: {
-      map: 'portugal',
+      map: 'world',
       label: {
         emphasis: {
           show: false
@@ -707,13 +707,13 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
             borderWidth: 1
           }
         }
-      }/*,
+      },
       {
         name: 'postsa-heat',
         type: 'heatmap',
         coordinateSystem: 'geo',
         data: []
-      }*/
+      }
     ]
   }
   var optionsGeoB = {
@@ -737,15 +737,19 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
     legend: {
       orient: 'vertical',
       y: 'bottom',
+      splitNumber: 5,
+      inRange: {
+        color: ['#50a3ba', '#eac736', '#d94e5d'].reverse()
+      },
       x:'right',
-      data:[],
+      data:['postsb-scatter','postsb-heat'],
       textStyle: {
         color: '#fff'
       }
     },
     visualMap: {
       min: 0,
-      max: 200,
+      max: 5,
       calculable: true,
       inRange: {
         color: ['#50a3ba', '#eac736', '#d94e5d']
@@ -755,7 +759,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
       }
     },
     geo: {
-      map: 'iran',
+      map: 'world',
       label: {
         emphasis: {
           show: false
@@ -802,10 +806,8 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
     ]
   }
 
-
   socket.removeListener('authenticated:seta');
   socketB.removeListener('authenticated:setb');
-
 
   socket.on('authenticated:seta', function (response) {
     var desc = response.socRes.desc;
@@ -973,7 +975,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
           var domsA = {};
           var dowsA = {};
           var hodsA = {};
-          var locsA = [];
+
           var profilesPieDomDataA = []
           var profilesPieDowDataA = []
           var profilesPieHodDataA = []
@@ -986,13 +988,15 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
             totalsA.totalComments += commentsTotal;
             var engagement = parseInt(likesTotal)+parseInt(commentsTotal);
             engagement = (engagement /dbPostsCountA).toFixed(2);
-            locsA = trendPost.media.location;
+            var locsA = trendPost.media.location;
             if(locsA && locsA !==null){
               if(locsA.lng && locsA.lat){
-                optionsGeoA.series[0].data.push( {
-                  name: locsA.name,
-                  value: [locsA.lng,locsA.lat].concat(engagement)
-                })
+              var locA = {
+                name: locsA.name,
+                value: [Number(locsA.lng),Number(locsA.lat),engagement]
+              }
+                optionsGeoA.series[0].data.push(locA)
+                optionsGeoA.series[1].data.push(locA)
               }
             }
             optionsLineA.series[optionsLineA.series.length-1].data.push(engagement);
@@ -1152,6 +1156,8 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
             echarts.getInstanceByDom(hodPieA).setOption(optionsPieHodA);
             var heatA = document.getElementById('heatA');
             echarts.getInstanceByDom(heatA).setOption(optionsHeatA);
+            var geoA = document.getElementById('geoA');
+            echarts.getInstanceByDom(geoA).setOption(optionsGeoA);
           }
         }
       }
@@ -1321,6 +1327,17 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
             totalsB.totalComments += commentsTotalB;
             var engagementB = parseInt(likesTotalB)+parseInt(commentsTotalB);
             engagementB = (engagementB /dbPostsCountB).toFixed(2);
+            var locsB = trendPostB.media.location;
+            if(locsB && locsB !==null){
+              if(locsB.lng && locsB.lat){
+                var locB = {
+                  name: locsB.name,
+                  value: [Number(locsB.lng),Number(locsB.lat),engagementB]
+                }
+                optionsGeoB.series[0].data.push(locB)
+                optionsGeoB.series[1].data.push(locB)
+              }
+            }
             optionsLineB.series[optionsLineB.series.length-1].data.push(engagementB);
             var dateB = dayjs.unix(trendPostB.taken_at_timestamp);
             var dateFormatB = dateB.format('YYYY-MM-DD');
@@ -1474,6 +1491,8 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
             echarts.getInstanceByDom(hodPieB).setOption(optionsPieHodB);
             var heatB = document.getElementById('heatB');
             echarts.getInstanceByDom(heatB).setOption(optionsHeatB);
+            var geoB = document.getElementById('geoB');
+            echarts.getInstanceByDom(geoB).setOption(optionsGeoB);
           }
 
         }
