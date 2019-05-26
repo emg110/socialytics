@@ -134,7 +134,7 @@ $("#search-input").on('keypress',(e)=>{
         if(json){
           json = json.users;
 
-          $("#autocomplete-results").append('<a href="#" id="close-btn" class="fa fa-times"></a><div style="width:100%;color:#f8f9fa;padding:5px;font-family: monospace; background: rgba(0,123,255,.5);text-align: center">Drag profiles to input</div>');
+          $("#autocomplete-results").append('<a href="#" id="close-btn" class="fa fa-times"></a><div style="width:100%;color:#f8f9fa;padding:5px;font-family: monospace; background: #31a9b8;text-align: center">Drag profiles to input</div>');
           $("#close-btn").on('click',function(){
             $("#autocomplete-results").html('<div>  </div>');
           });
@@ -176,7 +176,7 @@ $("#searchProfileBtn").click(()=>{
       if(json){
         json = json.users;
 
-        $("#autocomplete-results").append('<a href="#" id="close-btn" class="fa fa-times"></a><div style="width:100%;color:#f8f9fa;padding:5px;font-family: monospace; background: rgba(0,123,255,.5);text-align: center">Drag profiles to desired input</div>')
+        $("#autocomplete-results").append('<a href="#" id="close-btn" class="fa fa-times"></a><div style="width:100%;color:#f8f9fa;padding:5px;font-family: monospace; background: #31a9b8;text-align: center">Drag profiles to desired input</div>')
         $("#close-btn").on('click',function(){
           $("#autocomplete-results").html('<div>  </div>');
         });
@@ -212,6 +212,35 @@ $("#resetSeta").on('click',function(){
 $("#resetSetb").on('click',function(){
   $('#setb').importTags('');
 });
+
+
+$("#storeBrowsingBtn").on('click',function(){
+  if($("input[id='storeBrowsingBtn']").is(":checked")){
+
+    $("#setToggleDiv").removeClass('hidden');
+    $("#setToggleDiv").css('display','inline');
+
+  }else{
+    $("#setToggleDiv").addClass('hidden');
+    $("#setToggleDiv").css('display','none');
+  }
+});
+$("#allPostsBtn").on('click',function(){
+  if($("input[id='allPostsBtn']").is(":checked")){
+
+    $("#commentsDiv").removeClass('hidden');
+    $("#commentsDiv").css('display','inline');
+    $("#locationDiv").removeClass('hidden');
+    $("#locationDiv").css('display','inline');
+
+  }else{
+    $("#commentsDiv").addClass('hidden');
+    $("#commentsDiv").css('display','none');
+    $("#locationDiv").addClass('hidden');
+    $("#locationDiv").css('display','none');
+  }
+});
+
 
 
 

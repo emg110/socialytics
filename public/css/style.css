@@ -757,11 +757,11 @@ img {
 }
 
 input:checked + .slider {
-  background-color: #2196F3;
+  background-color: #1995ad;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+  box-shadow: 0 0 1px #1995ad;
 }
 
 input:checked + .slider:before {
@@ -777,5 +777,30 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+.hidden{
+  display:none;
+}
+.reset-btn{
+  text-align:center;
+  display:inline-block;
+  padding:5px; float:right;
+  margin-right:32%;
+  min-width:16%;
+  background-color: #bcbabe;
+}
+#searchProfileBtn{
+  text-align:center;
+  display:inline;
+  padding:5px;
+  margin:5px;
+  min-width:5%;
+  background-color: #1995ad;
+}
+#searchProfileBtn:hover{
+  border-color:#1995ad;
+  background-color: #116676;
+  color:#f1f1f2;
 }
 

@@ -183,8 +183,8 @@ function renderFormData(txt){
 
   var tagsOptions = {
     'defaultText':'Drag or add a profile...',
-    width:'400px',
-    height:'10%'
+    'width':'400px',
+    'height':'10%'
   };
   if(json.seta){
     console.log('set A found');

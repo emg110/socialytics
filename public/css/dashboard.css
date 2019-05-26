@@ -476,17 +476,17 @@ button {
 
 .btn-primary {
   color: #fff;
-  background-color: #428bca;
-  border-color: #357ebd;
+  background-color: #1995ad;
+  border-color: #1995ad;
 }
 
 .btn-primary:hover,
 .btn-primary:focus,
 .btn-primary:active,
 .btn-primary.active {
-  color: #fff;
-  background-color: #3071a9;
-  border-color: #285e8e;
+  border-color:#1995ad;
+  background-color: #116676;
+  color:#f1f1f2;
 }
 
 .btn-default {
@@ -779,7 +779,7 @@ button {
   min-width: 100%;
   font-size: 1em;
   color: white;
-  margin-left: 18px;
+  margin-left: 10px;
 
 }
 .counter-metric{
@@ -835,9 +835,10 @@ button {
   display: table;
   clear: both;
 }
-.posts{
-  background-color: #2f4554;
-  color:#fff;
+.posts {
+  background-color: #31a9b8;
+  color: #f1f1f2;
+  width: 115px;
 }
 .followers{
   background-color: #bda29a;
@@ -893,7 +894,7 @@ button {
 }
 div.tagsinput{
    border: none;
-  background: #676565;
+  background: #f1f1f2;
   padding: 5px;
   width: 300px;
   height: 100px;
@@ -927,5 +928,11 @@ div.tagsinput span.tag{
 .search-result{
   padding: 5px;
   margin: 5px;
-  color: white;
+  color: #4d4d4d;
+}
+.nav-link{
+  color:#1995ad;
+}
+.nav-tabs .nav-link.active{
+  color:#116676;
 }

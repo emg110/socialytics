@@ -1,7 +1,7 @@
 var tagsOptions = {
   'defaultText':'Drag or add a profile...',
-  width:'400px',
-  height:'10%'
+  'width':'400px',
+  'height':'10%'
 };
 $('#seta').tagsInput(tagsOptions)
 $('#setb').tagsInput(tagsOptions)
@@ -47,11 +47,11 @@ function getSetsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
     var html = xhr.responseText;
     //console.log(html)
     var json = JSON.parse(html);
-    var htmlA = '<div class="counter-metric-home-span posts">A-Instagaram: ' + json.totalInstaPostsA + '</div>'+
-      '<div class="counter-metric-home-span posts">A-Databse: ' + json.totalDbPostsA + '</div>';
+    var htmlA = '<div class="counter-metric-home-span posts"><span class="fa fa-instagram"></span><br>A: ' + json.totalInstaPostsA + '</div>'+
+      '<div class="counter-metric-home-span posts"><span class="fa fa-database"></span><br>A: ' + json.totalDbPostsA + '</div>';
     $("#countera").html(htmlA);
-    var htmlB = '<div class="counter-metric-home-span posts">B-Instagram: ' + json.totalInstaPostsB + '</div>'+
-      '<div class="counter-metric-home-span posts">B-Database: ' + json.totalDbPostsB + '</div>';
+    var htmlB = '<div class="counter-metric-home-span posts"><span class="fa fa-instagram"></span><br>B: ' + json.totalInstaPostsB + '</div>'+
+      '<div class="counter-metric-home-span posts"><span class="fa fa-database"></span><br>B: ' + json.totalDbPostsB + '</div>';
       $("#counterb").html(htmlB);
   }
   xhr.send();
