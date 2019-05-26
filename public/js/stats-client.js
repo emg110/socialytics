@@ -3,12 +3,11 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
   if(setLimit){
     seta = document.getElementById('seta').value.split(',').slice(0,parseInt(setLimit));
     setb = document.getElementById('setb').value.split(',').slice(0,parseInt(setLimit));
-  }else{
+  }
+  else{
     seta = document.getElementById('seta').value.split(',');
     setb = document.getElementById('setb').value.split(',');
   }
-
-
 
   totalsA = totalsB = {
     totalPosts:0,
@@ -1165,7 +1164,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
       }
     }
 
-  })
+  });
   socketB.on('authenticated:setb', function (response) {
     var descB = response.socRes.desc;
     if (descB === 'setb-profile-userid') {
