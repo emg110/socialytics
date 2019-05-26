@@ -13,6 +13,7 @@ module.exports = {
   tags: [],
   cube:{},
   seta:[
+    'zooza.cement',
     'tourism_portugal_',
     'ualg_universidadedoalgarve',
     'zoomarine_algarve_oficial'
@@ -27,6 +28,7 @@ module.exports = {
     // 'zoomarine_algarve_oficial'
   ],
   setb:[
+    'betongallery',
     'irantourism.me',
     'iran_tourism.info',
     'iran_tourism_official'

@@ -858,7 +858,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
             {
               query: {
                 "owner.id": useridA,
-                $sort: {taken_at_timestamp: -1},
+                $sort: {timestamp: -1},
                 $limit: 20000
               },
               paginate: {
@@ -868,10 +868,10 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
               location:true,
               un: accountA,
               aggregate: [
-                {type: 'sum', field: 'edge_media_to_comment', resField: 'comments'},
-                {type: 'sum', field: 'edge_media_preview_like', resField: 'likes'},
-    /*            {type: 'top', field: 'edge_media_to_comment', resField: 'likes'},
-                {type: 'top', field: 'edge_media_preview_like', resField: 'likes'}*/
+                {type: 'sum', field: 'comments', resField: 'comments'},
+                {type: 'sum', field: 'likes', resField: 'likes'},
+    /*            {type: 'top', field: 'comments', resField: 'likes'},
+                {type: 'top', field: 'likes', resField: 'likes'}*/
               ],
             },
             'seta-posts-likes-comments:' + useridA,
@@ -982,8 +982,8 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
 
           for (var trendPost of likesCommentsA.trendsdata){
 
-            var likesTotal = trendPost.edge_media_preview_like.count;
-            var commentsTotal = trendPost.edge_media_to_comment.count;
+            var likesTotal = trendPost.likes.count;
+            var commentsTotal = trendPost.comments.count;
             totalsA.totalLikes += likesTotal;
             totalsA.totalComments += commentsTotal;
             var engagement = parseInt(likesTotal)+parseInt(commentsTotal);
@@ -1000,7 +1000,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
               }
             }
             optionsLineA.series[optionsLineA.series.length-1].data.push(engagement);
-            var dateA = dayjs.unix(trendPost.taken_at_timestamp);
+            var dateA = dayjs.unix(trendPost.timestamp);
             var dateFormatA = dateA.format('YYYY-MM-DD');
             var domA = dayjs(dateA).date();
             domA = domA>9 ? String(domA) : '0'+domA
@@ -1212,7 +1212,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
             {
               query: {
                 "owner.id": useridB,
-                $sort: {taken_at_timestamp: -1},
+                $sort: {timestamp: -1},
                 $limit: 20000
               },
               paginate: {
@@ -1222,8 +1222,8 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
               un: accountB,
               location:true,
               aggregate: [
-                {type: 'sum', field: 'edge_media_to_comment', resField: 'comments'},
-                {type: 'sum', field: 'edge_media_preview_like', resField: 'likes'}
+                {type: 'sum', field: 'comments', resField: 'comments'},
+                {type: 'sum', field: 'likes', resField: 'likes'}
               ],
             },
             'setb-posts-likes-comments:' + useridB,
@@ -1323,8 +1323,8 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
 
           for (var trendPostB of likesCommentsB.trendsdata){
 
-            var likesTotalB = trendPostB.edge_media_preview_like.count;
-            var commentsTotalB = trendPostB.edge_media_to_comment.count;
+            var likesTotalB = trendPostB.likes.count;
+            var commentsTotalB = trendPostB.comments.count;
             totalsB.totalLikes += likesTotalB;
             totalsB.totalComments += commentsTotalB;
             var engagementB = parseInt(likesTotalB)+parseInt(commentsTotalB);
@@ -1341,7 +1341,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
               }
             }
             optionsLineB.series[optionsLineB.series.length-1].data.push(engagementB);
-            var dateB = dayjs.unix(trendPostB.taken_at_timestamp);
+            var dateB = dayjs.unix(trendPostB.timestamp);
             var dateFormatB = dateB.format('YYYY-MM-DD');
             var domB = dayjs(dateB).date();
             domB = domB>9 ? String(domB) : '0'+domB;

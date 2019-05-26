@@ -4,7 +4,7 @@ const fetch = require('node-fetch');
 //const ejs = require('ejs')
 const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36';
 const uri = config.PROTOCOL+"://"+config.HOST+':'+config.UIPORT+'/'
-const cities = require("all-the-cities")
+/*const cities = require("all-the-cities")*/
 const Nominatim = require('nominatim-geocoder')
 const geocoder = new Nominatim()
 //console.log(uri);
@@ -37,7 +37,8 @@ function cleans(post, isArray){
       }
     }
     return post
-  }else{
+  }
+  else{
     if (post.node) {
       post = post.node;
     }
@@ -51,6 +52,41 @@ function cleans(post, isArray){
     }
     return post
   }
+  return post
+}
+function prepPost(post){
+  let preppost = {
+    id: post.id,
+    timestamp:post.taken_at_timestamp,
+    captions:post.edge_media_to_caption,
+    shortcode:post.shortcode,
+    likes:post.edge_media_preview_like,
+    comments:post.edge_media_to_comment,
+    owner:post.owner,
+    thumbnail:post.thumbnail_src
+  }
+  return preppost
+}
+function prepMedia(media){
+  let prepmedia = {
+        shortcode:media.shortcode,
+        timestamp:media.taken_at_timestamp,
+        location:media.location,
+        preview:media.media_preview,
+        display_url:media.display_url,
+        dimensions:media.dimentions,
+        related_media: media.edge_web_media_to_related_media,
+        is_video:media.is_video,
+        caption_is_edited:media.caption_is_edited,
+        has_ranked_comments:media.has_ranked_comments,
+        comments_disabled:media.comments_disabled,
+        viewer_liked:media.viewer_has_liked,
+        viewer_saved:media.viewer_has_saved,
+        is_ad:media.is_ad
+
+  }
+  return prepmedia
+
 }
 const getEndpointDataEtl = async (etlApiEndpoint, username, accessToken, strategy)=>{
   let etlData = await fetch(etlApiEndpoint,
@@ -72,20 +108,28 @@ const getEndpointDataEtl = async (etlApiEndpoint, username, accessToken, strateg
 
 
 }
-const getCity= async (city)=>{
+/*const getCity= async (city)=>{
   let res = await cities.filter(citi => {
     return citi.name.match(city)
   })
   return res[0] || res
-}
+}*/
 module.exports = function (options = {}) {
   return async function mwEtlApi(req, res, next) {
     let username = req.headers.username;
     let accessToken =  req.headers.accesstoken;
     let strategy = 'jwt';
     let expr = req.originalUrl;
+
+
+
     if(expr.indexOf('/instagram/set/data?')>=0){
-      req.setTimeout(50000000000)
+      req.setTimeout(50000000000);
+      let getPosts = req.query.allPosts
+      let getComments = req.query.allComments
+      let getLocations = req.query.allLocations
+      let imProc = req.query.imageProcessing
+      let txtProc = req.query.textProcessing
       var resultData = {};
       resultData.totalInstaPostsA = resultData.totalInstaPostsB = 0
       resultData.totalDbPostsA = resultData.totalDbPostsB = 0
@@ -125,109 +169,124 @@ module.exports = function (options = {}) {
             res.sendStatus(500)
           }
         }
-        for(var setAProfile of resultData.profilesA){
-          let timePA = await setTimeout(function(){return 5000},5000);
-          resultData.totalInstaPostsA+=setAProfile.edge_owner_to_timeline_media.count
-          let etlDataPA = await getEndpointDataEtl(etlApiEndpointPosts+setAProfile.id, username, accessToken, strategy);
-          if(etlDataPA && etlDataPA !== 'No ETL data'){
-            resultData.totalDbPostsA+=etlDataPA.length;
-            for(let postA of etlDataPA){
-              postA = cleans(postA)
-              let timePMA = await setTimeout(function(){return 1000},1000);
-              let etlDataPMA = await getEndpointDataEtl(etlApiEndpointMedia+postA.shortcode, username, accessToken, strategy);
-              etlDataPMA = cleans(etlDataPMA)
-              let loc  =etlDataPMA.location;
-              if(loc && loc !== null){
-                if(!loc['lng'] && !loc['lon']){
-                  /*let location = await geoSearch(loc.name)*/
-                  let address = JSON.parse(loc['address_json']);
-                  if(address){
-                    let q = '';
-                    if(address['zip_code']){
-                      if(address['zip_code'].length>1){
-                        loc.zip = address['zip_code'];
-                      }
-                    }
-                    if(address['street_address']){
-                      if(address['street_address'].length>1){
-                        loc.street = address['street_address'];
-                      }
+        if(getPosts){
+          for(var setAProfile of resultData.profilesA){
+            let timePA = await setTimeout(function(){return 5000},5000);
+            resultData.totalInstaPostsA+=setAProfile.edge_owner_to_timeline_media.count
+            let etlDataPA = await getEndpointDataEtl(etlApiEndpointPosts+setAProfile.id, username, accessToken, strategy);
+            if(etlDataPA && etlDataPA !== 'No ETL data'){
+              resultData.totalDbPostsA+=etlDataPA.length;
+              for(let iA in etlDataPA){
+                let postA = etlDataPA[iA];
+                postA = await cleans(postA);
+                postA = await prepPost(postA);
+                let timePMA = await setTimeout(function(){return 1000},1000);
+                let etlDataPMA = await getEndpointDataEtl(etlApiEndpointMedia+postA.shortcode, username, accessToken, strategy);
+                etlDataPMA = await cleans(etlDataPMA);
+                etlDataPMA = await prepMedia(etlDataPMA);
+                if(getLocations){
+                  let loc  =etlDataPMA.location;
+                  if(loc && loc !== null){
+                    if(!loc['lng'] && !loc['lon']){
+                      /*let location = await geoSearch(loc.name)*/
+                      let address = JSON.parse(loc['address_json']);
+                      if(address){
+                        let q = '';
+                        if(address['zip_code']){
+                          if(address['zip_code'].length>1){
+                            loc.zip = address['zip_code'];
+                          }
+                        }
+                        if(address['street_address']){
+                          if(address['street_address'].length>1){
+                            loc.street = address['street_address'];
+                          }
 
-                    }
-                    if(address['region_name']){
-                      if(address['region_name'].length>1){
-                        loc.region = address['region_name'];
-                      }
+                        }
+                        if(address['region_name']){
+                          if(address['region_name'].length>1){
+                            loc.region = address['region_name'];
+                          }
 
-                    }
-                    if(address['city_name']){
-                      if(address['city_name'].length>1){
-                        if(address['city_name'].indexOf(',')>-1)address['city_name'] = address['city_name'].substring(0,address['city_name'].indexOf(','))
-                        loc.city = address['city_name'];
-                      }
-                    }
-                    if(address['country_code']){
-                      if(address['country_code'].length>1){
-                        loc.country = address['country_code'];
-                      }
+                        }
+                        if(address['city_name']){
+                          if(address['city_name'].length>1){
+                            if(address['city_name'].indexOf(',')>-1)address['city_name'] = address['city_name'].substring(0,address['city_name'].indexOf(','))
+                            loc.city = address['city_name'];
+                          }
+                        }
+                        if(address['country_code']){
+                          if(address['country_code'].length>1){
+                            loc.country = address['country_code'];
+                          }
 
-                    }
-                    if(!loc.zip && !loc.street && !loc.region &&  !loc.city){
-                      if(loc.name && loc.name.length>1)q = loc.name
-                      else if(loc.country)q = loc.country
-                    }
-                    else if(loc.city && loc.city.length>1 && loc.country && loc.country.length>1 ){
-                      q = loc.city + ',' + loc.country
-                    }else{
-                      q = loc.name
-                    }
+                        }
+                        if(!loc.zip && !loc.street && !loc.region &&  !loc.city){
+                          if(loc.name && loc.name.length>1)q = loc.name
+                          else if(loc.country)q = loc.country
+                        }
+                        else if(loc.city && loc.city.length>1 && loc.country && loc.country.length>1 ){
+                          q = loc.city + ',' + loc.country
+                        }else{
+                          q = loc.name
+                        }
 
-                    let locReq = await geocoder.search( { q: q }, {}, function(error, response) {
-                      if(error){
-                        console.log('info: SetA on Nominatim ETL has returned error: '+error);
-                        return []
-                      }
-                      else{
-                        return response
-                      }
-                    });
-                    let finalLoc = locReq[0]
-                    if(finalLoc){
-                      if(finalLoc.lng)loc.lng= finalLoc.lng;
-                      else if(finalLoc.lon)loc.lng= finalLoc.lon;
-                      loc.lat = finalLoc.lat;
-                      etlDataPMA.location = loc;
-                    }
+                        let locReq = await geocoder.search( { q: q }, {}, function(error, response) {
+                          if(error){
+                            console.log('info: SetA on Nominatim ETL has returned error: '+error);
+                            return []
+                          }
+                          else{
+                            return response
+                          }
+                        });
+                        let finalLoc = locReq[0]
+                        if(finalLoc){
+                          if(finalLoc.lng)loc.lng= finalLoc.lng;
+                          else if(finalLoc.lon)loc.lng= finalLoc.lon;
+                          loc.lat = finalLoc.lat;
+                          etlDataPMA.location = loc;
+                        }
 
+                      }
+                    }
                   }
                 }
+                if(getComments){
+                  let commentsCount = postA.comments.count || 0
+                  let commentsEtlApiEndpoint = serverUrl+'/instagram/comments?'+'shortcode='+postA.shortcode+'&count='+commentsCount;
+                  let commentsData = await getEndpointDataEtl(commentsEtlApiEndpoint, username, accessToken, strategy);
+                  postA.comments.edges = await cleans(commentsData, true)
+                }
+                postA.media = etlDataPMA;
+                etlDataPA[iA] = postA;
               }
-              postA.media = etlDataPMA
-            }
-            resultData.setA.push({profile:setAProfile.username,totalDb:etlDataPA.length,profileData:setAProfile,posts:etlDataPA})
-            console.log('info: Writing SetA,  '+ etlDataPA.length +'posts from ETL API to database')
-            let servicePostsA = 'instagram/postsa';
-            let recordDataA = await writeDatabase(req.app, etlDataPA, servicePostsA, username)
-              .then(result => {
-                return result
-                console.log('info: Patched setA member profile: '+setAProfile.username+' in database with '+etlDataPA.length+' records '+ 'for these profiles: '+resultData.profilesA.toString());
-              })
-              .catch(err => {
-                console.log(err);
-                res.sendStatus(500)
-              });
-            for (let resA of resultData.setA){
-              console.log('SetA '+resA.posts.length+' posts of profile: '+resA.profile+' cropped to 100 to be sent to user as sample ')
-              resA.posts = resA.posts.slice(0,100);
+              resultData.setA.push({profile:setAProfile.username,totalDb:etlDataPA.length,profileData:setAProfile,posts:etlDataPA})
+              console.log('info: Writing SetA,  '+ etlDataPA.length +'posts from ETL API to database');
+              let servicePostsA = 'instagram/postsa';
+              let recordDataA = await writeDatabase(req.app, etlDataPA, servicePostsA, username)
+                .then(result => {
+                  return result
+                  console.log('info: Patched setA member profile: '+setAProfile.username+' in database with '+etlDataPA.length+' records '+ 'for these profiles: '+resultData.profilesA.toString());
+                })
+                .catch(err => {
+                  console.log(err);
+                  res.sendStatus(500)
+                });
+              for (let resA of resultData.setA){
+                console.log('SetA '+resA.posts.length+' posts of profile: '+resA.profile+' cropped to 100 to be sent to user as sample ')
+                resA.posts = resA.posts.slice(0,100);
+
+              }
 
             }
-
-          }
-          else{
-            console.log('No ETL data has returned from Instagram');
-            res.sendStatus(500)
+            else{
+              console.log('No ETL data has returned from Instagram');
+              res.sendStatus(500)
+            }
           }
         }
+
       }
       if(setBData.length>0){
         for(var setBItem of setBData){
@@ -252,111 +311,125 @@ module.exports = function (options = {}) {
             res.sendStatus(500)
           }
         }
-        for(var setBProfile of resultData.profilesB){
-          let timePB = await setTimeout(function(){return 5000},5000);
-          resultData.totalInstaPostsB+=setBProfile.edge_owner_to_timeline_media.count
-          let etlDataPB = await getEndpointDataEtl(etlApiEndpointPosts+setBProfile.id, username, accessToken, strategy);
-          if(etlDataPB && etlDataPB !== 'No ETL data'){
-            resultData.totalDbPostsB+=etlDataPB.length;
+        if(getPosts){
+          for(var setBProfile of resultData.profilesB){
+            let timePB = await setTimeout(function(){return 5000},5000);
+            resultData.totalInstaPostsB+=setBProfile.edge_owner_to_timeline_media.count
+            let etlDataPB = await getEndpointDataEtl(etlApiEndpointPosts+setBProfile.id, username, accessToken, strategy);
+            if(etlDataPB && etlDataPB !== 'No ETL data'){
+              resultData.totalDbPostsB+=etlDataPB.length;
 
-            for(let postB of etlDataPB){
-              postB = cleans(postB)
-              let timePMB = await setTimeout(function(){return 1000},1000);
-              let etlDataPMB = await getEndpointDataEtl(etlApiEndpointMedia+postB.shortcode, username, accessToken, strategy);
-              etlDataPMB = cleans(etlDataPMB)
-              let locB  =etlDataPMB.location;
-              if(locB && locB !== null){
-                if(!locB['lng'] && !locB['lon']){
-                  /*let location = await geoSearch(loc.name)*/
-                  let addressB = JSON.parse(locB['address_json']);
-                  if(addressB){
-                    let qB = '';
-                    if(addressB['zip_code']){
-                      if(addressB['zip_code'].length>1){
-                        locB.zip = addressB['zip_code'];
-                      }
-                    }
-                    if(addressB['street_address']){
-                      if(addressB['street_address'].length>1){
-                        locB.street = addressB['street_address'];
-                      }
+              for(let jB in etlDataPB){
+                let postB = etlDataPB[jB];
+                postB = await cleans(postB)
+                postB = await prepPost(postB)
+                let timePMB = await setTimeout(function(){return 1000},1000);
+                let etlDataPMB = await getEndpointDataEtl(etlApiEndpointMedia+postB.shortcode, username, accessToken, strategy);
+                etlDataPMB = await cleans(etlDataPMB);
+                etlDataPMB = await prepMedia(etlDataPMB);
+                if(getLocations){
+                  let locB  =etlDataPMB.location;
+                  if(locB && locB !== null){
+                    if(!locB['lng'] && !locB['lon']){
+                      /*let location = await geoSearch(loc.name)*/
+                      let addressB = JSON.parse(locB['address_json']);
+                      if(addressB){
+                        let qB = '';
+                        if(addressB['zip_code']){
+                          if(addressB['zip_code'].length>1){
+                            locB.zip = addressB['zip_code'];
+                          }
+                        }
+                        if(addressB['street_address']){
+                          if(addressB['street_address'].length>1){
+                            locB.street = addressB['street_address'];
+                          }
 
-                    }
-                    if(addressB['region_name']){
-                      if(addressB['region_name'].length>1){
-                        locB.region = addressB['region_name'];
-                      }
+                        }
+                        if(addressB['region_name']){
+                          if(addressB['region_name'].length>1){
+                            locB.region = addressB['region_name'];
+                          }
 
-                    }
-                    if(addressB['city_name']){
-                      if(addressB['city_name'].length>1){
-                        if(addressB['city_name'].indexOf(',')>-1)addressB['city_name'] = addressB['city_name'].substring(0,addressB['city_name'].indexOf(','))
-                        locB.city = addressB['city_name'];
-                      }
-                    }
-                    if(addressB['country_code']){
-                      if(addressB['country_code'].length>1){
-                        locB.country = addressB['country_code'];
-                      }
+                        }
+                        if(addressB['city_name']){
+                          if(addressB['city_name'].length>1){
+                            if(addressB['city_name'].indexOf(',')>-1)addressB['city_name'] = addressB['city_name'].substring(0,addressB['city_name'].indexOf(','))
+                            locB.city = addressB['city_name'];
+                          }
+                        }
+                        if(addressB['country_code']){
+                          if(addressB['country_code'].length>1){
+                            locB.country = addressB['country_code'];
+                          }
 
-                    }
-                    if(!locB.zip && !locB.street && !locB.region &&  !locB.city){
-                      if(locB.name && locB.name.length>1)qB = locB.name
-                      else if(locB.country)qB = locB.country
-                    }
-                    else if(locB.city && locB.city.length>1 && locB.country && locB.country.length>1 ){
-                      qB = locB.city + ',' + locB.country
-                    }else{
-                      qB = locB.name
-                    }
+                        }
+                        if(!locB.zip && !locB.street && !locB.region &&  !locB.city){
+                          if(locB.name && locB.name.length>1)qB = locB.name
+                          else if(locB.country)qB = locB.country
+                        }
+                        else if(locB.city && locB.city.length>1 && locB.country && locB.country.length>1 ){
+                          qB = locB.city + ',' + locB.country
+                        }else{
+                          qB = locB.name
+                        }
 
-                    let locReqB = await geocoder.search( { q: qB }, {}, function(error, response) {
-                      if(error){
-                        console.log('info: SetB on Nominatim ETL has returned error: '+error);
-                        return []
-                      }
-                      else{
-                        return response
-                      }
-                    });
-                    let finalLocB = locReqB[0]
-                    if(finalLocB){
-                      if(finalLocB.lng)locB.lng= finalLocB.lng
-                      else if(finalLocB.lon)locB.lng= finalLocB.lon
-                      locB.lat = finalLocB.lat;
-                      etlDataPMB.location = locB
-                    }
+                        let locReqB = await geocoder.search( { q: qB }, {}, function(error, response) {
+                          if(error){
+                            console.log('info: SetB on Nominatim ETL has returned error: '+error);
+                            return []
+                          }
+                          else{
+                            return response
+                          }
+                        });
+                        let finalLocB = locReqB[0]
+                        if(finalLocB){
+                          if(finalLocB.lng)locB.lng= finalLocB.lng
+                          else if(finalLocB.lon)locB.lng= finalLocB.lon
+                          locB.lat = finalLocB.lat;
+                          etlDataPMB.location = locB
+                        }
 
+                      }
+                    }
                   }
                 }
+                if(getComments){
+                  let commentsCountB = postB.comments.count || 0
+                  let commentsEtlApiEndpointB = serverUrl+'/instagram/comments?'+'shortcode='+postB.shortcode+'&count='+commentsCountB;
+                  let commentsDataB = await getEndpointDataEtl(commentsEtlApiEndpointB, username, accessToken, strategy);
+                  postB.comments.edges = await cleans(commentsDataB, true)
+                }
+                postB.media = etlDataPMB
+                etlDataPB[jB] = postB;
               }
-              postB.media = etlDataPMB
-            }
-            resultData.setB.push({profile:setBProfile.username,totalDb:etlDataPB.length,profileData:setBProfile,posts:etlDataPB})
-            console.log('info: Writing SetB,  '+ etlDataPB.length +'posts from ETL API to database')
-            let servicePostsB = 'instagram/postsb';
-            let recordDataB = await writeDatabase(req.app, etlDataPB, servicePostsB, username)
-              .then(result => {
-                console.log('info: Patched setB in database with '+etlDataPB.length+' records '+ 'for these profiles: '+resultData.profilesB.toString());
-                return result
-              })
-              .catch(err => {
-                console.log(err);
-                res.sendStatus(500)
-              });
-            for (let resB of resultData.setB){
-              console.log('SetB '+resB.posts.length+' posts of profile: '+resB.profile+' cropped to 100 to be sent to user as sample ')
-              resB.posts = resB.posts.slice(0,100);
+              resultData.setB.push({profile:setBProfile.username,totalDb:etlDataPB.length,profileData:setBProfile,posts:etlDataPB})
+              console.log('info: Writing SetB,  '+ etlDataPB.length +'posts from ETL API to database')
+              let servicePostsB = 'instagram/postsb';
+              let recordDataB = await writeDatabase(req.app, etlDataPB, servicePostsB, username)
+                .then(result => {
+                  console.log('info: Patched setB in database with '+etlDataPB.length+' records '+ 'for these profiles: '+resultData.profilesB.toString());
+                  return result
+                })
+                .catch(err => {
+                  console.log(err);
+                  res.sendStatus(500)
+                });
+              for (let resB of resultData.setB){
+                console.log('SetB '+resB.posts.length+' posts of profile: '+resB.profile+' cropped to 100 to be sent to user as sample ')
+                resB.posts = resB.posts.slice(0,100);
 
+              }
             }
-          }
-          else{
-            console.log('No ETL data has returned from Instagram');
-            res.sendStatus(500)
+            else{
+              console.log('No ETL data has returned from Instagram');
+              res.sendStatus(500)
+            }
           }
         }
-      }
 
+      }
       console.log('info: Sending sets A & B data');
       res.json(resultData);
 
