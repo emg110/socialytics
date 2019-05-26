@@ -48,7 +48,11 @@ $('.btn-primary').on('click', function () {
   }
 });
 $('#getSetDataBtn').on('click', function () {
-  getSetsData()
+  $('#home-body').addClass('disabled');
+  if(confirm("Gettings sets data can take a long time! Are you sure?")){
+    getSetsData();
+  }
+
 });
 $("#login-form").submit(function (e) {
   console.log('info: Login started');
