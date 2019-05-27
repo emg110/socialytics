@@ -271,29 +271,28 @@ module.exports = function (options = {}) {
                 etlDataPA[iA] = postA;
               }
               if(getComments){
-                let timefcPMA = await setTimeout(function(){return 10000},10000);
+                //let timefcPMA = await setTimeout(function(){return 10000},10000);
                 for(let ijA in etlDataPA){
-                  if(ijA%100===0){
-                    let timefcPMA = await setTimeout(function(){return 10000},10000);
-                  }
-                  let postfcA = etlDataPA[ijA];
+                  if(ijA<200){
+                    let postfcA = etlDataPA[ijA];
+                    let commentsCount = postfcA.comments.count || 0
+                    let commentsEtlApiEndpoint = serverUrl+'/instagram/comments?'+'shortcode='+postfcA.shortcode+'&count='+commentsCount;
+                    if(commentsCount>0){
+                      let commentsData = await getEndpointDataEtl(commentsEtlApiEndpoint, username, accessToken, strategy).then(res=> {
+                        if (Array.isArray(res)) {
+                          return res
+                        } else if (typeof res === 'object' && res.hasOwnProperty('then')) {
+                          return res.then(delayedRes=>{
+                            return delayedRes
+                          })
 
-                  let commentsCount = postfcA.comments.count || 0
-                  let commentsEtlApiEndpoint = serverUrl+'/instagram/comments?'+'shortcode='+postfcA.shortcode+'&count='+commentsCount;
-                  if(commentsCount>0){
-                    let commentsData = await getEndpointDataEtl(commentsEtlApiEndpoint, username, accessToken, strategy).then(res=> {
-                      if (Array.isArray(res)) {
-                        return res
-                      } else if (typeof res === 'object' && res.hasOwnProperty('then')) {
-                        return res.then(delayedRes=>{
-                          return delayedRes
-                        })
-
-                      }
-                    });
-                    postfcA.comments.edges = await cleans(commentsData, true)
+                        }
+                      });
+                      postfcA.comments.edges = await cleans(commentsData, true)
+                    }
+                    etlDataPA[ijA] = postfcA;
                   }
-                  etlDataPA[ijA] = postfcA;
+
                 }
               }
 
@@ -451,29 +450,28 @@ module.exports = function (options = {}) {
               }
 
               if(getComments){
-                let timefcPMB = await setTimeout(function(){return 10000},10000);
+                //let timefcPMB = await setTimeout(function(){return 10000},10000);
                 for(let ijB in etlDataPB){
-                  if(ijB%100===0){
-                    let timefcPMB = await setTimeout(function(){return 10000},10000);
-                  }
-                  let postfcB = etlDataPB[ijB];
-                  let timefcPMB = await setTimeout(function(){return 1000},1000);
-                  let commentsCountB = postfcB.comments.count || 0
-                  let commentsEtlApiEndpoint = serverUrl+'/instagram/comments?'+'shortcode='+postfcB.shortcode+'&count='+commentsCountB;
-                  if(commentsCountB>0){
-                    let commentsDataB = await getEndpointDataEtl(commentsEtlApiEndpoint, username, accessToken, strategy).then(res=> {
-                      if (Array.isArray(res)) {
-                        return res
-                      } else if (typeof res === 'object' && res.hasOwnProperty('then')) {
-                        return res.then(delayedRes=>{
-                          return delayedRes
-                        })
+                  if(ijB<200){
+                    let postfcB = etlDataPB[ijB];
+                    let timefcPMB = await setTimeout(function(){return 1000},1000);
+                    let commentsCountB = postfcB.comments.count || 0
+                    let commentsEtlApiEndpoint = serverUrl+'/instagram/comments?'+'shortcode='+postfcB.shortcode+'&count='+commentsCountB;
+                    if(commentsCountB>0){
+                      let commentsDataB = await getEndpointDataEtl(commentsEtlApiEndpoint, username, accessToken, strategy).then(res=> {
+                        if (Array.isArray(res)) {
+                          return res
+                        } else if (typeof res === 'object' && res.hasOwnProperty('then')) {
+                          return res.then(delayedRes=>{
+                            return delayedRes
+                          })
 
-                      }
-                    });
-                    postfcB.comments.edges = await cleans(commentsDataB, true)
+                        }
+                      });
+                      postfcB.comments.edges = await cleans(commentsDataB, true)
+                    }
+                    etlDataPB[ijB] = postfcB;
                   }
-                  etlDataPB[ijB] = postfcB;
                 }
               }
 
