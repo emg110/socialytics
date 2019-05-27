@@ -230,7 +230,7 @@ module.exports = function (options = {}) {
                         }else{
                           q = loc.name
                         }
-
+                        let timePMA = await setTimeout(function(){return 1000},1000);
                         let locReq = await geocoder.search( { q: q }, {}, function(error, response) {
                           if(error){
                             console.log('info: SetA on Nominatim ETL has returned error: '+error);
@@ -373,7 +373,7 @@ module.exports = function (options = {}) {
                         }else{
                           qB = locB.name
                         }
-
+                        let timePMB = await setTimeout(function(){return 1000},1000);
                         let locReqB = await geocoder.search( { q: qB }, {}, function(error, response) {
                           if(error){
                             console.log('info: SetB on Nominatim ETL has returned error: '+error);
@@ -398,7 +398,16 @@ module.exports = function (options = {}) {
                 if(getComments){
                   let commentsCountB = postB.comments.count || 0
                   let commentsEtlApiEndpointB = serverUrl+'/instagram/comments?'+'shortcode='+postB.shortcode+'&count='+commentsCountB;
-                  let commentsDataB = await getEndpointDataEtl(commentsEtlApiEndpointB, username, accessToken, strategy);
+                  let commentsDataB = await getEndpointDataEtl(commentsEtlApiEndpointB, username, accessToken, strategy).then(res=> {
+                    if (Array.isArray(res)) {
+                      return res
+                    } else if (typeof res === 'object' && res.hasOwnProperty('then')) {
+                      return res.then(delayedRes=>{
+                        return delayedRes
+                      })
+
+                    }
+                  });
                   postB.comments.edges = await cleans(commentsDataB, true)
                 }
                 postB.media = etlDataPMB
