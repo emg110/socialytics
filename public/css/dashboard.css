@@ -478,6 +478,7 @@ button {
   color: #fff;
   background-color: #1995ad;
   border-color: #1995ad;
+  cursor: pointer ;
 }
 
 .btn-primary:hover,
