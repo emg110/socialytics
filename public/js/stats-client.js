@@ -639,9 +639,9 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
       }
     },
     roam:true,
-/*    zoom:80,
-    layoutCenter: ['30%', '100%'],
-    layoutSize:600,*/
+    /*    zoom:80,
+        layoutCenter: ['30%', '100%'],
+        layoutSize:600,*/
     tooltip: {
       trigger: 'item',
       formatter: function (params) {
@@ -869,8 +869,8 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
               aggregate: [
                 {type: 'sum', field: 'comments', resField: 'comments'},
                 {type: 'sum', field: 'likes', resField: 'likes'},
-    /*            {type: 'top', field: 'edge_media_to_comment', resField: 'likes'},
-                {type: 'top', field: 'edge_media_preview_like', resField: 'likes'}*/
+                /*            {type: 'top', field: 'comments', resField: 'likes'},
+                            {type: 'top', field: 'likes', resField: 'likes'}*/
               ],
             },
             'seta-posts-likes-comments:' + useridA,
@@ -894,8 +894,8 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
           optionsBarA.series[0].data.push(itemA.followers);
           optionsBarA.series[0].label[itemA.followers] = {
             height: 40,
-              align: 'center',
-              backgroundColor: {
+            align: 'center',
+            backgroundColor: {
               image: pictureA
             }
           }
@@ -990,10 +990,10 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
             var locsA = trendPost.media.location;
             if(locsA && locsA !==null){
               if(locsA.lng && locsA.lat){
-              var locA = {
-                name: locsA.name,
-                value: [Number(locsA.lng),Number(locsA.lat),engagement]
-              }
+                var locA = {
+                  name: locsA.name,
+                  value: [Number(locsA.lng),Number(locsA.lat),engagement]
+                }
                 optionsGeoA.series[0].data.push(locA)
                 optionsGeoA.series[1].data.push(locA)
               }
@@ -1231,7 +1231,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
 
           $("#profiles-counters-b").append(
             '<div  id="' + useridB+'b' + '" class="counter-metric">' +
-            
+
             '<img alt="missing" class="profile-mini-img" src="' +
             picit(itemB) +
             '" title="'+ accountB +'">'+

@@ -89,14 +89,31 @@ module.exports = function () {
 
             if(result){
               let resLocationArr = [];
-              if(context.params.location){
+              if(context.params.location || context.params.textProc || context.params.imageProc){
                 for (let item of context.result.data){
-                  if(item.media){
-                    if(item.media.location){
-                      let location = item.media.location
-                      resLocationArr.push({sc:item.shortcode,loc:location});
+                  if(context.params.location){
+                    if(item.media){
+                      if(item.media.location){
+                        let location = item.media.location;
+                        if(location.lat){
+                          resLocationArr.push({sc:item.shortcode,loc:{name:location.name,lat:location.lat,lng:location.lng}});
+                        }
+                      }
                     }
                   }
+                  if(context.params.textProc){
+                    if(item.comments.count > 0){
+                      for(let comment of item.comments.edges){
+
+                      }
+                    }
+                    if(item.captions.count > 0){
+                      for(let caption of item.captions.edges){
+
+                      }
+                    }
+                  }
+                  if(context.params.imageProc){}
 
                 }
               }
