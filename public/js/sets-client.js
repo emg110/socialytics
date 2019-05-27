@@ -38,6 +38,12 @@ function getSetsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
   url += seta.toString();
   url += '&setBData=';
   url += setb.toString();
+  url += '&allLocations=true';
+  url += '&textProcessing=true';
+  url += '&imageProcessing=true';
+  url += '&allComments=true';
+  url += '&allPosts=true';
+
   xhr.timeout = 0;
   xhr.open("GET", url, true);
   xhr.setRequestHeader('username', user)
@@ -46,13 +52,19 @@ function getSetsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
   xhr.onload = function (e) {
     var html = xhr.responseText;
     //console.log(html)
-    var json = JSON.parse(html);
-    var htmlA = '<div class="counter-metric-home-span posts"><span class="fa fa-instagram"></span><br>A: ' + json.totalInstaPostsA + '</div>'+
-      '<div class="counter-metric-home-span posts"><span class="fa fa-database"></span><br>A: ' + json.totalDbPostsA + '</div>';
-    $("#countera").html(htmlA);
-    var htmlB = '<div class="counter-metric-home-span posts"><span class="fa fa-instagram"></span><br>B: ' + json.totalInstaPostsB + '</div>'+
-      '<div class="counter-metric-home-span posts"><span class="fa fa-database"></span><br>B: ' + json.totalDbPostsB + '</div>';
-    $("#counterb").html(htmlB);
+    if(html !== 'Internal Server Error'){
+      var json = JSON.parse(html);
+      var htmlA = '<div class="counter-metric-home-span posts">A-Instagaram: ' + json.totalInstaPostsA + '</div>'+
+        '<div class="counter-metric-home-span posts">A-Databse: ' + json.totalDbPostsA + '</div>';
+      $("#countera").html(htmlA);
+      var htmlB = '<div class="counter-metric-home-span posts">B-Instagram: ' + json.totalInstaPostsB + '</div>'+
+        '<div class="counter-metric-home-span posts">B-Database: ' + json.totalDbPostsB + '</div>';
+      $("#counterb").html(htmlB);
+    }else{
+      $("#countera").html(html);
+      $("#counterb").html(html);
+    }
+
   }
   xhr.send();
 
