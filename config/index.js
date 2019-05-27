@@ -14,7 +14,7 @@ module.exports = {
   cube:{},
   seta:[
     'tourism_portugal_',
-    'ualg_universidadedoalgarve',
+    'betongallery',
     'zoomarine_algarve_oficial'
     // 'continente',
     // 'meoinstagram',
@@ -29,7 +29,7 @@ module.exports = {
   setb:[
     'irantourism.me',
     'iran_tourism.info',
-    'betongallery'
+    'tourism108'
     // 'mynetbarg',
     // 'kiagallery',
     // 'iran_.attractions',
