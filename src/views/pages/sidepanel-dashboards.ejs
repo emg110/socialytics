@@ -3,7 +3,7 @@
   <a href="javascript:void(0)" value="" style="display:none" id="backbtn" class="backbtn" onclick="backNav()">&#8406</a>
   <div id="dashboard-container">
     <div id="noDataMsg" class="loader loader--style1" title="0">  NO FILTERS HERE...</div>
-    <input type="text" style="width:60%;display:inline;margin:10px;" class="form-control" id="search-input" search-query="search-query">
+    <input type="text" style="width:60%;display:inline;margin:10px;" class="form-control" id="search-input" placeholder="Search for Instagram account" search-query="search-query">
     <input id="searchProfileBtn" style="text-align:center;display:inline; padding:5px; margin:20px; min-width:5%" value="Go" type="button" class="btn btn-secondary">
     <a href="#" data-toggle="popover" data-trigger="focus" title="Search instagram for profiles" data-content="Search instagram for user profiles name which searches instagram API directly and then you can drag & drop results in to set A or set B." data-placement="bottom" class="fa fa-info-circle" style="font-size: 15px;display:inline;margin-left:-40px"></a>
     <div style="overflow-y: scroll;max-height:20vh;margin-bottom:25px" id="autocomplete-results"></div>
@@ -17,7 +17,7 @@
     <a href="#" data-toggle="popover" data-trigger="focus" title="Returned records upper limit" data-content="For Instagram ETL and browsing operations which do not present -ALL- on their title, limit the count of returned records by setting this parameter." data-placement="top" class="fa fa-info-circle" style="font-size: 15px;display:inline;margin-left:-30px"></a><br>
     <input style="text-align:center;display:inline; padding:5px; margin:10px; min-width:25%" value="Get default sets" type="button" class="btn btn-primary" click-target="/instagram/sets/data?" call-type="form-data">
     <a href="#" data-toggle="popover" data-trigger="focus" title="Gets set A and set B data in full" data-content="Gets set A and set B members data, by each posts and each media and stores them all in database." data-placement="right" class="fa fa-info-circle" style="font-size: 15px;display:inline;margin-left:-30px"></a><br>
-    <input id="resetSets" style="text-align:center;display:inline-block; padding:5px; margin:10px; min-width:25%" value="Reset sets" type="button" class="btn btn-secondary">
+    <input id="resetSets" style="text-align:center;display:inline-block; padding:5px; margin:10px; min-width:25%;background-color: #bcbabe;" value="Reset sets" type="button" class="btn btn-secondary">
     <a href="#" data-toggle="popover" data-trigger="focus" title="Reset sets" data-content="Resets the filters only to configured predefined values(via configuration files)." data-placement="right" class="fa fa-info-circle" style="font-size: 15px;display:inline;margin-left:-30px"></a><br>
     <input id="getDataBtn" style="text-align:center;display:inline-block; padding:5px; margin:10px; min-width:25%" value="Start..." type="button" class="btn btn-primary" call-type="form-data">
     <a href="#" data-toggle="popover" data-trigger="focus" title="Start process" data-content="Starts the whole analytics process by requesting stats data from server and visualize it on to stats dashboard visualisations." data-placement="right" class="fa fa-info-circle" style="font-size: 15px;display:inline;margin-left:-30px"></a><br>
