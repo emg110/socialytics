@@ -252,15 +252,51 @@ module.exports = function (options = {}) {
                     }
                   }
                 }
-                if(getComments){
+                /*if(getComments){
                   let commentsCount = postA.comments.count || 0
                   let commentsEtlApiEndpoint = serverUrl+'/instagram/comments?'+'shortcode='+postA.shortcode+'&count='+commentsCount;
-                  let commentsData = await getEndpointDataEtl(commentsEtlApiEndpoint, username, accessToken, strategy);
+                  let commentsData = await getEndpointDataEtl(commentsEtlApiEndpoint, username, accessToken, strategy).then(res=> {
+                    if (Array.isArray(res)) {
+                      return res
+                    } else if (typeof res === 'object' && res.hasOwnProperty('then')) {
+                      return res.then(delayedRes=>{
+                        return delayedRes
+                      })
+
+                    }
+                  });
                   postA.comments.edges = await cleans(commentsData, true)
-                }
+                }*/
                 postA.media = etlDataPMA;
                 etlDataPA[iA] = postA;
               }
+              if(getComments){
+                let timefcPMA = await setTimeout(function(){return 10000},10000);
+                for(let ijA in etlDataPA){
+                  if(ijA%100===0){
+                    let timefcPMA = await setTimeout(function(){return 10000},10000);
+                  }
+                  let postfcA = etlDataPA[ijA];
+
+                  let commentsCount = postfcA.comments.count || 0
+                  let commentsEtlApiEndpoint = serverUrl+'/instagram/comments?'+'shortcode='+postfcA.shortcode+'&count='+commentsCount;
+                  if(commentsCount>0){
+                    let commentsData = await getEndpointDataEtl(commentsEtlApiEndpoint, username, accessToken, strategy).then(res=> {
+                      if (Array.isArray(res)) {
+                        return res
+                      } else if (typeof res === 'object' && res.hasOwnProperty('then')) {
+                        return res.then(delayedRes=>{
+                          return delayedRes
+                        })
+
+                      }
+                    });
+                    postfcA.comments.edges = await cleans(commentsData, true)
+                  }
+                  etlDataPA[ijA] = postfcA;
+                }
+              }
+
               resultData.setA.push({profile:setAProfile.username,totalDb:etlDataPA.length,profileData:setAProfile,posts:etlDataPA})
               console.log('info: Writing SetA,  '+ etlDataPA.length +'posts from ETL API to database');
               let servicePostsA = 'instagram/postsa';
@@ -395,7 +431,7 @@ module.exports = function (options = {}) {
                     }
                   }
                 }
-                if(getComments){
+                /*if(getComments){
                   let commentsCountB = postB.comments.count || 0
                   let commentsEtlApiEndpointB = serverUrl+'/instagram/comments?'+'shortcode='+postB.shortcode+'&count='+commentsCountB;
                   let commentsDataB = await getEndpointDataEtl(commentsEtlApiEndpointB, username, accessToken, strategy).then(res=> {
@@ -409,10 +445,38 @@ module.exports = function (options = {}) {
                     }
                   });
                   postB.comments.edges = await cleans(commentsDataB, true)
-                }
+                }*/
                 postB.media = etlDataPMB
                 etlDataPB[jB] = postB;
               }
+
+              if(getComments){
+                let timefcPMB = await setTimeout(function(){return 10000},10000);
+                for(let ijB in etlDataPB){
+                  if(ijB%100===0){
+                    let timefcPMB = await setTimeout(function(){return 10000},10000);
+                  }
+                  let postfcB = etlDataPB[ijB];
+                  let timefcPMB = await setTimeout(function(){return 1000},1000);
+                  let commentsCountB = postfcB.comments.count || 0
+                  let commentsEtlApiEndpoint = serverUrl+'/instagram/comments?'+'shortcode='+postfcB.shortcode+'&count='+commentsCountB;
+                  if(commentsCountB>0){
+                    let commentsDataB = await getEndpointDataEtl(commentsEtlApiEndpoint, username, accessToken, strategy).then(res=> {
+                      if (Array.isArray(res)) {
+                        return res
+                      } else if (typeof res === 'object' && res.hasOwnProperty('then')) {
+                        return res.then(delayedRes=>{
+                          return delayedRes
+                        })
+
+                      }
+                    });
+                    postfcB.comments.edges = await cleans(commentsDataB, true)
+                  }
+                  etlDataPB[ijB] = postfcB;
+                }
+              }
+
               resultData.setB.push({profile:setBProfile.username,totalDb:etlDataPB.length,profileData:setBProfile,posts:etlDataPB})
               console.log('info: Writing SetB,  '+ etlDataPB.length +'posts from ETL API to database')
               let servicePostsB = 'instagram/postsb';

@@ -29,7 +29,7 @@ module.exports = {
   setb:[
     'irantourism.me',
     'iran_tourism.info',
-    'iran_tourism_official'
+    'betongallery'
     // 'mynetbarg',
     // 'kiagallery',
     // 'iran_.attractions',
