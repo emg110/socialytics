@@ -104,7 +104,7 @@ function render(html, container, caller){
   var doneDate = dayjs(Date.now()).format('YYYY MM-DD HH:mm:ss')
   //<span class="badge">7</span>
   if($(caller).next().hasClass('glyphicon'))$(caller).next().remove();
-  $(caller).after('<span style="color:lawngreen;" class="glyphicon glyphicon-ok"></span>');
+  /*$(caller).after('<span style="color:lawngreen;" class="glyphicon glyphicon-ok"></span>');*/
 
   var count = 0;
   if (counters[currentVal]) {
