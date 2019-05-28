@@ -817,7 +817,7 @@ input:checked + .slider:before {
   display: inline;
   padding: 5px;
   min-width: 15%;
-  margin-right: 36%;
+  margin-right: 43%;
   margin-top: -9%;
 }
 
