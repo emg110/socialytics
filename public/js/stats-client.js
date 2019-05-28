@@ -1,39 +1,50 @@
+$("#textProcBtn").hide();
 function textProc(){
-  for(let itemAJ of window.profilesA){
-    var accountAJ = itemAJ.username;
-    var useridAJ = itemAJ.id;
-    /* var xhr = new XMLHttpRequest();
-     xhr.timeout = 0;
-     xhr.open("GET", '/instagram/postsa?"owner.id"='+useridAJ+'&$sort="{timestamp: -1}"'+'&$limit='+20000, true);
-     xhr.setRequestHeader('username', user)
-     xhr.setRequestHeader('accesstoken', accesstoken)
-     xhr.setRequestHeader('strategy', 'jwt')
-     xhr.onload = function (e) {
-       var txt = xhr.responseText;
-       renderFormData(txt);
-     }
-     xhr.send();*/
-    getServiceData('find',
-      'instagram/postsa',
-      {
-        query: {
-          "owner.id": useridAJ,
-          $sort: {timestamp: -1},
-          $limit: 20000
-        },
-        paginate: {
-          default: 100000,
-          max: 20000
-        },
-        textProc:true,
-        un: accountAJ
-      },
-      'seta-posts-text-proc:' + useridAJ,
-      'authenticated:seta'
-    );
+  let profilesArrA = [];
+  let profilesArrB = [];
+  for(let itemAJ of window['profilesA']){
+    profilesArrA.push(itemAJ.id)
   }
+  getServiceData('find',
+    'instagram/postsa',
+    {
+      query: {
+        "owner.id": {$in:profilesArrA},
+        $sort: {timestamp: -1},
+        $limit: 20000
+      },
+      paginate: {
+        default: 100000,
+        max: 20000
+      },
+      textProc:true
+    },
+    'seta-posts-text-proc' ,
+    'authenticated:seta'
+  );
+  for(let itemBJ of window['profilesB']){
+    profilesArrB.push(itemBJ.id)
+  }
+  getServiceData('find',
+    'instagram/postsb',
+    {
+      query: {
+        "owner.id": {$in:profilesArrB},
+        $sort: {timestamp: -1},
+        $limit: 20000
+      },
+      paginate: {
+        default: 100000,
+        max: 20000
+      },
+      textProc:true
+    },
+    'setb-posts-text-proc' ,
+    'authenticated:setb'
+  );
 }
 function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
+
   var setLimit = document.getElementById('set-limit-input').value
   if(setLimit){
     seta = document.getElementById('seta').value.split(',').slice(0,parseInt(setLimit));
@@ -43,7 +54,8 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
     seta = document.getElementById('seta').value.split(',');
     setb = document.getElementById('setb').value.split(',');
   }
-
+var profileCounterA = 0;
+var profileCounterB = 0;
   totalsA = totalsB = {
     totalPosts:0,
     totalFollowers:0,
@@ -1192,9 +1204,13 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
             echarts.getInstanceByDom(geoA).setOption(optionsGeoA);
           }
         }
+        profileCounterA++
+        if(profileCounterA === window.profilesA.length && profileCounterA===seta.length&& profileCounterB===setb.length && profileCounterB === window.profilesB.length){
+          $("#textProcBtn").show()
+        }
       }
     }
-    if (desc.indexOf('seta-posts-text-proc:') > -1){
+    if (desc.indexOf('seta-posts-text-proc') > -1){
       if (response.data) {
         console.log(JSON.stringify(response.data.comments))
         console.log(JSON.stringify(response.data.captions))
@@ -1535,6 +1551,16 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
           }
 
         }
+        profileCounterB++
+        if(profileCounterA === window.profilesA.length && profileCounterA===seta.length&& profileCounterB===setb.length && profileCounterB === window.profilesB.length){
+          $("#textProcBtn").show()
+        }
+      }
+    }
+    if (descB.indexOf('setb-posts-text-proc') > -1){
+      if (response.data) {
+        console.log(JSON.stringify(response.data.comments))
+        console.log(JSON.stringify(response.data.captions))
       }
     }
   })
