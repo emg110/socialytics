@@ -18,7 +18,7 @@
       </div>
       <div class="navbar-collapse">
         <ul class="navbar-nav nav main-nav">
-          <li-input-><a href="/dashboards/stats?username=<%=username%>">Stats dashboard</a></li-input->
+          <li><a href="/dashboards/stats?username=<%=username%>">Stats dashboard</a></li>
           <li><a href="/dashboards/explore?username=<%=username%>">Data explore</a></li>
           <li><a href="/dashboards/engagement?username=<%=username%>">Engagement dashboard</a>
           </li>
@@ -86,7 +86,7 @@
           </div>
           <br>
           <div style="" class="form-group tabs">
-            <ul style="max-width:20vw" class="nav nav-tabs">
+            <ul style="max-width:20vw;height:30px;" class="nav nav-tabs">
               <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#seta-tab" style="display:inline;">Set A</a>
                 <span style="display:inline;">
@@ -101,26 +101,22 @@
               </li>
             </ul>
             <div style="max-width:20vw" class="tab-content">
-              <div style="max-width:20vw" class="tab-pane container widget-stage" id="seta-tab">
-                <a style="display:inline;float:right;margin-right: 43%;" href="#" data-toggle="popover" data-trigger="focus" title="Set A(first set) of comparative analytics" data-content="Comparative analytics are implemented for two sets of data, varying inside(set A and set B). This part represents set A members input." data-placement="top" class="info fa fa-info-circle" ></a>
+              <div style="max-width:26vw;margin-left:-7%;" class="tab-pane container widget-stage" id="seta-tab">
+                <a style="display:inline;float:right;margin-right: 53%;margin-top: 6%;" href="#" data-toggle="popover" data-trigger="focus" title="Set A(first set) of comparative analytics" data-content="Comparative analytics are implemented for two sets of data, varying inside(set A and set B). This part represents set A members input." data-placement="top" class="info fa fa-info-circle" ></a>
                 <textarea style="padding:5px; margin:5px;display: inline" id="seta" class="seta" ondrop="drop(event)" ondragover="allowDrop(event)"></textarea>
-                <input id="resetSeta" style="text-align:left;display:block; padding:5px; float:left; min-width:16%" value="Reset set" type="button" class="btn btn-secondary reset-btn">
-                <a href="#" data-toggle="popover" data-trigger="focus" title="Reset sets" data-content="Resets the filters only to configured predefined values(via configuration files)." data-placement="top" class="info fa fa-info-circle" style="display:inline;float:right;margin-right: 43%;"></a>
-
-
-
+                <input id="resetSeta" value="Reset set" type="button" class="btn btn-secondary reset-btn">
+                <a href="#" data-toggle="popover" data-trigger="focus" title="Reset sets" data-content="Resets the filters only to configured predefined values(via configuration files)." data-placement="top" class="info fa fa-info-circle" style="display:inline;float:right;margin-right: 32%;margin-top: -7%;"></a>
               </div>
-              <div style="max-width:20vw" class="tab-pane container widget-stage" id="setb-tab">
-                <a style="display:inline;float:right;margin-right: 43%;" href="#" data-toggle="popover" data-trigger="focus" title="Set B(second set) of comparative analytics" data-content="Comparative analytics are implemented for two sets of data, varying inside(set A and set B). This tab represents set B members input."  data-placement="top" class="info fa fa-info-circle" ></a>
+
+              <div style="max-width:26vw;margin-left:-7%;" class="tab-pane container widget-stage" id="setb-tab">
+                <a style="display:inline;float:right;margin-right: 53%;margin-top: 6%;" href="#" data-toggle="popover" data-trigger="focus" title="Set B(second set) of comparative analytics" data-content="Comparative analytics are implemented for two sets of data, varying inside(set A and set B). This tab represents set B members input."  data-placement="top" class="info fa fa-info-circle" ></a>
                 <textarea style="padding:5px; margin:5px;display: inline" id="setb" class="setb" ondrop="drop(event)" ondragover="allowDrop(event)"></textarea>
-                <input id="resetSetb" style="text-align:left;display:block; padding:5px; float:left; min-width:16%" value="Reset set" type="button" class="btn btn-secondary reset-btn">
-                <a href="#" data-toggle="popover" data-trigger="focus" title="Reset sets" data-content="Resets the filters only to configured predefined values(via configuration files)." data-placement="top" class="info fa fa-info-circle" style="display:inline;float:right;margin-right: 43%;"></a>
-
-
-
+                <input id="resetSetb" value="Reset set" type="button" class="btn btn-secondary reset-btn">
+                <a href="#" data-toggle="popover" data-trigger="focus" title="Reset sets" data-content="Resets the filters only to configured predefined values(via configuration files)." data-placement="top" class="info fa fa-info-circle" style="display:inline;float:right;margin-right: 32%;margin-top: -7%;"></a>
               </div>
             </div>
-          </div><br>
+          </div>
+          <br>
           <input  style="width:40%; display:inline;margin:5px;padding:10px" placeholder="Count limit" type="number" class="form-control" id="count-input" count=0>
           <span><a href="#" data-toggle="popover" data-trigger="focus" title="Returned records upper limit" data-content="For Instagram ETL and browsing operations which do not present -ALL- on their title, limit the count of returned records by setting this parameter." data-placement="top" class="info fa fa-info-circle"></a></span><br>
           <input  style="width:40%; display:inline;margin:5px;padding:10px;" placeholder="Set limit"  type="number" class="form-control" id="set-limit-input" count=0>
@@ -151,7 +147,7 @@
       </div>
       <br><br><br>
       <div style="" class="form-group tabs">
-        <ul style="max-width:45vw" class="nav nav-tabs">
+        <ul style="max-width:45vw;height:30px;" class="nav nav-tabs">
           <li class="nav-item">
             <a class="nav-link active" data-toggle="tab" href="#self-tab" style="display:inline;">Self</a>
             <span style="display:inline;">
@@ -238,14 +234,6 @@
             <button style="display:inline" class="btn btn-primary etl-btn" type="button"  value="Get posts by tag" click-target="/instagram/tag?" call-type="tag-posts">Tag posts</button>
             <a href="#" data-toggle="popover" data-trigger="focus" title="Tag" data-content="Get posts by tag" data-placement="top" class="info fa fa-info-circle"></a><br>
           </div>
-<!--          <div style="max-width:45vw" class="tab-pane container widget-stage" id="search-tab">-->
-<!--            <br>-->
-<!--            <input type="text" placeholder="Search query.." class="form-control" id="search-input" search-query="search-query" style="display: inline;">-->
-<!--            <a href="#" data-toggle="popover" data-trigger="focus" title="Search query" data-content="Search query" data-placement="top" class="info fa fa-info-circle"></a><br>-->
-<!--            <button class="btn btn-primary etl-btn" type="button"  value="Get search items" click-target="/instagram/search?" call-type="search-posts">Search instagram</button>-->
-<!--            <a href="#" data-toggle="popover" data-trigger="focus" title="Get search items" data-content="Search query" data-placement="top" class="info fa fa-info-circle"></a>-->
-<!--          </div>-->
-
         </div>
       </div><br>
     </div>

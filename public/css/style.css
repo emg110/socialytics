@@ -158,7 +158,7 @@ a:focus {
   font-size: 20px;
   cursor: pointer;
   background-color: #111;
-  color: white;
+  color: #f25417;
   top: 0;
   padding: 10px 15px;
   border: none;
@@ -803,19 +803,6 @@ input:checked + .slider:before {
   background-color: #116676;
   color:#f1f1f2;
 }
-/*#searchInstaBtn{*/
-/*  text-align:center;*/
-/*  display:inline;*/
-/*  padding:5px;*/
-/*  margin:5px;*/
-/*  min-width:1%;*/
-/*  background-color: #1995ad;*/
-/*}*/
-/*#searchInstaBtn:hover{*/
-/*  border-color:#1995ad;*/
-/*  background-color: #116676;*/
-/*  color:#f1f1f2;*/
-/*}*/
 #search-insta-input{
   width:12%;
   display:inline;
@@ -824,5 +811,13 @@ input:checked + .slider:before {
   background-color: #575758;
   border-color: #575758;
   color:#fff
+}
+#resetSeta , #resetSetb{
+  text-align: left;
+  display: inline;
+  padding: 5px;
+  min-width: 15%;
+  margin-right: 36%;
+  margin-top: -9%;
 }
 

@@ -25,7 +25,7 @@ body {
 }
 
 a {
-  color: #428bca;
+  color: #1995ad;
   text-decoration: none;
 }
 
@@ -339,6 +339,10 @@ small,
 .navbar-inverse .navbar-brand,
 .navbar-inverse .navbar-nav>li>a {
   color: #777;
+}
+
+.navbar-inverse .navbar-nav>li>a:hover {
+  color: #31a9b8;
 }
 
 .navbar-inverse .navbar-toggle {
