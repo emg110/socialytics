@@ -803,4 +803,26 @@ input:checked + .slider:before {
   background-color: #116676;
   color:#f1f1f2;
 }
+/*#searchInstaBtn{*/
+/*  text-align:center;*/
+/*  display:inline;*/
+/*  padding:5px;*/
+/*  margin:5px;*/
+/*  min-width:1%;*/
+/*  background-color: #1995ad;*/
+/*}*/
+/*#searchInstaBtn:hover{*/
+/*  border-color:#1995ad;*/
+/*  background-color: #116676;*/
+/*  color:#f1f1f2;*/
+/*}*/
+#search-insta-input{
+  width:12%;
+  display:inline;
+  margin-left:60%;
+  border-radius:50px;
+  background-color: #575758;
+  border-color: #575758;
+  color:#fff
+}
 

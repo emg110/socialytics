@@ -12,17 +12,21 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand fa fa-chevron-left" href="../" style="color:#f25417;font-size:19px;"></a>
-        <!--<span id="help-btn" class="navbar-brand fa fa-info-circle" style="font-size:19px;"></span>-->
+        <!--<a class="navbar-brand fa fa-chevron-left" href="../" style="color:#f25417;font-size:19px;"></a>
+        <span id="help-btn" class="navbar-brand fa fa-info-circle" style="font-size:19px;"></span>-->
         <a class="navbar-brand" href="./">Socialytics</a>
       </div>
       <div class="navbar-collapse">
         <ul class="navbar-nav nav main-nav">
-          <li><a href="/dashboards/stats?username=<%=username%>">Stats dashboard</a></li>
+          <li-input-><a href="/dashboards/stats?username=<%=username%>">Stats dashboard</a></li-input->
           <li><a href="/dashboards/explore?username=<%=username%>">Data explore</a></li>
           <li><a href="/dashboards/engagement?username=<%=username%>">Engagement dashboard</a>
           </li>
         </ul>
+
+          <input type="text" class="form-control" id="search-insta-input" placeholder="search Instagram" search-query="search-query">
+          <a id="searchInstaBtn" class="fa fa-search fa-lg" style="margin-left: -2%;"></a>
+
       </div>
     </div>
   </div>
@@ -144,14 +148,12 @@
                <a href="#" data-toggle="popover" data-trigger="focus" title="Set B(second set) of comparative analytics" data-content="Comparative analytics are implemented for two sets of data, varying inside(set A and set B). This tab represents set B members input." data-placement="top" class="info fa fa-info-circle"></a>
             </span>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#search-tab" style="display:inline;">Search </a>
-            <span style="display:inline;">
-                <a href="#" data-toggle="popover" data-trigger="focus" title="Instagram general search ops" data-content="General search operations of Instagram gets a text query and returns data items under 3 different set of results: users, locations and hashtags. Every of which includes an array of founded  related records(returns an objects of tree arrays)." data-placement="top" class="info fa fa-info-circle"></a>
-            </span>
-
-
-          </li>
+<!--          <li class="nav-item">-->
+<!--            <a class="nav-link" data-toggle="tab" href="#search-tab" style="display:inline;">Search </a>-->
+<!--            <span style="display:inline;">-->
+<!--                <a href="#" data-toggle="popover" data-trigger="focus" title="Instagram general search ops" data-content="General search operations of Instagram gets a text query and returns data items under 3 different set of results: users, locations and hashtags. Every of which includes an array of founded  related records(returns an objects of tree arrays)." data-placement="top" class="info fa fa-info-circle"></a>-->
+<!--            </span>-->
+<!--          </li>-->
           <li class="nav-item">
             <br>
             <input  style="width:40%; display:inline;margin:5px;padding:10px;margin-left:20px;" placeholder="Count limit" type="number" class="form-control" id="count-input" count=0>
@@ -228,19 +230,17 @@
             <textarea style="display:block; padding:5px; margin:10px; min-height:200px;width:25em;" id="setb" class="setb" ondrop="drop(event)" ondragover="allowDrop(event)" style="display: inline;"></textarea>
 
           </div>
-          <div style="max-width:45vw" class="tab-pane container widget-stage" id="search-tab">
-            <br>
-            <input type="text" placeholder="Search query.." class="form-control" id="search-input" search-query="search-query" style="display: inline;">
-            <a href="#" data-toggle="popover" data-trigger="focus" title="Search query" data-content="Search query" data-placement="top" class="info fa fa-info-circle"></a><br>
-            <button class="btn btn-primary etl-btn" type="button"  value="Get search items" click-target="/instagram/search?" call-type="search-posts">Search instagram</button>
-            <a href="#" data-toggle="popover" data-trigger="focus" title="Get search items" data-content="Search query" data-placement="top" class="info fa fa-info-circle"></a>
-          </div>
+<!--          <div style="max-width:45vw" class="tab-pane container widget-stage" id="search-tab">-->
+<!--            <br>-->
+<!--            <input type="text" placeholder="Search query.." class="form-control" id="search-input" search-query="search-query" style="display: inline;">-->
+<!--            <a href="#" data-toggle="popover" data-trigger="focus" title="Search query" data-content="Search query" data-placement="top" class="info fa fa-info-circle"></a><br>-->
+<!--            <button class="btn btn-primary etl-btn" type="button"  value="Get search items" click-target="/instagram/search?" call-type="search-posts">Search instagram</button>-->
+<!--            <a href="#" data-toggle="popover" data-trigger="focus" title="Get search items" data-content="Search query" data-placement="top" class="info fa fa-info-circle"></a>-->
+<!--          </div>-->
 
         </div>
       </div><br>
-
     </div>
-
   </div>
 </div>
 <!--<script>

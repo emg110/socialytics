@@ -34,16 +34,16 @@ $('.btn-primary').on('click', function () {
     var endpoint = $(this).attr('click-target');
     var type = $(this).attr('call-type');
     if (type && endpoint) {
-      if (type !== 'form-data') {
-        //var currentVal = $(this).val().replace('Get ', 'Loading... ');
-        //$(this).val(currentVal);
-        $(this).addClass('fired');
-        //$(this).find('span').remove();
-      }
       var caller = this;
-      console.log(caller);
-      getEndpointData(endpoint, type, '', 'main', caller);
-      getEndpointData('/instagram/sets/data?', 'form-data', '', 'main', undefined);
+      if (type !== 'form-data') {
+        $(this).addClass('fired');
+        getEndpointData(endpoint, type, '', 'main', caller);
+
+      }else{
+        getEndpointData('/instagram/sets/data?', 'form-data', '', 'main', undefined);
+      }
+      // console.log(caller);
+
     }
   }
 });
@@ -206,6 +206,18 @@ $("#searchProfileBtn").click(()=>{
           className : "os-theme-dark",
         });*/
     });
+  }
+});
+
+$("#search-insta-input").on('keypress',(e)=>{
+  //console.log(e.which)
+  if(e.which===13){
+    var value = $("#search-insta-input").val();
+    // var caller = this;
+
+    if(value.length>3){
+      getEndpointData('/instagram/search?', 'search-posts', '', 'main');
+    }
   }
 });
 
