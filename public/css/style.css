@@ -814,10 +814,12 @@ input:checked + .slider:before {
 }
 #resetSeta , #resetSetb{
   text-align: left;
-  display: inline;
+  /* display: inline; */
   padding: 5px;
   min-width: 15%;
-  margin-right: 43%;
-  margin-top: -9%;
+  margin-right: 82%;
+  margin-top: 0%;
+  background-color: #a1d6e2;
+  border-color: #a1d6e2;
 }
 
