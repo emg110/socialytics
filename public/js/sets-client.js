@@ -1,6 +1,6 @@
 var tagsOptions = {
   'defaultText':'Drag or add a profile...',
-  width:'400px',
+  width:'200px',
   height:'10%'
 };
 $('#seta').tagsInput(tagsOptions)

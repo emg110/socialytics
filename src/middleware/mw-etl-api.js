@@ -271,13 +271,15 @@ module.exports = function (options = {}) {
                 etlDataPA[iA] = postA;
               }
               if(getComments){
+                let ijACounter = 0;
                 //let timefcPMA = await setTimeout(function(){return 10000},10000);
                 for(let ijA in etlDataPA){
-                  if(ijA<200){
+                  if(ijACounter<201){
                     let postfcA = etlDataPA[ijA];
                     let commentsCount = postfcA.comments.count || 0
                     let commentsEtlApiEndpoint = serverUrl+'/instagram/comments?'+'shortcode='+postfcA.shortcode+'&count='+commentsCount;
                     if(commentsCount>0){
+                      ijACounter++
                       let commentsData = await getEndpointDataEtl(commentsEtlApiEndpoint, username, accessToken, strategy).then(res=> {
                         if (Array.isArray(res)) {
                           return res
@@ -451,13 +453,15 @@ module.exports = function (options = {}) {
 
               if(getComments){
                 //let timefcPMB = await setTimeout(function(){return 10000},10000);
+                let ijBCounter = 0;
                 for(let ijB in etlDataPB){
-                  if(ijB<200){
+                  if(ijBCounter<201){
                     let postfcB = etlDataPB[ijB];
                     let timefcPMB = await setTimeout(function(){return 1000},1000);
                     let commentsCountB = postfcB.comments.count || 0
                     let commentsEtlApiEndpoint = serverUrl+'/instagram/comments?'+'shortcode='+postfcB.shortcode+'&count='+commentsCountB;
                     if(commentsCountB>0){
+                      ijBCounter++
                       let commentsDataB = await getEndpointDataEtl(commentsEtlApiEndpoint, username, accessToken, strategy).then(res=> {
                         if (Array.isArray(res)) {
                           return res
