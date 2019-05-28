@@ -136,12 +136,60 @@
     </div>
     <div class="hero">
       <div class="widget-wrapper">
-      <!--  <div class="widget-title">
-          Widget Title
-        </div>-->
+
         <div class="widget-stage">
-          <%include ./logo.ejs%>
-          <div id="carosel" style="width:100%"></div>
+          <div class="row whiteBox-profile ">
+            <div id="self-profile-pic" class="col-sm-6 profile-image">
+
+            </div>
+            <div class="col-sm-6 profile-titles">
+
+              <div id="self-username"></div>
+              <div id="self-bio"></div>
+
+            </div>
+            <div style="margin-left:33%;">
+
+              <button id="sugg-post-btn" style="height: 33px;min-width: 88%;" class="btn btn-primary etl-btn" type="button"  value="Get suggested posts" click-target="/instagram/suggested/posts?" call-type="sugg-posts">Sugg posts</button>
+              <a href="#" data-toggle="popover" data-trigger="focus" data-content="Gets suggested posts related to current logged in user profile." data-placement="top" class="info fa fa-info-circle"></a><br >
+              <button id="sugg-people-btn" style="height: 33px;min-width: 88%;" class="btn btn-primary etl-btn" type="button"  value="Get suggested people" click-target="/instagram/suggested/people?"  call-type="sugg-people">Sugg people</button>
+              <a href="#" data-toggle="popover" data-trigger="focus" data-content="Gets suggested people related to current logged in user profile." data-placement="top" class="info fa fa-info-circle"></a><br >
+              <button id="recent-feed-btn" style="height: 33px;min-width: 88%;" class="btn btn-primary etl-btn" type="button"  value="Get feed" click-target="/instagram/feed?" call-type="feed-posts">Recent feed</button>
+              <a href="#" data-toggle="popover" data-trigger="focus" data-content="Gets feed related to current logged in user profile." data-placement="top" class="info fa fa-info-circle"></a><br >
+              <button id="all-feed-btn" style="height: 33px;min-width: 88%;" class="btn btn-primary etl-btn" type="button"  value="Get all feed" click-target="/instagram/allfeed?" call-type="all-feed-posts">All feed</button>
+              <a href="#" data-toggle="popover" data-trigger="focus" data-content="Gets all feeds related to current logged in user profile." data-placement="top" class="info fa fa-info-circle"></a>
+
+            </div>
+
+            <div style="display:inline-block" class="col-sm-6 text-center align-self-center profile-counters">
+              <div style="background-color:#2f4554" class="byline-counter">
+
+                  <span class="byline" title="Posts count"
+                        onClick=getEndpointData("/instagram/posts?","recent-posts","","posts")><span id="self-posts-count" class="fa fa-instagram"></span></span>
+
+              </div>
+              <div style="background-color:#bda29a" class="byline-counter">
+
+                  <span class="byline" title="Followers count"
+                        onClick=getEndpointData("/instagram/followers?","user-followers","","followers")><span id="self-followers-count" class="fa fa-users"></span></span>
+
+              </div>
+              <div style="background-color:#ca8622" class="byline-counter">
+
+                  <span class="byline" title="Followings count"
+                        onClick=getEndpointData("/instagram/following?","user-following","","following")><span id="self-following-count" class="fa fa-user"></span></span>
+
+              </div>
+
+              <div style="background-color:#91c7ae" class="byline-counter">
+
+                  <span class="byline" title="Saved count"><span id="self-saved-count" class="fa fa-bookmark-o"></span></span>
+
+              </div>
+
+
+            </div>
+          </div>
         </div>
       <!--  <div class="widget-notes">
           Notes about this chart
