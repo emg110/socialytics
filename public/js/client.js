@@ -67,23 +67,21 @@ $("#login-form").submit(function (e) {
         var username = data.username;
         var accesstoken = data.accesstoken;
         var email = data.email;
-        ls.setItem('username', username)
-        ls.setItem('accesstoken', accesstoken)
-        ls.setItem('email', email)
+        ls.setItem('username', username);
+        ls.setItem('accesstoken', accesstoken);
+        ls.setItem('email', email);
+        ls.setItem('pic', data.pic);
+        ls.setItem('bio', data.bio);
+        ls.setItem('followers', data.stats.followers);
+        ls.setItem('following', data.stats.following);
+        ls.setItem('saved', data.stats.saved);
+        ls.setItem('posts', data.stats.posts);
+
         var homeUrl = window.location.protocol + '//' + window.location.host + '/home?' + 'username=' + username;
         console.log('info: Authentication to Socialytics has completed! Now requesting home page: ' + homeUrl)
         window.location.href = homeUrl;
-        /*  var client = new XMLHttpRequest();
-          client.open('GET', homeUrl);
-          client.setRequestHeader('Authorization', accesstoken);
-          client.onload = function (e) {
-          var html = client.responseText;
-          var path = window.location.pathname
-          var url = window.location.protocol+'//'+ window.location.host+ '/home' +'?username='+username
-          window.history.pushState({urlPath:url},"Socialytics",url);
-          window.document.write(html)
-         }
-          client.send();*/
+
+
 
       }
   })
@@ -252,7 +250,21 @@ $("#allPostsBtn").on('click',function(){
     $("#locationDiv").css('display','none');
   }
 });
+var selfPic =ls.getItem('pic');
+var selfBio =ls.getItem('bio');
+var selfUsername =ls.getItem('username');
+var selfFollowersCount =ls.getItem('followers');
+var selfFollowingCount =ls.getItem('following');
+var selfSavedCount =ls.getItem('saved') || 0;
+var selfPostsCount =ls.getItem('posts');
 
 
+$('#self-profile-pic').html('<img class="usr-img-thumbnail" alt="emg110" src="'+selfPic+'">');
+$('#self-bio').html('<h5>'+selfBio+'</h5>');
+$('#self-username').html('<h3>'+selfUsername+'</h3>');
+$('#self-followers-count').html('<br><span>'+selfFollowersCount+'</span>');
+$('#self-following-count').html('<br><span>'+selfFollowingCount+'</span>');
+$('#self-posts-count').html('<br><span>'+selfPostsCount+'</span>');
+$('#self-saved-count').html('<br><span>'+selfSavedCount+'</span>');
 
 
