@@ -100,7 +100,8 @@ module.exports = function () {
 
             if(result){
               let resLocationArr = [];
-              let resCommentsArr = [];
+              let resComments = {};
+              let resCaptions = {};
               if(context.params.location || context.params.textProc || context.params.imageProc){
                 for (let item of context.result.data){
                   if(context.params.location){
@@ -115,9 +116,10 @@ module.exports = function () {
                   }
                   if(context.params.textProc){
                     if(item.comments.count > 0){
+                      resComments[item.shortcode]=[];
                       for(let comment of item.comments.edges){
                         knwlInstance.init(comment.text);
-                        resCommentsArr.push({
+                        resComments[item.shortcode].push({
                           created_at:comment.created_at,
                           text:comment.text,
                           owner:{
@@ -153,18 +155,42 @@ module.exports = function () {
                         })
                       }
                     }
-                    if(item.captions.count > 0){
+                    if(item.captions.edges){
                       for(let caption of item.captions.edges){
+                        knwlInstance.init(caption.text);
+                        resCaptions[item.shortcode].push({
+                          text:caption.node.text,
+                          word_count:wordcount(caption.node.text),
+                          sentiment:sentiment(caption.node.text),
+                          emoji: emojiExtract.extractEmoji(caption.node.text),
+                          emojiSentiments:emojiSentiment(caption.node.text),
+                          keywords: keywordExtractor(caption.node.text,{}),
+                          ner:{
+                            dates: knwlInstance.get('dates'),
+                            times:knwlInstance.get('times'),
+                            phones:knwlInstance.get('phones'),
+                            links:knwlInstance.get('links'),
+                            emails:knwlInstance.get('emails'),
+                            places:knwlInstance.get('places')
+                          },
+                          count_words:countWords(caption.node.text,true),
+                          links: Autolinker.parse(caption.node.text,{
+                            urls:true,
+                            email:true,
+                            phone:true,
+                            mention:true,
+                            hashtag:true
+                          })
 
+                        })
                       }
                     }
                   }
-                  if(context.params.imageProc){}
-
                 }
               }
               resObj[resField] = result
               resObj['locations'] = resLocationArr
+              resObj['comments'] = resCommentsArr
             }
           }
         }
