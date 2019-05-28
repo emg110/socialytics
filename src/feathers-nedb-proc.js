@@ -125,7 +125,7 @@ module.exports = function () {
                           owner:{
                             pic_url:comment.owner.profile_pic_url,
                             username: comment.owner.username,
-                            gender:genderDetect(comment.owner.username)
+                            gender:genderDetect.detect(comment.owner.username)
                           },
                           word_count:wordcount(comment.text),
                           sentiment:sentiment(comment.text),
