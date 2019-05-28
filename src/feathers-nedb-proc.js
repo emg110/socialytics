@@ -75,6 +75,103 @@ function aggregateSum(array, type, field){
 module.exports = function () {
   return async function (context) {
     let resObj = {};
+    if(context.method === 'find' && context.params.location){
+      let resLocationArr = [];
+      for (let item of context.result.data){
+        if(context.params.location){
+          if(item.media){
+            if(item.media.location){
+              let location = item.media.location;
+              if(location.lat){
+                resLocationArr.push({sc:item.shortcode,loc:{name:location.name,lat:location.lat,lng:location.lng}});
+              }
+            }
+          }
+        }
+      }
+      if(context.params.location)resObj.locations = resLocationArr
+    }
+    if(context.method === 'find' && context.params.textProc){
+      let resComments = {};
+      let resCaptions = {};
+      for (let item of context.result.data){
+        if(context.params.textProc){
+          if(item.comments.count > 0){
+            resComments[item.shortcode]=[];
+            if(Array.isArray(item.comments.edges)){
+              for(let comment of item.comments.edges){
+                knwlInstance.init(comment.text);
+                resComments[item.shortcode].push({
+                  created_at:comment.created_at,
+                  text:comment.text,
+                  owner:{
+                    pic_url:comment.owner.profile_pic_url,
+                    username: comment.owner.username,
+                    gender:genderDetect.detect(comment.owner.username)
+                  },
+                  word_count:wordcount(comment.text),
+                  sentiment:sentiment(comment.text),
+                  emoji: emojiExtract.extractEmoji(comment.text),
+                  emojiSentiments:emojiSentiment(comment.text),
+                  keywords: keywordExtractor.extract(comment.text,{}),
+                  ner:{
+                    dates: knwlInstance.get('dates'),
+                    times:knwlInstance.get('times'),
+                    phones:knwlInstance.get('phones'),
+                    links:knwlInstance.get('links'),
+                    emails:knwlInstance.get('emails'),
+                    places:knwlInstance.get('places')
+                  },
+                  count_words:countWords(comment.text,true),
+                  links: Autolinker.parse(comment.text,{
+                    urls:true,
+                    email:true,
+                    phone:true,
+                    mention:'instagram',
+                    hashtag:'instagram',
+                    stripPrefix:false
+                  })
+                })
+              }
+            }
+          }
+          if(item.captions.edges){
+            resCaptions[item.shortcode]=[];
+            for(let caption of item.captions.edges){
+              knwlInstance.init(caption.node.text);
+              resCaptions[item.shortcode].push({
+                text:caption.node.text,
+                word_count:wordcount(caption.node.text),
+                sentiment:sentiment(caption.node.text),
+                emoji: emojiExtract.extractEmoji(caption.node.text),
+                emojiSentiments:emojiSentiment(caption.node.text),
+                keywords: keywordExtractor.extract(caption.node.text,{}),
+                ner:{
+                  dates: knwlInstance.get('dates'),
+                  times:knwlInstance.get('times'),
+                  phones:knwlInstance.get('phones'),
+                  links:knwlInstance.get('links'),
+                  emails:knwlInstance.get('emails'),
+                  places:knwlInstance.get('places')
+                },
+                count_words:countWords(caption.node.text,true),
+                links: Autolinker.parse(caption.node.text,{
+                  urls:true,
+                  email:true,
+                  phone:true,
+                  mention:'instagram',
+                  hashtag:'instagram',
+                  stripPrefix:false
+                })
+
+              })
+            }
+          }
+        }
+      }
+      resObj.comments = resComments;
+      resObj.captions = resCaptions;
+    }
     if (context.method === 'find'  && context.params.aggregate) {
       if(Array.isArray(context.params.aggregate)){
         for (let aggri of context.params.aggregate){
@@ -99,98 +196,7 @@ module.exports = function () {
             }
 
             if(result){
-              let resLocationArr = [];
-              let resComments = {};
-              let resCaptions = {};
-              if(context.params.location || context.params.textProc || context.params.imageProc){
-                for (let item of context.result.data){
-                  if(context.params.location){
-                    if(item.media){
-                      if(item.media.location){
-                        let location = item.media.location;
-                        if(location.lat){
-                          resLocationArr.push({sc:item.shortcode,loc:{name:location.name,lat:location.lat,lng:location.lng}});
-                        }
-                      }
-                    }
-                  }
-                  if(context.params.textProc){
-                    if(item.comments.count > 0){
-                      resComments[item.shortcode]=[];
-                      for(let comment of item.comments.edges){
-                        knwlInstance.init(comment.text);
-                        resComments[item.shortcode].push({
-                          created_at:comment.created_at,
-                          text:comment.text,
-                          owner:{
-                            pic_url:comment.owner.profile_pic_url,
-                            username: comment.owner.username,
-                            gender:genderDetect.detect(comment.owner.username)
-                          },
-                          word_count:wordcount(comment.text),
-                          sentiment:sentiment(comment.text),
-                          emoji: emojiExtract.extractEmoji(comment.text),
-                          emojiSentiments:emojiSentiment(comment.text),
-                          keywords: keywordExtractor.extract(comment.text,{}),
-                          ner:{
-                            dates: knwlInstance.get('dates'),
-                            times:knwlInstance.get('times'),
-                            phones:knwlInstance.get('phones'),
-                            links:knwlInstance.get('links'),
-                            emails:knwlInstance.get('emails'),
-                            places:knwlInstance.get('places')
-                          },
-                          count_words:countWords(comment.text,true),
-                          links: Autolinker.parse(comment.text,{
-                            urls:true,
-                            email:true,
-                            phone:true,
-                            mention:true,
-                            hashtag:true
-                          })
-
-
-
-
-                        })
-                      }
-                    }
-                    if(item.captions.edges){
-                      for(let caption of item.captions.edges){
-                        knwlInstance.init(caption.text);
-                        resCaptions[item.shortcode].push({
-                          text:caption.node.text,
-                          word_count:wordcount(caption.node.text),
-                          sentiment:sentiment(caption.node.text),
-                          emoji: emojiExtract.extractEmoji(caption.node.text),
-                          emojiSentiments:emojiSentiment(caption.node.text),
-                          keywords: keywordExtractor.extract(caption.node.text,{}),
-                          ner:{
-                            dates: knwlInstance.get('dates'),
-                            times:knwlInstance.get('times'),
-                            phones:knwlInstance.get('phones'),
-                            links:knwlInstance.get('links'),
-                            emails:knwlInstance.get('emails'),
-                            places:knwlInstance.get('places')
-                          },
-                          count_words:countWords(caption.node.text,true),
-                          links: Autolinker.parse(caption.node.text,{
-                            urls:true,
-                            email:true,
-                            phone:true,
-                            mention:true,
-                            hashtag:true
-                          })
-
-                        })
-                      }
-                    }
-                  }
-                }
-              }
               resObj[resField] = result
-              resObj['locations'] = resLocationArr
-              resObj['comments'] = resCommentsArr
             }
           }
         }
@@ -198,10 +204,10 @@ module.exports = function () {
         resObj['total']=context.result.data.length;
         let trendArray = context.result.data.slice(0,101);
         resObj['trendsdata']=trendArray;
-        context.result = resObj;
-
       }
     }
+    context.result = resObj;
+
     return context
   }
 }

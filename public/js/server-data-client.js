@@ -209,7 +209,6 @@ function getEndpointData(endpoint, type, code, container, caller) {
   }
   else {
     console.log('form data...')
-    xhr = new XMLHttpRequest();
     xhr.timeout = 0;
     xhr.open("GET", endpoint, true);
     xhr.setRequestHeader('username', user)

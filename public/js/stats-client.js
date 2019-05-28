@@ -1,3 +1,38 @@
+function textProc(){
+  for(let itemAJ of window.profilesA){
+    var accountAJ = itemAJ.username;
+    var useridAJ = itemAJ.id;
+    /* var xhr = new XMLHttpRequest();
+     xhr.timeout = 0;
+     xhr.open("GET", '/instagram/postsa?"owner.id"='+useridAJ+'&$sort="{timestamp: -1}"'+'&$limit='+20000, true);
+     xhr.setRequestHeader('username', user)
+     xhr.setRequestHeader('accesstoken', accesstoken)
+     xhr.setRequestHeader('strategy', 'jwt')
+     xhr.onload = function (e) {
+       var txt = xhr.responseText;
+       renderFormData(txt);
+     }
+     xhr.send();*/
+    getServiceData('find',
+      'instagram/postsa',
+      {
+        query: {
+          "owner.id": useridAJ,
+          $sort: {timestamp: -1},
+          $limit: 20000
+        },
+        paginate: {
+          default: 100000,
+          max: 20000
+        },
+        textProc:true,
+        un: accountAJ
+      },
+      'seta-posts-text-proc:' + useridAJ,
+      'authenticated:seta'
+    );
+  }
+}
 function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
   var setLimit = document.getElementById('set-limit-input').value
   if(setLimit){
@@ -819,7 +854,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
           totalFollowing:0,
           totalLikes:0,
           totalComments:0
-        }
+        };
         $("#profiles-counters-a").html('');
         optionsBarA.series.push({
           type: 'bar',
@@ -831,11 +866,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
             color:'#fff',
             formatter: '{b}'
           }
-        })
-
-
-
-
+        });
 
         //$("#profiles-counters-a").append(legendHtmlA)
         $("#profileA-metrics-legend").html(legendHtmlA);
@@ -865,7 +896,6 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
                 max: 20000
               },
               location:true,
-              textProc:true,
               un: accountA,
               aggregate: [
                 {type: 'sum', field: 'comments', resField: 'comments'},
@@ -1164,7 +1194,12 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
         }
       }
     }
-
+    if (desc.indexOf('seta-posts-text-proc:') > -1){
+      if (response.data) {
+        console.log(JSON.stringify(response.data.comments))
+        console.log(JSON.stringify(response.data.captions))
+      }
+    }
   });
   socketB.on('authenticated:setb', function (response) {
     var descB = response.socRes.desc;
@@ -1221,7 +1256,6 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
               },
               un: accountB,
               location:true,
-              textProc:true,
               aggregate: [
                 {type: 'sum', field: 'comments', resField: 'comments'},
                 {type: 'sum', field: 'likes', resField: 'likes'}
