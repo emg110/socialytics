@@ -95,6 +95,7 @@
     "count-words-array": "latest",
     "count-words": "latest",
     "word-counting": "latest",
+    "wordcount": "latest",
     "node-postgres-json": "latest",
     "object-path": "latest",
     "objection": "^1.6.8",

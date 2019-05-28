@@ -1,3 +1,14 @@
+const sentiment = require('node-sentiment');
+const emojiExtract = require('extract-emoji');
+const emojiSentiment = require('emoji-extract-sentiment');
+const keywordExtractor = require('keyword-extractor');
+const Knwl = require('knwl.js');
+var knwlInstance = new Knwl('english');
+const wordcount = require('wordcount');
+const countWords = require("count-words");
+const Autolinker = require( 'autolinker' );
+const genderDetect = require('gender-detection');
+
 function aggregateSum(array, type, field){
   var aggr = array.data.reduce(function(sum, post){
     if(post[field]){
@@ -89,6 +100,7 @@ module.exports = function () {
 
             if(result){
               let resLocationArr = [];
+              let resCommentsArr = [];
               if(context.params.location || context.params.textProc || context.params.imageProc){
                 for (let item of context.result.data){
                   if(context.params.location){
@@ -104,7 +116,41 @@ module.exports = function () {
                   if(context.params.textProc){
                     if(item.comments.count > 0){
                       for(let comment of item.comments.edges){
+                        knwlInstance.init(comment.text);
+                        resCommentsArr.push({
+                          created_at:comment.created_at,
+                          text:comment.text,
+                          owner:{
+                            pic_url:comment.owner.profile_pic_url,
+                            username: comment.owner.username,
+                            gender:genderDetect(comment.owner.username)
+                          },
+                          word_count:wordcount(comment.text),
+                          sentiment:sentiment(comment.text),
+                          emoji: emojiExtract.extractEmoji(comment.text),
+                          emojiSentiments:emojiSentiment(comment.text),
+                          keywords: keywordExtractor(comment.text,{}),
+                          ner:{
+                            dates: knwlInstance.get('dates'),
+                            times:knwlInstance.get('times'),
+                            phones:knwlInstance.get('phones'),
+                            links:knwlInstance.get('links'),
+                            emails:knwlInstance.get('emails'),
+                            places:knwlInstance.get('places')
+                          },
+                          count_words:countWords(comment.text,true),
+                          links: Autolinker.parse(comment.text,{
+                            urls:true,
+                            email:true,
+                            phone:true,
+                            mention:true,
+                            hashtag:true
+                          })
 
+
+
+
+                        })
                       }
                     }
                     if(item.captions.count > 0){
