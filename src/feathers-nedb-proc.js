@@ -131,7 +131,7 @@ module.exports = function () {
                           sentiment:sentiment(comment.text),
                           emoji: emojiExtract.extractEmoji(comment.text),
                           emojiSentiments:emojiSentiment(comment.text),
-                          keywords: keywordExtractor(comment.text,{}),
+                          keywords: keywordExtractor.extract(comment.text,{}),
                           ner:{
                             dates: knwlInstance.get('dates'),
                             times:knwlInstance.get('times'),
@@ -164,7 +164,7 @@ module.exports = function () {
                           sentiment:sentiment(caption.node.text),
                           emoji: emojiExtract.extractEmoji(caption.node.text),
                           emojiSentiments:emojiSentiment(caption.node.text),
-                          keywords: keywordExtractor(caption.node.text,{}),
+                          keywords: keywordExtractor.extract(caption.node.text,{}),
                           ner:{
                             dates: knwlInstance.get('dates'),
                             times:knwlInstance.get('times'),

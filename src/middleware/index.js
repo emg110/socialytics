@@ -80,13 +80,13 @@ const { authenticate } = require('@feathersjs/authentication').express;
               username: username,
               userid:userId,
               email: email,
-              bio:userData.biography,
-              pic:userData.profile_pic_url,
+              bio:userData.graphql.user.biography,
+              pic:userData.graphql.user.profile_pic_url,
               stats: {
-                followers:userData.edge_followed_by.count,
-                following:userData.edge_follow.count,
-                posts: userData.edge_owner_to_timeline_media.count,
-                saved: userData.edge_saved_media.count
+                followers:userData.graphql.user.edge_followed_by.count,
+                following:userData.graphql.user.edge_follow.count,
+                posts: userData.graphql.user.edge_owner_to_timeline_media.count,
+                saved: userData.graphql.user.edge_saved_media.count
               },
 
             })
