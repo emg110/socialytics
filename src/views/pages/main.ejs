@@ -199,12 +199,6 @@
       <div style="" class="form-group tabs">
         <ul style="max-width:45vw;height:30px;" class="nav nav-tabs">
           <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#self-tab" style="display:inline;">Self</a>
-            <span style="display:inline;">
-            <a href="#" data-toggle="popover" data-trigger="focus" title="Current Instagram user ops" data-content="ETL and/or API browsing operations for current loged in user's registered Instagram account(via registered session id)." data-placement="top" class="info fa fa-info-circle"></a>
-            </span>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#profile-tab" style="display:inline;">Profile</a>
             <span style="display:inline;">
             <a href="#" data-toggle="popover" data-trigger="focus" title="Instagram profile ops" data-content="ETL and/or API browsing operations for desired user profile." data-placement="top" class="info fa fa-info-circle"></a>
@@ -231,19 +225,6 @@
 
         </ul>
         <div style="max-width:45vw" class="tab-content">
-          <div style="max-width:45vw" class="tab-pane active container widget-stage" id="self-tab">
-            <br>
-            <input id="profile-name-input" type="text" class="form-control" placeholder="Logged in user profile" disabled="true" style="display: inline;">
-            <a href="#" data-toggle="popover" data-trigger="focus" title="user profile" data-content="System will input and use current logged in user's registered Instagram account(via registered session id)." data-placement="top" class="info fa fa-info-circle"></a><br>
-            <button id="sugg-post-btn" class="btn btn-primary etl-btn" type="button"  value="Get suggested posts" click-target="/instagram/suggested/posts?" call-type="sugg-posts">Sugg posts</button>
-            <a href="#" data-toggle="popover" data-trigger="focus" data-content="Gets suggested posts related to current logged in user profile." data-placement="top" class="info fa fa-info-circle"></a>
-            <button id="sugg-people-btn" class="btn btn-primary etl-btn" type="button"  value="Get suggested people" click-target="/instagram/suggested/people?"  call-type="sugg-people">Sugg people</button>
-            <a href="#" data-toggle="popover" data-trigger="focus" data-content="Gets suggested people related to current logged in user profile." data-placement="top" class="info fa fa-info-circle"></a>
-            <button id="recent-feed-btn" class="btn btn-primary etl-btn" type="button"  value="Get feed" click-target="/instagram/feed?" call-type="feed-posts">Recent feed</button>
-            <a href="#" data-toggle="popover" data-trigger="focus" data-content="Gets feed related to current logged in user profile." data-placement="top" class="info fa fa-info-circle"></a>
-            <button id="all-feed-btn" class="btn btn-primary etl-btn" type="button"  value="Get all feed" click-target="/instagram/allfeed?" call-type="all-feed-posts">All feed</button>
-            <a href="#" data-toggle="popover" data-trigger="focus" data-content="Gets all feeds related to current logged in user profile." data-placement="top" class="info fa fa-info-circle"></a>
-          </div>
           <div style="max-width:45vw" class="tab-pane container widget-stage" id="profile-tab">
             <br>
             <input type="text" ondrop="drop(event)" ondragover="allowDrop(event)" placeholder="Profile name" class="form-control" id="username-input" username="username"style="display: inline;">
