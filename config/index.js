@@ -42,11 +42,11 @@ module.exports = {
   ],
   default_form_data: {
     username: "emg110",
-    tag: "emg110",
+    tag: "branding",
     location: "faro",
-    query: "faro",
-    shortcode: "BwE-N5mFizR",
-    count: 65
+    query: "university algarve",
+    shortcode: "BvZ7xQpl8Vd",
+    count: 100
   },
   // NOTICE: PLEASE DELETE ALL DB FILES INSIDE DATA FOLDER BEFORE CHANGING VERSIONING
   versioning: false
