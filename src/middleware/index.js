@@ -78,7 +78,17 @@ const { authenticate } = require('@feathersjs/authentication').express;
           */  res.status(200).send({
               accesstoken:accessToken,
               username: username,
-              email: email
+              userid:userId,
+              email: email,
+              bio:userData.biography,
+              pic:userData.profile_pic_url,
+              stats: {
+                followers:userData.edge_followed_by.count,
+                following:userData.edge_follow.count,
+                posts: userData.edge_owner_to_timeline_media.count,
+                saved: userData.edge_saved_media.count
+              },
+
             })
 
           });
