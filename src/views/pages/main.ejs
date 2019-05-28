@@ -81,6 +81,46 @@
             <a href="#" data-toggle="popover" data-trigger="focus" title="Get all locations" data-content="Geo codes each posts of each profile of sets via OSM nominatim API." data-placement="top" class="info fa fa-info-circle"></a><br>
           </div>
           <br>
+          <div style="" class="form-group tabs">
+            <ul style="max-width:20vw" class="nav nav-tabs">
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#seta-tab" style="display:inline;">Set A</a>
+                <span style="display:inline;">
+              <a href="#" data-toggle="popover" data-trigger="focus" title="Set A(first set) of comparative analytics" data-content="comparative analytics are implemented for two sets of data, varying inside(set A and set B). This tab represents set A members input." data-placement="top" class="info fa fa-info-circle"></a>
+            </span>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#setb-tab" style="display:inline;">Set B</a>
+                <span style="display:inline;">
+               <a href="#" data-toggle="popover" data-trigger="focus" title="Set B(second set) of comparative analytics" data-content="Comparative analytics are implemented for two sets of data, varying inside(set A and set B). This tab represents set B members input." data-placement="top" class="info fa fa-info-circle"></a>
+            </span>
+              </li>
+            </ul>
+            <div style="max-width:20vw" class="tab-content">
+              <div style="max-width:20vw" class="tab-pane container widget-stage" id="seta-tab">
+                <a style="display:inline;float:right;margin-right: 43%;" href="#" data-toggle="popover" data-trigger="focus" title="Set A(first set) of comparative analytics" data-content="Comparative analytics are implemented for two sets of data, varying inside(set A and set B). This part represents set A members input." data-placement="top" class="info fa fa-info-circle" ></a>
+                <textarea style="padding:5px; margin:5px;display: inline" id="seta" class="seta" ondrop="drop(event)" ondragover="allowDrop(event)"></textarea>
+                <input id="resetSeta" style="text-align:left;display:block; padding:5px; float:left; min-width:16%" value="Reset set" type="button" class="btn btn-secondary reset-btn">
+                <a href="#" data-toggle="popover" data-trigger="focus" title="Reset sets" data-content="Resets the filters only to configured predefined values(via configuration files)." data-placement="top" class="info fa fa-info-circle" style="display:inline;float:right;margin-right: 43%;"></a>
+
+
+
+              </div>
+              <div style="max-width:20vw" class="tab-pane container widget-stage" id="setb-tab">
+                <a style="display:inline;float:right;margin-right: 43%;" href="#" data-toggle="popover" data-trigger="focus" title="Set B(second set) of comparative analytics" data-content="Comparative analytics are implemented for two sets of data, varying inside(set A and set B). This tab represents set B members input."  data-placement="top" class="info fa fa-info-circle" ></a>
+                <textarea style="padding:5px; margin:5px;display: inline" id="setb" class="setb" ondrop="drop(event)" ondragover="allowDrop(event)"></textarea>
+                <input id="resetSetb" style="text-align:left;display:block; padding:5px; float:left; min-width:16%" value="Reset set" type="button" class="btn btn-secondary reset-btn">
+                <a href="#" data-toggle="popover" data-trigger="focus" title="Reset sets" data-content="Resets the filters only to configured predefined values(via configuration files)." data-placement="top" class="info fa fa-info-circle" style="display:inline;float:right;margin-right: 43%;"></a>
+
+
+
+              </div>
+            </div>
+          </div><br>
+          <input  style="width:40%; display:inline;margin:5px;padding:10px" placeholder="Count limit" type="number" class="form-control" id="count-input" count=0>
+          <span><a href="#" data-toggle="popover" data-trigger="focus" title="Returned records upper limit" data-content="For Instagram ETL and browsing operations which do not present -ALL- on their title, limit the count of returned records by setting this parameter." data-placement="top" class="info fa fa-info-circle"></a></span><br>
+          <input  style="width:40%; display:inline;margin:5px;padding:10px;" placeholder="Set limit"  type="number" class="form-control" id="set-limit-input" count=0>
+          <span><a href="#" data-toggle="popover" data-trigger="focus" title="Set members upper limit" data-content="Maximum number of set members get in to account for full data extraction, as a dynamic parameter." data-placement="top" class="info fa fa-info-circle"></a></span><br>
           <input style="margin-bottom:5px;width:40%;" value="Get sets data" type="button" class="btn btn-primary" id="getSetDataBtn">
           <a href="#" data-toggle="popover" data-trigger="focus" title="Gets set A and set B data in full" data-content="Gets set A and set B members data, by each posts and each media and stores them all in database." data-placement="top" class="info fa fa-info-circle"></a><br><br>
           <div id="countera" class="stats-totals"></div><br>
@@ -152,13 +192,10 @@
 
 
           </li>
-          <li class="nav-item">
+         <!-- <li class="nav-item">
             <br>
-            <input  style="width:40%; display:inline;margin:5px;padding:10px;margin-left:20px;" placeholder="Count limit" type="number" class="form-control" id="count-input" count=0>
-            <span><a href="#" data-toggle="popover" data-trigger="focus" title="Returned records upper limit" data-content="For Instagram ETL and browsing operations which do not present -ALL- on their title, limit the count of returned records by setting this parameter." data-placement="top" class="info fa fa-info-circle"></a></span>
-            <input  style="width:40%; display:inline;margin:5px;padding:10px;" placeholder="Set limit"  type="number" class="form-control" id="set-limit-input" count=0>
-              <span><a href="#" data-toggle="popover" data-trigger="focus" title="Set members upper limit" data-content="Maximum number of set members get in to account for full data extraction, as a dynamic parameter." data-placement="top" class="info fa fa-info-circle"></a></span>
-          </li>
+
+          </li>-->
 
         </ul>
         <div style="max-width:45vw" class="tab-content">
