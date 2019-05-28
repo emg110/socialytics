@@ -865,6 +865,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
                 max: 20000
               },
               location:true,
+              textProc:true,
               un: accountA,
               aggregate: [
                 {type: 'sum', field: 'comments', resField: 'comments'},
@@ -1220,6 +1221,7 @@ function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
               },
               un: accountB,
               location:true,
+              textProc:true,
               aggregate: [
                 {type: 'sum', field: 'comments', resField: 'comments'},
                 {type: 'sum', field: 'likes', resField: 'likes'}
