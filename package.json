@@ -124,7 +124,8 @@
     "flatbush": "latest",
     "nominatim-geocoder": "latest",
     "all-the-cities": "latest",
-    "rtree": "latest"
+    "rtree": "latest",
+    "worker-nodes": "latest"
   },
   "devDependencies": {
     "chai": "latest",
