@@ -805,7 +805,7 @@ input:checked + .slider:before {
 #search-insta-input{
   width:12%;
   display:inline;
-  margin-left:60%;
+  margin-left:58%;
   border-radius:50px;
   background-color: #575758;
   border-color: #575758;
