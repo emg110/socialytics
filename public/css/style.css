@@ -626,7 +626,7 @@ img {
   /*background-color: #495057;*/
   min-width: 103%;
   font-size: 0.7em;
-  /* margin-left: -16px; */
+   margin-left: -29%;
 
 }
 .byline-counter{
@@ -824,3 +824,10 @@ input:checked + .slider:before {
   border-color: #a1d6e2;
 }
 
+#maximMinimBtn{
+  position: absolute;
+  top: 16px;
+  right: 59px;
+  font-size: 20px;
+  margin-left: 50px;
+}

@@ -8,6 +8,20 @@ function closeNav(id) {
   document.getElementById(id).style.width = "0";
 }
 
+function maximMinimNav(id) {
+  if($("#maximMinimBtn").hasClass('fa-window-maximize')){
+    document.getElementById(id).style.width = "100%";
+    $("#maximMinimBtn").removeClass('fa-window-maximize');
+    $("#maximMinimBtn").addClass('fa-window-minimize');
+  }else{
+    document.getElementById(id).style.width = "35%";
+    $("#maximMinimBtn").removeClass('fa-window-minimize');
+    $("#maximMinimBtn").addClass('fa-window-maximize');
+
+  }
+
+}
+
 function backNav() {
   var html = undefined;
   var currentFreeIndex = parseInt(ls.getItem('currentFreeIndex'));
