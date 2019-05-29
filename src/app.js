@@ -49,6 +49,9 @@ app.configure(socketio(function (io) {
   io.on('connection', function (socket) {
     //socket.emit('instagram', { text: 'A client connected!' });
     socket.on('authenticated:seta', function (socReq) {
+      if(socReq.data.desc.indexOf('seta-posts-text-proc')>-1){
+        socket.emit('authenticated:seta', {progress: 'seta-posts-text-proc: processing', socRes: socReq.data});
+      }
       switch (socReq.data.method) {
         case 'find':
           app.service(socReq.data.service).find(socReq.options).then(items => {
@@ -68,6 +71,9 @@ app.configure(socketio(function (io) {
 
     });
     socket.on('authenticated:setb', function (socReq) {
+      if(socReq.data.desc.indexOf('setb-posts-text-proc')>-1){
+        socket.emit('authenticated:setb', {progress: 'setb-posts-text-proc: processing', socRes: socReq.data});
+      }
       switch (socReq.data.method) {
         case 'find':
           app.service(socReq.data.service).find(socReq.options).then(items => {

@@ -94,7 +94,7 @@ module.exports = function () {
     if(context.method === 'find' && context.params.textProc){
       let resComments = {};
       let resCaptions = {};
-      context.result.data = context.result.data.slice(0,20);
+      //context.result.data = context.result.data.slice(0,20);
       for (let item of context.result.data){
         if(context.params.textProc){
           if(item.comments.count > 0){
@@ -109,7 +109,7 @@ module.exports = function () {
                   mention:'instagram',
                   hashtag:'instagram',
                   stripPrefix:false
-                })
+                });
                 for (let i in links){
                   links[i] = {link:links[i].matchedText}
 
@@ -192,8 +192,10 @@ module.exports = function () {
           }
         }
       }
-      resObj.comments = resComments;
-      resObj.captions = resCaptions;
+      //resObj.comments = resComments;
+      //resObj.captions = resCaptions;
+      resObj.comments = [];
+      resObj.captions = [];
     }
     if (context.method === 'find'  && context.params.aggregate) {
       if(Array.isArray(context.params.aggregate)){

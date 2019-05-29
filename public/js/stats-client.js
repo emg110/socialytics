@@ -1,5 +1,20 @@
 $("#textProcBtn").hide();
 function textProc(){
+  socket.removeListener('authenticated:seta');
+
+  socket.on('authenticated:seta', function (responseA) {
+    let descA = responseA.socRes.desc
+    if (descA.indexOf('seta-posts-text-proc') > -1){
+      if (responseA.data) {
+        console.log('comments')
+        console.log('captions')
+      }
+      else if(responseA.progress){
+        console.log(responseA.progress)
+      }
+    }
+  })
+
   let profilesArrA = [];
   let profilesArrB = [];
   for(let itemAJ of window['profilesA']){
@@ -14,8 +29,8 @@ function textProc(){
         $limit: 20000
       },
       paginate: {
-        default: 100000,
-        max: 20000
+        default: 20000,
+        max: 10000
       },
       textProc:true
     },
@@ -25,6 +40,19 @@ function textProc(){
   for(let itemBJ of window['profilesB']){
     profilesArrB.push(itemBJ.id)
   }
+  socketB.removeListener('authenticated:setb');
+  socketB.on('authenticated:setb', function (responseB) {
+    let descB = responseB.socRes.desc
+    if (descB.indexOf('setb-posts-text-proc') > -1){
+      if (responseB.data) {
+        console.log('comments')
+        console.log('captions')
+      }
+      else if(responseB.progress){
+        console.log(responseB.progress)
+      }
+    }
+  })
   getServiceData('find',
     'instagram/postsb',
     {
@@ -34,8 +62,8 @@ function textProc(){
         $limit: 20000
       },
       paginate: {
-        default: 100000,
-        max: 20000
+        default: 20000,
+        max: 10000
       },
       textProc:true
     },
@@ -960,7 +988,7 @@ var profileCounterB = 0;
         $("#total-metrics-a").html(htmlA);
       }
     }
-    if (desc.indexOf('seta-posts-likes-comments:') > -1) {
+    else if (desc.indexOf('seta-posts-likes-comments:') > -1) {
       if (response.data) {
         var likesCommentsA = response.data;
         var socResA = response.socRes;
@@ -1210,12 +1238,7 @@ var profileCounterB = 0;
         }
       }
     }
-    if (desc.indexOf('seta-posts-text-proc') > -1){
-      if (response.data) {
-        console.log(JSON.stringify(response.data.comments))
-        console.log(JSON.stringify(response.data.captions))
-      }
-    }
+
   });
   socketB.on('authenticated:setb', function (response) {
     var descB = response.socRes.desc;
@@ -1557,12 +1580,7 @@ var profileCounterB = 0;
         }
       }
     }
-    if (descB.indexOf('setb-posts-text-proc') > -1){
-      if (response.data) {
-        console.log(JSON.stringify(response.data.comments))
-        console.log(JSON.stringify(response.data.captions))
-      }
-    }
+
   })
 
   if (seta.length >= 1) {
