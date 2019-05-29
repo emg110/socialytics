@@ -9,7 +9,8 @@ const countWords = require("count-words");
 const Autolinker = require( 'autolinker' );
 const genderDetect = require('gender-detection');
 
-module.exports = function (dataArray) {
+module.exports = async function (dataArray) {
+  dataArray = dataArray.slice(0,20)
   let resObj = {};
   let resComments = {};
   let resCaptions = {};
