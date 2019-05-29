@@ -1,5 +1,4 @@
-const WorkerNodes = require('worker-nodes');
-const textProcWorkerNodes = new WorkerNodes('../../../../src/text-processing.js');
+const textProc = require('./text-processing')
 function aggregateSum(array, type, field){
   var aggr = array.data.reduce(function(sum, post){
     if(post[field]){
@@ -83,9 +82,8 @@ module.exports = function () {
       if(context.params.location)resObj.locations = resLocationArr
     }
     if(context.method === 'find' && context.params.textProc){
-      resObj = await textProcWorkerNodes.call(context.result.data).then(resObj => {
-        return resObj
-      });
+      const resO = await textProc(context.result.data)
+      resObj = resO
     }
     if (context.method === 'find'  && context.params.aggregate) {
       if(Array.isArray(context.params.aggregate)){
