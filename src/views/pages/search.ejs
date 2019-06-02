@@ -71,10 +71,8 @@
               <span class="private-account glyphicon glyphicon-lock" title="Private Account"></span>
             <% } %>
             <% if(!!edge.is_verified) { %>
-              <span class="verified glyphicon glyphicon-ok" title="Verified Account"></span><span class="verified glyphicon glyphicon-user" alt="Verified Account"></span>
-            <% }else{ %>
-              <span class="not-verified glyphicon glyphicon-user" title="Not verified!"></span>
-            <%}%>
+                <h6 class="profile-boolean-indicator"><span class="verified fa fa-check-circle" title="Verified Account"></span> Verified</h6>
+              <% }%>
             <% if(!!edge.following) { %>
               <span class="glyphicon glyphicon-star" title="Followed Account"></span>
             <% } %>
