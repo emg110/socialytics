@@ -17,7 +17,7 @@ function textProc(set){
       var emojicloud = resObj.emojicloud
 
       for (var i in wordCloud){
-        if(wordCloud[i]>1)words.push({
+        words.push({
           text:i,
           weight:wordCloud[i]
         })
@@ -30,11 +30,17 @@ function textProc(set){
       }
       $("#wordCloudA").height(400);
       $("#emojiCloudA").height(400);
-      $('#wordCloudA').jQCloud(words,{shape: 'rectangular',autoResize: true});
-      $('#emojiCloudA').jQCloud(emojis,{shape: 'rectangular',autoResize: true,fontSize: {
-          from: 0.2,
-          to: 0.01
-        }});
+      if(window.wordcloudA){
+        $('#wordCloudA').jQCloud('update',words);
+        $('#emojiCloudA').jQCloud('update',emojis);
+      }else{
+        $('#wordCloudA').jQCloud(words,{shape: 'rectangular',autoResize: true,delay: 5});
+        $('#emojiCloudA').jQCloud(emojis,{shape: 'rectangular',autoResize: true,delay: 5,fontSize: {
+            from: 0.2,
+            to: 0.01
+          }});
+        window.wordcloudA = true;
+      }
       console.log(resObj.results.data.length+' text processing results for profiles of seta')
     })
   }else if(set==='setb'){
@@ -51,7 +57,7 @@ function textProc(set){
       var emojicloudB = resObjB.emojicloud
 
       for (var iB in wordCloudB){
-        if(wordCloudB[i]>1)wordsB.push({
+        wordsB.push({
           text:iB,
           weight:wordCloudB[iB]
         })
@@ -62,13 +68,21 @@ function textProc(set){
           weight:emojicloudB[jB]+10
         })
       }
+
       $("#wordCloudB").height(400);
       $("#emojiCloudB").height(400);
-      $('#wordCloudB').jQCloud(wordsB,{shape: 'rectangular',autoResize: true});
-      $('#emojiCloudB').jQCloud(emojisB,{shape: 'rectangular',autoResize: true,fontSize: {
-          from: 0.2,
-          to: 0.01
-        }});
+      if(window.wordcloudB){
+        $('#wordCloudB').jQCloud('update',wordsB);
+        $('#emojiCloudB').jQCloud('update',emojisB);
+      }else{
+        $('#wordCloudB').jQCloud(wordsB,{shape: 'rectangular',autoResize: true,delay: 5});
+        $('#emojiCloudB').jQCloud(emojisB,{shape: 'rectangular',autoResize: true,delay: 5,fontSize: {
+            from: 0.2,
+            to: 0.01
+          }});
+        window.wordcloudB = true;
+      }
+
       console.log(resDataB.length+' text processing results for profiles of setb')
     })
   }
