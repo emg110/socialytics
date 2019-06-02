@@ -50,7 +50,6 @@
     "echarts": "latest",
     "echarts-cities-js": "latest",
     "echarts-countries-js": "latest",
-    "echarts-wordcloud": "latest",
     "ejs": "latest",
     "emoji-extract-sentiment": "latest",
     "extract-emoji": "latest",
@@ -125,7 +124,8 @@
     "nominatim-geocoder": "latest",
     "all-the-cities": "latest",
     "rtree": "latest",
-    "worker-nodes": "latest"
+    "worker-nodes": "latest",
+    "emoji-regex": "latest"
   },
   "devDependencies": {
     "chai": "latest",

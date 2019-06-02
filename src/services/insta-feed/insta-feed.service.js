@@ -2,7 +2,7 @@
 const createService = require('feathers-nedb');
 const createModel = require('../../models/insta-feed.model');
 const hooks = require('./insta-feed.hooks');
-const search = require('../../feathers-nedb-search')
+const search = require('../../hooks/hook-feathers-nedb-search')
 module.exports = function (app) {
   const Model = createModel(app);
   const paginate = app.get('paginate');

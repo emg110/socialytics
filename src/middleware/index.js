@@ -1,6 +1,7 @@
 const config = require('../../config')
 const mwViewsRender = require('./mw-views-render');
 const mwEtlApi = require('./mw-etl-api');
+const mwTextProc = require('./mw-text-processing');
 const mwFindCrossfilter = require('./mw-find-crossfilter');
 const Instagram = require('../backend-social/api/instagram/instagram');
 const logger = require('../logger');
@@ -186,7 +187,9 @@ const { authenticate } = require('@feathersjs/authentication').express;
     });
     app.use(mwViewsRender());
     app.use(mwFindCrossfilter());
+    app.use(mwTextProc());
     app.use(mwEtlApi());
+
 
 
 };

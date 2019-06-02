@@ -1,4 +1,4 @@
-const config = require('../config');
+const config = require('../../config');
 const universe = require('universe');
 function cube(array){
   return universe(array).then(function(cube){

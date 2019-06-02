@@ -1,5 +1,5 @@
 // Application hooks that run for every service
-const log = require('./hooks/log');
+const log = require('./hooks/hook-log');
 const hookInstaCheckBeforeCreate = require('./hooks/hook-insta-check-before-create');
 const hookInstaVersionBeforeCreate = require('./hooks/hook-insta-version-before-create');
 const { authenticate } = require('@feathersjs/authentication').hooks;

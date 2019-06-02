@@ -1,4 +1,3 @@
-const textProc = require('./text-processing')
 function aggregateSum(array, type, field){
   var aggr = array.data.reduce(function(sum, post){
     if(post[field]){
@@ -81,10 +80,6 @@ module.exports = function () {
       }
       if(context.params.location)resObj.locations = resLocationArr
     }
-    if(context.method === 'find' && context.params.textProc){
-      const resO = await textProc(context.result.data)
-      resObj = resO
-    }
     if (context.method === 'find'  && context.params.aggregate) {
       if(Array.isArray(context.params.aggregate)){
         for (let aggri of context.params.aggregate){
@@ -119,8 +114,8 @@ module.exports = function () {
         resObj['trendsdata']=trendArray;
       }
     }
-    context.result = resObj;
 
+    if(Object.keys(resObj).length>0)context.result = resObj;
     return context
   }
 }

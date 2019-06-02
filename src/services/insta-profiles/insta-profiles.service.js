@@ -2,7 +2,7 @@
 const createService = require('feathers-nedb');
 const createModel = require('../../models/insta-profiles.model');
 const hooks = require('./insta-profiles.hooks');
-const search = require('../../feathers-nedb-search')
+const search = require('../../hooks/hook-feathers-nedb-search')
 
 module.exports = function (app) {
   const Model = createModel(app);

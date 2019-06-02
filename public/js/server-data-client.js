@@ -207,7 +207,7 @@ function getEndpointData(endpoint, type, code, container, caller) {
       norender(caller);
     }
   }
-  else {
+  else if (type === "form-data"){
     console.log('form data...')
     xhr.timeout = 0;
     xhr.open("GET", endpoint, true);
@@ -221,9 +221,30 @@ function getEndpointData(endpoint, type, code, container, caller) {
     xhr.send();
 
   }
-
 }
+function getTextProcData(profiles, set){
+  return new Promise(function (resolve, reject){
+    var user = ls.getItem('username');
+    var accesstoken = ls.getItem('accesstoken');
+    var xhr = new XMLHttpRequest();
+    console.log('Text processing... for profiles of set: '+set)
+    xhr.timeout = 0;
+    xhr.open("GET", '/instagram/set/textProc?profiles='+profiles+'&set='+set, true);
+    xhr.setRequestHeader('username', user)
+    xhr.setRequestHeader('accesstoken', accesstoken)
+    xhr.setRequestHeader('strategy', 'jwt')
+    xhr.onload = function (e) {
+      var res = xhr.responseText;
+      if(res){
+        resolve(res)
+      }else if(e){
+        reject(e)
+      }
 
+    }
+    xhr.send();
+  })
+}
 function getServiceData(method, service, filters, desc, channel) {
   var accesstoken = ls.getItem('accesstoken')
   var data = {}

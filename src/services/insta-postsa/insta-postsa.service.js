@@ -1,11 +1,10 @@
-// Initializes the `instaPosts` service on path `/instagram/posts`
 const createService = require('feathers-nedb');
 const createModel = require('../../models/insta-postsa.model');
 const hooks = require('./insta-postsa.hooks');
 //const search = require('../../feathers-nedb-regex-search')
-const search = require('../../feathers-nedb-search')
-const aggr = require('../../feathers-nedb-proc')
-const cube = require('../../feathers-nedb-cube')
+const search = require('../../hooks/hook-feathers-nedb-search')
+const aggr = require('../../hooks/hook-feathers-nedb-proc')
+const cube = require('../../hooks/hook-feathers-nedb-cube')
 module.exports = function (app) {
   const Model = createModel(app);
   const paginate = app.get('paginate');

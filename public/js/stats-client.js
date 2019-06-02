@@ -1,75 +1,80 @@
-$("#textProcBtn").hide();
-function textProc(){
-  socket.removeListener('authenticated:seta');
+//$("#textProcBtn").hide();
+function textProc(set){
+  var profilesArrA = [];
+  var profilesArrB = [];
 
-  socket.on('authenticated:seta', function (responseA) {
-    let descA = responseA.socRes.desc
-    if (descA.indexOf('seta-posts-text-proc') > -1){
-      if (responseA.data) {
-        console.log('comments')
-        console.log('captions')
-      }
-      else if(responseA.progress){
-        console.log(responseA.progress)
-      }
-    }
-  })
+  if(set==='seta'){
+    for(let itemAJ of window['profilesA']){
+      profilesArrA.push(itemAJ.id)
 
-  let profilesArrA = [];
-  let profilesArrB = [];
-  for(let itemAJ of window['profilesA']){
-    profilesArrA.push(itemAJ.id)
-  }
-  getServiceData('find',
-    'instagram/postsa',
-    {
-      query: {
-        "owner.id": {$in:profilesArrA},
-        $sort: {timestamp: -1},
-        $limit: 20000
-      },
-      paginate: {
-        default: 20000,
-        max: 10000
-      },
-      textProc:true
-    },
-    'seta-posts-text-proc' ,
-    'authenticated:seta'
-  );
-  for(let itemBJ of window['profilesB']){
-    profilesArrB.push(itemBJ.id)
-  }
-  socketB.removeListener('authenticated:setb');
-  socketB.on('authenticated:setb', function (responseB) {
-    let descB = responseB.socRes.desc
-    if (descB.indexOf('setb-posts-text-proc') > -1){
-      if (responseB.data) {
-        console.log('comments')
-        console.log('captions')
-      }
-      else if(responseB.progress){
-        console.log(responseB.progress)
-      }
     }
-  })
-  getServiceData('find',
-    'instagram/postsb',
-    {
-      query: {
-        "owner.id": {$in:profilesArrB},
-        $sort: {timestamp: -1},
-        $limit: 20000
-      },
-      paginate: {
-        default: 20000,
-        max: 10000
-      },
-      textProc:true
-    },
-    'setb-posts-text-proc' ,
-    'authenticated:setb'
-  );
+    getTextProcData(profilesArrA.toString(),set).then((res)=>{
+      var resObj = JSON.parse(res);
+      var resData = resObj.results.data;
+      var words = []
+      var emojis = []
+      var wordCloud = resObj.wordcloud
+      var emojicloud = resObj.emojicloud
+
+      for (var i in wordCloud){
+        if(wordCloud[i]>1)words.push({
+          text:i,
+          weight:wordCloud[i]
+        })
+      }
+      for (var j in emojicloud){
+        emojis.push({
+          text:j,
+          weight:emojicloud[j]+10
+        })
+      }
+      $("#wordCloudA").height(400);
+      $("#emojiCloudA").height(400);
+      $('#wordCloudA').jQCloud(words,{shape: 'rectangular',autoResize: true});
+      $('#emojiCloudA').jQCloud(emojis,{shape: 'rectangular',autoResize: true,fontSize: {
+          from: 0.2,
+          to: 0.01
+        }});
+      console.log(resObj.results.data.length+' text processing results for profiles of seta')
+    })
+  }else if(set==='setb'){
+    for(let itemBJ of window['profilesB']){
+      profilesArrB.push(itemBJ.id)
+
+    }
+    getTextProcData(profilesArrB.toString(),set).then((resb)=>{
+      var resObjB = JSON.parse(resb);
+      var resDataB = resObjB.results.data;
+      var wordsB = []
+      var emojisB = []
+      var wordCloudB = resObjB.wordcloud
+      var emojicloudB = resObjB.emojicloud
+
+      for (var iB in wordCloudB){
+        if(wordCloudB[i]>1)wordsB.push({
+          text:iB,
+          weight:wordCloudB[iB]
+        })
+      }
+      for (var jB in emojicloudB){
+       emojisB.push({
+          text:jB,
+          weight:emojicloudB[jB]+10
+        })
+      }
+      $("#wordCloudB").height(400);
+      $("#emojiCloudB").height(400);
+      $('#wordCloudB').jQCloud(wordsB,{shape: 'rectangular',autoResize: true});
+      $('#emojiCloudB').jQCloud(emojisB,{shape: 'rectangular',autoResize: true,fontSize: {
+          from: 0.2,
+          to: 0.01
+        }});
+      console.log(resDataB.length+' text processing results for profiles of setb')
+    })
+  }
+
+
+
 }
 function getStatsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
 
@@ -1233,8 +1238,9 @@ var profileCounterB = 0;
           }
         }
         profileCounterA++
-        if(profileCounterA === window.profilesA.length && profileCounterA===seta.length&& profileCounterB===setb.length && profileCounterB === window.profilesB.length){
-          $("#textProcBtn").show()
+        if(profileCounterA === window.profilesA.length && profileCounterA===seta.length){
+          //$("#textProcBtn").show()
+          textProc('seta')
         }
       }
     }
@@ -1575,8 +1581,9 @@ var profileCounterB = 0;
 
         }
         profileCounterB++
-        if(profileCounterA === window.profilesA.length && profileCounterA===seta.length&& profileCounterB===setb.length && profileCounterB === window.profilesB.length){
-          $("#textProcBtn").show()
+        if(profileCounterB===setb.length && profileCounterB === window.profilesB.length){
+          //$("#textProcBtn").show()
+          textProc('setb')
         }
       }
     }

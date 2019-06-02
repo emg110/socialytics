@@ -115,10 +115,10 @@ $("#getDataBtn").on('click',function(e){
   e.preventDefault();
   getStatsData();
 })
-$("#textProcBtn").on('click',function(e){
+/*$("#textProcBtn").on('click',function(e){
   e.preventDefault();
   textProc();
-})
+})*/
 $("#resetSets").on('click',function(e){
   e.preventDefault();
   $("#seta").importTags('')

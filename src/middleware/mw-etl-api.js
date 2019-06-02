@@ -1,5 +1,6 @@
 const config = require('../../config');
 const serverUrl = config.PROTOCOL+"://"+config.HOST+':'+config.PORT+'/api';
+const textProcess = require('../middleware/text-processing')
 const fetch = require('node-fetch');
 //const ejs = require('ejs')
 const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36';
@@ -276,7 +277,7 @@ module.exports = function (options = {}) {
                 for(let ijA in etlDataPA){
                   if(ijACounter<201){
                     let postfcA = etlDataPA[ijA];
-                    let commentsCount = postfcA.comments.count || 0
+                    let commentsCount = postfcA.comments.count
                     let commentsEtlApiEndpoint = serverUrl+'/instagram/comments?'+'shortcode='+postfcA.shortcode+'&count='+commentsCount;
                     if(commentsCount>0){
                       ijACounter++
@@ -291,9 +292,20 @@ module.exports = function (options = {}) {
                         }
                       });
                       postfcA.comments.edges = await cleans(commentsData, true)
+                      if(txtProc){
+                        postfcA.comments.edges = await textProcess(postfcA.comments.edges, true)
+                      }
                     }
                     etlDataPA[ijA] = postfcA;
                   }
+                  else{
+                    let postfcA = etlDataPA[ijA];
+                    if(postfcA.comments.count>0){
+                      postfcA.comments.edges = await textProcess(postfcA.comments.edges, true)
+                    }
+                    etlDataPA[ijA] = postfcA;
+                  }
+
 
                 }
               }
@@ -473,6 +485,16 @@ module.exports = function (options = {}) {
                         }
                       });
                       postfcB.comments.edges = await cleans(commentsDataB, true)
+                      if(txtProc){
+                        postfcB.comments.edges = await textProcess(postfcB.comments.edges, true)
+                      }
+                    }
+                    etlDataPB[ijB] = postfcB;
+                  }
+                  else{
+                    let postfcB = etlDataPB[ijB];
+                    if(postfcB.comments.count>0){
+                      postfcB.comments.edges = await textProcess(postfcB.comments.edges, true)
                     }
                     etlDataPB[ijB] = postfcB;
                   }
