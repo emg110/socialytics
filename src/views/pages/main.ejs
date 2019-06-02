@@ -39,27 +39,28 @@
           <a href="#" data-toggle="popover" data-trigger="focus" title="Search instagram for profiles" data-content="Search instagram for user profiles name which searches instagram API directly and then you can drag & drop results in to user profiles inputs like set A,set B and user profile name." data-placement="bottom" class="info fa fa-info-circle"></a>
           <div style="overflow-y:scroll;max-height:20vh;margin-bottom:25px;color:black;background-color: #f1f1f2;" id="autocomplete-results"></div><br>
           <input value="Get sample filters" type="button" class="btn btn-primary" click-target="/instagram/form/data?" call-type="form-data">
-          <a href="#" data-toggle="popover" data-trigger="focus" title="Gets sample filters and sets" data-content="Gets sample filter items and configured set members which are popular Portugies and Iranian brands." data-placement="top" class="info fa fa-info-circle"></a><br>
+          <a href="#" data-toggle="popover" data-trigger="focus" title="Gets sample filters and sets" data-content="Gets sample filter items and configured set members which are popular Portugies and Iranian brands." data-placement="top" class="info fa fa-info-circle"></a>
+          <br ><br >
 
           <div style="width:50%;float:left;">
-            <h5 style="margin-left:10px;">Store browsings</h5>
+            <h6 style="margin-left:10px;">Store browsings</h6>
             <label class="switch">
               <input id="storeBrowsingBtn" type="checkbox">
               <span class="slider round"></span>
             </label>
-            <a href="#" data-toggle="popover" data-trigger="focus" title="Record to database as you browse" data-content="With this option turned on all the data from Instagram will be recorded to database(only public data in compliance to GDPR regulations)." data-placement="top" class="info fa fa-info-circle"></a>
+            <a href="#" data-toggle="popover" data-trigger="focus" title="Record to database as you browse" data-content="With this option turned on all the data from Instagram will be recorded to database(only public data in compliance to GDPR regulations)." data-placement="top" class="info fa fa-info-circle"></a><br><br>
           </div>
           <div id="setToggleDiv" style="width:50%;" class="hidden">
-            <h5 style="margin-left:10px;">Set toggle</h5>
+            <h6 style="margin-left:10px;">Set toggle</h6>
             <label class="switch">
               <input type="checkbox">
               <span class="slider round"></span>
             </label>
-            <a href="#" data-toggle="popover" data-trigger="focus" title="Post recording set toggle" data-content="This switch toggles between set A and set B for recording data(only for posts, all other data are unified)." data-placement="top" class="info fa fa-info-circle"></a><br>
+            <a href="#" data-toggle="popover" data-trigger="focus" title="Post recording set toggle" data-content="This switch toggles between set A and set B for recording data(only for posts, all other data are unified)." data-placement="top" class="info fa fa-info-circle"></a>
           </div>
-          <br>
+
           <div style="width:50%;">
-            <h5 style="margin-left:10px;">All posts</h5>
+            <h6 style="margin-left:10px;">All posts</h6>
             <label class="switch">
               <input id="allPostsBtn" type="checkbox">
               <span class="slider round"></span>
@@ -68,7 +69,7 @@
           </div>
 
           <div id="commentsDiv" style="width:50%;float:left;" class="hidden">
-            <h5 style="margin-left:10px;">Comments</h5>
+            <h6 style="margin-left:10px;">Comments</h6>
             <label class="switch">
               <input type="checkbox">
               <span class="slider round"></span>
@@ -77,15 +78,15 @@
           </div>
 
           <div id="locationDiv" style="width:50%;" class="hidden">
-            <h5 style="margin-left:10px;">Location</h5>
+            <h6 style="margin-left:10px;">Location</h6>
             <label class="switch">
               <input type="checkbox">
               <span class="slider round"></span>
             </label>
-            <a href="#" data-toggle="popover" data-trigger="focus" title="Get all locations" data-content="Geo codes each posts of each profile of sets via OSM nominatim API." data-placement="top" class="info fa fa-info-circle"></a><br>
+            <a href="#" data-toggle="popover" data-trigger="focus" title="Get all locations" data-content="Geo codes each posts of each profile of sets via OSM nominatim API." data-placement="top" class="info fa fa-info-circle"></a><br><br>
           </div>
           <br>
-          <div style="" class="form-group tabs">
+          <div style="margin-left:15px;" class="form-group tabs">
             <ul style="max-width:20vw;height:30px;" class="nav nav-tabs">
               <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#seta-tab" style="display:inline;">Set A</a>
@@ -162,25 +163,25 @@
             </div>
 
             <div style="display:inline-block;margin-left:19%;" class="col-sm-6 text-center align-self-center profile-counters">
-              <div style="background-color:#2f4554" class="byline-counter" onClick=getEndpointData("/instagram/posts?","recent-posts","<%=username%>","posts")>
+              <div style="background-color:#2f4554"  title="Posts count" class="byline-counter" onClick=getEndpointData("/instagram/posts?","recent-posts","<%=username%>","posts")>
 
-                  <span class="byline" title="Posts count"><span id="self-posts-count" class="fa fa-instagram"></span></span>
-
-              </div>
-              <div style="background-color:#bda29a" class="byline-counter" onClick=getEndpointData("/instagram/followers?","user-followers","<%=username%>","followers")>
-
-                  <span class="byline" title="Followers count"><span id="self-followers-count" class="fa fa-users"></span></span>
+                  <span class="byline"><span id="self-posts-count" class="fa fa-instagram"></span></span>
 
               </div>
-              <div style="background-color:#ca8622" class="byline-counter" onClick=getEndpointData("/instagram/following?","user-following","<%=username%>","following")>
+              <div style="background-color:#bda29a" title="Followers count" class="byline-counter" onClick=getEndpointData("/instagram/followers?","user-followers","<%=username%>","followers")>
 
-                  <span class="byline" title="Followings count"><span id="self-following-count" class="fa fa-user"></span></span>
+                  <span class="byline"><span id="self-followers-count" class="fa fa-users"></span></span>
+
+              </div>
+              <div style="background-color:#ca8622" title="Followings count" class="byline-counter" onClick=getEndpointData("/instagram/following?","user-following","<%=username%>","following")>
+
+                  <span class="byline"><span id="self-following-count" class="fa fa-user"></span></span>
 
               </div>
 
-              <div style="background-color:#91c7ae" class="byline-counter">
+              <div style="background-color:#91c7ae" title="Saved count" class="byline-counter">
 
-                  <span class="byline" title="Saved count"><span id="self-saved-count" class="fa fa-bookmark-o"></span></span>
+                  <span class="byline"><span id="self-saved-count" class="fa fa-bookmark-o"></span></span>
 
               </div>
 
@@ -192,7 +193,7 @@
           Notes about this chart
         </div>-->
       </div>
-      <br><br><br>
+      <br><br>
       <div style="" class="form-group tabs">
         <ul style="max-width:45vw;height:30px;" class="nav nav-tabs">
           <li class="nav-item">
