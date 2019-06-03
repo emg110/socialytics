@@ -9,6 +9,7 @@ function textProc(set){
 
     }
     getTextProcData(profilesArrA.toString(),set).then((res)=>{
+
       var resObj = JSON.parse(res);
       var resData = resObj.results.data;
       var words = []
@@ -33,6 +34,7 @@ function textProc(set){
       if(window.wordcloudA){
         $('#wordCloudA').jQCloud('update',words);
         $('#emojiCloudA').jQCloud('update',emojis);
+
       }else{
         $('#wordCloudA').jQCloud(words,{shape: 'rectangular',autoResize: true,delay: 5});
         $('#emojiCloudA').jQCloud(emojis,{shape: 'rectangular',autoResize: true,delay: 5,fontSize: {
@@ -40,10 +42,18 @@ function textProc(set){
             to: 0.01
           }});
         window.wordcloudA = true;
+        var htmlTextProc = '<div id="wordCount-metric" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-instagram"></span></div>' +
+          '<div id="sentiment-metric" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-users"></span></div>' +
+          '<div id="hashtag-metric" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-user-o"></span></div>' +
+          '<div id="keyword-metric" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-heart-o"></span></div>' +
+          '<div id="mention-metric" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-comments-o" style="cursor:pointer;"></span></div>';
+
+        $("#text-proc-totalsa").html(htmlTextProc);
       }
       console.log(resObj.results.data.length+' text processing results for profiles of seta')
     })
-  }else if(set==='setb'){
+  }
+  else if(set==='setb'){
     for(let itemBJ of window['profilesB']){
       profilesArrB.push(itemBJ.id)
 
@@ -1608,7 +1618,8 @@ var profileCounterB = 0;
     $("#countera").html(htmlChartLoadingMini);
     window.profilesA = [];
     //{$search: seta[i], $fields: ['username'], $deep: false}
-    $(".widget-stage.classa").html(htmlChartLoading);
+    // $(".widget-stage.classa").html(htmlChartLoading);
+    $(".widget-stage.classa").html('<span></span>');
     getServiceData('find',
       'instagram/profiles',
       {
@@ -1628,7 +1639,7 @@ var profileCounterB = 0;
     $("#counterb").html(htmlChartLoadingMini);
     window.profilesB = [];
     //{$search: seta[i], $fields: ['username'], $deep: false}
-    $(".widget-stage.classb").html(htmlChartLoading);
+    $(".widget-stage.classb").html('<span></span>');
     getServiceData('find',
       'instagram/profiles',
       {

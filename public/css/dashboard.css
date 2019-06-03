@@ -828,7 +828,7 @@ button {
   display:inline-block;
 }
 .widget-title, .widget-notes{
-  color:#b4afaf
+  color:#b4afafM
 }
 .counters-stage{
   width:auto;
@@ -843,7 +843,7 @@ button {
 .posts {
   background-color: #31a9b8;
   color: #f1f1f2;
-  width: 115px;
+  /*width: 115px;*/
 }
 .followers{
   background-color: #bda29a;
