@@ -29,7 +29,7 @@ function textProc(set){
 
       $("#text-proc-totalsa").html(htmlTextProca);
       var resObj = JSON.parse(res);
-      var resData = resObj.results.data;
+      var resData = resObj.results;
       var words = []
       var emojis = []
       var wordCloud = resObj.wordcloud
@@ -83,7 +83,7 @@ function textProc(set){
             }});
           $("#emojiCloudALink").off('click');
           $("#emojiCloudALink").on('click',function(){
-            $('#emojiCloudB').jQCloud('update',emojis);
+            $('#emojiCloudA').jQCloud('update',emojis);
           })
           window.emojicloudA = true;
         })
@@ -105,9 +105,12 @@ function textProc(set){
 
       $("#text-proc-totalsb").html(htmlTextProcb);
       var resObjB = JSON.parse(resb);
-      var resDataB = resObjB.results.data;
+      var resDataB = resObjB.results;
       var wordsB = []
       var emojisB = []
+      var sentimentsNutB = []
+      var sentimentsPosB = []
+      var sentimentsNegB = []
       var wordCloudB = resObjB.wordcloud
       var emojicloudB = resObjB.emojicloud
 
@@ -123,6 +126,27 @@ function textProc(set){
           weight:emojicloudB[jB]+10
         })
       }
+      var optionsRadarB = {
+        grid: {containLabel: true,top:0,},
+        series: [ ],
+        textStyle:{
+          color:'#999'
+        }
+      };
+      /*for (var kB in resDataB){
+        var score = resDataB[kB].sentiment.score;
+        if(score>0){
+          sentimentsPosB.push(score)
+        }else if(score<0){
+          sentimentsNegB.push()
+        }else if(score===0){
+          sentimentsNutB.push()
+        }
+
+
+
+      }*/
+
 
 
 
