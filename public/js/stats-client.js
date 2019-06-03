@@ -1,7 +1,19 @@
 //$("#textProcBtn").hide();
+$("#text-procb").responsiveTabs({
+  startCollapsed: 'accordion'
+})
+$('#text-procb').responsiveTabs('activate', 0);
+$("#text-proca").responsiveTabs({
+  startCollapsed: 'accordion'
+})
+$('#text-proca').responsiveTabs('activate', 0);
 function textProc(set){
   var profilesArrA = [];
   var profilesArrB = [];
+  window.wordcloudB = false
+  window.wordcloudA = false
+  window.emojicloudB = false;
+  window.emojicloudA = false;
 
   if(set==='seta'){
     for(let itemAJ of window['profilesA']){
@@ -9,6 +21,13 @@ function textProc(set){
 
     }
     getTextProcData(profilesArrA.toString(),set).then((res)=>{
+      var htmlTextProca = '<div id="wordCount-metrica" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-wikipedia-w"></span></div>' +
+        '<div id="sentiment-metrica" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-smile-o"></span></div>' +
+        '<div id="hashtag-metrica" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-hashtag"></span></div>' +
+        '<div id="keyword-metrica" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-key"></span></div>' +
+        '<div id="mention-metrica" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-at" style="cursor:pointer;"></span></div>';
+
+      $("#text-proc-totalsa").html(htmlTextProca);
       var resObj = JSON.parse(res);
       var resData = resObj.results.data;
       var words = []
@@ -16,42 +35,60 @@ function textProc(set){
       var wordCloud = resObj.wordcloud
       var emojicloud = resObj.emojicloud
 
-      for (var i in wordCloud){
+      for (i in wordCloud){
         words.push({
           text:i,
           weight:wordCloud[i]
         })
       }
-      for (var j in emojicloud){
+      for (j in emojicloud){
         emojis.push({
           text:j,
           weight:emojicloud[j]+10
         })
       }
-      $("#wordCloudA").height(400);
-      $("#emojiCloudA").height(400);
-      $("#wordCloudA").html('<span></span>');
-      $("#emojiCloudA").html('<span></span>');
+
+
+
       if(window.wordcloudA){
+        $("#wordCloudALink").off('click');
+
         $('#wordCloudA').jQCloud('update',words);
-        $('#emojiCloudA').jQCloud('update',emojis);
-
-      }else{
-        $('#wordCloudA').jQCloud(words,{shape: 'rectangular',autoResize: true,delay: 5});
-        $('#emojiCloudA').jQCloud(emojis,{shape: 'rectangular',autoResize: true,delay: 5,fontSize: {
-            from: 0.2,
-            to: 0.01
-          }});
-        window.wordcloudA = true;
-        var htmlTextProca = '<div id="wordCount-metrica" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-wikipedia-w"></span></div>' +
-          '<div id="sentiment-metrica" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-smile-o"></span></div>' +
-          '<div id="hashtag-metrica" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-hashtag"></span></div>' +
-          '<div id="keyword-metrica" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-key"></span></div>' +
-          '<div id="mention-metrica" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-at" style="cursor:pointer;"></span></div>';
-
-        $("#text-proc-totalsa").html(htmlTextProca);
+        $("#wordCloudALink").on('click',function(){
+          $('#wordCloudA').jQCloud('update',words);
+        })
       }
-      console.log(resObj.results.data.length+' text processing results for profiles of seta')
+      else{
+        $("#wordCloudA").height(400);
+        $("#wordCloudA").html('<span></span>');
+        $('#wordCloudA').jQCloud(words,{shape: 'rectangular',autoResize: true,delay: 5});
+        $("#wordCloudALink").on('click',function(){
+          $('#wordCloudA').jQCloud('update',words);
+        })
+        window.wordcloudA = true;
+      }
+      if(window.emojicloudA){
+        $("#emojiCloudALink").off('click');
+        $("#emojiCloudALink").on('click',function(){
+          $('#emojiCloudA').jQCloud('update',emojis);
+        })
+      }
+      else{
+        $("#emojiCloudALink").on('click',function(){
+          $("#emojiCloudA").height(400);
+          $("#emojiCloudA").html('<span></span>');
+          $('#emojiCloudA').jQCloud(emojis,{shape: 'rectangular',autoResize: true,delay: 5,fontSize: {
+              from: 0.1,
+              to: 0.01
+            }});
+          $("#emojiCloudALink").off('click');
+          $("#emojiCloudALink").on('click',function(){
+            $('#emojiCloudB').jQCloud('update',emojis);
+          })
+          window.emojicloudA = true;
+        })
+      }
+      console.log(resData.length+' text processing results for profiles of seta')
     })
   }
   else if(set==='setb'){
@@ -60,6 +97,13 @@ function textProc(set){
 
     }
     getTextProcData(profilesArrB.toString(),set).then((resb)=>{
+      var htmlTextProcb = '<div id="wordCount-metricb" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-wikipedia-w"></span></div>' +
+        '<div id="sentiment-metricb" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-smile-o"></span></div>' +
+        '<div id="hashtag-metricb" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-hashtag"></span></div>' +
+        '<div id="keyword-metricb" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-key"></span></div>' +
+        '<div id="mention-metricb" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-at" style="cursor:pointer;"></span></div>';
+
+      $("#text-proc-totalsb").html(htmlTextProcb);
       var resObjB = JSON.parse(resb);
       var resDataB = resObjB.results.data;
       var wordsB = []
@@ -80,29 +124,46 @@ function textProc(set){
         })
       }
 
-      $("#wordCloudB").height(400);
-      $("#emojiCloudB").height(400);
-      $("#wordCloudB").html('<span></span>');
-      $("#emojiCloudB").html('<span></span>');
+
+
       if(window.wordcloudB){
+        $("#wordCloudBLink").off('click');
+
         $('#wordCloudB').jQCloud('update',wordsB);
-        $('#emojiCloudB').jQCloud('update',emojisB);
-      }else{
-        $('#wordCloudB').jQCloud(wordsB,{shape: 'rectangular',autoResize: true,delay: 5});
-        $('#emojiCloudB').jQCloud(emojisB,{shape: 'rectangular',autoResize: true,delay: 5,fontSize: {
-            from: 0.2,
-            to: 0.01
-          }});
-        window.wordcloudB = true;
-        var htmlTextProcb = '<div id="wordCount-metricb" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-wikipedia-w"></span></div>' +
-          '<div id="sentiment-metricb" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-smile-o"></span></div>' +
-          '<div id="hashtag-metricb" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-hashtag"></span></div>' +
-          '<div id="keyword-metricb" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-key"></span></div>' +
-          '<div id="mention-metricb" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-at" style="cursor:pointer;"></span></div>';
-
-        $("#text-proc-totalsb").html(htmlTextProcb);
+        $("#wordCloudBLink").on('click',function(){
+          $('#wordCloudB').jQCloud('update',wordsB);
+        })
       }
-
+      else{
+        $("#wordCloudB").height(400);
+        $("#wordCloudB").html('<span></span>');
+        $('#wordCloudB').jQCloud(wordsB,{shape: 'rectangular',autoResize: true,delay: 5});
+        $("#wordCloudBLink").on('click',function(){
+          $('#wordCloudB').jQCloud('update',wordsB);
+        })
+        window.wordcloudB = true;
+      }
+      if(window.emojicloudB){
+        $("#emojiCloudBLink").off('click');
+        $("#emojiCloudBLink").on('click',function(){
+          $('#emojiCloudB').jQCloud('update',emojisB);
+        })
+      }
+      else{
+        $("#emojiCloudBLink").on('click',function(){
+          $("#emojiCloudB").height(400);
+          $("#emojiCloudB").html('<span></span>');
+          $('#emojiCloudB').jQCloud(emojisB,{shape: 'rectangular',autoResize: true,delay: 5,fontSize: {
+              from: 0.1,
+              to: 0.01
+            }});
+          $("#emojiCloudBLink").off('click');
+          $("#emojiCloudBLink").on('click',function(){
+            $('#emojiCloudB').jQCloud('update',emojisB);
+          })
+          window.emojicloudB = true;
+        })
+      }
       console.log(resDataB.length+' text processing results for profiles of setb')
     })
   }

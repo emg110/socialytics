@@ -829,3 +829,87 @@ input:checked + .slider:before {
   font-size: 20px;
   margin-left: 50px;
 }
+.r-tabs {
+  margin-top:10px;
+  position: relative;
+
+  background-color: #222222;
+
+  border-top: 1px solid #222222;
+  border-right: 1px solid #222222;
+  border-left: 1px solid #222222;
+  border-bottom: 4px solid #222222;
+  border-radius: 4px;
+
+}
+
+/* Tab element */
+.r-tabs .r-tabs-nav .r-tabs-tab {
+  position: relative;
+  background-color: #222222;
+}
+
+/* Tab anchor */
+.r-tabs .r-tabs-nav .r-tabs-anchor {
+  display: inline-block;
+  padding: 10px 12px;
+
+  text-decoration: none;
+  text-shadow: 0 1px rgba(0, 0, 0, 0.4);
+  font-size: 14px;
+  font-weight: bold;
+  color: #1a94ab;
+}
+
+/* Disabled tab */
+.r-tabs .r-tabs-nav .r-tabs-state-disabled {
+  opacity: 0.5;
+}
+
+/* Active state tab anchor */
+.r-tabs .r-tabs-nav .r-tabs-state-active .r-tabs-anchor {
+  color: #222222;
+  text-shadow: none;
+
+  background-color: white;
+
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+}
+
+/* Tab panel */
+.r-tabs .r-tabs-panel {
+  background-color: #222222;
+
+  border-bottom: none;
+
+
+}
+
+/* Accordion anchor */
+.r-tabs .r-tabs-accordion-title .r-tabs-anchor {
+  display: block;
+  padding: 10px;
+
+  background-color: #222222;
+  color: #1a94ab;
+  font-weight: bold;
+  text-decoration: none;
+  text-shadow: 0 1px rgba(0, 0, 0, 0.4);
+  font-size: 14px;
+
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+}
+
+/* Active accordion anchor */
+.r-tabs .r-tabs-accordion-title.r-tabs-state-active .r-tabs-anchor {
+  background-color: #1a94ab;
+  color: #222222;
+  text-shadow: none;
+}
+
+/* Disabled accordion button */
+.r-tabs .r-tabs-accordion-title.r-tabs-state-disabled {
+  opacity: 0.5;
+}
