@@ -42,13 +42,13 @@ function textProc(set){
             to: 0.01
           }});
         window.wordcloudA = true;
-        var htmlTextProc = '<div id="wordCount-metric" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-instagram"></span></div>' +
-          '<div id="sentiment-metric" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-users"></span></div>' +
-          '<div id="hashtag-metric" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-user-o"></span></div>' +
-          '<div id="keyword-metric" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-heart-o"></span></div>' +
-          '<div id="mention-metric" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-comments-o" style="cursor:pointer;"></span></div>';
+        var htmlTextProca = '<div id="wordCount-metrica" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-wikipedia-w"></span></div>' +
+          '<div id="sentiment-metrica" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-smile-o"></span></div>' +
+          '<div id="hashtag-metrica" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-hashtag"></span></div>' +
+          '<div id="keyword-metrica" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-key"></span></div>' +
+          '<div id="mention-metrica" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-at" style="cursor:pointer;"></span></div>';
 
-        $("#text-proc-totalsa").html(htmlTextProc);
+        $("#text-proc-totalsa").html(htmlTextProca);
       }
       console.log(resObj.results.data.length+' text processing results for profiles of seta')
     })
@@ -91,6 +91,13 @@ function textProc(set){
             to: 0.01
           }});
         window.wordcloudB = true;
+        var htmlTextProcb = '<div id="wordCount-metricb" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-wikipedia-w"></span></div>' +
+          '<div id="sentiment-metricb" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-smile-o"></span></div>' +
+          '<div id="hashtag-metricb" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-hashtag"></span></div>' +
+          '<div id="keyword-metricb" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-key"></span></div>' +
+          '<div id="mention-metricb" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-at" style="cursor:pointer;"></span></div>';
+
+        $("#text-proc-totalsb").html(htmlTextProcb);
       }
 
       console.log(resDataB.length+' text processing results for profiles of setb')

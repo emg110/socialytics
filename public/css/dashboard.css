@@ -941,3 +941,23 @@ div.tagsinput span.tag{
 .nav-tabs .nav-link.active{
   color:#116676;
 }
+#wordCount-metrica, #wordCount-metricb{
+  background-color: #4d4d4d;
+  color: #f1f1f2;
+}
+#sentiment-metrica ,#sentiment-metricb{
+  background-color: #5a6268;
+  color: #f1f1f2;
+}
+#hashtag-metrica, #hashtag-metricb{
+  background-color: #727c82;
+  color: #f1f1f2;
+}
+#keyword-metrica, #keyword-metricb{
+  background-color: #8c8c8c;
+  color: #f1f1f2;
+}
+#mention-metrica, #mention-metricb{
+  background-color: #6c757d;
+  color: #f1f1f2;
+}
