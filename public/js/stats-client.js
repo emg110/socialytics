@@ -9,7 +9,6 @@ function textProc(set){
 
     }
     getTextProcData(profilesArrA.toString(),set).then((res)=>{
-
       var resObj = JSON.parse(res);
       var resData = resObj.results.data;
       var words = []
@@ -31,6 +30,8 @@ function textProc(set){
       }
       $("#wordCloudA").height(400);
       $("#emojiCloudA").height(400);
+      $("#wordCloudA").html('<span></span>');
+      $("#emojiCloudA").html('<span></span>');
       if(window.wordcloudA){
         $('#wordCloudA').jQCloud('update',words);
         $('#emojiCloudA').jQCloud('update',emojis);
@@ -81,6 +82,8 @@ function textProc(set){
 
       $("#wordCloudB").height(400);
       $("#emojiCloudB").height(400);
+      $("#wordCloudB").html('<span></span>');
+      $("#emojiCloudB").html('<span></span>');
       if(window.wordcloudB){
         $('#wordCloudB').jQCloud('update',wordsB);
         $('#emojiCloudB').jQCloud('update',emojisB);
@@ -1619,7 +1622,7 @@ var profileCounterB = 0;
     window.profilesA = [];
     //{$search: seta[i], $fields: ['username'], $deep: false}
     // $(".widget-stage.classa").html(htmlChartLoading);
-    $(".widget-stage.classa").html('<span></span>');
+    $(".widget-stage.classa").html(htmlChartLoadingMini);
     getServiceData('find',
       'instagram/profiles',
       {
@@ -1639,7 +1642,7 @@ var profileCounterB = 0;
     $("#counterb").html(htmlChartLoadingMini);
     window.profilesB = [];
     //{$search: seta[i], $fields: ['username'], $deep: false}
-    $(".widget-stage.classb").html('<span></span>');
+    $(".widget-stage.classb").html(htmlChartLoadingMini);
     getServiceData('find',
       'instagram/profiles',
       {
