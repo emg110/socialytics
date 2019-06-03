@@ -711,9 +711,17 @@ img {
 #close-btn {
   float: right;
   margin-right: 12px;
-  margin-top: 6px;
+  margin-top: 8px;
   color: #FFF;
   z-index:999;
+}
+#close-button{
+  float: right;
+  margin-right: 12px;
+  margin-top: -1px;
+  color: #FFF;
+  z-index: 999;
+  font-size: 18px;
 }
 .switch {
   position: relative;

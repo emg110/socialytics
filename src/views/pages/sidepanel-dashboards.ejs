@@ -3,10 +3,10 @@
   <a href="javascript:void(0)" value="" style="display:none" id="backbtn" class="backbtn" onclick="backNav()">&#8406</a>
   <div id="dashboard-container">
     <div id="noDataMsg" class="loader loader--style1" title="0">  NO FILTERS HERE...</div>
-    <input type="text" style="width:60%;display:inline;margin:10px;" class="form-control" id="search-input" placeholder="Search for Instagram account" search-query="search-query">
+    <input type="text" style="width:60%;display:inline;margin:10px;" class="form-control" id="search-input-side-panel" placeholder="Search for Instagram account" search-query="search-query">
     <input id="searchProfileBtn" style="text-align:center;display:inline; padding:5px; margin:20px; min-width:5%" value="Go" type="button" class="btn btn-secondary">
     <a href="#" data-toggle="popover" data-trigger="focus" title="Search instagram for profiles" data-content="Search instagram for user profiles name which searches instagram API directly and then you can drag & drop results in to set A or set B." data-placement="bottom" class="fa fa-info-circle" style="font-size: 15px;display:inline;margin-left:-40px"></a>
-    <div style="overflow-y: scroll;max-height:20vh;margin-bottom:25px" id="autocomplete-results"></div>
+    <div style="overflow-y: scroll;max-height:20vh;margin-bottom:25px;background-color:#f1f1f2;" id="autocomplete-results"></div>
     <span style="color:#999;font-size:15px;margin-left:14px;">Set A</span>
     <a href="#" data-toggle="popover" data-trigger="focus" title="Set A(first set) of comparative analytics" data-content="Comparative analytics are implemented for two sets of data, varying inside(set A and set B). This part represents set A members input." data-placement="right" class="fa fa-info-circle" style="font-size: 15px;display:inline;margin-left:-25px"></a>
     <textarea style="display:block; padding:5px; margin:10px; min-height:200px;width:25em" id="seta" class="seta" ondrop="drop(event)" ondragover="allowDrop(event)"></textarea>
