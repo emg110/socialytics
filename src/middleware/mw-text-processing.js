@@ -61,7 +61,7 @@ module.exports = function (options = {}) {
       let finalTextProcRes = JSON.stringify({
         set:querySet,
         profiles:queryProfiles,
-        results:resTextProc,
+        results:commentsData,
         wordcloud:wordCloudData,
         emojicloud:emojiCloudData
       })
