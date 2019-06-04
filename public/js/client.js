@@ -157,17 +157,26 @@ $("#search-input").on('keypress',(e)=>{
 
           for(var i of json){
             i = i.user;
-            var verified = i.is_verified? 'Verified':'';
-            $("#autocomplete-results").append(
+            var searchRes =
               '<div id="'+i.username+'" class="search-result" draggable="true" ondragstart="drag(event)">'+
               '<span>'+
               '<img title="'+i.full_name+':'+'" class="profile-mini-img" src="'+i.profile_pic_url+'">'+
               '</span>'+
-              '<span style="margin-left:1vw">'+
+              '<span style="margin-left:1vw" id="searched-username">'+
               i.username+
-              '</span>'+
-              '<span style="margin: 5px;background-color: rgba(0, 170, 255, .8);" class="badge badge-secondary">'+verified+'</span>'+
-              '</div>')
+              '</span>';
+
+            if(i.is_private){
+              searchRes += ' <span class="fa fa-lock"></span></div>';
+            }
+            if( i.is_verified){
+              searchRes += ' <span class="fa fa-check-circle verified"></span></div>';
+            }
+            else{
+              searchRes += '</div>';
+            }
+
+            $("#autocomplete-results").append(searchRes);
           }
         }
        /* $("#autocomplete-results").overlayScrollbars({
@@ -201,17 +210,26 @@ $("#search-input-side-panel").on('keypress',(e)=>{
 
           for(var i of json){
             i = i.user;
-            var verified = i.is_verified? 'Verified':'';
-            $("#autocomplete-results").append(
+            var searchRes =
               '<div id="'+i.username+'" class="search-result" draggable="true" ondragstart="drag(event)">'+
               '<span>'+
               '<img title="'+i.full_name+':'+'" class="profile-mini-img" src="'+i.profile_pic_url+'">'+
               '</span>'+
-              '<span style="margin-left:1vw">'+
+              '<span style="margin-left:1vw" id="searched-username">'+
               i.username+
-              '</span>'+
-              '<span style="margin: 5px;background-color: rgba(0, 170, 255, .8);" class="badge badge-secondary">'+verified+'</span>'+
-              '</div>')
+              '</span>';
+
+            if(i.is_private){
+              searchRes += ' <span class="fa fa-lock"></span></div>';
+            }
+            if( i.is_verified){
+              searchRes += ' <span class="fa fa-check-circle verified"></span></div>';
+            }
+            else{
+              searchRes += '</div>';
+            }
+
+            $("#autocomplete-results").append(searchRes);
           }
         }
         /* $("#autocomplete-results").overlayScrollbars({
@@ -222,6 +240,56 @@ $("#search-input-side-panel").on('keypress',(e)=>{
           });*/
       });
     }
+  }
+});
+$("#sidepanelSearchProfileBtn").click(()=>{
+  var value = $("#search-input-side-panel").val();
+  /* var instance = $("#autocomplete-results").overlayScrollbars()
+   if(instance)instance.destroy()*/
+  $("#autocomplete-results").html('<div>  </div>')
+  if(value.length>3){
+    window.fetch('https://www.instagram.com/web/search/topsearch/?query='+value).then(res=>{
+      return res.json()
+    }).then(function (json) {
+      if(json){
+        json = json.users;
+
+        $("#autocomplete-results").append('<a href="#" id="close-button" class="fa fa-times"></a><div style="width:100%;color:#f8f9fa;padding:5px;font-family: monospace; background: #31a9b8;text-align: center">Drag profiles to input</div>');
+        $("#close-button").on('click',function(){
+          $("#autocomplete-results").html('<div>  </div>');
+        });
+
+        for(var i of json){
+          i = i.user;
+          var searchRes =
+            '<div id="'+i.username+'" class="search-result" draggable="true" ondragstart="drag(event)">'+
+            '<span>'+
+            '<img title="'+i.full_name+':'+'" class="profile-mini-img" src="'+i.profile_pic_url+'">'+
+            '</span>'+
+            '<span style="margin-left:1vw" id="searched-username">'+
+            i.username+
+            '</span>';
+
+          if(i.is_private){
+            searchRes += ' <span class="fa fa-lock"></span></div>';
+          }
+          if( i.is_verified){
+            searchRes += ' <span class="fa fa-check-circle verified"></span></div>';
+          }
+          else{
+            searchRes += '</div>';
+          }
+
+          $("#autocomplete-results").append(searchRes);
+        }
+      }
+      /* $("#autocomplete-results").overlayScrollbars({
+         className : "os-theme-dark"
+       })*/
+      /*OverlayScrollbars(document.getElementById('autocomplete-results'), {
+          className : "os-theme-dark",
+        });*/
+    });
   }
 });
 $("#searchProfileBtn").click(()=>{
@@ -242,17 +310,27 @@ $("#searchProfileBtn").click(()=>{
         });
         for(var i of json){
           i = i.user;
-          var verified = i.is_verified? 'Verified':'';
-          $("#autocomplete-results").append(
+          var searchRes =
             '<div id="'+i.username+'" class="search-result" draggable="true" ondragstart="drag(event)">'+
             '<span>'+
             '<img title="'+i.full_name+':'+'" class="profile-mini-img" src="'+i.profile_pic_url+'">'+
             '</span>'+
-            '<span style="margin-left:1vw">'+
+            '<span style="margin-left:1vw" id="searched-username">'+
             i.username+
-            '</span>'+
-            '<span style="margin: 5px;background-color: rgba(0, 170, 255, .8);" class="badge badge-secondary">'+verified+'</span>'+
-            '</div>')
+            '</span>';
+
+          if(i.is_private){
+            searchRes += ' <span class="fa fa-lock"></span></div>';
+          }
+          if( i.is_verified){
+            searchRes += ' <span class="fa fa-check-circle verified"></span></div>';
+          }
+          else{
+            searchRes += '</div>';
+          }
+
+          $("#autocomplete-results").append(searchRes);
+
         }
       }
      /* $("#autocomplete-results").overlayScrollbars({
@@ -264,6 +342,7 @@ $("#searchProfileBtn").click(()=>{
     });
   }
 });
+
 
 $("#search-insta-input").on('keypress',(e)=>{
   //console.log(e.which)
