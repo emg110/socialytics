@@ -99,7 +99,7 @@ function render(html, container, caller){
   }*/
 
   $(caller).val(currentVal);
-  $(caller).css('background-color', '#007bff');
+  $(caller).css('background-color', '#38b5c5');
   $(caller).find('#loading').remove();
   var doneDate = dayjs(Date.now()).format('YYYY MM-DD HH:mm:ss')
   //<span class="badge">7</span>
@@ -164,7 +164,7 @@ function norender(caller){
   //if (currentVal) currentVal = currentVal.replace('Loading... ', 'Get ');
   //$('.disabled').val(currentVal);
   $('#loading').remove();
-  $(caller).css('background-color', '#007bff');
+  $(caller).css('background-color', '#38b5c5');
   //$('.disabled').next().remove();
   $(caller).removeClass('fired');
   //$(caller).removeClass('fired');

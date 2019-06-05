@@ -150,7 +150,7 @@
           </div>
 
           <div class="likes-comments">
-              <span style="cursor:pointer; color: rgb(249,5,5);" class="fa fa-heart"
+              <span style="cursor:pointer; color: rgb(249,5,5);" class="fa fa-heart-o"
                     onClick=getEndpointData("/instagram/likes?","post-likes","<%= edge.shortcode %>","post-likes")>
                 <% if(edge.edge_media_preview_like){ %>
                   <% if(edge.edge_media_preview_like.count) { %><%= edge.edge_media_preview_like.count+' ' %>
@@ -159,12 +159,22 @@
                 <%= edge.edge_liked_by.count+' ' %>
                 <% } %>
               </span>
-            <span style="cursor:pointer; color:#749f83;" class="fa fa-comment"
+            <span style="cursor:pointer; color:#749f83;" class="fa fa-comments-o"
                   onClick=getEndpointData("/instagram/comments?","post-comments","<%= edge.shortcode %>","post-comments")>
               <% if(edge.edge_media_to_comment){ %>
               <%= edge.edge_media_to_comment.count+' ' %>
               <% } %>
             </span>
+            <span style="cursor:pointer; color:#ffaa80;" class="fa fa-handshake-o"> 0</span>
+            <span style="cursor:pointer; color:#61a0a8;" class="fa fa-exchange"> 0</span>
+
+            <% if(edge.is_video){ %>
+              <span style="cursor:pointer; color:#e0b0b1;" class="fa fa-video-camera">
+                <% if(edge.video_view_count){ %>
+                  <%= edge.video_view_count+' ' %>
+                <% } %>
+              </span>
+            <% } %>
 
           </div>
 
