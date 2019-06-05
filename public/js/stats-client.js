@@ -21,11 +21,12 @@ function textProc(set){
 
     }
     getTextProcData(profilesArrA.toString(),set).then((res)=>{
-      var htmlTextProca = '<div id="wordCount-metrica" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-wikipedia-w"></span></div>' +
-        '<div id="sentiment-metrica" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-smile-o"></span></div>' +
-        '<div id="hashtag-metrica" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-hashtag"></span></div>' +
-        '<div id="keyword-metrica" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-key"></span></div>' +
-        '<div id="mention-metrica" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-at" style="cursor:pointer;"></span></div>';
+      var htmlTextProca =
+        '<div id="wordCount-metrica" class="counter-metric-span" title="Word count">' + 0 + '<br ><span class="fa fa-wikipedia-w"></span></div>' +
+        '<div id="sentiment-metrica" class="counter-metric-span" title="Sentiment">' + 0 + '<br ><span class="fa fa-smile-o"></span></div>' +
+        '<div id="hashtag-metrica" class="counter-metric-span" title="Hashtag">' + 0 + '<br ><span class="fa fa-hashtag"></span></div>' +
+        '<div id="keyword-metrica" class="counter-metric-span" title="Keywords">' + 0 + '<br ><span class="fa fa-key"></span></div>' +
+        '<div id="mention-metrica" class="counter-metric-span" title="Mention">' + 0 + '<br ><span class="fa fa-at" style="cursor:pointer;"></span></div>';
 
       $("#text-proc-totalsa").html(htmlTextProca);
       var resObj = JSON.parse(res);
@@ -97,11 +98,11 @@ function textProc(set){
 
     }
     getTextProcData(profilesArrB.toString(),set).then((resb)=>{
-      var htmlTextProcb = '<div id="wordCount-metricb" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-wikipedia-w"></span></div>' +
-        '<div id="sentiment-metricb" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-smile-o"></span></div>' +
-        '<div id="hashtag-metricb" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-hashtag"></span></div>' +
-        '<div id="keyword-metricb" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-key"></span></div>' +
-        '<div id="mention-metricb" class="counter-metric-span">' + 0 + '<br ><span class="fa fa-at" style="cursor:pointer;"></span></div>';
+      var htmlTextProcb = '<div id="wordCount-metricb" class="counter-metric-span" title="Word count">' + 0 + '<br ><span class="fa fa-wikipedia-w"></span></div>' +
+        '<div id="sentiment-metricb" class="counter-metric-span" title="Sentiment">' + 0 + '<br ><span class="fa fa-smile-o"></span></div>' +
+        '<div id="hashtag-metricb" class="counter-metric-span" title="Hashtag">' + 0 + '<br ><span class="fa fa-hashtag"></span></div>' +
+        '<div id="keyword-metricb" class="counter-metric-span" title="Keywords">' + 0 + '<br ><span class="fa fa-key"></span></div>' +
+        '<div id="mention-metricb" class="counter-metric-span" title="Mention">' + 0 + '<br ><span class="fa fa-at" style="cursor:pointer;"></span></div>';
 
       $("#text-proc-totalsb").html(htmlTextProcb);
       var resObjB = JSON.parse(resb);

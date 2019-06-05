@@ -1,11 +1,15 @@
 function openNav(id, width) {
   //document.getElementById(id).style.backgroundColor = "#111";
   document.getElementById(id).style.width = width || "35%";
+  $("#maximMinimBtn").removeClass('fa-window-minimize');
+  $("#maximMinimBtn").addClass('fa-window-maximize');
 }
 
 /* Set the width of the sidebar to 0 (hide it) */
 function closeNav(id) {
   document.getElementById(id).style.width = "0";
+  $("#maximMinimBtn").removeClass('fa-window-maximize');
+  $("#maximMinimBtn").addClass('fa-window-minimize');
 }
 
 function maximMinimNav(id) {
