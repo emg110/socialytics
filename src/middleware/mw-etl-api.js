@@ -129,7 +129,7 @@ module.exports = function (options = {}) {
       let getPosts = req.query.allPosts
       let getComments = req.query.allComments
       let getLocations = req.query.allLocations
-      let imProc = req.query.imageProcessing
+      //let imProc = req.query.imageProcessing
       let txtProc = req.query.textProcessing
       var resultData = {};
       resultData.totalInstaPostsA = resultData.totalInstaPostsB = 0
@@ -534,7 +534,7 @@ module.exports = function (options = {}) {
     }
     else if(expr.indexOf('/instagram/profile')>=0){
       let etlApiEndpoint = serverUrl+expr;
-      let service = 'instagram/profiles';
+      //let service = 'instagram/profiles';
       let page = 'pages/profile';
       console.log('info: Now requesting profile from ETL backend for: '+ username);
       let etlData = await getEndpointDataEtl(etlApiEndpoint, username, accessToken, strategy);
@@ -562,7 +562,7 @@ module.exports = function (options = {}) {
     else if(expr.indexOf('/instagram/whoami')>=0){
       expr = expr.replace('/instagram/whoami','/instagram/profile') + "?"+ username
       let etlApiEndpoint = serverUrl+expr;
-      let service = 'instagram/profiles';
+      //let service = 'instagram/profiles';
       let page = 'pages/profile';
       let etlData = await getEndpointDataEtl(etlApiEndpoint, username, accessToken, strategy);
       console.log('info: Writing data from ETL API to database')
@@ -587,7 +587,7 @@ module.exports = function (options = {}) {
       console.log('info: Now requesting posts from ETL backend for: '+ username);
       let etlData = await getEndpointDataEtl(etlApiEndpoint, username, accessToken, strategy);
       if(etlData && etlData !== 'No ETL data'){
-        let service = 'instagram/posts';
+        //let service = 'instagram/posts';
         let page = 'pages/posts';
         console.log('info: Rendering data from ETL API to client')
         //etlData = cleans(etlData, true)
@@ -610,7 +610,7 @@ module.exports = function (options = {}) {
     else if(expr.indexOf('/instagram/allposts')>=0){
       req.setTimeout(50000000000)
       let etlApiEndpoint = serverUrl+expr;
-      let service = 'instagram/posts';
+      //let service = 'instagram/posts';
       let page = 'pages/posts';
       let etlData = await getEndpointDataEtl(etlApiEndpoint, username, accessToken, strategy);
       var dataLength = etlData.length
@@ -648,7 +648,7 @@ module.exports = function (options = {}) {
     }
     else if(expr.indexOf('/instagram/tag')>=0){
       let etlApiEndpoint = serverUrl+expr.replace('/explore','');
-      let service = 'instagram/tag';
+      //let service = 'instagram/tag';
       let page = 'pages/posts';
       let etlData = await getEndpointDataEtl(etlApiEndpoint, username, accessToken, strategy);
       if(etlData.length){
@@ -678,7 +678,7 @@ module.exports = function (options = {}) {
     }
     else if(expr.indexOf('/instagram/location')>=0){
       let etlApiEndpoint = serverUrl+expr.replace('/explore','');
-      let service = 'instagram/location';
+      //let service = 'instagram/location';
       let page = 'pages/posts';
       let etlData = await getEndpointDataEtl(etlApiEndpoint, username, accessToken, strategy);
 
@@ -710,7 +710,7 @@ module.exports = function (options = {}) {
     }
     else if(expr.indexOf('/instagram/following')>=0){
       let etlApiEndpoint = serverUrl+expr;
-      let service = 'instagram/following';
+      //let service = 'instagram/following';
       let page = 'pages/follow';
       let etlData = await getEndpointDataEtl(etlApiEndpoint, username, accessToken, strategy);
       if(etlData.length){
@@ -738,7 +738,7 @@ module.exports = function (options = {}) {
     }
     else if(expr.indexOf('/instagram/followers')>=0){
       let etlApiEndpoint = serverUrl+expr;
-      let service = 'instagram/followers';
+      //let service = 'instagram/followers';
       let page = 'pages/follow';
       let etlData = await getEndpointDataEtl(etlApiEndpoint, username, accessToken, strategy);
       if(etlData.length){
@@ -772,7 +772,7 @@ module.exports = function (options = {}) {
     }
     else if(expr.indexOf('/instagram/search')>=0){
       let etlApiEndpoint = serverUrl+expr;
-      let service = 'instagram/search';
+      //let service = 'instagram/search';
       let page = 'pages/search';
       let etlData = await getEndpointDataEtl(etlApiEndpoint, username, accessToken, strategy);
       console.log('info: Rendering data from ETL API to client')
@@ -789,7 +789,7 @@ module.exports = function (options = {}) {
     }
     else if(expr.indexOf('/instagram/feed')>=0){
       let etlApiEndpoint = serverUrl+expr;
-      let service = 'instagram/feed';
+      //let service = 'instagram/feed';
       let page = 'pages/feed';
       let etlData = await getEndpointDataEtl(etlApiEndpoint, username, accessToken, strategy);
       if(etlData.user)etlData = etlData.user;
@@ -809,7 +809,7 @@ module.exports = function (options = {}) {
     }
     else if(expr.indexOf('/instagram/allfeed')>=0){
       let etlApiEndpoint = serverUrl+expr;
-      let service = 'instagram/feed';
+      //let service = 'instagram/feed';
       let page = 'pages/feed';
       let etlData = await getEndpointDataEtl(etlApiEndpoint, username, accessToken, strategy);
       console.log('info: Rendering data from ETL API to client')
@@ -826,7 +826,7 @@ module.exports = function (options = {}) {
     }
     else if(expr.indexOf('/instagram/suggested/posts')>=0){
       let etlApiEndpoint = serverUrl+expr;
-      let service = 'instagram/feed';
+      //let service = 'instagram/feed';
       let page = 'pages/posts';
       let etlData = await getEndpointDataEtl(etlApiEndpoint, username, accessToken, strategy);
       let finalData = {};
@@ -848,7 +848,7 @@ module.exports = function (options = {}) {
     }
     else if(expr.indexOf('/instagram/suggested/people')>=0){
       let etlApiEndpoint = serverUrl+expr;
-      let service = 'instagram/profiles';
+      //let service = 'instagram/profiles';
       let page = 'pages/people';
       let etlData = await getEndpointDataEtl(etlApiEndpoint, username, accessToken, strategy);
       let finalData = {};
@@ -868,7 +868,7 @@ module.exports = function (options = {}) {
     }
     else if(expr.indexOf('/instagram/likes')>=0){
       let etlApiEndpoint = serverUrl+expr;
-      let service = 'instagram/likes';
+      //let service = 'instagram/likes';
       let page = 'pages/likes';
       let etlData = await getEndpointDataEtl(etlApiEndpoint, username, accessToken, strategy);
       if(etlData.length>0){
@@ -893,7 +893,7 @@ module.exports = function (options = {}) {
     }
     else if(expr.indexOf('/instagram/comments')>=0){
       let etlApiEndpoint = serverUrl+expr;
-      let service = 'instagram/comments';
+      //let service = 'instagram/comments';
       let page = 'pages/comments';
       let etlData = await getEndpointDataEtl(etlApiEndpoint, username, accessToken, strategy);
       if(etlData.length>0){
@@ -918,7 +918,7 @@ module.exports = function (options = {}) {
     }
     else if(expr.indexOf('/instagram/post')>=0){
       let etlApiEndpoint = serverUrl+expr;
-      let service = 'instagram/media';
+      //let service = 'instagram/media';
       let page = 'pages/post';
       let etlData = await getEndpointDataEtl(etlApiEndpoint, username, accessToken, strategy);
       if(etlData){
