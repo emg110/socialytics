@@ -3,6 +3,8 @@ const createService = require('feathers-nedb');
 const createModel = require('../../models/insta-tags.model');
 const hooks = require('./insta-tags.hooks');
 const search = require('../../hooks/hook-feathers-nedb-search')
+const aggr = require('../../hooks/hook-feathers-nedb-proc')
+const cube = require('../../hooks/hook-feathers-nedb-cube')
 module.exports = function (app) {
   const Model = createModel(app);
   const paginate = app.get('paginate');
@@ -11,7 +13,7 @@ module.exports = function (app) {
     Model,
     whitelist: [ '$regex','$where' ],
     paginate,
-    multi:true
+    multi:true,
   };
 
   // Initialize our service with any options it requires
@@ -24,6 +26,9 @@ module.exports = function (app) {
   service.hooks({
     before: {
       find: search()
+    },
+    after: {
+      find: aggr()
     }
   })
 };

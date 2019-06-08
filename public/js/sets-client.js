@@ -5,7 +5,7 @@ var tagsOptions = {
 };
 $('#seta').tagsInput(tagsOptions)
 $('#setb').tagsInput(tagsOptions)
-function getSetsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
+function getSetsData(isHashTag, totalsA = {}, totalsB = {}, seta = [], setb = []) {
   var setLimit = document.getElementById('set-limit-input').value || 3
   if(setLimit){
     seta = document.getElementById('seta').value.split(',').slice(0,setLimit);
@@ -34,7 +34,7 @@ function getSetsData(totalsA = {}, totalsB = {}, seta = [], setb = []) {
   if (accesstoken) console.log('info: accessToken is available');
   console.log('info: Now getting endpoint data... ' + 'for user: ' + user);
   var xhr = new XMLHttpRequest();
-  var url = '/instagram/set/data?setAData=';
+  var url = isHashTag? '/instagram/tagset/data?setAData=': '/instagram/set/data?setAData=';
   url += seta.toString();
   url += '&setBData=';
   url += setb.toString();

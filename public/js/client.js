@@ -64,7 +64,14 @@ $('.btn-primary').on('click', function () {
 $('#getSetDataBtn').on('click', function () {
   $('#home-body').addClass('disabled');
   if(confirm("Gettings sets data can take a long time! Are you sure?")){
-    getSetsData();
+    getSetsData(false);
+  }
+
+});
+$('#getTagSetDataBtn').on('click', function () {
+  $('#home-body').addClass('disabled');
+  if(confirm("Gettings hashtag sets data can take a long time! Are you sure?")){
+    getSetsData(true);
   }
 
 });

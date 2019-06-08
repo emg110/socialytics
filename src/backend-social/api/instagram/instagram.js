@@ -340,7 +340,7 @@ module.exports = class Instagram {
     if (typeof config.users[self.username].instagram.receivePromises[userId] !== 'undefined' && !selfSelf)
       return 0
 
-    first = 50;
+    first = 100;
 
     const query = {
       id: userId,
@@ -385,7 +385,7 @@ module.exports = class Instagram {
               console.log('fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
               setTimeout(() => {
                 resolve(self.getAllUserPosts(userId, after, first, 1, 1));
-              }, config.users[self.username].instagram.paginationDelay);
+              }, Math.floor(Math.random() * 8) + 4);
             });
           } else {
             config.users[self.username].instagram.receivePromises[userId.toString()] = undefined
@@ -399,7 +399,7 @@ module.exports = class Instagram {
             console.log('request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
             setTimeout(() => {
               resolve(self.getAllUserPosts(userId, after, first, postsCounter, selfSelf));
-            }, config.users[self.username].instagram.paginationDelay);
+            }, Math.floor(Math.random() * 8) + 4);
           });
         }
 
@@ -424,10 +424,12 @@ module.exports = class Instagram {
     if (!selfSelf)
       config.users[self.username].instagram.tagPosts[tag] = []
 
-    if (typeof config.users[self.username].instagram.receivePromises[tag] !== 'undefined' && !selfSelf)
+    if (typeof config.users[self.username].instagram.receivePromises[tag] !== 'undefined' && !selfSelf){
       return 0
+    }
 
-    first = (n<=50)? n : 50;
+
+    first = 100;
 
     const query = {
       tag_name: tag,
@@ -472,26 +474,28 @@ module.exports = class Instagram {
                 console.log('fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
                 setTimeout(() => {
                   resolve(self.getAllTagPosts(n, tag, after, first, 1, 1));
-                }, config.users[self.username].instagram.paginationDelay);
+                }, Math.floor(Math.random() * 8) + 4);
               });
             }
             else {
               config.users[self.username].instagram.receivePromises[tag] = undefined
               return config.users[self.username].instagram.tagPosts[tag]
             }
-          }else {
-            config.users[self.username].instagram.receivePromises[tag] = undefined
-            return config.users[self.username].instagram.tagPosts[tag]
           }
+          else {
+              config.users[self.username].instagram.receivePromises[tag] = undefined
+              return config.users[self.username].instagram.tagPosts[tag]
+            }
 
 
-        } else {
+        }
+        else {
           return new Promise((resolve) => {
             console.log(json);
             console.log('request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
             setTimeout(() => {
               resolve(self.getAllTagPosts(n, tag, after, first, postsCounter, selfSelf));
-            }, config.users[self.username].instagram.paginationDelay);
+            }, Math.floor(Math.random() * 8) + 4);
           });
         }
 
@@ -565,7 +569,7 @@ module.exports = class Instagram {
                 console.log('fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
                 setTimeout(() => {
                   resolve(self.getAllLocationPosts(n, location, after, first, 1, 1));
-                }, config.users[self.username].instagram.paginationDelay);
+                }, Math.floor(Math.random() * 8) + 4);
               });
             } else {
               config.users[self.username].instagram.receivePromises[location] = undefined
@@ -583,7 +587,7 @@ module.exports = class Instagram {
             console.log('request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
             setTimeout(() => {
               resolve(self.getAllLocationPosts(n, location, after, first, postsCounter, selfSelf));
-            }, config.users[self.username].instagram.paginationDelay);
+            }, Math.floor(Math.random() * 8) + 4);
           });
         }
 
@@ -694,7 +698,7 @@ module.exports = class Instagram {
                 console.log('fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
                 setTimeout(() => {
                   resolve(self.getUserFollowers(n, userId, after, first , 1, 1));
-                }, config.users[self.username].instagram.paginationDelay);
+                }, Math.floor(Math.random() * 8) + 4);
               });
             } else {
               config.users[self.username].instagram.receivePromises[userId] = undefined
@@ -712,7 +716,7 @@ module.exports = class Instagram {
             console.log('request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
             setTimeout(() => {
               resolve(self.getUserFollowers(n, userId, after, first,  followersCounter, selfSelf));
-            }, config.users[self.username].instagram.paginationDelay);
+            }, Math.floor(Math.random() * 8) + 4);
           });
         }
 
@@ -789,7 +793,7 @@ module.exports = class Instagram {
                 console.log('fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
                 setTimeout(() => {
                   resolve(self.getUserFollowing(n, userId, after, first, 1, 1));
-                }, config.users[self.username].instagram.paginationDelay);
+                }, Math.floor(Math.random() * 8) + 4);
               });
             } else {
               config.users[self.username].instagram.receivePromises[userId] = undefined
@@ -807,7 +811,7 @@ module.exports = class Instagram {
             console.log('request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
             setTimeout(() => {
               resolve(self.getUserFollowing(n, userId, after, first, followingCounter, selfSelf));
-            }, config.users[self.username].instagram.paginationDelay);
+            }, Math.floor(Math.random() * 8) + 4);
           });
         }
 
@@ -931,7 +935,7 @@ module.exports = class Instagram {
                 console.log('fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
                 setTimeout(() => {
                   resolve(self.getAllUserPosts(n, userId, fetch_media_item_cursor, fetch_media_item_count, 1, 1));
-                }, config.users[self.username].instagram.paginationDelay);
+                }, Math.floor(Math.random() * 8) + 4);
               });
             } else {
               config.users[self.username].instagram.receivePromises[userId] = undefined
@@ -949,7 +953,7 @@ module.exports = class Instagram {
             console.log('request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
             setTimeout(() => {
               resolve(self.getAllUserFeeds(n, userId, fetch_media_item_cursor, fetch_media_item_count, postsCounter, selfSelf));
-            }, config.users[self.username].instagram.paginationDelay);
+            }, Math.floor(Math.random() * 8) + 4);
           });
         }
 
@@ -1095,7 +1099,7 @@ module.exports = class Instagram {
                 console.log('fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
                 setTimeout(() => {
                   resolve(self.getPostLikes(n, postId, after, first , 1, 1));
-                }, config.users[self.username].instagram.paginationDelay);
+                }, Math.floor(Math.random() * 8) + 4);
               });
             }
             else {
@@ -1114,7 +1118,7 @@ module.exports = class Instagram {
             console.log('request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
             setTimeout(() => {
               resolve(self.getPostLikes(n, postId, after, first,  likesCounter, selfSelf));
-            }, config.users[self.username].instagram.paginationDelay);
+            }, Math.floor(Math.random() * 8) + 4);
           });
         }
 
@@ -1138,7 +1142,7 @@ module.exports = class Instagram {
     if (typeof config.users[self.username].instagram.receivePromises[postId] !== 'undefined' && !selfSelf)
       return 0
 
-    first = (n<=50)? n : 50;
+    first = (n<=100)? n : 100;
 
     const query = {
       shortcode: postId,
@@ -1183,7 +1187,7 @@ module.exports = class Instagram {
                 console.log('fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
                 setTimeout(() => {
                   resolve(self.getPostComments(n, postId, after, first , 1, 1));
-                }, config.users[self.username].instagram.paginationDelay);
+                }, Math.floor(Math.random() * 8) + 4);
               });
             } else {
               config.users[self.username].instagram.receivePromises[postId] = undefined
@@ -1201,7 +1205,7 @@ module.exports = class Instagram {
             console.log('request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
             setTimeout(() => {
               resolve(self.getPostComments(n, postId, after, first,  commentsCounter, selfSelf));
-            }, config.users[self.username].instagram.paginationDelay);
+            }, Math.floor(Math.random() * 8) + 4);
           });
         }
 
@@ -1225,7 +1229,7 @@ module.exports = class Instagram {
     if (typeof config.users[self.username].instagram.receivePromises[userId] !== 'undefined' && !selfSelf)
       return 0
 
-    first = (n<=50)? n : 50;
+    first = (n<=100)? n : 100;
 
     const query = {
       first: first
@@ -1269,7 +1273,7 @@ module.exports = class Instagram {
                 console.log('fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
                 setTimeout(() => {
                   resolve(self.getSuggestedPosts(n, after, first , 1, 1));
-                }, config.users[self.username].instagram.paginationDelay);
+                }, Math.floor(Math.random() * 8) + 4);
               });
             } else {
               config.users[self.username].instagram.receivePromises[userId] = undefined
@@ -1287,7 +1291,7 @@ module.exports = class Instagram {
             console.log('request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
             setTimeout(() => {
               resolve(self.getSuggestedPosts(n, after, first,  sugPostCounter, selfSelf));
-            }, config.users[self.username].instagram.paginationDelay);
+            }, Math.floor(Math.random() * 8) + 4);
           });
         }
 
@@ -1360,7 +1364,7 @@ module.exports = class Instagram {
                 console.log('fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
                 setTimeout(() => {
                   resolve(self.getSuggestedPeople(n, fetch_media_cursor, fetch_media_count, 1, 1));
-                }, config.users[self.username].instagram.paginationDelay);
+                }, Math.floor(Math.random() * 8) + 4);
               });
             } else {
               config.users[self.username].instagram.receivePromises[userId] = undefined
@@ -1378,7 +1382,7 @@ module.exports = class Instagram {
             console.log('request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
             setTimeout(() => {
               resolve(self.getSuggestedPeople(n, fetch_media_cursor, fetch_media_count,  sugPeopleCounter, selfSelf));
-            }, config.users[self.username].instagram.paginationDelay);
+            }, Math.floor(Math.random() * 8) + 4);
           });
         }
 
