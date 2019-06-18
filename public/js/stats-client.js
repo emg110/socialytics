@@ -1171,9 +1171,13 @@ var profileCounterB = 0;
           var dowsA = {};
           var hodsA = {};
 
-          var profilesPieDomDataA = []
-          var profilesPieDowDataA = []
-          var profilesPieHodDataA = []
+          var profilesPieDomDataA = [];
+          var profilesPieDowDataA = [];
+          var profilesPieHodDataA = [];
+          var followerCountA ={};
+          for(i of window.profilesA){
+              followerCountA =i.edge_followed_by.count;
+          }
 
           for (var trendPost of likesCommentsA.trendsdata){
 
@@ -1182,7 +1186,7 @@ var profileCounterB = 0;
             totalsA.totalLikes += likesTotal;
             totalsA.totalComments += commentsTotal;
             var engagement = parseInt(likesTotal)+parseInt(commentsTotal);
-            engagement = (engagement /dbPostsCountA).toFixed(2);
+            engagement = (engagement /followerCountA).toFixed(2);
             var locsA = trendPost.media.location;
             if(locsA && locsA !==null){
               if(locsA.lng && locsA.lat){
@@ -1520,6 +1524,10 @@ var profileCounterB = 0;
           var profilesPieDomDataB = []
           var profilesPieDowDataB = []
           var profilesPieHodDataB = []
+          var followerCountB ={};
+          for(i of window.profilesB){
+            followerCountB =i.edge_followed_by.count;
+          }
 
           for (var trendPostB of likesCommentsB.trendsdata){
 
@@ -1528,7 +1536,7 @@ var profileCounterB = 0;
             totalsB.totalLikes += likesTotalB;
             totalsB.totalComments += commentsTotalB;
             var engagementB = parseInt(likesTotalB)+parseInt(commentsTotalB);
-            engagementB = (engagementB /dbPostsCountB).toFixed(2);
+            engagementB = (engagementB /followerCountB).toFixed(2);
             var locsB = trendPostB.media.location;
             if(locsB && locsB !==null){
               if(locsB.lng && locsB.lat){
