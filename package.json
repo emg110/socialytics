@@ -2,7 +2,7 @@
   "name": "socialytics",
   "version": "1.0.0",
   "private": true,
-  "description": "Houman Hadian's doctoral project analytics platform codebase, to be graduated as an opensource npm package",
+  "description": "Social ETL and analytics platform",
   "keywords": [],
   "homepage": "https://www.github.com/emg110/socialytics",
   "bugs": {},
@@ -125,7 +125,12 @@
     "all-the-cities": "latest",
     "rtree": "latest",
     "worker-nodes": "latest",
-    "emoji-regex": "latest"
+    "emoji-regex": "latest",
+    "csv-writer": "latest",
+    "ndjson": "latest",
+    "json-safe-parse": "latest",
+    "objects-to-csv": "latest",
+    "fast-csv": "latest"
   },
   "devDependencies": {
     "chai": "latest",
@@ -150,7 +155,7 @@
   },
   "authors": [
     "M.Ghiasi <emg110@gmail.com>",
-    "H.Hadian <a58976@ualg.pt>"
+    "Sheghzo <shm1358@gmail.com>"
   ],
   "eslintConfig": {
     "extends": [

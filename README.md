@@ -1,32 +1,12 @@
-![houmanhadian.github.io](./public/img/hhadianproject.png?raw=true "Houman Hadian's Doctoral Project")
 # Socialytics:
-Tool developed during Houman Hadian's doctoral project as code base for social APIs ETL and analytics.
-@UAlg.pt
+A modern social data acquisition (ETL) and analysis tool.
 
 Socialytics, is intended to provide batch ~~and realtime (LAMBDA)~~ ETL functionality on Instagram APIs (private web API)
-in order to analyse brand engagement on social networks like Instagram via analytical models presented on 
-[Houman Hadian's doctoral project research papers](https://houmanhadian.github.io/). This is an open source contribution in hope of producing side common benefits along with academic & scientific values. Soon to be published separately as NPM package with a more techy name indeed! We beleive that respecting diversity of tech tools in the wild there are still few full functional FOSS tools for browsing and analytics on social networks out there. Seeing a gap that could be filled makes the purpose to make a tool that can be reused for research, academic and scientific purposes. Noticible impacts on branding (place, product & service), tourism, marketing and behaivioral analytics sciences are envisioned and sought.
+in order to analyse brand engagement on social networks like Instagram and Twitter. This is an open source software to be published separately as NPM package.
 
 **`Notice:` Work in progress!**
 
-**`Notice:` Version 1 is almost ready (tests are not!!!)!**
-
-**`TODO:`**
-
-1- ~~Add Instagram login form as start page for frontend and store the session-id and csrf_token on server side (with security in mind!)~~
-
-2- ~~Add UI components for parameters~~
-
-3- ~~Implement database loading (NeDB for time being with support for MongoDB, Postgress, ElasticSearch and Redis).~~
-
-4- Add progress , start and stop for every API ETL operation.
-
-5- Add export to CSV/JSON option ~~to every ETL process~~.
-
-6- ~~Add Analytics dashboards and components~~.
-
-7- Add analytical models and algorithms.
-
+**`Notice:` Version 1 is almost out!**
 
 //---------------------------------------------------
 
@@ -43,12 +23,12 @@ in order to analyse brand engagement on social networks like Instagram via analy
 
 5- Run: _npm install_ then Run:_npm start_  (or optionally Run: _pm2 start src/_)
 
-6- Go to localhost:8080 (Check the config for port) and start analysing Instagram!
+6- Go to localhost:PORT (Check the config for port) and start analysing Instagram!
 
 
 **`Contributors:`**
  
- M.Ghiasi (emg110@gmail.com), H.Hadian (a58976@ualg.pt), Sheghzo(shm1358@gmail.com)
+ M.Ghiasi (emg110@gmail.com), Sheghzo(shm1358@gmail.com)
 
 Special thanks to these great open source projects which paved the client's starting point but since changes required to make the tool complete , comprehensive and calibrated for analytics hence they have undergone great changes which left no place for branching and backward contribution via pull requests thus here we announce our gratitudes and in turn give back the whole effort to community, free and open source:
 
@@ -67,16 +47,6 @@ Special thanks to these great open source projects which paved the client's star
 [arve0/feathers-nedb-fuzzy-search](https://github.com/arve0/feathers-nedb-fuzzy-search)
 
 
-
 **`Screens:`**
-
-
-![houmanhadian.github.io](./public/img/home_screen.png?raw=true "Houman Hadian's Doctoral Project")
-
-
-![houmanhadian.github.io](./public/img/stats_screen.png?raw=true "Houman Hadian's Doctoral Project")
-
-
-![houmanhadian.github.io](./public/img/stats_search.jpg?raw=true "Houman Hadian's Doctoral Project")
 
 **`demo:--soon`**

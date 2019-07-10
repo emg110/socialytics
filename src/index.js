@@ -1,6 +1,19 @@
 /* eslint-disable no-console */
 const logger = require('./logger');
 const app = require('./app');
+/*const ObjectsToCsv = require('objects-to-csv');
+var opts = {
+  paginate: {
+  default: 100000,
+      max: 20000
+  }
+}
+app.service('instagram/tag').find(opts).then(items=>{
+  let csv = new ObjectsToCsv(items.data);
+
+  // Save to file:
+  csv.toDisk('./testaaaaa.csv');
+})*/
 const port = app.get('port');
 var fs = require('fs');
 const https  = require('https');

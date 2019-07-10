@@ -96,4 +96,5 @@ app.configure(socketio(function (io) {
 app.use(express.notFound());
 app.use(express.errorHandler({logger}));
 app.hooks(appHooks);
+
 module.exports = app;
