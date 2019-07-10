@@ -154,24 +154,25 @@ $("#search-input").on('keypress',(e)=>{
 /*    var instance = $("#autocomplete-results").overlayScrollbars()
     if(instance)instance.destroy()*/
     $("#autocomplete-results").html('<div>  </div>')
-    if(value.length>3){
+    if(value.length>2){
       window.fetch('https://www.instagram.com/web/search/topsearch/?query='+value).then(res=>{
         return res.json()
       }).then(function (json) {
-        if(json){
-          json = json.users;
 
-          $("#autocomplete-results").append('<a href="#" id="close-btn" class="fa fa-times"></a><div style="width:100%;color:#f8f9fa;padding:5px;font-family: monospace; background: #31a9b8;text-align: center">Drag profiles to input</div>');
-          $("#close-btn").on('click',function(){
-            $("#autocomplete-results").html('<div>  </div>');
-          });
+        $("#autocomplete-results").append('<a href="#" id="close-btn" class="fa fa-times"></a><div style="width:100%;color:#f8f9fa;padding:5px;font-family: monospace; background: #31a9b8;text-align: center">Drag profiles to input</div>');
+        $("#close-btn").on('click',function(){
+          $("#autocomplete-results").html('<div>  </div>');
+        });
+        if(json && json.users.length >= 1){
+
+          json = json.users;
 
           for(var i of json){
             i = i.user;
             var searchRes =
               '<div id="'+i.username+'" class="search-result" draggable="true" ondragstart="drag(event)">'+
               '<span>'+
-              '<img title="'+i.full_name+':'+'" class="profile-mini-img" src="'+i.profile_pic_url+'">'+
+              '<img title="'+i.full_name+'" class="profile-mini-img" src="'+i.profile_pic_url+'">'+
               '</span>'+
               '<span style="margin-left:1vw" id="searched-username">'+
               i.username+
@@ -190,6 +191,9 @@ $("#search-input").on('keypress',(e)=>{
             $("#autocomplete-results").append(searchRes);
           }
         }
+        else{
+          $("#autocomplete-results").append('<span>Result not found.</span>');
+        }
        /* $("#autocomplete-results").overlayScrollbars({
           className : "os-theme-dark"
         })*/
@@ -207,7 +211,7 @@ $("#search-input-side-panel").on('keypress',(e)=>{
     /*    var instance = $("#autocomplete-results").overlayScrollbars()
         if(instance)instance.destroy()*/
     $("#autocomplete-results").html('<div>  </div>')
-    if(value.length>3){
+    if(value.length>2){
       window.fetch('https://www.instagram.com/web/search/topsearch/?query='+value).then(res=>{
         return res.json()
       }).then(function (json) {
@@ -258,7 +262,7 @@ $("#sidepanelSearchProfileBtn").click(()=>{
   /* var instance = $("#autocomplete-results").overlayScrollbars()
    if(instance)instance.destroy()*/
   $("#autocomplete-results").html('<div>  </div>')
-  if(value.length>3){
+  if(value.length>2){
     window.fetch('https://www.instagram.com/web/search/topsearch/?query='+value).then(res=>{
       return res.json()
     }).then(function (json) {
@@ -308,7 +312,7 @@ $("#searchProfileBtn").click(()=>{
  /* var instance = $("#autocomplete-results").overlayScrollbars()
   if(instance)instance.destroy()*/
   $("#autocomplete-results").html('<div>  </div>')
-  if(value.length>3){
+  if(value.length>2){
     window.fetch('https://www.instagram.com/web/search/topsearch/?query='+value).then(res=>{
       return res.json()
     }).then(function (json) {
@@ -361,7 +365,7 @@ $("#search-insta-input").on('keypress',(e)=>{
     var value = $("#search-insta-input").val();
     // var caller = this;
 
-    if(value.length>3){
+    if(value.length>2){
       getEndpointData('/instagram/search?', 'search-posts', '', 'main');
     }
   }
