@@ -1,7 +1,8 @@
 # Socialytics:
 A modern social data acquisition (ETL) and analysis tool.
 
-Socialytics, is intended to provide ETL & analytics functionality on Instagram APIs (private web API) on social networks like Instagram and Twitter. This is an open source software to be published separately as NPM package.
+Socialytics, is intended to provide social ETL and analytics functionality on Instagram APIs (private web API)
+on social networks like Instagram and Twitter. This is an open source software to be published separately as NPM package.
 
 **`Notice:` Work in progress!**
 
