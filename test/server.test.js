@@ -2,7 +2,7 @@ const rp = require('request-promise');
 const url = require('url');
 const app = require('../src/app');
 
-const port = app.get('port') || 3030;
+const port = app.get('port') || 8105;
 const getUrl = pathname => url.format({
   hostname: app.get('host') || 'localhost',
   protocol: 'http',
@@ -10,7 +10,7 @@ const getUrl = pathname => url.format({
   pathname
 });
 
-describe('Feathers application tests (with jest)', () => {
+describe('Socialytics application tests (with jest)', () => {
   beforeAll(done => {
     this.server = app.listen(port);
     this.server.once('listening', () => done());
