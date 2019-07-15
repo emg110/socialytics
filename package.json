@@ -2,7 +2,7 @@
   "name": "socialytics",
   "version": "1.0.0",
   "private": true,
-  "description": "Social ETL and analytics platform",
+  "description": "Social ETL, analytics and intelligence platform",
   "keywords": [],
   "homepage": "https://www.github.com/emg110/socialytics",
   "bugs": {},
@@ -147,7 +147,8 @@
     "request": "latest",
     "request-promise-native": "latest",
     "should": "latest",
-    "supertest": "latest"
+    "supertest": "latest",
+    "generate-unit-test": "latest"
   },
   "engines": {
     "node": "^8.12.0",
