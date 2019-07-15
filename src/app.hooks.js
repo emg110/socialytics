@@ -1,4 +1,3 @@
-// Application hooks that run for every service
 const log = require('./hooks/hook-log');
 const hookInstaCheckBeforeCreate = require('./hooks/hook-insta-check-before-create');
 const hookInstaVersionBeforeCreate = require('./hooks/hook-insta-version-before-create');
@@ -9,8 +8,6 @@ const checkProvider = function(){
       throw new Error('You can not delete a user via Socket.io');
     }
   }
-  // check for if(context.params.provider) to prevent any external call
-
 }
 
 module.exports = {

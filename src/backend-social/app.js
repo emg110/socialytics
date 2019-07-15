@@ -18,7 +18,7 @@ application.use(cors({
     origin: "*"
 }));
 /*const ip = require('koa-ip')
-application.use(ip(['127.0.0.1','192.168.140.110']))*/
+application.use(ip(['127.0.0.1','192.168.x.x']))*/
 application
     .use(healthCheck.routes())
     .use(healthCheck.allowedMethods());

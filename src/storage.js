@@ -8,7 +8,7 @@ module.exports = async function writeDatabase(fapi, data, service, account) {
   }
   if (data.graphql) {
     if (data.graphql.shortcode_media) {
-      for (i in data.graphql.shortcode_media) {
+      for (let i in data.graphql.shortcode_media) {
         data[i] = data.graphql.shortcode_media[i]
       }
       delete data.graphql.shortcode_media

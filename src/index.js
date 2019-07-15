@@ -43,7 +43,6 @@ const application = require("./backend-social/app");
 /*const instagram = require('./backend-social/api/instagram/index').instagramClient;*/
 console.log('**************************************');
 const etlServer = application.listen(PORT, () => {
-  //console.log(`ETL Server Listening on ${host}:${port}`)
   console.log('info: ETL Server Listening on http://%s:%d', HOST, PORT)
 });
 etlServer.timeout=60*60*1000;

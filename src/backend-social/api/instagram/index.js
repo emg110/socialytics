@@ -7,9 +7,6 @@ router.get("/etl-health-check", async (ctx) => {
   ctx.status = 200
   ctx.body = { result: "ok" }
 });
-const getSetsDataInstagram =
-// Instagram client router endpoints mapped to async functions to implement 100% async Rest json endpoints.
-/*router.get("/instagram/set/data", api.getStatsData);*/
 router.get("/instagram/profile", api.profileJson);
 router.get("/instagram/whoami", api.profileSelfJson);
 router.get("/instagram/posts", api.userPosts);
@@ -28,6 +25,7 @@ router.get("/instagram/post", api.postJson);
 /*router.get("/instagram/post/page", api.postPage);*/
 router.get("/instagram/suggested/posts", api.suggestedPosts);
 router.get("/instagram/suggested/people", api.suggestedPeople);
+/*router.get("/instagram/set/data", api.getStatsData);*/
 console.log("Socialytics Instagram backend ETL routes registered...");
 module.exports = router;
 

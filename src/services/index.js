@@ -1,5 +1,5 @@
 
-const instaPosts = require('./insta-posts/insta-posts.service.js');
+//const instaPosts = require('./insta-posts/insta-posts.service.js');
 const instaPostsa = require('./insta-postsa/insta-postsa.service.js');
 const instaPostsb = require('./insta-postsb/insta-postsb.service.js');
 const instaProfiles = require('./insta-profiles/insta-profiles.service.js');
@@ -16,7 +16,7 @@ const users = require('./users/users.service.js');
 
 // eslint-disable-next-line no-unused-vars
 module.exports = function (app) {
-  app.configure(instaPosts);
+  //app.configure(instaPosts);
   app.configure(instaPostsa);
   app.configure(instaPostsb);
   app.configure(instaProfiles);

@@ -5,7 +5,6 @@ const Instagram = require('./instagram');
 
 console.log("Socialytics Instagram client has been initialized...");
 console.log("Socialytics Instagram API has started...");
-//Async functions using Instagram client
 var api = {};
 api.profileJson = async (ctx) => {
   var username = ctx.get('username')
@@ -190,8 +189,6 @@ api.exploreTag = async (ctx) => {
     });
     config.activetag = tag;
     /*let writeTagPostsToDatabase = await writeDatabase(socket, accesstoken,  tagsData, '/instagram/tag')*/
-
-
     ctx.status = 200;
     ctx.body = {
       results: tagsData
@@ -256,7 +253,6 @@ api.userFollowing = async (ctx) => {
       console.log(err);
     });
     /*let writeFollowingToDatabase = await writeDatabase(socket, accesstoken,  userFollowingData, '/instagram/following')*/
-
     ctx.status = 200;
     ctx.body = {
       results: userFollowingData
