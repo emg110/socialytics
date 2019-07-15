@@ -15,15 +15,17 @@ on social networks like Instagram and Twitter. This is an open source software t
 
 1- Clone this project
 
-2- Optionally-- Run: _npm install -g pm2_
+2- Optionally-- Create a folder under project, name it "security" and put public and private keys to be used for SSL/TLS on HTTPS
 
-3- Config your session_id  from your browser on Instagram website (within Instagram cookies!).
+3- Optionally-- Run: _npm install -g pm2_
 
-4- In CMD go to project root folder
+4- Config your session_id  from your browser on Instagram website (within Instagram cookies!).
 
-5- Run: _npm install_ then Run:_npm start_  (or optionally Run: _pm2 start src/_)
+5- In CMD go to project root folder
 
-6- Go to localhost:PORT (Check the config for port) and start analysing Instagram!
+6- Run: _npm install_ then Run:_npm start_  (or optionally Run: _pm2 start src/_)
+
+7- Go to localhost:PORT (Check the config for port) and start analysing Instagram!
 
 
 **`Contributors:`**
