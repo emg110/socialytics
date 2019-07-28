@@ -8,7 +8,7 @@ const csvWriter = createCsvWriter({
 const records = require('./algtourism.js');
 csvWriter.writeRecords(records)
   .then().catch(err=>{
-  console.log(err)
+  logger.error(err)
 });*!/
 //var jsonsafeparse = require('json-safe-parse');
 
@@ -28,7 +28,7 @@ var lineReader = require('readline').createInterface({
 lineReader.on('line', function (line) {
  /!* let rec = await csvWriter.writeRecords(line)       // returns a promise
     .then().catch(err=>{
-    console.log(err)
+    logger.error(err)
   });*!/
   //line = line.replace(/\"/g, '"');
   line = line.replace(/\//g, '');
@@ -43,7 +43,7 @@ lineReader.on('line', function (line) {
     .then(() => {
       console.log('...Done');
     }).catch(err=>{
-      console.log(err)
+      logger.error(err)
   });*!/
   //outStream.write(JSON.stringify(jsonArray));
   //outStream.write(']; module.exports = function(){return algarveTourism}');
@@ -51,13 +51,14 @@ lineReader.on('line', function (line) {
     .then(()=>{
       console.log('Wrote to CSV')
     }).catch(err=>{
-      console.log(err)
+      logger.error(err)
     })*!/
   //require('./algarve_tourism.js')
   console.log('ended....')
 
 });*/
-const fs = require('fs')
+const fs = require('fs');
+const logger = require('./logger');
 var stream = fs.createReadStream("../testaaaaa.csv");
 var csv = require("fast-csv");
 

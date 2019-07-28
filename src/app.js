@@ -39,11 +39,11 @@ app.configure(socketio(function (io) {
           app.service(socReq.data.service).find(socReq.options).then(items => {
             socket.emit('authenticated:seta', {data: items, socRes: socReq.data});
           }).catch(err=>{
-            console.log(err)
+            logger.error(err)
           })
           break
         default:
-          console.log('info: Method does not exist! ');
+          logger.warn('Method does not exist! ');
 
 
       }
@@ -58,11 +58,11 @@ app.configure(socketio(function (io) {
             }*/
             socket.emit('authenticated:setb', {data: items, socRes: socReq.data});
           }).catch(err=>{
-            console.log(err)
+            logger.error(err)
           })
           break
         default:
-          console.log('info: Method does not exist! ');
+          logger.warn('Method does not exist! ');
 
 
       }

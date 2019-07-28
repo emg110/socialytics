@@ -1,4 +1,5 @@
 const config = require('../../config');
+const logger = require('../../src/logger')
 const serverUrl = config.PROTOCOL+"://"+config.HOST+':'+config.PORT+'/api';
 const textProcess = require('../middleware/text-processing')
 const fetch = require('node-fetch');
@@ -94,9 +95,9 @@ const getEndpointDataEtl = async (etlApiEndpoint, username, accessToken, strateg
     {
       headers: getHeaders(username, accessToken, strategy),
     }).then(t => t.json().catch((e) => {
-    console.log('Instagram API returned an error:' + e)
+    logger.error('Instagram API returned an error: ' + e)
   }).then(r => r));
-  console.log('Returning retrieved results from backend-social API to client');
+  logger.info('Returning retrieved results from backend-social API to client');
   //res.render('pages/profile',{finalData});
   if(etlData){
     if(etlData.results){
@@ -154,19 +155,19 @@ module.exports = function (options = {}) {
           if(etlDataA && etlDataA !== 'No ETL data'){
             resultData.profilesA.push(etlDataA)
             let serviceProfile = 'instagram/profiles';
-            console.log('info: Writing SetA profile '+ etlDataA.username +' from ETL API to database')
+            logger.info('Writing SetA profile '+ etlDataA.username +' from ETL API to database')
             let recordProfileA = await writeDatabase(req.app, etlDataA, serviceProfile, username)
               .then(result => {
                 return result
-                console.log('info: SetA, profile: '+ etlDataA.username +' , has written from ETL API to database')
+                logger.info('SetA, profile: '+ etlDataA.username +' , has written from ETL API to database')
               })
               .catch(err => {
-                console.log(err);
+                logger.error(err);
                 res.sendStatus(500)
               });
           }
           else{
-            console.log('No ETL data has returned from Instagram');
+            logger.error('No ETL data has returned from Instagram');
             res.sendStatus(500)
           }
         }
@@ -234,7 +235,7 @@ module.exports = function (options = {}) {
                         let timePMA = await setTimeout(function(){return 1000},1000);
                         let locReq = await geocoder.search( { q: q }, {}, function(error, response) {
                           if(error){
-                            console.log('info: SetA on Nominatim ETL has returned error: '+error);
+                            logger.error('SetA on Nominatim ETL has returned error: '+error);
                             return []
                           }
                           else{
@@ -311,26 +312,26 @@ module.exports = function (options = {}) {
               }
 
               resultData.setA.push({profile:setAProfile.username,totalDb:etlDataPA.length,profileData:setAProfile,posts:etlDataPA})
-              console.log('info: Writing SetA,  '+ etlDataPA.length +'posts from ETL API to database');
+              logger.info('Writing SetA,  '+ etlDataPA.length +'posts from ETL API to database');
               let servicePostsA = 'instagram/postsa';
               let recordDataA = await writeDatabase(req.app, etlDataPA, servicePostsA, username)
                 .then(result => {
                   return result
-                  console.log('info: Patched setA member profile: '+setAProfile.username+' in database with '+etlDataPA.length+' records '+ 'for these profiles: '+resultData.profilesA.toString());
+                  logger.info('Patched setA member profile: '+setAProfile.username+' in database with '+etlDataPA.length+' records '+ 'for these profiles: '+resultData.profilesA.toString());
                 })
                 .catch(err => {
-                  console.log(err);
+                  logger.error(err);
                   res.sendStatus(500)
                 });
               for (let resA of resultData.setA){
-                console.log('SetA '+resA.posts.length+' posts of profile: '+resA.profile+' cropped to 100 to be sent to user as sample ')
+                logger.info('SetA '+resA.posts.length+' posts of profile: '+resA.profile+' cropped to 100 to be sent to user as sample ')
                 resA.posts = resA.posts.slice(0,100);
 
               }
 
             }
             else{
-              console.log('No ETL data has returned from Instagram');
+              logger.error('No ETL data has returned from Instagram');
               res.sendStatus(500)
             }
           }
@@ -343,20 +344,20 @@ module.exports = function (options = {}) {
           let etlDataB = await getEndpointDataEtl(etlApiEndpoint+setBItem, username, accessToken, strategy);
           if(etlDataB && etlDataB !== 'No ETL data'){
             resultData.profilesB.push(etlDataB)
-            console.log('info: Writing SetB profile '+ etlDataB.username +' from ETL API to database')
+            logger.info('Writing SetB profile '+ etlDataB.username +' from ETL API to database')
             let serviceProfile = 'instagram/profiles';
             let recordProfileB = await writeDatabase(req.app, etlDataB, serviceProfile, username)
               .then(result => {
-                console.log('info: SetB, profile: '+ etlDataB.username +' , has written from ETL API to database')
+                logger.info('SetB, profile: '+ etlDataB.username +' , has written from ETL API to database')
                 return result
               })
               .catch(err => {
-                console.log(err);
+                logger.error(err);
                 res.sendStatus(500)
               });
           }
           else{
-            console.log('No ETL data has returned from Instagram');
+            logger.error('No ETL data has returned from Instagram');
             res.sendStatus(500)
           }
         }
@@ -425,7 +426,7 @@ module.exports = function (options = {}) {
                         let timePMB = await setTimeout(function(){return 1000},1000);
                         let locReqB = await geocoder.search( { q: qB }, {}, function(error, response) {
                           if(error){
-                            console.log('info: SetB on Nominatim ETL has returned error: '+error);
+                            logger.error('SetB on Nominatim ETL has returned error: '+error);
                             return []
                           }
                           else{
@@ -502,32 +503,32 @@ module.exports = function (options = {}) {
               }
 
               resultData.setB.push({profile:setBProfile.username,totalDb:etlDataPB.length,profileData:setBProfile,posts:etlDataPB})
-              console.log('info: Writing SetB,  '+ etlDataPB.length +'posts from ETL API to database')
+              logger.info('Writing SetB,  '+ etlDataPB.length +'posts from ETL API to database')
               let servicePostsB = 'instagram/postsb';
               let recordDataB = await writeDatabase(req.app, etlDataPB, servicePostsB, username)
                 .then(result => {
-                  console.log('info: Patched setB in database with '+etlDataPB.length+' records '+ 'for these profiles: '+resultData.profilesB.toString());
+                  logger.info('Patched setB in database with '+etlDataPB.length+' records '+ 'for these profiles: '+resultData.profilesB.toString());
                   return result
                 })
                 .catch(err => {
-                  console.log(err);
+                  logger.error(err);
                   res.sendStatus(500)
                 });
               for (let resB of resultData.setB){
-                console.log('SetB '+resB.posts.length+' posts of profile: '+resB.profile+' cropped to 100 to be sent to user as sample ')
+                logger.info('SetB '+resB.posts.length+' posts of profile: '+resB.profile+' cropped to 100 to be sent to user as sample ')
                 resB.posts = resB.posts.slice(0,100);
 
               }
             }
             else{
-              console.log('No ETL data has returned from Instagram');
+              logger.error('No ETL data has returned from Instagram');
               res.sendStatus(500)
             }
           }
         }
 
       }
-      console.log('info: Sending sets A & B data');
+      logger.info('Sending sets A & B data to client');
       res.json(resultData);
 
 
@@ -570,7 +571,7 @@ module.exports = function (options = {}) {
               postA = await prepPost(postA);
               let timePMA = await setTimeout(function(){return 1000},1000);
               let etlDataPMA = await getEndpointDataEtl(etlApiEndpointMedia+postA.shortcode, username, accessToken, strategy).then(res=>res).catch(err=>{
-                console.log('Instagram returned no media by error: '+err)
+                logger.error('Instagram returned error (No media has retunred): '+err)
               });
               if(etlDataPMA){
                 etlDataPMA = await cleans(etlDataPMA);
@@ -632,7 +633,7 @@ module.exports = function (options = {}) {
                      let timePMA = await setTimeout(function(){return 1000},1000);
                      let locReq = await geocoder.search( { q: q }, {}, function(error, response) {
                        if(error){
-                         console.log('info: SetA on Nominatim ETL has returned error: '+error);
+                         console.log('SetA on Nominatim ETL has returned error: '+error);
                          return []
                        }
                        else{
@@ -682,26 +683,26 @@ module.exports = function (options = {}) {
               let recordDataA = await writeDatabase(req.app, etlDataPA[iA], servicePostsA, username)
                 .then(result => {
                   return result
-                  console.log('info: Patched setA member profile: '+setAProfile.username+' in database with '+etlDataPA.length+' records '+ 'for these profiles: '+resultData.profilesA.toString());
+                  logger.info('Patched setA member profile: '+setAProfile.username+' in database with '+etlDataPA.length+' records '+ 'for these profiles: '+resultData.profilesA.toString());
                 })
                 .catch(err => {
-                  console.log(err);
+                  logger.error(err);
                   //res.sendStatus(500)
                 });
             }
 
-            //console.log('info: Writing SetA,  '+ etlDataPA.length +'posts from ETL API to database');
+            //console.log('Writing SetA,  '+ etlDataPA.length +'posts from ETL API to database');
 
 
           }
           else{
-            console.log('No ETL data has returned from Instagram');
+            logger.error('No ETL data has returned from Instagram');
             res.sendStatus(500)
           }
         }
 
       }
-      console.log('info: Sending sets A & B data');
+      logger.error('Sending sets A & B data to client');
       res.json(resultData);
 
 
@@ -710,25 +711,25 @@ module.exports = function (options = {}) {
       let etlApiEndpoint = serverUrl+expr;
       //let service = 'instagram/profiles';
       let page = 'pages/profile';
-      console.log('info: Now requesting profile from ETL backend for: '+ username);
+      logger.info('Now requesting profile from ETL backend for: '+ username);
       let etlData = await getEndpointDataEtl(etlApiEndpoint, username, accessToken, strategy);
       if(etlData && etlData !== 'No ETL data'){
-        console.log('info: Writing data from ETL API to database');
-        console.log('info: Rendering data from ETL API to client');
+        logger.info('Writing data from ETL API to database');
+        logger.info('Rendering data from ETL API to client');
         etlData = cleans(etlData);
         renderData(etlData,page,username,res);
         /* writeDatabase(req.app, etlData, service, username)
            .then(result => {
-             console.log('info: Rendering data from ETL API to client')
+             console.log('Rendering data from ETL API to client')
              renderData(etlData,page,username,res);
            })
            .catch(err => {
-             console.log(err);
+             logger.error(err);
              res.sendStatus(500)
            });*/
       }
       else{
-        console.log('No ETL data has returned from Instagram');
+        logger.error('No ETL data has returned from Instagram');
         res.sendStatus(500)
       }
 
@@ -739,18 +740,18 @@ module.exports = function (options = {}) {
       //let service = 'instagram/profiles';
       let page = 'pages/profile';
       let etlData = await getEndpointDataEtl(etlApiEndpoint, username, accessToken, strategy);
-      console.log('info: Writing data from ETL API to database')
+      logger.info('Writing data from ETL API to database')
       if(etlData !== 'No ETL data'){
         etlData = cleans(etlData)
-        console.log('info: Rendering data from ETL API to client')
+        logger.info('Rendering data from ETL API to client')
         renderData(etlData,page,username,res);
         /* writeDatabase(req.app, etlData, service, username)
            .then(result => {
-             console.log('info: Rendering data from ETL API to client')
+             console.log('Rendering data from ETL API to client')
              renderData(etlData,page,username,res);
            })
            .catch(err => {
-             console.log(err);
+             logger.error(err);
              res.sendStatus(500)
            });*/
       }
@@ -758,26 +759,26 @@ module.exports = function (options = {}) {
     }
     else if(expr.indexOf('/instagram/posts')>=0){
       let etlApiEndpoint = serverUrl+expr;
-      console.log('info: Now requesting posts from ETL backend for: '+ username);
+      logger.info('Now requesting posts from ETL backend for: '+ username);
       let etlData = await getEndpointDataEtl(etlApiEndpoint, username, accessToken, strategy);
       if(etlData && etlData !== 'No ETL data'){
         //let service = 'instagram/posts';
         let page = 'pages/posts';
-        console.log('info: Rendering data from ETL API to client')
+        logger.info('Rendering data from ETL API to client')
         //etlData = cleans(etlData, true)
         renderData(etlData,page,username,res);
         /* writeDatabase(req.app, etlData, service, username)
            .then(result => {
-             console.log('info: Rendering data from ETL API to client')
+             console.log('Rendering data from ETL API to client')
              renderData(etlData,page,username,res);
            })
            .catch(err => {
-             console.log(err);
+             logger.error(err);
              res.sendStatus(500)
            });*/
       }
       else{
-        console.log('No ETL data has returned from Instagram');
+        logger.error('No ETL data has returned from Instagram');
         res.sendStatus(500)
       }
     }
@@ -804,19 +805,19 @@ module.exports = function (options = {}) {
         }else{
           finalData.user.edge_owner_to_timeline_media.edges = etlData
         }
-        console.log('All '+ etlData.length + ' posts have been collected from instagram, cropped to 100 records for view')
+        logger.info('All '+ etlData.length + ' posts have been collected from instagram, cropped to 100 records for view')
 
         etlData = finalData;
       }
-      console.log('info: Rendering data from ETL API to client')
+      logger.info('Rendering data from ETL API to client')
       renderData(etlData,page,username,res);
       /*writeDatabase(req.app, etlData, service, username)
         .then(result => {
-          console.log('info: Rendering data from ETL API to client')
+          console.log('Rendering data from ETL API to client')
           renderData(etlData,page,username,res);
         })
         .catch(err => {
-          console.log(err);
+          logger.error(err);
           res.sendStatus(500)
         });*/
     }
@@ -830,22 +831,22 @@ module.exports = function (options = {}) {
            etlData = etlData.slice(0,100);
            console.log('data has been cropped to 100 items to show for all posts but all posts have been saved to database successfully');
          }*/
-        console.log('All '+ etlData.length + ' tag posts have been collected from instagram')
+        logger.info('All '+ etlData.length + ' tag posts have been collected from instagram')
         let finalData = {};
         finalData.user = {};
         finalData.user.edge_owner_to_timeline_media = {};
         finalData.user.edge_owner_to_timeline_media.edges = etlData;
         etlData = finalData;
       }
-      console.log('info: Rendering data from ETL API to client')
+      logger.info('Rendering data from ETL API to client')
       renderData(etlData,page,username,res);
       /*writeDatabase(req.app, etlData, service, username)
         .then(result => {
-          console.log('info: Rendering data from ETL API to client')
+          console.log('Rendering data from ETL API to client')
           renderData(etlData,page,username,res);
         })
         .catch(err => {
-          console.log(err);
+          logger.error(err);
           res.sendStatus(500)
         });*/
 
@@ -862,22 +863,22 @@ module.exports = function (options = {}) {
            etlData = etlData.slice(0,100);
            console.log('data has been cropped to 100 items to show for all posts but all posts have been saved to database successfully');
          }*/
-        console.log('All '+ etlData.length + ' location posts have been collected from instagram')
+        logger.info('All '+ etlData.length + ' location posts have been collected from instagram')
         let finalData = {};
         finalData.user = {};
         finalData.user.edge_owner_to_timeline_media = {};
         finalData.user.edge_owner_to_timeline_media.edges = etlData;
         etlData = finalData;
       }
-      console.log('info: Rendering data from ETL API to client')
+      logger.info('Rendering data from ETL API to client')
       renderData(etlData,page,username,res);
       /*writeDatabase(req.app, etlData, service, username)
         .then(result => {
-          console.log('info: Rendering data from ETL API to client')
+          console.log('Rendering data from ETL API to client')
           renderData(etlData,page,username,res);
         })
         .catch(err => {
-          console.log(err);
+          logger.error(err);
           res.sendStatus(500)
         });*/
 
@@ -892,21 +893,21 @@ module.exports = function (options = {}) {
           etlData = etlData.slice(0,100);
           console.log('data has been cropped to 100 items to show for all posts but all posts have been saved to database successfully');
         }*/
-        console.log('All '+ etlData.length + ' following profiles have been collected from instagram')
+        logger.info('All '+ etlData.length + ' following profiles have been collected from instagram')
         let finalData = {};
 
         finalData.edges = etlData;
         etlData = finalData;
       }
-      console.log('info: Rendering data from ETL API to client')
+      logger.info('Rendering data from ETL API to client')
       renderData(etlData,page,username,res);
       /* writeDatabase(req.app, etlData, service, username)
          .then(result => {
-           console.log('info: Rendering data from ETL API to client')
+           console.log('Rendering data from ETL API to client')
            renderData(etlData,page,username,res);
          })
          .catch(err => {
-           console.log(err);
+           logger.error(err);
            res.sendStatus(500)
          });*/
     }
@@ -929,18 +930,18 @@ module.exports = function (options = {}) {
         }else{
           finalData.edges=etlData;
         }
-        console.log('All '+ etlData.length + ' follower profiles have been collected from instagram')
+        logger.info('All '+ etlData.length + ' follower profiles have been collected from instagram')
         etlData = finalData;
       }
-      console.log('info: Rendering data from ETL API to client')
+      logger.info('Rendering data from ETL API to client')
       renderData(etlData,page,username,res);
       /*writeDatabase(req.app, etlData, service, username)
         .then(result => {
-          console.log('info: Rendering data from ETL API to client')
+          console.log('Rendering data from ETL API to client')
           renderData(etlData,page,username,res);
         })
         .catch(err => {
-          console.log(err);
+          logger.error(err);
           res.sendStatus(500)
         });*/
     }
@@ -949,15 +950,15 @@ module.exports = function (options = {}) {
       //let service = 'instagram/search';
       let page = 'pages/search';
       let etlData = await getEndpointDataEtl(etlApiEndpoint, username, accessToken, strategy);
-      console.log('info: Rendering data from ETL API to client')
+      logger.info('Rendering data from ETL API to client')
       renderData(etlData,page,username,res);
       /*writeDatabase(req.app, etlData, service, username)
         .then(result => {
-          console.log('info: Rendering data from ETL API to client')
+          console.log('Rendering data from ETL API to client')
           renderData(etlData,page,username,res);
         })
         .catch(err => {
-          console.log(err);
+          logger.error(err);
           res.sendStatus(500)
         });*/
     }
@@ -969,15 +970,15 @@ module.exports = function (options = {}) {
       if(etlData.user)etlData = etlData.user;
       if(etlData.edge_web_feed_timeline)etlData = etlData.edge_web_feed_timeline;
       if(etlData.edges)etlData = etlData.edges;
-      console.log('info: Rendering data from ETL API to client')
+      logger.info('Rendering data from ETL API to client')
       renderData(etlData,page,username,res);
       /*writeDatabase(req.app, etlData, service, username)
         .then(result => {
-          console.log('info: Rendering data from ETL API to client')
+          console.log('Rendering data from ETL API to client')
           renderData(etlData,page,username,res);
         })
         .catch(err => {
-          console.log(err);
+          logger.error(err);
           res.sendStatus(500)
         });*/
     }
@@ -986,15 +987,15 @@ module.exports = function (options = {}) {
       //let service = 'instagram/feed';
       let page = 'pages/feed';
       let etlData = await getEndpointDataEtl(etlApiEndpoint, username, accessToken, strategy);
-      console.log('info: Rendering data from ETL API to client')
+      logger.info('Rendering data from ETL API to client')
       renderData(etlData,page,username,res);
       /*writeDatabase(req.app, etlData, service, username)
         .then(result => {
-          console.log('info: Rendering data from ETL API to client')
+          console.log('Rendering data from ETL API to client')
           renderData(etlData,page,username,res);
         })
         .catch(err => {
-          console.log(err);
+          logger.error(err);
           res.sendStatus(500)
         });*/
     }
@@ -1008,15 +1009,15 @@ module.exports = function (options = {}) {
       finalData.user.edge_owner_to_timeline_media = {};
       finalData.user.edge_owner_to_timeline_media.edges = etlData;
       etlData = finalData;
-      console.log('info: Rendering data from ETL API to client')
+      logger.info('Rendering data from ETL API to client')
       renderData(etlData,page,username,res);
       /*writeDatabase(req.app, etlData, service, username)
         .then(result => {
-          console.log('info: Rendering data from ETL API to client')
+          console.log('Rendering data from ETL API to client')
           renderData(etlData,page,username,res);
         })
         .catch(err => {
-          console.log(err);
+          logger.error(err);
           res.sendStatus(500)
         });*/
     }
@@ -1028,15 +1029,15 @@ module.exports = function (options = {}) {
       let finalData = {};
       finalData.edges = etlData;
       etlData = finalData;
-      console.log('info: Rendering data from ETL API to client')
+      logger.info('Rendering data from ETL API to client')
       renderData(etlData,page,username,res);
       /* writeDatabase(req.app, etlData, service, username)
          .then(result => {
-           console.log('info: Rendering data from ETL API to client')
+           console.log('Rendering data from ETL API to client')
            renderData(etlData,page,username,res);
          })
          .catch(err => {
-           console.log(err);
+           logger.error(err);
            res.sendStatus(500)
          });*/
     }
@@ -1049,15 +1050,15 @@ module.exports = function (options = {}) {
         let finalData = {};
         finalData.edges = etlData;
         etlData = finalData;
-        console.log('info: Rendering data from ETL API to client')
+        logger.info('Rendering data from ETL API to client')
         renderData(etlData,page,username,res);
         /*writeDatabase(req.app, etlData, service, username)
           .then(result => {
-            console.log('info: Rendering data from ETL API to client')
+            console.log('Rendering data from ETL API to client')
             renderData(etlData,page,username,res);
           })
           .catch(err => {
-            console.log(err);
+            logger.error(err);
             res.sendStatus(500)
           });*/
       }else{
@@ -1074,15 +1075,15 @@ module.exports = function (options = {}) {
         let finalData = {};
         finalData.edges = etlData;
         etlData = finalData;
-        console.log('info: Rendering data from ETL API to client')
+        logger.info('Rendering data from ETL API to client')
         renderData(etlData,page,username,res);
         /*writeDatabase(req.app, etlData, service, username)
           .then(result => {
-            console.log('info: Rendering data from ETL API to client')
+            console.log('Rendering data from ETL API to client')
             renderData(etlData,page,username,res);
           })
           .catch(err => {
-            console.log(err);
+            logger.error(err);
             res.sendStatus(500)
           });*/
       }else{
@@ -1097,15 +1098,15 @@ module.exports = function (options = {}) {
       let etlData = await getEndpointDataEtl(etlApiEndpoint, username, accessToken, strategy);
       if(etlData){
         etlData = cleans(etlData)
-        console.log('info: Rendering data from ETL API to client')
+        logger.info('Rendering data from ETL API to client')
         renderData(etlData,page,username,res);
         /*writeDatabase(req.app, etlData, service, username)
           .then(result => {
-            console.log('info: Rendering data from ETL API to client')
+            console.log('Rendering data from ETL API to client')
             renderData(etlData,page,username,res);
           })
           .catch(err => {
-            console.log(err);
+            logger.error(err);
             res.sendStatus(500)
           });*/
       }else{
@@ -1114,7 +1115,7 @@ module.exports = function (options = {}) {
 
     }
     else{
-      console.log('info: Not an ETL request! End of the line for: '  + ': '+ expr+ ' Sending 404');
+      logger.error('Not an ETL request! End of the line for: '  + ': '+ expr+ ' Sending 404');
       res.sendStatus(404);
     }
 

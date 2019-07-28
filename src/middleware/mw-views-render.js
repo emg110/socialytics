@@ -11,36 +11,36 @@ module.exports = function (options = {}) {
     switch (expr) {
       case '/':
         res.redirect('/login');
-        console.log('info: redirecting to login page to authenticate');
+        logger.warn('Redirecting to login page to authenticate');
 
         break;
 
       case engagement:
         res.render('pages/dashboards-engagement',{username:username});
-        console.log('info: Rendering instagram engagement dashboard page');
+        logger.info('Rendering instagram engagement dashboard page');
         break;
       case stats:
         res.render('pages/dashboards-stats',{username:username});
-        console.log('info: Rendering instagram stats dashboard page for: '+ username);
+        logger.info('Rendering instagram stats dashboard page for: '+ username);
         break;
       case explore:
         res.render('pages/dashboards-explore',{username:username});
-        console.log('info: Rendering instagram explore dashboard page');
+        logger.info('Rendering instagram explore dashboard page');
         break;
       case '/instagram/form/data?':
         var formData = config.default_form_data
         res.json(formData)
-        console.log('info: Rendering form data');
+        logger.info('Rendering form data');
 
         break;
       case '/instagram/sets/data?':
         var setsData = {seta:config.seta,setb:config.setb}
         res.json(setsData)
-        console.log('info: Rendering sets data');
+        logger.info('Rendering sets data');
 
         break;
       default:
-        console.log('info: Not a view request! Redirecting to ETL middleware'  + ': '+ expr);
+        logger.warn('Not a view request! Redirecting to ETL middleware'  + ': '+ expr);
         next();
     }
   };

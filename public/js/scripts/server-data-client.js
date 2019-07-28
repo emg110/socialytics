@@ -1,8 +1,8 @@
 function getEndpointData(endpoint, type, code, container, caller) {
   var user = ls.getItem('username');
   var accesstoken = ls.getItem('accesstoken');
-  if (accesstoken) console.log('info: accessToken is available')
-  console.log('info: Now getting endpoint data... ' + 'for user: ' + user)
+  if (accesstoken) console.log('accessToken is available')
+  console.log('Now getting endpoint data... ' + 'for user: ' + user)
   $("#carosel").hide();
   $("#logo").show();
   var xhr = new XMLHttpRequest();

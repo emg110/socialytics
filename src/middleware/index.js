@@ -15,15 +15,15 @@ const { authenticate } = require('@feathersjs/authentication').express;
     app.use('/home',expressLayouts);
     app.use('/home',async (req, res)=> {
       let username = req.query.username;
-      console.log('Incoming: Request for /home')
+      logger.info('Incoming: Request for /home')
       if(username && config.users[username]){
         if(config.users[username].sessionid && config.users[username].csrftoken){
           res.render('pages/index',{ layout: 'layouts/layout-home',username:username},function(err, html) {
             if(err){
-              console.log('ejs has returned this error: '+ err);
+              logger.error('ejs has returned this error: '+ err);
               res.sendStatus(500)
             }else{
-              console.log('render: home page');
+              logger.info('render: home page');
               res.send(html);
             }
 
@@ -39,7 +39,7 @@ const { authenticate } = require('@feathersjs/authentication').express;
       }
     });
     app.post('/authenticate',authenticate('local'), async (req, res) => {
-      console.log('Incoming: Request for /authenticate')
+      logger.info('Incoming: Request for /authenticate')
       var username = req.user.username;
       var email = req.user.email;
       if(req.user){
@@ -49,7 +49,7 @@ const { authenticate } = require('@feathersjs/authentication').express;
         app.service('authentication').create(data)
           .then(async function(response) {
             var accessToken = response.accessToken
-            console.log('info: User found for authentication '+ username);
+            logger.info('User found for authentication '+ username);
             config.users[username] = req.user;
             const instagram = new Instagram(username.toLowerCase());
 
@@ -58,22 +58,22 @@ const { authenticate } = require('@feathersjs/authentication').express;
               return csrf;
             }).catch(e =>
             {
-              console.log(e);
+              logger.error(e);
             });
             let userData = await instagram.getUserDataByUsername(username).then(t => {
               return t;
             }).catch(e =>
             {
-              console.log(e);
+              logger.error(e);
             })
             let userId = instagram.getUserIdByUserName(userData);
             if(userId){
               config.users[username].csrftoken = csrftoken;
               if(!config.users[username].userid)config.users[username].userid = userId;
               config.users[username].status = 'verified';
-              console.log('info: Got csrf-token and checked along username and session-id with Instagram and added to request');
+              logger.info('Got csrf-token and checked along username and session-id with Instagram and added to request');
             }
-            console.log('now responsing to authenticate call from client via REST for username: '+ username +' by email: '+ email)
+            logger.info('Now responding to authenticate call from client via REST for username: '+ username +' by email: '+ email)
            /* res.header("Access-Control-Allow-Origin", "*");
             res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
           */  res.status(200).send({
@@ -102,7 +102,7 @@ const { authenticate } = require('@feathersjs/authentication').express;
       }
     });
     app.use('/register', async (req, res) => {
-      console.log('Incoming: Request for /register')
+      logger.info('Incoming: Request for /register')
       if(req.body.sessionid && req.body.username && req.body.password && req.body.email){
         let username = req.body.username.toLowerCase();
         config.users[username] = {};
@@ -115,13 +115,13 @@ const { authenticate } = require('@feathersjs/authentication').express;
           return csrf;
         }).catch(e =>
         {
-          console.log(e);
+          logger.error(e);
         });
         const userData = await instagram.getUserDataByUsername(username).then(t => {
           return t;
         }).catch(e =>
         {
-          console.log(e);
+          logger.error(e);
         })
         let userId = instagram.getUserIdByUserName(userData);
         let fullname = instagram.getUserFullNameByUserName(userData) || '';
@@ -143,11 +143,11 @@ const { authenticate } = require('@feathersjs/authentication').express;
           app.service('users')
             .create(data)
             .then(result => {
-              console.log('User registeration successfully done and retuned: '+ result);
+              logger.info('User registration successfully done and returned: '+ result);
               res.redirect('/home?username='+username)
             })
             .catch(err => {
-              console.log(err);
+              logger.error(err);
               res.redirect('/login')
             });
         }
@@ -158,31 +158,31 @@ const { authenticate } = require('@feathersjs/authentication').express;
       }
     });
     app.use('/logout', (req, res) => {
-      console.log('Incoming: Request for /logout')
-      console.log('info: Logging out...! Redirecting to login page')
+      logger.info('Incoming: Request for /logout')
+      logger.warn('Logging out...! Redirecting to login page')
       res.redirect('/login');
     });
     app.use('/login', (req, res) => {
-      console.log('Incoming: Request for /login')
+      logger.info('Incoming: Request for /login')
       let username = req.query.username;
       if(username && config.users[username]){
         if(config.users[username].sessionid && config.users[username].csrftoken){
           res.render('pages/index', { layout: 'layouts/layout-home',username:username, accesstoken:accesstoken });
-          console.log('render: home page');
+          logger.info('render: home page');
         }else {
           res.render('pages/login');
-          console.log('render: login page');
+          logger.info('render: login page');
         }
       }
       else {
         res.render('pages/login');
-        console.log('render: login page');
+        logger.info('render: login page');
       }
 
     });
     app.use('/registration', (req, res) => {
-      console.log('Incoming: Request for /registration')
-      console.log('render: Registration page')
+      logger.info('Incoming: Request for /registration')
+      logger.info('render: Registration page')
       res.render('pages/register')
     });
     app.use(mwViewsRender());

@@ -1,6 +1,7 @@
 "use-strict";
 
 const fetch = require('node-fetch');
+const logger = require('../../../logger');
 const FormData = require('form-data');
 const config  = require('../../../../config');
 
@@ -169,7 +170,7 @@ module.exports = class Instagram {
       this.updateCookieValues(html, true)
       return this.csrftoken
     }).catch((err) =>
-      console.log('Failed to get instagram csrf token: '+ err)
+      logger.error('Failed to get instagram csrf token: '+ err)
     )
   }
 
@@ -227,7 +228,7 @@ module.exports = class Instagram {
         self.updateCookieValues(res);
         return config.users[self.username].instagram.cookieValues.sessionid;
       }).catch(() =>
-      console.log('Instagram authentication failed...')
+      logger.error('Instagram authentication failed...')
     )
   }
 
@@ -245,7 +246,7 @@ module.exports = class Instagram {
       {
         headers: this.getHeaders(),
       }).then(t => t.json().catch((e) => {
-      console.log('Instagram returned:' + e)
+      console.log('Instagram returned error:' + e)
       console.log(t)
     }).then(r => r))*/
 
@@ -287,8 +288,8 @@ module.exports = class Instagram {
       {
         headers: this.getHeaders(),
       }).then(t => t.json().catch((e) => {
-      console.log('Instagram returned:' + e)
-    }).then(r => r)).finally(console.log('Profile JSON data has fetched from Instagram for user ID: '+userId))
+      logger.error('Instagram returned error:' + e)
+    }).then(r => r)).finally(logger.info('Profile JSON data has fetched from Instagram for user ID: '+userId))
 
   }
 
@@ -317,7 +318,7 @@ module.exports = class Instagram {
             }
           )
       }).then(t => t.json().then(r => r)).catch(e=>{
-      console.log(e);
+      logger.error(e);
     })
   }
 
@@ -371,8 +372,7 @@ module.exports = class Instagram {
         try {
           json = JSON.parse(response)
         } catch (e) {
-          console.log('Session error')
-          console.log(response)
+          logger.error('Session error: '+response)
           return [];
         }
 
@@ -382,7 +382,7 @@ module.exports = class Instagram {
           if (json.data.user.edge_owner_to_timeline_media.page_info.has_next_page) {
             let after = json.data.user.edge_owner_to_timeline_media.page_info.end_cursor
             return new Promise((resolve) => {
-              console.log('fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
+              logger.info('fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
               setTimeout(() => {
                 resolve(self.getAllUserPosts(userId, after, first, 1, 1));
               }, Math.floor(Math.random() * 8) + 4);
@@ -395,8 +395,8 @@ module.exports = class Instagram {
         }
         else {
           return new Promise((resolve) => {
-            console.log(json);
-            console.log('request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
+            logger.error(json);
+            logger.warn('Request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
             setTimeout(() => {
               resolve(self.getAllUserPosts(userId, after, first, postsCounter, selfSelf));
             }, Math.floor(Math.random() * 8) + 4);
@@ -404,7 +404,7 @@ module.exports = class Instagram {
         }
 
       }).catch((e) => {
-        console.log('Instagram returned error:' + e)
+        logger.error('Instagram returned error:' + e)
       })
     })
   }
@@ -460,8 +460,7 @@ module.exports = class Instagram {
         try {
           json = JSON.parse(response)
         } catch (e) {
-          console.log('Session error')
-          console.log(response)
+          logger.error('Session error: '+ response);
           return [];
         }
 
@@ -471,7 +470,7 @@ module.exports = class Instagram {
             if (json.data.hashtag.edge_hashtag_to_media.page_info.has_next_page) {
               let after = json.data.hashtag.edge_hashtag_to_media.page_info.end_cursor
               return new Promise((resolve) => {
-                console.log('fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
+                logger.info('fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
                 setTimeout(() => {
                   resolve(self.getAllTagPosts(n, tag, after, first, 1, 1));
                 }, Math.floor(Math.random() * 8) + 4);
@@ -491,8 +490,8 @@ module.exports = class Instagram {
         }
         else {
           return new Promise((resolve) => {
-            console.log(json);
-            console.log('request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
+            logger.error(json);
+            logger.error('Request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
             setTimeout(() => {
               resolve(self.getAllTagPosts(n, tag, after, first, postsCounter, selfSelf));
             }, Math.floor(Math.random() * 8) + 4);
@@ -500,7 +499,7 @@ module.exports = class Instagram {
         }
 
       }).catch((e) => {
-        console.log('Instagram returned error:' + e)
+        logger.error('Instagram returned error:' + e)
       })
     })
   }
@@ -555,8 +554,7 @@ module.exports = class Instagram {
         try {
           json = JSON.parse(response)
         } catch (e) {
-          console.log('Session error')
-          console.log(response)
+          logger.error('Session error: '+ response)
           return [];
         }
 
@@ -566,7 +564,7 @@ module.exports = class Instagram {
             if (json.data.location.edge_location_to_media.page_info.has_next_page) {
               let after = json.data.location.edge_location_to_media.page_info.end_cursor
               return new Promise((resolve) => {
-                console.log('fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
+                logger.info('Fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
                 setTimeout(() => {
                   resolve(self.getAllLocationPosts(n, location, after, first, 1, 1));
                 }, Math.floor(Math.random() * 8) + 4);
@@ -583,8 +581,8 @@ module.exports = class Instagram {
 
         } else {
           return new Promise((resolve) => {
-            console.log(json);
-            console.log('request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
+            logger.error(json);
+            logger.error('Request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
             setTimeout(() => {
               resolve(self.getAllLocationPosts(n, location, after, first, postsCounter, selfSelf));
             }, Math.floor(Math.random() * 8) + 4);
@@ -592,7 +590,7 @@ module.exports = class Instagram {
         }
 
       }).catch((e) => {
-        console.log('Instagram returned error:' + e)
+        logger.error('Instagram returned error: ' + e)
       })
     })
   }
@@ -684,8 +682,7 @@ module.exports = class Instagram {
         try {
           json = JSON.parse(response)
         } catch (e) {
-          console.log('Session error')
-          console.log(response)
+          logger.error('Session error: '+ response);
           return [];
         }
 
@@ -695,7 +692,7 @@ module.exports = class Instagram {
             if (json.data.user.edge_followed_by.page_info.has_next_page) {
               let after = json.data.user.edge_followed_by.page_info.end_cursor
               return new Promise((resolve) => {
-                console.log('fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
+                logger.info('Fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
                 setTimeout(() => {
                   resolve(self.getUserFollowers(n, userId, after, first , 1, 1));
                 }, Math.floor(Math.random() * 8) + 4);
@@ -712,8 +709,8 @@ module.exports = class Instagram {
 
         } else {
           return new Promise((resolve) => {
-            console.log(json);
-            console.log('request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
+            logger.error(json);
+            logger.error('Request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
             setTimeout(() => {
               resolve(self.getUserFollowers(n, userId, after, first,  followersCounter, selfSelf));
             }, Math.floor(Math.random() * 8) + 4);
@@ -721,7 +718,7 @@ module.exports = class Instagram {
         }
 
       }).catch((e) => {
-        console.log('Instagram returned:' + e)
+        logger.error('Instagram returned error: ' + e)
       })
     })
   }
@@ -779,8 +776,7 @@ module.exports = class Instagram {
         try {
           json = JSON.parse(response)
         } catch (e) {
-          console.log('Session error')
-          console.log(response)
+          logger.error('Session error: '+ response)
           return [];
         }
 
@@ -790,7 +786,7 @@ module.exports = class Instagram {
             if (json.data.user.edge_follow.page_info.has_next_page) {
               let after = json.data.user.edge_follow.page_info.end_cursor
               return new Promise((resolve) => {
-                console.log('fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
+                logger.info('Fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
                 setTimeout(() => {
                   resolve(self.getUserFollowing(n, userId, after, first, 1, 1));
                 }, Math.floor(Math.random() * 8) + 4);
@@ -807,8 +803,8 @@ module.exports = class Instagram {
 
         } else {
           return new Promise((resolve) => {
-            console.log(json);
-            console.log('request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
+            logger.error(json);
+            logger.error('Request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
             setTimeout(() => {
               resolve(self.getUserFollowing(n, userId, after, first, followingCounter, selfSelf));
             }, Math.floor(Math.random() * 8) + 4);
@@ -816,7 +812,7 @@ module.exports = class Instagram {
         }
 
       }).catch((e) => {
-        console.log('Instagram returned:' + e)
+        logger.error('Instagram returned error:' + e)
       })
     })
   }
@@ -921,8 +917,7 @@ module.exports = class Instagram {
         try {
           json = JSON.parse(response)
         } catch (e) {
-          console.log('Session error')
-          console.log(response)
+          logger.error('Session error: '+ response)
           return [];
         }
 
@@ -932,7 +927,7 @@ module.exports = class Instagram {
             if (json.data.user.edge_web_feed_timeline.page_info.has_next_page) {
               let fetch_media_item_cursor = json.data.user.edge_web_feed_timeline.page_info.end_cursor;
               return new Promise((resolve) => {
-                console.log('fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
+                logger.info('Fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
                 setTimeout(() => {
                   resolve(self.getAllUserPosts(n, userId, fetch_media_item_cursor, fetch_media_item_count, 1, 1));
                 }, Math.floor(Math.random() * 8) + 4);
@@ -949,8 +944,8 @@ module.exports = class Instagram {
 
         } else {
           return new Promise((resolve) => {
-            console.log(json);
-            console.log('request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
+            logger.error(json);
+            logger.error('Request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
             setTimeout(() => {
               resolve(self.getAllUserFeeds(n, userId, fetch_media_item_cursor, fetch_media_item_count, postsCounter, selfSelf));
             }, Math.floor(Math.random() * 8) + 4);
@@ -958,7 +953,7 @@ module.exports = class Instagram {
         }
 
       }).catch((e) => {
-        console.log('Instagram returned error:' + e)
+        logger.error('Instagram returned error:' + e)
       })
     })
   }
@@ -1085,8 +1080,7 @@ module.exports = class Instagram {
         try {
           json = JSON.parse(response)
         } catch (e) {
-          console.log('Session error')
-          console.log(response)
+          logger.error('Session error: '+response)
           return [];
         }
 
@@ -1096,7 +1090,7 @@ module.exports = class Instagram {
             if (json.data.shortcode_media.edge_liked_by.page_info.has_next_page) {
               let after = json.data.shortcode_media.edge_liked_by.page_info.end_cursor
               return new Promise((resolve) => {
-                console.log('fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
+                logger.info('Fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
                 setTimeout(() => {
                   resolve(self.getPostLikes(n, postId, after, first , 1, 1));
                 }, Math.floor(Math.random() * 8) + 4);
@@ -1114,8 +1108,8 @@ module.exports = class Instagram {
 
         } else {
           return new Promise((resolve) => {
-            console.log(json);
-            console.log('request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
+            logger.error(json);
+            logger.error('Request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
             setTimeout(() => {
               resolve(self.getPostLikes(n, postId, after, first,  likesCounter, selfSelf));
             }, Math.floor(Math.random() * 8) + 4);
@@ -1123,7 +1117,7 @@ module.exports = class Instagram {
         }
 
       }).catch((e) => {
-        console.log('Instagram returned:' + e)
+        logger.error('Instagram returned error: ' + e)
       })
     })
   }
@@ -1173,8 +1167,7 @@ module.exports = class Instagram {
         try {
           json = JSON.parse(response)
         } catch (e) {
-          console.log('Session error')
-          console.log(response)
+          logger.error('Session error: '+response);
           return [];
         }
 
@@ -1184,7 +1177,7 @@ module.exports = class Instagram {
             if (json.data.shortcode_media.edge_media_to_comment.page_info.has_next_page) {
               let after = json.data.shortcode_media.edge_media_to_comment.page_info.end_cursor
               return new Promise((resolve) => {
-                console.log('fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
+                logger.info('Fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
                 setTimeout(() => {
                   resolve(self.getPostComments(n, postId, after, first , 1, 1));
                 }, Math.floor(Math.random() * 8) + 4);
@@ -1201,8 +1194,8 @@ module.exports = class Instagram {
 
         } else {
           return new Promise((resolve) => {
-            console.log(json);
-            console.log('request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
+            logger.error(json);
+            logger.error('Request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
             setTimeout(() => {
               resolve(self.getPostComments(n, postId, after, first,  commentsCounter, selfSelf));
             }, Math.floor(Math.random() * 8) + 4);
@@ -1210,7 +1203,7 @@ module.exports = class Instagram {
         }
 
       }).catch((e) => {
-        console.log('Instagram returned:' + e)
+        logger.error('Instagram returned error: ' + e)
       })
     })
   }
@@ -1259,8 +1252,7 @@ module.exports = class Instagram {
         try {
           json = JSON.parse(response)
         } catch (e) {
-          console.log('Session error')
-          console.log(response)
+          logger.error('Session error: '+response);
           return [];
         }
 
@@ -1270,7 +1262,7 @@ module.exports = class Instagram {
             if (json.data.user.edge_web_discover_media.page_info.has_next_page) {
               let after = json.data.user.edge_web_discover_media.page_info.end_cursor
               return new Promise((resolve) => {
-                console.log('fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
+                logger.info('Fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
                 setTimeout(() => {
                   resolve(self.getSuggestedPosts(n, after, first , 1, 1));
                 }, Math.floor(Math.random() * 8) + 4);
@@ -1287,8 +1279,8 @@ module.exports = class Instagram {
 
         } else {
           return new Promise((resolve) => {
-            console.log(json);
-            console.log('request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
+            logger.error(json);
+            logger.error('Request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
             setTimeout(() => {
               resolve(self.getSuggestedPosts(n, after, first,  sugPostCounter, selfSelf));
             }, Math.floor(Math.random() * 8) + 4);
@@ -1296,7 +1288,7 @@ module.exports = class Instagram {
         }
 
       }).catch((e) => {
-        console.log('Instagram returned:' + e)
+        logger.error('Instagram returned error: ' + e)
       })
     })
   }
@@ -1349,8 +1341,7 @@ module.exports = class Instagram {
         try {
           json = JSON.parse(response)
         } catch (e) {
-          console.log('Session error')
-          console.log(response)
+          logger.error('Session error: '+ response);
           return [];
         }
 
@@ -1361,7 +1352,7 @@ module.exports = class Instagram {
             if (json.data.user.edge_suggested_users.page_info.has_next_page && json.data.user.edge_suggested_users.page_info.end_cursor) {
               let fetch_media_cursor = json.data.user.edge_suggested_users.page_info.end_cursor
               return new Promise((resolve) => {
-                console.log('fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
+                logger.info('Fetching next page in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
                 setTimeout(() => {
                   resolve(self.getSuggestedPeople(n, fetch_media_cursor, fetch_media_count, 1, 1));
                 }, Math.floor(Math.random() * 8) + 4);
@@ -1378,8 +1369,8 @@ module.exports = class Instagram {
 
         } else {
           return new Promise((resolve) => {
-            console.log(json);
-            console.log('request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
+            logger.error(json);
+            logger.error('Request failed, retrying in ' + config.users[self.username].instagram.paginationDelay / 1000 + ' seconds');
             setTimeout(() => {
               resolve(self.getSuggestedPeople(n, fetch_media_cursor, fetch_media_count,  sugPeopleCounter, selfSelf));
             }, Math.floor(Math.random() * 8) + 4);
@@ -1387,7 +1378,7 @@ module.exports = class Instagram {
         }
 
       }).catch((e) => {
-        console.log('Instagram returned:' + e)
+        logger.error('Instagram returned error: ' + e)
       })
     })
   }

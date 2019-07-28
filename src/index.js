@@ -22,27 +22,27 @@ const apiHttpsServer = https.createServer({
   key: fs.readFileSync('./security/privatekey.pem'),
   cert: fs.readFileSync('./security/certificate.pem')
 }, app).listen(port);
-
+logger.info('Security keys have been found on installation folder')
 // Call app.setup to initialize all services and SocketIO
 app.setup(apiHttpsServer);
 process.on('unhandledRejection', (reason, p) =>{
-    console.log('Unhandled Rejection : ', p, reason)
+    logger.error('Unhandled Rejection: ['+ p + '] Reason: ['+reason+']')
+  //console.log('Unhandled Rejection : ', p, reason)
     //process.kill()
 }
 );
 
 /*apiServer.on('listening', () =>
-  console.log('info: API Server started on http://%s:%d', app.get('host'), port)
+  console.log('API Server started on http://%s:%d', app.get('host'), port)
 );*/
 apiHttpsServer.on('listening', () =>
-  console.log('info: API Server started on https://%s:%d', app.get('host'), app.get('port'))
+  logger.info('API Server started on https://%s:%d', app.get('host'), app.get('port'))
 );
 
 const { HOST, PORT } = require("../config");
 const application = require("./backend-social/app");
 /*const instagram = require('./backend-social/api/instagram/index').instagramClient;*/
-console.log('**************************************');
 const etlServer = application.listen(PORT, () => {
-  console.log('info: ETL Server Listening on http://%s:%d', HOST, PORT)
+  logger.info('ETL Server Listening on http://%s:%d', HOST, PORT)
 });
 etlServer.timeout=60*60*1000;

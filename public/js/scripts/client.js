@@ -76,7 +76,7 @@ $('#getTagSetDataBtn').on('click', function () {
 
 });
 $("#login-form").submit(function (e) {
-  console.log('info: Login started');
+  console.log('Login started');
   //prevent Default functionality
   e.preventDefault();
 
@@ -88,7 +88,7 @@ $("#login-form").submit(function (e) {
   $.post(actionurl,logindata )
     .done(function (data) {
       if (data) {
-        console.log('info: Authentication data received from Socialytics server')
+        console.log('Authentication data received from Socialytics server')
         var username = data.username;
         var accesstoken = data.accesstoken;
         var email = data.email;
@@ -103,7 +103,7 @@ $("#login-form").submit(function (e) {
         ls.setItem('posts', data.stats.posts);
 
         var homeUrl = window.location.protocol + '//' + window.location.host + '/home?' + 'username=' + username;
-        console.log('info: Authentication to Socialytics has completed! Now requesting home page: ' + homeUrl)
+        console.log('Authentication to Socialytics has completed! Now requesting home page: ' + homeUrl)
         window.location.href = homeUrl;
 
 

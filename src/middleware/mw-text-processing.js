@@ -1,6 +1,7 @@
 const countWords = require("count-words");
 const emojiRegex = require('emoji-regex');
 const regex = emojiRegex();
+const logger = require('../logger');
 module.exports = function (options = {}) {
   return async function mwTextProcessing(req, res, next) {
     let expr = req.originalUrl;
@@ -14,7 +15,7 @@ module.exports = function (options = {}) {
       let emojiCloudArray=[];
 
       //TODO: find all posts of set's profile and return their textProc object only (textProc array not comments array)
-      console.log('Text processing middleware is working now...');
+      logger.info('Text processing middleware is working now...');
       let resTextProc = await req.app.service(postsSet).find({
         query: {
           "owner.id": {$in:queryProfiles.split(',')},
@@ -30,7 +31,7 @@ module.exports = function (options = {}) {
       }).then(items => {
         return items
       }).catch(err=>{
-        console.log(err)
+        logger.error(err)
       })
 
       for (let i in resTextProc.data){
@@ -46,7 +47,7 @@ module.exports = function (options = {}) {
           }
         }
       }else{
-        console.log('No comments data')
+        logger.warn('No comments data')
       }
 
       let wordCloudData = await countWords(wordCloudArray.toString(),true)

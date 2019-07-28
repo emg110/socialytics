@@ -1,8 +1,9 @@
 var config = require('../../../../config');
+const logger = require('../../../logger');
 const Router = require("koa-router");
 const router = new Router({ prefix: "/api" });
 const api = require('./api');
-console.log("Socialytics Instagram backend API and Router initialized...");
+logger.info("Socialytics Instagram backend API and Router initialized...");
 router.get("/etl-health-check", async (ctx) => {
   ctx.status = 200
   ctx.body = { result: "ok" }
@@ -26,7 +27,7 @@ router.get("/instagram/post", api.postJson);
 router.get("/instagram/suggested/posts", api.suggestedPosts);
 router.get("/instagram/suggested/people", api.suggestedPeople);
 /*router.get("/instagram/set/data", api.getStatsData);*/
-console.log("Socialytics Instagram backend ETL routes registered...");
+logger.info("Socialytics Instagram backend ETL routes registered...");
 module.exports = router;
 
 

@@ -1,3 +1,4 @@
+const logger = require('./logger');
 module.exports = function(app) {
   if(typeof app.channel !== 'function') {
     // If no real-time functionality has been configured just return
@@ -25,7 +26,7 @@ module.exports = function(app) {
   // eslint-disable-next-line no-unused-vars
   app.publish((data, hook) => {
     // app.publish(eventname, () => {})
-    console.log('Publishing all events to all authenticated users.');
+    logger.info('Publishing all events to all authenticated users.');
     return app.channel('authenticated');
   });
   // app.service('users').publish('created', () => app.channel('admins'));

@@ -31,8 +31,8 @@ function getSetsData(isHashTag, totalsA = {}, totalsB = {}, seta = [], setb = []
   $("#counterb").html(htmlChartLoadingMini);
   var user = ls.getItem('username');
   var accesstoken = ls.getItem('accesstoken');
-  if (accesstoken) console.log('info: accessToken is available');
-  console.log('info: Now getting endpoint data... ' + 'for user: ' + user);
+  if (accesstoken) console.log('accessToken is available');
+  console.log('Now getting endpoint data... ' + 'for user: ' + user);
   var xhr = new XMLHttpRequest();
   var url = isHashTag? '/instagram/tagset/data?setAData=': '/instagram/set/data?setAData=';
   url += seta.toString();

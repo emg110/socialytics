@@ -1,3 +1,4 @@
+const logger = require('./logger');
 module.exports = async function writeDatabase(fapi, data, service, account) {
   if (data.user) {
     if (data.user.edge_owner_to_timeline_media) {
@@ -49,7 +50,7 @@ module.exports = async function writeDatabase(fapi, data, service, account) {
         return result;
       })
       .catch(err => {
-        console.log(err);
+        logger.error(err);
       });
     let createDataMulti = await fapi.service(service)
       .create(items)
@@ -57,7 +58,7 @@ module.exports = async function writeDatabase(fapi, data, service, account) {
         return result;
       })
       .catch(err => {
-        console.log(err);
+        logger.error(err);
       });
   }
   else if(data.id){
@@ -67,7 +68,7 @@ module.exports = async function writeDatabase(fapi, data, service, account) {
         return result;
       })
       .catch(err => {
-        console.log(err);
+        logger.error(err);
       });
     if(findData.data[0]){
       let removeData = await fapi.service(service)
@@ -76,7 +77,7 @@ module.exports = async function writeDatabase(fapi, data, service, account) {
           return result;
         })
         .catch(err => {
-          console.log(err);
+          logger.error(err);
         });
     }
 
@@ -86,7 +87,7 @@ module.exports = async function writeDatabase(fapi, data, service, account) {
         return result;
       })
       .catch(err => {
-        console.log(err);
+        logger.error(err);
       });
   }
 
