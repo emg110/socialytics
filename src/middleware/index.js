@@ -23,7 +23,7 @@ const { authenticate } = require('@feathersjs/authentication').express;
               logger.error('ejs has returned this error: '+ err);
               res.sendStatus(500)
             }else{
-              logger.info('render: home page');
+              logger.info('Render: Home page');
               res.send(html);
             }
 
@@ -168,21 +168,21 @@ const { authenticate } = require('@feathersjs/authentication').express;
       if(username && config.users[username]){
         if(config.users[username].sessionid && config.users[username].csrftoken){
           res.render('pages/index', { layout: 'layouts/layout-home',username:username, accesstoken:accesstoken });
-          logger.info('render: home page');
+          logger.info('Render: Home page');
         }else {
           res.render('pages/login');
-          logger.info('render: login page');
+          logger.info('Render: Login page');
         }
       }
       else {
         res.render('pages/login');
-        logger.info('render: login page');
+        logger.info('Render: Login page');
       }
 
     });
     app.use('/registration', (req, res) => {
       logger.info('Incoming: Request for /registration')
-      logger.info('render: Registration page')
+      logger.info('Render: Registration page')
       res.render('pages/register')
     });
     app.use(mwViewsRender());

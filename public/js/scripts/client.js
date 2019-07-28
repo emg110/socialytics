@@ -55,9 +55,12 @@ $('.btn-primary').on('click', function () {
       var caller = this;
       if (type !== 'form-data') {
         $(this).addClass('fired');
+        getEndpointData(endpoint, type, '', 'main', caller);
+      }else{
+        getEndpointData('/instagram/sets/data?', 'form-data', '', 'main', undefined);
       }
-      getEndpointData('/instagram/sets/data?', 'form-data', '', 'main', undefined);
-      getEndpointData(endpoint, type, '', 'main', caller);
+
+
     }
   }
 });

@@ -36,7 +36,7 @@ module.exports = function (options = {}) {
       case '/instagram/sets/data?':
         var setsData = {seta:config.seta,setb:config.setb}
         res.json(setsData)
-        logger.info('Rendering sets data');
+        logger.info('Rendering sets member names data');
 
         break;
       default:
