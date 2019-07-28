@@ -1,4 +1,4 @@
-<% if(!(typeof etlData.places == 'undefined')){ console.log('we got data here...') %>
+<% if(!(typeof etlData.places == 'undefined')){ console.log('EJS: Search view has got data to load...') %>
 
 <h1 style="color: #fff; vertical-align: middle; padding: 10px;  background-color: grey;"><span class="glyphicon glyphicon-map-marker"></span> Places:</h1>
 <% etlData.places.forEach((edge) => { %>
@@ -25,7 +25,7 @@
 
 <% }) %>
 <% } %>
-<% if(!(typeof etlData.hashtags == 'undefined')){ console.log('we got data here...') %>
+<% if(!(typeof etlData.hashtags == 'undefined')){ console.log('EJS: Search view has got data to load...') %>
 
 <h1 style="color: #fff; vertical-align: middle; background-color: grey;padding: 10px;"><span style="padding-right:5px" class="glyphicon glyphicon-tags"></span>  Hashtags:</h1>
 <% etlData.hashtags.forEach((edge) => { %>
@@ -51,7 +51,7 @@
 
 <% }) %>
 <% } %>
-<% if(!(typeof etlData.users == 'undefined')){ console.log('we got data here...') %>
+<% if(!(typeof etlData.users == 'undefined')){ console.log('EJS: Search view has got data to load...') %>
 
 <h1 style="color: #fff; vertical-align: middle; padding: 10px;  background-color: grey;padding: 10px;"><span class="glyphicon glyphicon-user"></span> Users:</h1>
 <% etlData.users.forEach((edge) => { %>

@@ -124,7 +124,7 @@
 </div>
 
 <div class="row">
-  <% if(!(typeof etlData.edge_owner_to_timeline_media.edges == 'undefined')){ console.log('we got data here...') %>
+  <% if(!(typeof etlData.edge_owner_to_timeline_media.edges == 'undefined')){ console.log('EJS: Profile view has got data to load...') %>
   <% etlData.edge_owner_to_timeline_media.edges.forEach((edge) => { %>
     <% posts++ %>
     <% if (edge.node) edge = edge.node %>

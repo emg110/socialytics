@@ -1,4 +1,4 @@
-<% if(!(typeof etlData.edges == 'undefined')){ console.log('we got data here...')%>
+<% if(!(typeof etlData.edges == 'undefined')){ console.log('EJS: Comments view has got data to load...')%>
   <% etlData.edges.forEach((edge) => { %>
   <% if(edge.node)edge = edge.node %>
   <% var commentDate = new Date(parseInt(edge.created_at)*1000) %>
