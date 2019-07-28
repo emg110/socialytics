@@ -2,11 +2,11 @@
 $("#text-procb").responsiveTabs({
   startCollapsed: 'accordion'
 })
-$('#text-procb').responsiveTabs('activate', 0);
+//$('#text-procb').responsiveTabs('activate', 0);
 $("#text-proca").responsiveTabs({
   startCollapsed: 'accordion'
 })
-$('#text-proca').responsiveTabs('activate', 0);
+//$('#text-proca').responsiveTabs('activate', 0);
 function textProc(set){
   var profilesArrA = [];
   var profilesArrB = [];
