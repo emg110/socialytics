@@ -34,12 +34,14 @@ const { authenticate } = require('@feathersjs/authentication').express;
         else {
           res.redirect('/login');
         }
-      }else{
-        res.sendStatus(404)
+      }
+      else{
+        //res.sendStatus(404)
+        res.status(404).redirect('/login');
       }
     });
     app.post('/authenticate',authenticate('local'), async (req, res) => {
-      logger.info('Incoming: Request for /authenticate')
+      logger.info('Incoming: Request for /authenticate');
       var username = req.user.username;
       var email = req.user.email;
       if(req.user){
@@ -48,7 +50,7 @@ const { authenticate } = require('@feathersjs/authentication').express;
 
         app.service('authentication').create(data)
           .then(async function(response) {
-            var accessToken = response.accessToken
+            var accessToken = response.accessToken;
             logger.info('User found for authentication '+ username);
             config.users[username] = req.user;
             const instagram = new Instagram(username.toLowerCase());
@@ -76,7 +78,8 @@ const { authenticate } = require('@feathersjs/authentication').express;
             logger.info('Now responding to authenticate call from client via REST for username: '+ username +' by email: '+ email)
            /* res.header("Access-Control-Allow-Origin", "*");
             res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-          */  res.status(200).send({
+          */
+           res.status(200).send({
               accesstoken:accessToken,
               username: username,
               userid:userId,

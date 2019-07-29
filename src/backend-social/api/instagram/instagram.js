@@ -756,18 +756,19 @@ module.exports = class Instagram {
     }
 
     const variables = encodeURIComponent(JSON.stringify(query));
-
+    let url = 'https://www.instagram.com/graphql/query/?query_id=17874545323001329&variables=' + variables;
+    let cookie = self.generateCookie(false);
+    let headers = self.combineWithBaseHeader({
+        'accept': '*/*',
+        'accept-encoding': 'gzip, deflate, br',
+        'cookie': cookie
+      });
     config.users[self.username].instagram.receivePromises[userId] = 1
-    return fetch('https://www.instagram.com/graphql/query/?query_id=17874545323001329&variables=' + variables,
+    return fetch(url,
       {
         'method': 'get',
-        'headers': self.combineWithBaseHeader(
-          {
-            'accept': 'text/html,application/xhtml+xml,application/xml;q0.9,image/webp,image/apng,*.*;q=0.8',
-            'accept-encoding': 'gzip, deflate, br',
-            'cookie': self.generateCookie(false)
-          }
-        )
+        'headers': headers
+
       }).then(res => {
       return res.text().then((response) => {
         //prepare convert to json

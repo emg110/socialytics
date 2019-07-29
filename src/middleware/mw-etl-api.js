@@ -232,7 +232,7 @@ module.exports = function (options = {}) {
                         }else{
                           q = loc.name
                         }
-                        let timePMA = await setTimeout(function(){return 1000},1000);
+                        let timePMA = await setTimeout(function(){return true},2200);
                         let locReq = await geocoder.search( { q: q }, {}, function(error, response) {
                           if(error){
                             logger.error('SetA on Nominatim ETL has returned error: '+error);

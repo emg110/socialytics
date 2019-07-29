@@ -47,6 +47,15 @@ function backNav() {
   }
 
 }
+
+var selfPic =ls.getItem('pic');
+var selfBio =ls.getItem('bio');
+var selfUsername =ls.getItem('username');
+var selfFollowersCount =ls.getItem('followers');
+var selfFollowingCount =ls.getItem('following');
+var selfSavedCount =ls.getItem('saved') || 0;
+var selfPostsCount =ls.getItem('posts');
+
 $('.btn-primary').on('click', function () {
   if (!$(this).hasClass('disabled')) {
     var endpoint = $(this).attr('click-target');
@@ -58,6 +67,7 @@ $('.btn-primary').on('click', function () {
         getEndpointData(endpoint, type, '', 'main', caller);
       }else{
         getEndpointData('/instagram/sets/data?', 'form-data', '', 'main', undefined);
+        getEndpointData(endpoint, type, '', 'main', caller);
       }
 
 
@@ -78,53 +88,6 @@ $('#getTagSetDataBtn').on('click', function () {
   }
 
 });
-$("#login-form").submit(function (e) {
-  console.log('Login started');
-  //prevent Default functionality
-  e.preventDefault();
-
-  $('#login').html(htmlLoading)
-  $('#registration').addClass('disabled');
-  $('#login-error').html('')
-  var actionurl = e.currentTarget.action;
-  var logindata = $("#login-form").serialize()
-  $.post(actionurl,logindata )
-    .done(function (data) {
-      if (data) {
-        console.log('Authentication data received from Socialytics server')
-        var username = data.username;
-        var accesstoken = data.accesstoken;
-        var email = data.email;
-        ls.setItem('username', username);
-        ls.setItem('accesstoken', accesstoken);
-        ls.setItem('email', email);
-        ls.setItem('pic', data.pic);
-        ls.setItem('bio', data.bio);
-        ls.setItem('followers', data.stats.followers);
-        ls.setItem('following', data.stats.following);
-        ls.setItem('saved', data.stats.saved);
-        ls.setItem('posts', data.stats.posts);
-
-        var homeUrl = window.location.protocol + '//' + window.location.host + '/home?' + 'username=' + username;
-        console.log('Authentication to Socialytics has completed! Now requesting home page: ' + homeUrl)
-        window.location.href = homeUrl;
-
-
-
-      }
-  })
-    .fail(function(error){
-      $('#login').html('Login to socialytics');
-      $('#registration').removeClass('disabled');
-      $('#login-error').html('Login failed , please try again with correct inputs');
-
-      console.log('Login failed with error: '+ error)
-    })
-});
-$("#github").click(function () {
-  window.open('https://github.com/emg110/socialytics/', '_blank');
-});
-
 $("#getDataBtn").on('click',function(e){
   e.preventDefault();
   getStatsData();
@@ -139,17 +102,6 @@ $("#resetSets").on('click',function(e){
 
   $("#setb").importTags('')
 })
-
-//$(".scrollable").overlayScrollbars({ className : "os-theme-dark"});
-
-// OverlayScrollbars(document.querySelectorAll('body'), {
-//   className : "os-theme-dark",
-// });
-
-/*OverlayScrollbars(document.getElementById('home-sidebar'), {
-  className : "os-theme-dark",
-});*/
-
 $("#search-input").on('keypress',(e)=>{
   //console.log(e.which)
   if(e.which===13){
@@ -260,6 +212,53 @@ $("#search-input-side-panel").on('keypress',(e)=>{
     }
   }
 });
+$("#search-insta-input").on('keypress',(e)=>{
+  //console.log(e.which)
+  if(e.which===13){
+    var value = $("#search-insta-input").val();
+    // var caller = this;
+
+    if(value.length>2){
+      getEndpointData('/instagram/search?', 'search-posts', '', 'main');
+    }
+  }
+});
+$("#resetSeta").on('click',function(){
+  $('#seta').importTags('');
+});
+$("#resetSetb").on('click',function(){
+  $('#setb').importTags('');
+});
+$("#storeBrowsingBtn").on('click',function(){
+  if($("input[id='storeBrowsingBtn']").is(":checked")){
+
+    $("#setToggleDiv").removeClass('hidden');
+    $("#setToggleDiv").css('display','inline');
+
+  }else{
+    $("#setToggleDiv").addClass('hidden');
+    $("#setToggleDiv").css('display','none');
+  }
+});
+$("#allPostsBtn").on('click',function(){
+  if($("input[id='allPostsBtn']").is(":checked")){
+
+    $("#commentsDiv").removeClass('hidden');
+    $("#commentsDiv").css('display','inline');
+    $("#locationDiv").removeClass('hidden');
+    $("#locationDiv").css('display','inline');
+
+  }else{
+    $("#commentsDiv").addClass('hidden');
+    $("#commentsDiv").css('display','none');
+    $("#locationDiv").addClass('hidden');
+    $("#locationDiv").css('display','none');
+  }
+});
+
+$("#github").click(function () {
+  window.open('https://github.com/emg110/socialytics/', '_blank');
+});
 $("#sidepanelSearchProfileBtn").click(()=>{
   var value = $("#search-input-side-panel").val();
   /* var instance = $("#autocomplete-results").overlayScrollbars()
@@ -312,8 +311,8 @@ $("#sidepanelSearchProfileBtn").click(()=>{
 });
 $("#searchProfileBtn").click(()=>{
   var value = $("#search-input").val();
- /* var instance = $("#autocomplete-results").overlayScrollbars()
-  if(instance)instance.destroy()*/
+  /* var instance = $("#autocomplete-results").overlayScrollbars()
+   if(instance)instance.destroy()*/
   $("#autocomplete-results").html('<div>  </div>')
   if(value.length>2){
     window.fetch('https://www.instagram.com/web/search/topsearch/?query='+value).then(res=>{
@@ -351,9 +350,9 @@ $("#searchProfileBtn").click(()=>{
 
         }
       }
-     /* $("#autocomplete-results").overlayScrollbars({
-        className : "os-theme-dark"
-      })*/
+      /* $("#autocomplete-results").overlayScrollbars({
+         className : "os-theme-dark"
+       })*/
       /*OverlayScrollbars(document.getElementById('autocomplete-results'), {
           className : "os-theme-dark",
         });*/
@@ -361,62 +360,50 @@ $("#searchProfileBtn").click(()=>{
   }
 });
 
+$("#login-form").submit(function (e) {
+  console.log('Login started');
+  //prevent Default functionality
+  e.preventDefault();
 
-$("#search-insta-input").on('keypress',(e)=>{
-  //console.log(e.which)
-  if(e.which===13){
-    var value = $("#search-insta-input").val();
-    // var caller = this;
+  $('#login').html(htmlLoading)
+  $('#registration').addClass('disabled');
+  $('#login-error').html('')
+  var actionurl = e.currentTarget.action;
+  var logindata = $("#login-form").serialize()
+  $.post(actionurl,logindata )
+    .done(function (data) {
+      if (data) {
+        console.log('Authentication data received from Socialytics server')
+        var username = data.username;
+        var accesstoken = data.accesstoken;
+        var email = data.email;
+        ls.setItem('username', username);
+        ls.setItem('accesstoken', accesstoken);
+        ls.setItem('email', email);
+        ls.setItem('pic', data.pic);
+        ls.setItem('bio', data.bio);
+        ls.setItem('followers', data.stats.followers);
+        ls.setItem('following', data.stats.following);
+        ls.setItem('saved', data.stats.saved);
+        ls.setItem('posts', data.stats.posts);
 
-    if(value.length>2){
-      getEndpointData('/instagram/search?', 'search-posts', '', 'main');
-    }
-  }
+        var homeUrl = window.location.protocol + '//' + window.location.host + '/home?' + 'username=' + username;
+        console.log('Authentication to Socialytics has completed! Now requesting home page: ' + homeUrl)
+        window.location.href = homeUrl;
+
+
+
+      }
+    })
+    .fail(function(error){
+      $('#login').html('Login to socialytics');
+      $('#registration').removeClass('disabled');
+      $('#login-error').html('Login failed , please try again with correct inputs');
+
+      console.log('Login failed with error: '+ error)
+    })
 });
-
 $('[data-toggle="popover"]').popover();
-$("#resetSeta").on('click',function(){
-  $('#seta').importTags('');
-});
-$("#resetSetb").on('click',function(){
-  $('#setb').importTags('');
-});
-
-
-$("#storeBrowsingBtn").on('click',function(){
-  if($("input[id='storeBrowsingBtn']").is(":checked")){
-
-    $("#setToggleDiv").removeClass('hidden');
-    $("#setToggleDiv").css('display','inline');
-
-  }else{
-    $("#setToggleDiv").addClass('hidden');
-    $("#setToggleDiv").css('display','none');
-  }
-});
-$("#allPostsBtn").on('click',function(){
-  if($("input[id='allPostsBtn']").is(":checked")){
-
-    $("#commentsDiv").removeClass('hidden');
-    $("#commentsDiv").css('display','inline');
-    $("#locationDiv").removeClass('hidden');
-    $("#locationDiv").css('display','inline');
-
-  }else{
-    $("#commentsDiv").addClass('hidden');
-    $("#commentsDiv").css('display','none');
-    $("#locationDiv").addClass('hidden');
-    $("#locationDiv").css('display','none');
-  }
-});
-var selfPic =ls.getItem('pic');
-var selfBio =ls.getItem('bio');
-var selfUsername =ls.getItem('username');
-var selfFollowersCount =ls.getItem('followers');
-var selfFollowingCount =ls.getItem('following');
-var selfSavedCount =ls.getItem('saved') || 0;
-var selfPostsCount =ls.getItem('posts');
-
 
 $('#self-profile-pic').html('<img class="usr-img-thumbnail" alt="emg110" src="'+selfPic+'">');
 $('#self-bio').html('<h5>'+selfBio+'</h5>');
@@ -426,4 +413,10 @@ $('#self-following-count').html('<br><span>'+selfFollowingCount+'</span>');
 $('#self-posts-count').html('<br><span>'+selfPostsCount+'</span>');
 $('#self-saved-count').html('<br><span>'+selfSavedCount+'</span>');
 
-
+//$(".scrollable").overlayScrollbars({ className : "os-theme-dark"});
+// OverlayScrollbars(document.querySelectorAll('body'), {
+//   className : "os-theme-dark",
+// });
+/*OverlayScrollbars(document.getElementById('home-sidebar'), {
+  className : "os-theme-dark",
+});*/
