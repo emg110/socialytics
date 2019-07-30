@@ -95,7 +95,7 @@ const { authenticate } = require('@feathersjs/authentication').express;
 
             })
 
-          });
+          }).catch(err=>logger.error(err));
 
 
       }

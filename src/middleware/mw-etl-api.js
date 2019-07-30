@@ -96,7 +96,7 @@ const getEndpointDataEtl = async (etlApiEndpoint, username, accessToken, strateg
       headers: getHeaders(username, accessToken, strategy),
     }).then(t => t.json().catch((e) => {
     logger.error('Instagram API returned an error: ' + e)
-  }).then(r => r));
+  }).then(r => r).catch(e=>{logger.error(e)})).catch(e=>{logger.error(e)});
   logger.info('Returning retrieved results from backend-social API to client');
   //res.render('pages/profile',{finalData});
   if(etlData){
@@ -105,7 +105,7 @@ const getEndpointDataEtl = async (etlApiEndpoint, username, accessToken, strateg
     }
     return etlData
   }else{
-    return console.error('No ETL data')
+    return logger.error('No ETL data')
   }
 
 
@@ -150,7 +150,7 @@ module.exports = function (options = {}) {
       if(setBData[0] === '')setBData=[];
       if(setAData.length>0){
         for(var setAItem of setAData){
-          let timeA = await setTimeout(function(){return 5000},5000);
+          let timeA = await setTimeout(function(){return true},5000);
           let etlDataA = await getEndpointDataEtl(etlApiEndpoint+setAItem, username, accessToken, strategy);
           if(etlDataA && etlDataA !== 'No ETL data'){
             resultData.profilesA.push(etlDataA)
@@ -173,7 +173,7 @@ module.exports = function (options = {}) {
         }
         if(getPosts){
           for(var setAProfile of resultData.profilesA){
-            let timePA = await setTimeout(function(){return 5000},5000);
+            let timePA = await setTimeout(function(){return true},5000);
             resultData.totalInstaPostsA+=setAProfile.edge_owner_to_timeline_media.count
             let etlDataPA = await getEndpointDataEtl(etlApiEndpointPosts+setAProfile.id, username, accessToken, strategy);
             if(etlDataPA && etlDataPA !== 'No ETL data'){
@@ -182,7 +182,7 @@ module.exports = function (options = {}) {
                 let postA = etlDataPA[iA];
                 postA = await cleans(postA);
                 postA = await prepPost(postA);
-                let timePMA = await setTimeout(function(){return 1000},1000);
+                let timePMA = await setTimeout(function(){return true},2200);
                 let etlDataPMA = await getEndpointDataEtl(etlApiEndpointMedia+postA.shortcode, username, accessToken, strategy);
                 etlDataPMA = await cleans(etlDataPMA);
                 etlDataPMA = await prepMedia(etlDataPMA);
@@ -282,16 +282,17 @@ module.exports = function (options = {}) {
                     let commentsEtlApiEndpoint = serverUrl+'/instagram/comments?'+'shortcode='+postfcA.shortcode+'&count='+commentsCount;
                     if(commentsCount>0){
                       ijACounter++
+                      let timefcPMA = await setTimeout(function(){return true},2200);
                       let commentsData = await getEndpointDataEtl(commentsEtlApiEndpoint, username, accessToken, strategy).then(res=> {
                         if (Array.isArray(res)) {
                           return res
                         } else if (typeof res === 'object' && res.hasOwnProperty('then')) {
                           return res.then(delayedRes=>{
                             return delayedRes
-                          })
+                          }).catch(err=>logger.error(err))
 
                         }
-                      });
+                      }).catch(err=>logger.error(err));
                       postfcA.comments.edges = await cleans(commentsData, true)
                       if(txtProc){
                         postfcA.comments.edges = await textProcess(postfcA.comments.edges, true)
@@ -340,7 +341,7 @@ module.exports = function (options = {}) {
       }
       if(setBData.length>0){
         for(var setBItem of setBData){
-          let timeB = await setTimeout(function(){return 5000},5000);
+          let timeB = await setTimeout(function(){return true},5000);
           let etlDataB = await getEndpointDataEtl(etlApiEndpoint+setBItem, username, accessToken, strategy);
           if(etlDataB && etlDataB !== 'No ETL data'){
             resultData.profilesB.push(etlDataB)
@@ -363,7 +364,7 @@ module.exports = function (options = {}) {
         }
         if(getPosts){
           for(var setBProfile of resultData.profilesB){
-            let timePB = await setTimeout(function(){return 5000},5000);
+            let timePB = await setTimeout(function(){return true},5000);
             resultData.totalInstaPostsB+=setBProfile.edge_owner_to_timeline_media.count
             let etlDataPB = await getEndpointDataEtl(etlApiEndpointPosts+setBProfile.id, username, accessToken, strategy);
             if(etlDataPB && etlDataPB !== 'No ETL data'){
@@ -373,7 +374,7 @@ module.exports = function (options = {}) {
                 let postB = etlDataPB[jB];
                 postB = await cleans(postB)
                 postB = await prepPost(postB)
-                let timePMB = await setTimeout(function(){return 1000},1000);
+                let timePMB = await setTimeout(function(){return true},2200);
                 let etlDataPMB = await getEndpointDataEtl(etlApiEndpointMedia+postB.shortcode, username, accessToken, strategy);
                 etlDataPMB = await cleans(etlDataPMB);
                 etlDataPMB = await prepMedia(etlDataPMB);
@@ -423,7 +424,7 @@ module.exports = function (options = {}) {
                         }else{
                           qB = locB.name
                         }
-                        let timePMB = await setTimeout(function(){return 1000},1000);
+                        let timePMB = await setTimeout(function(){return true},2200);
                         let locReqB = await geocoder.search( { q: qB }, {}, function(error, response) {
                           if(error){
                             logger.error('SetB on Nominatim ETL has returned error: '+error);
@@ -470,7 +471,7 @@ module.exports = function (options = {}) {
                 for(let ijB in etlDataPB){
                   if(ijBCounter<201){
                     let postfcB = etlDataPB[ijB];
-                    let timefcPMB = await setTimeout(function(){return 1000},1000);
+                    let timefcPMB = await setTimeout(function(){return true},2200);
                     let commentsCountB = postfcB.comments.count || 0
                     let commentsEtlApiEndpoint = serverUrl+'/instagram/comments?'+'shortcode='+postfcB.shortcode+'&count='+commentsCountB;
                     if(commentsCountB>0){
@@ -481,10 +482,10 @@ module.exports = function (options = {}) {
                         } else if (typeof res === 'object' && res.hasOwnProperty('then')) {
                           return res.then(delayedRes=>{
                             return delayedRes
-                          })
+                          }).catch(err=>logger.error(err))
 
                         }
-                      });
+                      }).catch(err=>logger.error(err));
                       postfcB.comments.edges = await cleans(commentsDataB, true)
                       if(txtProc){
                         postfcB.comments.edges = await textProcess(postfcB.comments.edges, true)
@@ -666,7 +667,7 @@ module.exports = function (options = {}) {
                         })
 
                       }
-                    });
+                    }).catch(err=>logger.error(err));
                     postfcA.comments.edges = await cleans(commentsData, true)
                     if(txtProc){
                       postfcA.comments.edges = await textProcess(postfcA.comments.edges, true)
