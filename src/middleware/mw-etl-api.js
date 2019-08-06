@@ -3,6 +3,8 @@ const logger = require('../../src/logger')
 const serverUrl = config.PROTOCOL+"://"+config.HOST+':'+config.PORT+'/api';
 const textProcess = require('../middleware/text-processing')
 const fetch = require('node-fetch');
+const { Client } = require('@elastic/elasticsearch');
+const client = new Client({ node: config.ES_HOST });
 //const ejs = require('ejs')
 const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36';
 const uri = config.PROTOCOL+"://"+config.HOST+':'+config.UIPORT+'/'
@@ -88,6 +90,59 @@ function prepMedia(media){
 
   }
   return prepmedia
+
+}
+async function writeToES(rec, index){
+  if(rec['_id']){
+    rec.dbid = rec['_id'];
+    delete rec['_id'];
+  }
+  if(rec['comments']){
+    if(rec['comments'].edges){
+      delete rec['comments'].edges
+    }
+  }
+  var capts = {};
+  if (rec['captions']){
+    if(rec['captions'].edges){
+      if(rec['captions'].edges.length > 0){
+        for (var i=0; i<rec['captions'].edges.length;i++){
+          capts['caption'+i] = rec['captions'].edges[i].node.text
+        }
+      }
+    }
+  }
+  rec['captions']= capts;
+  if (rec['media']){
+    if(rec['media']['related_media']){
+      delete rec['media']['related_media']
+    }
+  }
+  if (rec['timestamp']){
+    rec['timestamp']=rec['timestamp']*1000
+  }
+  if (!rec['extraction_at']){
+    rec['extraction_at']= Date.now();
+  }
+  if (rec['media']){
+    if(rec['media']['timestamp']){
+      rec['media']['timestamp']=rec['media']['timestamp']*1000
+    }
+    if (rec['media']['location']){
+      if(rec['media']['location']['lat'] && rec['media']['location']['lng']){
+        rec['media']['location']['geopoint']={"lat":rec['media']['location']['lat'] , "lon":rec['media']['location']['lng']}
+      }
+    }
+  }
+  await client.index({
+    index: index,
+    type: '_doc',
+    body: rec
+  }).then(()=>{
+    logger.info(" Record has been stored in ES")
+  }).catch(err=>{
+    logger.error(err)
+  })
 
 }
 const getEndpointDataEtl = async (etlApiEndpoint, username, accessToken, strategy)=>{
@@ -186,6 +241,7 @@ module.exports = function (options = {}) {
                 let etlDataPMA = await getEndpointDataEtl(etlApiEndpointMedia+postA.shortcode, username, accessToken, strategy);
                 etlDataPMA = await cleans(etlDataPMA);
                 etlDataPMA = await prepMedia(etlDataPMA);
+                postA.extraction_at = Date.now();
                 if(getLocations){
                   let loc  =etlDataPMA.location;
                   if(loc && loc !== null){
@@ -254,65 +310,49 @@ module.exports = function (options = {}) {
                     }
                   }
                 }
-                /*if(getComments){
-                  let commentsCount = postA.comments.count || 0
-                  let commentsEtlApiEndpoint = serverUrl+'/instagram/comments?'+'shortcode='+postA.shortcode+'&count='+commentsCount;
-                  let commentsData = await getEndpointDataEtl(commentsEtlApiEndpoint, username, accessToken, strategy).then(res=> {
-                    if (Array.isArray(res)) {
-                      return res
-                    } else if (typeof res === 'object' && res.hasOwnProperty('then')) {
-                      return res.then(delayedRes=>{
-                        return delayedRes
-                      })
-
-                    }
-                  });
-                  postA.comments.edges = await cleans(commentsData, true)
-                }*/
                 postA.media = etlDataPMA;
+
                 etlDataPA[iA] = postA;
               }
               if(getComments){
-                let ijACounter = 0;
-                //let timefcPMA = await setTimeout(function(){return 10000},10000);
                 for(let ijA in etlDataPA){
-                  if(ijACounter<201){
-                    let postfcA = etlDataPA[ijA];
-                    let commentsCount = postfcA.comments.count
-                    let commentsEtlApiEndpoint = serverUrl+'/instagram/comments?'+'shortcode='+postfcA.shortcode+'&count='+commentsCount;
-                    if(commentsCount>0){
-                      ijACounter++
-                      let timefcPMA = await setTimeout(function(){return true},2200);
-                      let commentsData = await getEndpointDataEtl(commentsEtlApiEndpoint, username, accessToken, strategy).then(res=> {
-                        if (Array.isArray(res)) {
-                          return res
-                        } else if (typeof res === 'object' && res.hasOwnProperty('then')) {
-                          return res.then(delayedRes=>{
-                            return delayedRes
-                          }).catch(err=>logger.error(err))
+                  let postfcA = etlDataPA[ijA];
+                  let commentsCount = postfcA.comments.count>=200 ? 200 : postfcA.comments.count;
+                  let commentsEtlApiEndpoint = serverUrl+'/instagram/comments?'+'shortcode='+postfcA.shortcode+'&count='+commentsCount;
+                  if(commentsCount>0){
+                    let timefcPMA = await setTimeout(function(){return true},2000);
+                    let commentsData = await getEndpointDataEtl(commentsEtlApiEndpoint, username, accessToken, strategy).then(res=> {
+                      if (Array.isArray(res)) {
+                        return res
+                      } else if (typeof res === 'object' && res.hasOwnProperty('then')) {
+                        return res.then(delayedRes=>{
+                          return delayedRes
+                        }).catch(err=>logger.error(err))
 
-                        }
-                      }).catch(err=>logger.error(err));
-                      postfcA.comments.edges = await cleans(commentsData, true)
-                      if(txtProc){
-                        postfcA.comments.edges = await textProcess(postfcA.comments.edges, true)
                       }
+                    }).catch(err=>logger.error(err));
+                    postfcA.comments.edges = await cleans(commentsData, true)
+                    if(txtProc){
+                      postfcA.comments.edges = await textProcess(postfcA.comments.edges, true)
                     }
-                    etlDataPA[ijA] = postfcA;
                   }
-                  else{
+                  etlDataPA[ijA] = postfcA;
+                  if(config.ES_ENABLED){
+                    writeToES(postfcA,'insta-postsa');
+                  }
+                  /*else{
                     let postfcA = etlDataPA[ijA];
                     if(postfcA.comments.count>0){
                       postfcA.comments.edges = await textProcess(postfcA.comments.edges, true)
                     }
                     etlDataPA[ijA] = postfcA;
-                  }
+                  }*/
 
 
                 }
               }
 
-              resultData.setA.push({profile:setAProfile.username,totalDb:etlDataPA.length,profileData:setAProfile,posts:etlDataPA})
+              resultData.setA.push({profile:setAProfile.username,totalDb:etlDataPA.length,profileData:setAProfile,posts:etlDataPA.length})
               logger.info('Writing SetA,  '+ etlDataPA.length +'posts from ETL API to database');
               let servicePostsA = 'instagram/postsa';
               let recordDataA = await writeDatabase(req.app, etlDataPA, servicePostsA, username)
@@ -325,9 +365,7 @@ module.exports = function (options = {}) {
                   res.sendStatus(500)
                 });
               for (let resA of resultData.setA){
-                logger.info('SetA '+resA.posts.length+' posts of profile: '+resA.profile+' cropped to 100 to be sent to user as sample ')
-                resA.posts = resA.posts.slice(0,100);
-
+                logger.info('SetA '+resA.posts+' posts of profile: '+resA.profile+' cropped to 100 to be sent to user as sample ')
               }
 
             }
@@ -446,64 +484,55 @@ module.exports = function (options = {}) {
                     }
                   }
                 }
-                /*if(getComments){
-                  let commentsCountB = postB.comments.count || 0
-                  let commentsEtlApiEndpointB = serverUrl+'/instagram/comments?'+'shortcode='+postB.shortcode+'&count='+commentsCountB;
-                  let commentsDataB = await getEndpointDataEtl(commentsEtlApiEndpointB, username, accessToken, strategy).then(res=> {
-                    if (Array.isArray(res)) {
-                      return res
-                    } else if (typeof res === 'object' && res.hasOwnProperty('then')) {
-                      return res.then(delayedRes=>{
-                        return delayedRes
-                      })
-
-                    }
-                  });
-                  postB.comments.edges = await cleans(commentsDataB, true)
-                }*/
                 postB.media = etlDataPMB
                 etlDataPB[jB] = postB;
               }
 
               if(getComments){
-                //let timefcPMB = await setTimeout(function(){return 10000},10000);
-                let ijBCounter = 0;
                 for(let ijB in etlDataPB){
-                  if(ijBCounter<201){
-                    let postfcB = etlDataPB[ijB];
-                    let timefcPMB = await setTimeout(function(){return true},2200);
-                    let commentsCountB = postfcB.comments.count || 0
-                    let commentsEtlApiEndpoint = serverUrl+'/instagram/comments?'+'shortcode='+postfcB.shortcode+'&count='+commentsCountB;
-                    if(commentsCountB>0){
-                      ijBCounter++
-                      let commentsDataB = await getEndpointDataEtl(commentsEtlApiEndpoint, username, accessToken, strategy).then(res=> {
-                        if (Array.isArray(res)) {
-                          return res
-                        } else if (typeof res === 'object' && res.hasOwnProperty('then')) {
-                          return res.then(delayedRes=>{
-                            return delayedRes
-                          }).catch(err=>logger.error(err))
+                  let postfcB = etlDataPB[ijB];
+                  let timefcPMB = await setTimeout(function(){return true},2200);
+                  let commentsCountB = postfcB.comments.count>=200?200:postfcB.comments.count;
+                  let commentsEtlApiEndpoint = serverUrl+'/instagram/comments?'+'shortcode='+postfcB.shortcode+'&count='+commentsCountB;
+                  if(commentsCountB>0){
+                    let commentsDataB = await getEndpointDataEtl(commentsEtlApiEndpoint, username, accessToken, strategy).then(res=> {
+                      if (Array.isArray(res)) {
+                        return res
+                      } else if (typeof res === 'object' && res.hasOwnProperty('then')) {
+                        return res.then(delayedRes=>{
+                          return delayedRes
+                        }).catch(err=>{
+                          if(err.indexOf('rate limited')>0 || err.indexOf('Please wait a few minutes')){
+                            setTimeout(function(){
+                              logger.error(err);
+                            },300000);
+                          }else{
+                            logger.error(err);
+                          }
+                        })
 
-                        }
-                      }).catch(err=>logger.error(err));
-                      postfcB.comments.edges = await cleans(commentsDataB, true)
-                      if(txtProc){
-                        postfcB.comments.edges = await textProcess(postfcB.comments.edges, true)
                       }
-                    }
-                    etlDataPB[ijB] = postfcB;
-                  }
-                  else{
-                    let postfcB = etlDataPB[ijB];
-                    if(postfcB.comments.count>0){
+                    }).catch(err=>{
+                      if(err.indexOf('rate limited')>0 || err.indexOf('Please wait a few minutes')){
+                        setTimeout(function(){
+                          logger.error(err);
+
+                        },300000);
+                      }else{
+                        logger.error(err);
+                      }
+
+                    });
+                    postfcB.comments.edges = await cleans(commentsDataB, true)
+                    if(txtProc){
                       postfcB.comments.edges = await textProcess(postfcB.comments.edges, true)
                     }
-                    etlDataPB[ijB] = postfcB;
                   }
+                  etlDataPB[ijB] = postfcB;
                 }
               }
 
-              resultData.setB.push({profile:setBProfile.username,totalDb:etlDataPB.length,profileData:setBProfile,posts:etlDataPB})
+              resultData.setB.push({profile:setBProfile.username,totalDb:etlDataPB.length,profileData:setBProfile,posts:etlDataPB.length})
               logger.info('Writing SetB,  '+ etlDataPB.length +'posts from ETL API to database')
               let servicePostsB = 'instagram/postsb';
               let recordDataB = await writeDatabase(req.app, etlDataPB, servicePostsB, username)
@@ -516,7 +545,7 @@ module.exports = function (options = {}) {
                   res.sendStatus(500)
                 });
               for (let resB of resultData.setB){
-                logger.info('SetB '+resB.posts.length+' posts of profile: '+resB.profile+' cropped to 100 to be sent to user as sample ')
+                logger.info('SetB '+resB.posts+' posts of profile: '+resB.profile+' cropped to 100 to be sent to user as sample ')
                 resB.posts = resB.posts.slice(0,100);
 
               }

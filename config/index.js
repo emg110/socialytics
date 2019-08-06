@@ -4,6 +4,8 @@ module.exports = {
   HOST: process.env.HOST || "localhost",
   PROTOCOL: "http",
   UIPORT:"8195",
+  ES_ENABLED:true,
+  ES_HOST:'http://192.168.140.200:9600',
   //"houmanproject": {email:"your@email.com",sessionid:undefined,csrftoken:undefined}
   users: {},
   sessionid: undefined,
