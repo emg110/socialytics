@@ -1,8 +1,8 @@
 const fs = require('fs');
 const logger = require('./logger');
-const inStream = require('fs').createReadStream('././data/insta-postsa.db')
-const { Client } = require('@elastic/elasticsearch')
-const client = new Client({ node: 'http://192.168.140.200:9600' })
+const { Client } = require('@elastic/elasticsearch');
+const client = new Client({ node: 'http://192.168.140.200:9600' });
+const inStream = fs.createReadStream('././data/insta-postsa.db');
 var lineReader = require('readline').createInterface({
   input: inStream
 });

@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@elastic/elasticsearch": "~6.8.2",
+    "feathers-elasticsearch": "latest",
     "@feathersjs/authentication": "latest",
     "@feathersjs/authentication-client": "latest",
     "@feathersjs/authentication-jwt": "latest",

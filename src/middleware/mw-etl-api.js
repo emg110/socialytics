@@ -178,8 +178,6 @@ module.exports = function (options = {}) {
     let strategy = 'jwt';
     let expr = req.originalUrl;
 
-
-
     if(expr.indexOf('/instagram/set/data?')>=0){
       req.setTimeout(50000000000);
       let getPosts = req.query.allPosts
