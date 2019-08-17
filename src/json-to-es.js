@@ -3,24 +3,68 @@ const logger = require('./logger');
 const { Client } = require('@elastic/elasticsearch');
 const client = new Client({ node: 'http://192.168.140.200:9600' });
 const inStream = fs.createReadStream('././data/insta-postsa.db');
+const getDB = require('./nedb-file') ;
+const db = getDB('././data/insta-profiles.db')
+/*function findOne(id){
+   db.findOne({"id":id  }, function (err, docs) {
+    if(docs.id){
+      return docs.username
+    }
+  });
+}*/
+async function findOne(id) {
+  let promise = await new Promise((resolve, reject) => {
+    db.findOne({"id":id  }, function (err, docs) {
+      if(docs.id && docs !== null){
+       resolve(docs.username)
+      }
+      else if(err){
+        reject(err)
+      }
+    });
+  })
+    .catch(err => {throw err});
+
+  return promise
+}
+//findOne('144117420').then(username=>console.log(username));
+
 var lineReader = require('readline').createInterface({
   input: inStream
 });
-async function writeToES(doc){
+async function writeToES(doc, index){
+  await findOne(doc['owner']['id'])
+    .then(username=>{
+      doc['owner']['username']=username
+    })
+    .catch(err => logger.error(err));
+
   await client.index({
-    index: 'insta-postsa',
+    index: index,
     type: '_doc',
     body: doc
   }).then(()=>{
     counter++;
-    logger.info(counter+" Records has been stored in ES")
+    logger.info(counter+" docs has been stored in ES index: "+index)
+  }).catch(err=>{
+    logger.error(err)
+  })
+
+}
+async function queryES(q, index){
+  await client.search({
+    index: index,
+    type: '_doc',
+    query: q
+  }).then(()=>{
+    logger.info('')
   }).catch(err=>{
     logger.error(err)
   })
 
 }
 var counter=0;
-lineReader.on('line', function (line) {
+lineReader.on('line',  function (line) {
 
   //line = line.replace(/\"/g, '"');
   //line = line.replace(/\//g, '');
@@ -31,7 +75,17 @@ lineReader.on('line', function (line) {
   }
   if(rec['comments']){
     if(rec['comments'].edges){
-      delete rec['comments'].edges
+      if(rec['comments'].edges.length>0){
+        for (i in rec['comments'].edges){
+          delete rec['comments'].edges[i]['text_proc']["count_words"]
+          delete rec['comments'].edges[i]['text_proc']["ner"]
+          delete rec['comments'].edges[i]['text_proc']["emojiSentiments"]
+          if(rec['comments'].edges[i]['text_proc']){
+            rec['comments'].edges[i]['text_proc']['emojis']=rec['comments'].edges[i]['text_proc']['emojis'].join(',')
+            rec['comments'].edges[i]['text_proc']['keywords']=rec['comments'].edges[i]['text_proc']['keywords'].join(',')
+          }
+        }
+      }
     }
   }
   var capts = {};
@@ -67,7 +121,7 @@ lineReader.on('line', function (line) {
     }
   }
 
-  writeToES(rec);
+   writeToES(rec, 'instagram_posts');
 
 });
 
@@ -75,7 +129,7 @@ lineReader.on('line', function (line) {
 inStream.on('end', function() {
 
   logger.info('ETL has ended successfully....'+' & around '+counter+' Records have been transfered in total')
-  client.indices.refresh({ index: 'insta-postsa' })
+  client.indices.refresh({ index: 'instagram_posts' })
 
 });
 
