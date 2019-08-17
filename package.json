@@ -70,6 +70,7 @@
     "keyword-extractor": "0.0.17",
     "knwl.js": "latest",
     "koa": "latest",
+    "koa-router": "latest",
     "koa-logger": "^3.2.1",
     "koa2-cors": "latest",
     "koa-bodyparser": "latest",
