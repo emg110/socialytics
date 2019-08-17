@@ -315,48 +315,51 @@ $("#searchProfileBtn").click(()=>{
    if(instance)instance.destroy()*/
   $("#autocomplete-results").html('<div>  </div>')
   if(value.length>2){
-    window.fetch('https://www.instagram.com/web/search/topsearch/?query='+value).then(res=>{
-      return res.json()
-    }).then(function (json) {
-      if(json){
-        json = json.users;
+    window.fetch('https://www.instagram.com/web/search/topsearch/?query='+value)
+      .then(res=>{
+        return res.json()
+      })
+      .then(function (json) {
+        if(json){
+          json = json.users;
 
-        $("#autocomplete-results").append('<a href="#" id="close-btn" class="fa fa-times"></a><div style="width:100%;color:#f8f9fa;padding:5px;font-family: monospace; background: #31a9b8;text-align: center">Drag profiles to desired input</div>')
-        $("#close-btn").on('click',function(){
-          $("#autocomplete-results").html('<div>  </div>');
-        });
-        for(var i of json){
-          i = i.user;
-          var searchRes =
-            '<div id="'+i.username+'" class="search-result" draggable="true" ondragstart="drag(event)">'+
-            '<span>'+
-            '<img title="'+i.full_name+':'+'" class="profile-mini-img" src="'+i.profile_pic_url+'">'+
-            '</span>'+
-            '<span style="margin-left:1vw" id="searched-username">'+
-            i.username+
-            '</span>';
+          $("#autocomplete-results").append('<a href="#" id="close-btn" class="fa fa-times"></a><div style="width:100%;color:#f8f9fa;padding:5px;font-family: monospace; background: #31a9b8;text-align: center">Drag profiles to desired input</div>')
+          $("#close-btn").on('click',function(){
+            $("#autocomplete-results").html('<div>  </div>');
+          });
+          for(var i of json){
+            i = i.user;
+            var searchRes =
+              '<div id="'+i.username+'" class="search-result" draggable="true" ondragstart="drag(event)">'+
+              '<span>'+
+              '<img title="'+i.full_name+':'+'" class="profile-mini-img" src="'+i.profile_pic_url+'">'+
+              '</span>'+
+              '<span style="margin-left:1vw" id="searched-username">'+
+              i.username+
+              '</span>';
 
-          if(i.is_private){
-            searchRes += ' <span class="fa fa-lock"></span></div>';
+            if(i.is_private){
+              searchRes += ' <span class="fa fa-lock"></span></div>';
+            }
+            if( i.is_verified){
+              searchRes += ' <span class="fa fa-check-circle verified"></span></div>';
+            }
+            else{
+              searchRes += '</div>';
+            }
+
+            $("#autocomplete-results").append(searchRes);
+
           }
-          if( i.is_verified){
-            searchRes += ' <span class="fa fa-check-circle verified"></span></div>';
-          }
-          else{
-            searchRes += '</div>';
-          }
-
-          $("#autocomplete-results").append(searchRes);
-
         }
-      }
-      /* $("#autocomplete-results").overlayScrollbars({
-         className : "os-theme-dark"
-       })*/
-      /*OverlayScrollbars(document.getElementById('autocomplete-results'), {
-          className : "os-theme-dark",
-        });*/
-    });
+        /* $("#autocomplete-results").overlayScrollbars({
+           className : "os-theme-dark"
+         })*/
+        /*OverlayScrollbars(document.getElementById('autocomplete-results'), {
+            className : "os-theme-dark",
+          });*/
+      })
+      .catch(err=>console.log(err));
   }
 });
 
